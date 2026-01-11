@@ -31,7 +31,7 @@ None
 **Goal**: Working React app with routing, Tailwind styling, and basic layout
 **Depends on**: Nothing (first phase)
 **Research**: Unlikely (standard Vite + React setup)
-**Plans**: TBD
+**Plans**: 2 (01-01: Vite + Tailwind, 01-02: Routing + Navigation)
 
 ### Phase 2: Firebase Setup
 **Goal**: Firestore connected with security rules, households can join via 4-digit code
@@ -97,7 +97,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 1/2 | In progress | - |
 | 2. Firebase Setup | 0/TBD | Not started | - |
 | 3. Data Layer | 0/TBD | Not started | - |
 | 4. Meal Library | 0/TBD | Not started | - |
