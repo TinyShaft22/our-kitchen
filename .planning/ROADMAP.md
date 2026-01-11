@@ -14,7 +14,7 @@ None
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Foundation** - Project setup with Vite, React, TypeScript, Tailwind, routing
+- [x] **Phase 1: Foundation** - Project setup with Vite, React, TypeScript, Tailwind, routing
 - [ ] **Phase 2: Firebase Setup** - Firestore config, security rules, 4-digit household auth
 - [ ] **Phase 3: Data Layer** - TypeScript types, Firestore hooks, offline persistence setup
 - [ ] **Phase 4: Meal Library** - CRUD for meals with ingredients, quick add floating button
@@ -97,7 +97,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 1/2 | In progress | - |
+| 1. Foundation | 2/2 | Complete | 2026-01-11 |
 | 2. Firebase Setup | 0/TBD | Not started | - |
 | 3. Data Layer | 0/TBD | Not started | - |
 | 4. Meal Library | 0/TBD | Not started | - |
