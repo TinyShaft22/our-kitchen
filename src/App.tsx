@@ -1,16 +1,25 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Navigation from './components/layout/Navigation'
+import Home from './pages/Home'
+import MealLibrary from './pages/MealLibrary'
+import GroceryListPage from './pages/GroceryListPage'
+import BakingPage from './pages/BakingPage'
+
 function App() {
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center">
-      <div className="text-center p-8 bg-white rounded-softer shadow-soft">
-        <h1 className="text-4xl font-bold text-charcoal mb-4">Our Kitchen</h1>
-        <p className="text-lg text-charcoal/70">Welcome to your family recipe hub</p>
-        <div className="mt-6 flex gap-4 justify-center">
-          <span className="px-4 py-2 bg-terracotta text-white rounded-soft">Terracotta</span>
-          <span className="px-4 py-2 bg-sage text-white rounded-soft">Sage</span>
-          <span className="px-4 py-2 bg-honey text-charcoal rounded-soft">Honey</span>
-        </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-cream flex flex-col">
+        <main className="flex-1 overflow-auto pb-20">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/meals" element={<MealLibrary />} />
+            <Route path="/grocery" element={<GroceryListPage />} />
+            <Route path="/baking" element={<BakingPage />} />
+          </Routes>
+        </main>
+        <Navigation />
       </div>
-    </div>
+    </BrowserRouter>
   )
 }
 
