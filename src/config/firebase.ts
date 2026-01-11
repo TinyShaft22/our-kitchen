@@ -1,5 +1,10 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app';
-import { getFirestore, type Firestore } from 'firebase/firestore';
+import {
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+  type Firestore,
+} from 'firebase/firestore';
 
 // Firebase configuration from environment variables
 const firebaseConfig = {
@@ -14,7 +19,22 @@ const firebaseConfig = {
 // Initialize Firebase
 const app: FirebaseApp = initializeApp(firebaseConfig);
 
-// Initialize Firestore
-const db: Firestore = getFirestore(app);
+// Initialize Firestore with offline persistence enabled
+// Uses IndexedDB for caching with multi-tab support
+let db: Firestore;
+try {
+  db = initializeFirestore(app, {
+    localCache: persistentLocalCache({
+      tabManager: persistentMultipleTabManager(),
+    }),
+  });
+} catch (error) {
+  // Fallback: persistence may fail in some browsers (e.g., private browsing)
+  // or if Firestore was already initialized without persistence
+  console.warn('Firestore persistence unavailable, using default cache:', error);
+  // Import getFirestore dynamically as fallback
+  const { getFirestore } = await import('firebase/firestore');
+  db = getFirestore(app);
+}
 
 export { app, db };
