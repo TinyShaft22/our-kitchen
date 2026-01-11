@@ -384,10 +384,17 @@ public/
 
 ---
 
+## GitHub Setup (COMPLETE)
+
+- [x] Create GitHub repository
+- [x] Push code to GitHub
+
+**Repository:** https://github.com/TinyShaft22/our-kitchen
+
+---
+
 ## Netlify Setup (TODO)
 
-- [ ] Create GitHub repository
-- [ ] Push code to GitHub
-- [ ] Connect Netlify to GitHub repo
+- [ ] Connect Netlify to GitHub repo (https://github.com/TinyShaft22/our-kitchen)
 - [ ] Add environment variables in Netlify dashboard
 - [ ] Deploy
