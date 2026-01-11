@@ -24,6 +24,11 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Local Claude settings
-.claude/
+# Local Claude settings (keep these private)
+.claude/settings.local.json
 CLAUDE.local.md
+
+# Allow project-level Claude config to be tracked:
+# - .claude/commands/ (GSD workflow commands)
+# - .claude/skills/ (project-specific skills)
+# - .claude/get-shit-done/ (GSD templates and references)
