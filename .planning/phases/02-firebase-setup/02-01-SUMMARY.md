@@ -69,7 +69,7 @@ Each task was committed atomically:
 1. **Task 1: Initialize Firebase SDK with Firestore** - `40c4604` (feat)
 2. **Task 2: Create Firestore security rules for household access** - `a2f7370` (feat)
 
-**Plan metadata:** [pending] (docs: complete plan)
+**Plan metadata:** `de3e7a6` (docs: complete plan)
 
 ## Files Created/Modified
 - `src/config/firebase.ts` - Firebase app and Firestore initialization with env-based config

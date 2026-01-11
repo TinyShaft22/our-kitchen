@@ -38,7 +38,7 @@ None
 **Depends on**: Phase 1
 **Research**: Likely (Firestore security rules for household access)
 **Research topics**: Firestore security rules patterns for shared household data, 4-digit code validation approach
-**Plans**: TBD
+**Plans**: 2 (02-01: Firebase SDK + Security Rules, 02-02: Household Auth)
 
 ### Phase 3: Data Layer
 **Goal**: TypeScript types for all entities, Firestore hooks, data flows working
@@ -98,7 +98,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-11 |
-| 2. Firebase Setup | 0/TBD | Not started | - |
+| 2. Firebase Setup | 1/2 | In progress | - |
 | 3. Data Layer | 0/TBD | Not started | - |
 | 4. Meal Library | 0/TBD | Not started | - |
 | 5. Weekly Planning | 0/TBD | Not started | - |
