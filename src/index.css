@@ -30,3 +30,8 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* Safe area padding for iOS devices */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
