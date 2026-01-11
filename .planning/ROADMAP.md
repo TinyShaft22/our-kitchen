@@ -16,7 +16,7 @@ None
 
 - [x] **Phase 1: Foundation** - Project setup with Vite, React, TypeScript, Tailwind, routing
 - [x] **Phase 2: Firebase Setup** - Firestore config, security rules, 4-digit household auth
-- [ ] **Phase 3: Data Layer** - TypeScript types, Firestore hooks, offline persistence setup
+- [ ] **Phase 3: Data Layer** - TypeScript types, Firestore hooks, offline persistence setup (1/3 plans)
 - [ ] **Phase 4: Meal Library** - CRUD for meals with ingredients, quick add floating button
 - [ ] **Phase 5: Weekly Planning** - Select meals for the week from library
 - [ ] **Phase 6: Grocery Generation** - Auto-generate list from weekly meals, quantity combining
@@ -44,7 +44,7 @@ None
 **Goal**: TypeScript types for all entities, Firestore hooks, data flows working
 **Depends on**: Phase 2
 **Research**: Unlikely (standard Firestore React patterns)
-**Plans**: TBD
+**Plans**: 3 (03-01: Types + Persistence, 03-02: Firestore Hooks, 03-03: Sample Data)
 
 ### Phase 4: Meal Library
 **Goal**: Add, edit, delete meals with ingredients; floating + button for quick add
@@ -99,7 +99,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-11 |
 | 2. Firebase Setup | 2/2 | Complete | 2026-01-11 |
-| 3. Data Layer | 0/TBD | Not started | - |
+| 3. Data Layer | 1/3 | In progress | - |
 | 4. Meal Library | 0/TBD | Not started | - |
 | 5. Weekly Planning | 0/TBD | Not started | - |
 | 6. Grocery Generation | 0/TBD | Not started | - |

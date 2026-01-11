@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** Phase 2 — Firebase Setup
+**Current focus:** Phase 3 — Data Layer
 
 ## Current Position
 
-Phase: 2 of 10 (Firebase Setup)
-Plan: 2 of 2 in current phase
-Status: Phase complete
-Last activity: 2026-01-11 — Completed 02-02-PLAN.md
+Phase: 3 of 10 (Data Layer)
+Plan: 1 of 3 in current phase
+Status: Plan complete
+Last activity: 2026-01-11 — Completed 03-01-PLAN.md
 
-Progress: ████░░░░░░ 20%
+Progress: █████░░░░░ 25%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 4 min
-- Total execution time: 0.28 hours
+- Total plans completed: 5
+- Average duration: 4.4 min
+- Total execution time: 0.37 hours
 
 **By Phase:**
 
@@ -29,10 +29,11 @@ Progress: ████░░░░░░ 20%
 |-------|-------|-------|----------|
 | 1 | 2 | 10 min | 5 min |
 | 2 | 2 | 7 min | 3.5 min |
+| 3 | 1 | 5 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (5 min), 01-02 (5 min), 02-01 (5 min), 02-02 (2 min)
-- Trend: Improving
+- Last 5 plans: 01-02 (5 min), 02-01 (5 min), 02-02 (2 min), 03-01 (5 min)
+- Trend: Stable
 
 ## Accumulated Context
 
@@ -49,6 +50,8 @@ Recent decisions affecting current work:
 | 02-01 | Household-based security rules | No Firebase Auth, use householdCode field matching |
 | 02-02 | localStorage for household code | Simple persistence, no auth needed |
 | 02-02 | JoinHousehold outside BrowserRouter | Standalone gate before app renders |
+| 03-01 | Firebase v12 persistentLocalCache | Modern offline persistence API with multi-tab support |
+| 03-01 | Extracted status/source types | GroceryStatus, GrocerySource, BakingStatus for type safety |
 
 ### Deferred Issues
 
@@ -64,6 +67,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-11T23:40:53Z
-Stopped at: Completed 02-02-PLAN.md (Phase 2 complete)
+Last session: 2026-01-11T23:58:45Z
+Stopped at: Completed 03-01-PLAN.md (Phase 3 plan 1 of 3)
 Resume file: None
