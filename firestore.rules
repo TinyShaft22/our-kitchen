@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Household document - anyone can read to verify code exists
+    // Only allow create if code doesn't exist yet
+    match /households/{code} {
+      allow read: if true;
+      allow create: if !exists(/databases/$(database)/documents/households/$(code));
+      allow update, delete: if false; // Households are permanent
+    }
+
+    // All other collections require matching householdCode field
+    match /meals/{mealId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null; // For creates
+    }
+
+    match /weeklyMeals/{weekId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null;
+    }
+
+    match /groceryList/{itemId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null;
+    }
+
+    match /staples/{stapleId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null;
+    }
+
+    match /bakingEssentials/{itemId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null;
+    }
+
+    match /boughtHistory/{historyId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null;
+    }
+  }
+}
