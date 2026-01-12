@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { useHousehold } from '../hooks/useHousehold';
 import { useMeals } from '../hooks/useMeals';
 import { MealCard } from '../components/meals/MealCard';
+import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import type { Meal } from '../types';
 
 function MealLibrary() {
   const { householdCode } = useHousehold();
   const { meals, loading } = useMeals(householdCode);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const handleEdit = (meal: Meal) => {
     // Will be wired up in 04-03
@@ -16,6 +19,15 @@ function MealLibrary() {
     // Will be wired up in 04-03
     console.log('Delete meal:', meal.id);
   };
+
+  const handleAddClick = () => {
+    // Modal built in 04-02
+    setIsAddModalOpen(true);
+    console.log('FAB clicked, isAddModalOpen:', true);
+  };
+
+  // Suppress unused variable warning until 04-02
+  void isAddModalOpen;
 
   if (loading) {
     return (
@@ -49,6 +61,11 @@ function MealLibrary() {
           ))}
         </div>
       )}
+
+      <FloatingActionButton
+        onClick={handleAddClick}
+        ariaLabel="Add new meal"
+      />
     </div>
   );
 }
