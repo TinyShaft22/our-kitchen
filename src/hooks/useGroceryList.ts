@@ -14,6 +14,9 @@ import {
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import type { GroceryItem, GroceryStatus } from '../types';
+import type { GroceryItemInput } from '../utils/generateGroceryItems';
+
+export type { GroceryItemInput } from '../utils/generateGroceryItems';
 
 interface UseGroceryListReturn {
   items: GroceryItem[];
@@ -24,6 +27,7 @@ interface UseGroceryListReturn {
   deleteItem: (id: string) => Promise<void>;
   updateStatus: (id: string, status: GroceryStatus) => Promise<void>;
   clearBoughtItems: () => Promise<void>;
+  generateFromWeeklyPlan: (items: GroceryItemInput[]) => Promise<void>;
 }
 
 export function useGroceryList(householdCode: string | null): UseGroceryListReturn {
@@ -181,6 +185,50 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
     }
   }, [householdCode]);
 
+  const generateFromWeeklyPlan = useCallback(
+    async (newItems: GroceryItemInput[]): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      try {
+        const groceryRef = collection(db, 'groceryList');
+        const batch = writeBatch(db);
+
+        // Step 1: Delete all existing items where source === 'meal'
+        const q = query(
+          groceryRef,
+          where('householdCode', '==', householdCode),
+          where('source', '==', 'meal')
+        );
+
+        const snapshot = await getDocs(q);
+        snapshot.docs.forEach((docSnap) => {
+          batch.delete(docSnap.ref);
+        });
+
+        // Step 2: Add all new items with status 'need' and source 'meal'
+        for (const item of newItems) {
+          const newDocRef = doc(groceryRef);
+          batch.set(newDocRef, {
+            ...item,
+            status: 'need',
+            source: 'meal',
+            householdCode,
+          });
+        }
+
+        // Step 3: Commit the batch atomically
+        await batch.commit();
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to generate grocery list';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode]
+  );
+
   return {
     items,
     loading,
@@ -190,5 +238,6 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
     deleteItem,
     updateStatus,
     clearBoughtItems,
+    generateFromWeeklyPlan,
   };
 }
