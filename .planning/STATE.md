@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-11)
 ## Current Position
 
 Phase: 3 of 10 (Data Layer)
-Plan: 1 of 3 in current phase
-Status: Plan complete
-Last activity: 2026-01-11 — Completed 03-01-PLAN.md
+Plan: 2 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-11 — Completed 03-02-PLAN.md
 
-Progress: █████░░░░░ 25%
+Progress: ██████░░░░ 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 4.4 min
-- Total execution time: 0.37 hours
+- Total plans completed: 6
+- Average duration: 4.5 min
+- Total execution time: 0.45 hours
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: █████░░░░░ 25%
 |-------|-------|-------|----------|
 | 1 | 2 | 10 min | 5 min |
 | 2 | 2 | 7 min | 3.5 min |
-| 3 | 1 | 5 min | 5 min |
+| 3 | 2 | 10 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (5 min), 02-01 (5 min), 02-02 (2 min), 03-01 (5 min)
+- Last 5 plans: 02-01 (5 min), 02-02 (2 min), 03-01 (5 min), 03-02 (5 min)
 - Trend: Stable
 
 ## Accumulated Context
@@ -52,6 +52,8 @@ Recent decisions affecting current work:
 | 02-02 | JoinHousehold outside BrowserRouter | Standalone gate before app renders |
 | 03-01 | Firebase v12 persistentLocalCache | Modern offline persistence API with multi-tab support |
 | 03-01 | Extracted status/source types | GroceryStatus, GrocerySource, BakingStatus for type safety |
+| 03-02 | Compound doc ID for weekly plans | {householdCode}_{weekId} ensures uniqueness per household per week |
+| 03-02 | ISO week ID format YYYY-WNN | Consistent week identification across year boundaries |
 
 ### Deferred Issues
 
@@ -67,6 +69,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-11T23:58:45Z
-Stopped at: Completed 03-01-PLAN.md (Phase 3 plan 1 of 3)
+Last session: 2026-01-12T00:04:00Z
+Stopped at: Completed 03-02-PLAN.md (Phase 3 plan 2 of 3)
 Resume file: None
