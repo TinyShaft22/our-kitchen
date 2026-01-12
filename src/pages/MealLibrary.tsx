@@ -3,11 +3,12 @@ import { useHousehold } from '../hooks/useHousehold';
 import { useMeals } from '../hooks/useMeals';
 import { MealCard } from '../components/meals/MealCard';
 import { FloatingActionButton } from '../components/ui/FloatingActionButton';
+import { AddMealModal } from '../components/meals/AddMealModal';
 import type { Meal } from '../types';
 
 function MealLibrary() {
   const { householdCode } = useHousehold();
-  const { meals, loading } = useMeals(householdCode);
+  const { meals, loading, addMeal } = useMeals(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const handleEdit = (meal: Meal) => {
@@ -21,13 +22,16 @@ function MealLibrary() {
   };
 
   const handleAddClick = () => {
-    // Modal built in 04-02
     setIsAddModalOpen(true);
-    console.log('FAB clicked, isAddModalOpen:', true);
   };
 
-  // Suppress unused variable warning until 04-02
-  void isAddModalOpen;
+  const handleCloseModal = () => {
+    setIsAddModalOpen(false);
+  };
+
+  const handleSaveMeal = async (mealData: Omit<Meal, 'id' | 'householdCode'>) => {
+    await addMeal(mealData);
+  };
 
   if (loading) {
     return (
@@ -65,6 +69,12 @@ function MealLibrary() {
       <FloatingActionButton
         onClick={handleAddClick}
         ariaLabel="Add new meal"
+      />
+
+      <AddMealModal
+        isOpen={isAddModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveMeal}
       />
     </div>
   );
