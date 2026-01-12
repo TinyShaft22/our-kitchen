@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { useHousehold } from '../hooks/useHousehold';
 import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
 import { useMeals } from '../hooks/useMeals';
 import { WeeklyMealCard } from '../components/planning/WeeklyMealCard';
+import { FloatingActionButton } from '../components/ui/FloatingActionButton';
+import { AddToWeekModal } from '../components/planning/AddToWeekModal';
 import type { WeeklyMealEntry } from '../types';
 
 /**
@@ -16,13 +19,27 @@ function formatWeekId(weekId: string): string {
 
 function Home() {
   const { householdCode } = useHousehold();
-  const { currentWeek, loading: weekLoading, weekId } = useWeeklyPlan(householdCode);
+  const { currentWeek, loading: weekLoading, weekId, addMealToWeek } = useWeeklyPlan(householdCode);
   const { meals, loading: mealsLoading } = useMeals(householdCode);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Helper to get meal name by ID
   const getMealName = (mealId: string): string => {
     const meal = meals.find((m) => m.id === mealId);
     return meal?.name ?? 'Unknown Meal';
+  };
+
+  // Modal handlers
+  const handleAddClick = () => {
+    setIsAddModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsAddModalOpen(false);
+  };
+
+  const handleAddMealToWeek = async (mealId: string, servings: number) => {
+    await addMealToWeek(mealId, servings);
   };
 
   // Stub handlers - will be wired in 05-03
@@ -75,6 +92,18 @@ function Home() {
           ))}
         </div>
       )}
+
+      <FloatingActionButton
+        onClick={handleAddClick}
+        ariaLabel="Add meal to week"
+      />
+
+      <AddToWeekModal
+        isOpen={isAddModalOpen}
+        onClose={handleCloseModal}
+        meals={meals}
+        onAdd={handleAddMealToWeek}
+      />
     </div>
   );
 }
