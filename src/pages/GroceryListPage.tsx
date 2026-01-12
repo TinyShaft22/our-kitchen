@@ -12,8 +12,9 @@ function GroceryListPage() {
   const { householdCode } = useHousehold();
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
-  const { items, loading: groceryLoading, generateFromWeeklyPlan, updateStatus } = useGroceryList(householdCode);
+  const { items, loading: groceryLoading, generateFromWeeklyPlan, updateStatus, completeTrip } = useGroceryList(householdCode);
   const [generating, setGenerating] = useState(false);
+  const [completing, setCompleting] = useState(false);
   const [selectedStore, setSelectedStore] = useState<Store | 'all'>('all');
 
   // Combined loading state
@@ -75,6 +76,22 @@ function GroceryListPage() {
       setGenerating(false);
     }
   };
+
+  const handleCompleteTrip = async () => {
+    if (selectedStore === 'all') return;
+    setCompleting(true);
+    try {
+      await completeTrip(selectedStore);
+      // Items will disappear via real-time listener
+    } catch (err) {
+      console.error('Failed to complete trip:', err);
+    } finally {
+      setCompleting(false);
+    }
+  };
+
+  // Shopping mode is active when a specific store is selected
+  const isShoppingMode = selectedStore !== 'all';
 
   if (loading) {
     return (
@@ -169,19 +186,32 @@ function GroceryListPage() {
         </div>
       )}
 
-      {/* Generate FAB */}
-      <button
-        onClick={handleGenerate}
-        disabled={generating || !currentWeek?.meals.length}
-        className="fixed bottom-24 right-4 w-14 h-14 bg-terracotta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        aria-label="Generate grocery list from weekly meals"
-      >
-        {generating ? (
-          <span className="text-sm">...</span>
-        ) : (
-          <span className="text-xl">🛒</span>
-        )}
-      </button>
+      {/* Complete Trip button - only in shopping mode with items in cart */}
+      {isShoppingMode && inCartCount > 0 && (
+        <button
+          onClick={handleCompleteTrip}
+          disabled={completing}
+          className="fixed bottom-24 left-4 right-4 bg-sage text-white py-3 rounded-soft font-semibold shadow-lg transition-colors hover:bg-sage/90 active:bg-sage/80 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {completing ? 'Completing...' : `Complete Trip (${inCartCount} items)`}
+        </button>
+      )}
+
+      {/* Generate FAB - hidden during shopping mode */}
+      {!isShoppingMode && (
+        <button
+          onClick={handleGenerate}
+          disabled={generating || !currentWeek?.meals.length}
+          className="fixed bottom-24 right-4 w-14 h-14 bg-terracotta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Generate grocery list from weekly meals"
+        >
+          {generating ? (
+            <span className="text-sm">...</span>
+          ) : (
+            <span className="text-xl">🛒</span>
+          )}
+        </button>
+      )}
     </div>
   );
 }

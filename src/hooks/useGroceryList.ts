@@ -13,7 +13,7 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { GroceryItem, GroceryStatus } from '../types';
+import type { GroceryItem, GroceryStatus, Store } from '../types';
 import type { GroceryItemInput } from '../utils/generateGroceryItems';
 
 export type { GroceryItemInput } from '../utils/generateGroceryItems';
@@ -28,6 +28,7 @@ interface UseGroceryListReturn {
   updateStatus: (id: string, status: GroceryStatus) => Promise<void>;
   clearBoughtItems: () => Promise<void>;
   generateFromWeeklyPlan: (items: GroceryItemInput[]) => Promise<void>;
+  completeTrip: (store?: Store) => Promise<number>;
 }
 
 export function useGroceryList(householdCode: string | null): UseGroceryListReturn {
@@ -185,6 +186,45 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
     }
   }, [householdCode]);
 
+  const completeTrip = useCallback(
+    async (store?: Store): Promise<number> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      try {
+        const groceryRef = collection(db, 'groceryList');
+        const q = query(
+          groceryRef,
+          where('householdCode', '==', householdCode),
+          where('status', '==', 'in-cart')
+        );
+
+        const snapshot = await getDocs(q);
+
+        // Filter by store client-side to avoid compound index requirement
+        const toDelete = store
+          ? snapshot.docs.filter((d) => d.data().store === store)
+          : snapshot.docs;
+
+        if (toDelete.length === 0) {
+          return 0;
+        }
+
+        const batch = writeBatch(db);
+        toDelete.forEach((docSnap) => batch.delete(docSnap.ref));
+        await batch.commit();
+
+        return toDelete.length;
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to complete trip';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode]
+  );
+
   const generateFromWeeklyPlan = useCallback(
     async (newItems: GroceryItemInput[]): Promise<void> => {
       if (!householdCode) {
@@ -239,5 +279,6 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
     updateStatus,
     clearBoughtItems,
     generateFromWeeklyPlan,
+    completeTrip,
   };
 }
