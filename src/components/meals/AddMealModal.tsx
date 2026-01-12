@@ -1,11 +1,21 @@
 import { useState } from 'react';
 import type { Meal, Ingredient } from '../../types';
+import { IngredientInput } from './IngredientInput';
 
 interface AddMealModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (meal: Omit<Meal, 'id' | 'householdCode'>) => Promise<void>;
 }
+
+// Default ingredient values for new ingredients
+const createDefaultIngredient = (): Ingredient => ({
+  name: '',
+  qty: 1,
+  unit: '',
+  category: 'produce',
+  defaultStore: 'safeway',
+});
 
 export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
   const [name, setName] = useState('');
@@ -14,10 +24,6 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  // Suppress unused variable warnings - will be used in 04-02 Task 2
-  void ingredients;
-  void setIngredients;
 
   const resetForm = () => {
     setName('');
@@ -32,15 +38,33 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
     onClose();
   };
 
+  const handleAddIngredient = () => {
+    setIngredients([...ingredients, createDefaultIngredient()]);
+  };
+
+  const handleUpdateIngredient = (index: number, updated: Ingredient) => {
+    const newIngredients = [...ingredients];
+    newIngredients[index] = updated;
+    setIngredients(newIngredients);
+  };
+
+  const handleRemoveIngredient = (index: number) => {
+    setIngredients(ingredients.filter((_, i) => i !== index));
+  };
+
   const handleSave = async () => {
-    // Validate
+    // Validate meal name
     if (!name.trim()) {
       setError('Meal name is required');
       return;
     }
 
-    // Ingredients validation will be added in Task 2
-    // For now, just save with empty ingredients
+    // Validate at least one ingredient with a name
+    const validIngredients = ingredients.filter((ing) => ing.name.trim());
+    if (validIngredients.length === 0) {
+      setError('At least one ingredient with a name is required');
+      return;
+    }
 
     setSaving(true);
     setError(null);
@@ -50,7 +74,7 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
         name: name.trim(),
         servings,
         isBaking,
-        ingredients,
+        ingredients: validIngredients,
       });
       handleClose();
     } catch (err) {
@@ -74,7 +98,7 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
       {/* Modal Panel */}
       <div className="relative bg-cream rounded-t-softer w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-lg">
         {/* Header */}
-        <div className="sticky top-0 bg-cream border-b border-charcoal/10 px-4 py-3 flex items-center justify-between">
+        <div className="sticky top-0 bg-cream border-b border-charcoal/10 px-4 py-3 flex items-center justify-between z-10">
           <button
             onClick={handleClose}
             className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-cream text-charcoal"
@@ -167,14 +191,37 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
             </button>
           </div>
 
-          {/* Ingredients section placeholder - will be built in Task 2 */}
+          {/* Ingredients Section */}
           <div className="border-t border-charcoal/10 pt-4 mt-4">
-            <h3 className="text-sm font-medium text-charcoal mb-2">
-              Ingredients
-            </h3>
-            <p className="text-sm text-charcoal/60">
-              Ingredient entry coming in Task 2...
-            </p>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-medium text-charcoal">
+                Ingredients ({ingredients.length})
+              </h3>
+              <button
+                type="button"
+                onClick={handleAddIngredient}
+                className="h-11 px-4 rounded-soft bg-terracotta text-white text-sm font-medium hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors"
+              >
+                + Add Ingredient
+              </button>
+            </div>
+
+            {ingredients.length === 0 ? (
+              <p className="text-sm text-charcoal/60 text-center py-4">
+                No ingredients yet. Tap &quot;Add Ingredient&quot; to get started.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {ingredients.map((ingredient, index) => (
+                  <IngredientInput
+                    key={index}
+                    ingredient={ingredient}
+                    onChange={(updated) => handleUpdateIngredient(index, updated)}
+                    onRemove={() => handleRemoveIngredient(index)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
