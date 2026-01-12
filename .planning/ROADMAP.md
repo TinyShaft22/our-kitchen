@@ -68,7 +68,7 @@ None
 **Goal**: Filter by store, track items in cart, complete shopping trip
 **Depends on**: Phase 6
 **Research**: Unlikely (internal UI patterns)
-**Plans**: TBD
+**Plans**: 2 (07-01: Store Filter & Item Interaction, 07-02: Shopping Trip Completion)
 
 ### Phase 8: Voice & Staples
 **Goal**: Voice input for quick capture, staples section for always-grab items
@@ -103,7 +103,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 4. Meal Library | 3/3 | Complete | 2026-01-12 |
 | 5. Weekly Planning | 3/3 | Complete | 2026-01-12 |
 | 6. Grocery Generation | 2/2 | Complete | 2026-01-12 |
-| 7. Shopping Mode | 0/TBD | Not started | - |
+| 7. Shopping Mode | 1/2 | In progress | - |
 | 8. Voice & Staples | 0/TBD | Not started | - |
 | 9. Baking Corner | 0/TBD | Not started | - |
 | 10. PWA & Polish | 0/TBD | Not started | - |

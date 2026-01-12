@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** Phase 6 complete — Ready for Phase 7: Shopping Mode
+**Current focus:** Phase 7 in progress — Shopping Mode (1/2 plans)
 
 ## Current Position
 
-Phase: 6 of 10 (Grocery Generation)
-Plan: 2 of 2 in current phase
-Status: Phase complete
-Last activity: 2026-01-12 — Completed 06-02-PLAN.md (Grocery List Page UI)
+Phase: 7 of 10 (Shopping Mode)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-01-12 — Completed 07-01-PLAN.md (Store Filter & Item Interaction)
 
-Progress: ██████████████████░░ 65%
+Progress: ███████████████████░ 70%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 16
 - Average duration: 4 min
-- Total execution time: 0.98 hours
+- Total execution time: 1.07 hours
 
 **By Phase:**
 
@@ -33,9 +33,10 @@ Progress: ██████████████████░░ 65%
 | 4 | 3 | 12 min | 4 min |
 | 5 | 3 | 10 min | 3.3 min |
 | 6 | 2 | 5 min | 2.5 min |
+| 7 | 1 | 5 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-01 (3 min), 05-02 (3 min), 05-03 (4 min), 06-01 (2 min), 06-02 (3 min)
+- Last 5 plans: 05-02 (3 min), 05-03 (4 min), 06-01 (2 min), 06-02 (3 min), 07-01 (5 min)
 - Trend: Improving
 
 ## Accumulated Context
@@ -65,6 +66,8 @@ Recent decisions affecting current work:
 | 04-02 | Dynamic ingredient list | Add/remove buttons vs fixed input count |
 | 06-01 | GroceryItemInput intermediate type | Excludes id/householdCode/status/source (added by hook) |
 | 06-01 | Case-insensitive duplicate matching | Lowercase name + unit match, first occurrence casing kept |
+| 07-01 | Store filter pills terracotta/white styling | Active terracotta, inactive white with border |
+| 07-01 | GroceryItemCard converted to button | Proper accessibility for tap interaction |
 
 ### Deferred Issues
 
@@ -80,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-12T16:55:24Z
-Stopped at: Completed 06-02-PLAN.md (Grocery List Page UI) - Phase 6 complete
+Last session: 2026-01-12T17:13:32Z
+Stopped at: Completed 07-01-PLAN.md (Store Filter & Item Interaction)
 Resume file: None
