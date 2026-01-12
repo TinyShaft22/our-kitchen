@@ -12,7 +12,7 @@ function GroceryListPage() {
   const { householdCode } = useHousehold();
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
-  const { items, loading: groceryLoading, generateFromWeeklyPlan } = useGroceryList(householdCode);
+  const { items, loading: groceryLoading, generateFromWeeklyPlan, updateStatus } = useGroceryList(householdCode);
   const [generating, setGenerating] = useState(false);
   const [selectedStore, setSelectedStore] = useState<Store | 'all'>('all');
 
@@ -134,7 +134,13 @@ function GroceryListPage() {
               </h2>
               <div className="space-y-2">
                 {categoryItems.map((item) => (
-                  <GroceryItemCard key={item.id} item={item} />
+                  <GroceryItemCard
+                    key={item.id}
+                    item={item}
+                    onToggleInCart={() =>
+                      updateStatus(item.id, item.status === 'in-cart' ? 'need' : 'in-cart')
+                    }
+                  />
                 ))}
               </div>
             </section>

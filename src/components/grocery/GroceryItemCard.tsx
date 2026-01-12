@@ -3,19 +3,34 @@ import { STORES, CATEGORIES } from '../../types';
 
 interface GroceryItemCardProps {
   item: GroceryItem;
+  onToggleInCart?: () => void;
 }
 
-export function GroceryItemCard({ item }: GroceryItemCardProps) {
+export function GroceryItemCard({ item, onToggleInCart }: GroceryItemCardProps) {
   // Get display names for store and category
   const storeName = STORES.find((s) => s.id === item.store)?.name || item.store;
   const categoryName = CATEGORIES.find((c) => c.id === item.category)?.name || item.category;
+  const isInCart = item.status === 'in-cart';
 
   return (
-    <div className="bg-white rounded-soft shadow-soft p-4 min-h-[44px]">
+    <button
+      type="button"
+      onClick={onToggleInCart}
+      className={`w-full text-left rounded-soft shadow-soft p-4 min-h-[44px] cursor-pointer transition-colors ${
+        isInCart ? 'bg-sage/10' : 'bg-white'
+      }`}
+    >
       <div className="flex justify-between items-start">
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-charcoal truncate">{item.name}</h3>
-          <p className="text-sm text-charcoal/70 mt-0.5">
+          <h3 className={`font-semibold truncate ${
+            isInCart ? 'line-through text-charcoal/50' : 'text-charcoal'
+          }`}>
+            {isInCart && <span className="mr-1">✓</span>}
+            {item.name}
+          </h3>
+          <p className={`text-sm mt-0.5 ${
+            isInCart ? 'text-charcoal/40' : 'text-charcoal/70'
+          }`}>
             {item.qty} {item.unit}
           </p>
         </div>
@@ -28,6 +43,6 @@ export function GroceryItemCard({ item }: GroceryItemCardProps) {
           </span>
         </div>
       </div>
-    </div>
+    </button>
   );
 }
