@@ -5,8 +5,8 @@ import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
 import { useGroceryList } from '../hooks/useGroceryList';
 import { generateGroceryItems } from '../utils/generateGroceryItems';
 import { GroceryItemCard } from '../components/grocery/GroceryItemCard';
-import { CATEGORIES } from '../types';
-import type { GroceryItem, Category } from '../types';
+import { CATEGORIES, STORES } from '../types';
+import type { GroceryItem, Category, Store } from '../types';
 
 function GroceryListPage() {
   const { householdCode } = useHousehold();
@@ -14,11 +14,20 @@ function GroceryListPage() {
   const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
   const { items, loading: groceryLoading, generateFromWeeklyPlan } = useGroceryList(householdCode);
   const [generating, setGenerating] = useState(false);
+  const [selectedStore, setSelectedStore] = useState<Store | 'all'>('all');
 
   // Combined loading state
   const loading = mealsLoading || weekLoading || groceryLoading;
 
-  // Group items by category
+  // Filter items by selected store
+  const filteredItems = useMemo(() => {
+    if (selectedStore === 'all') {
+      return items;
+    }
+    return items.filter((item) => item.store === selectedStore);
+  }, [items, selectedStore]);
+
+  // Group filtered items by category
   const groupedItems = useMemo(() => {
     const groups = new Map<Category, GroceryItem[]>();
 
@@ -28,7 +37,7 @@ function GroceryListPage() {
     }
 
     // Add items to their category groups
-    for (const item of items) {
+    for (const item of filteredItems) {
       const group = groups.get(item.category);
       if (group) {
         group.push(item);
@@ -43,7 +52,7 @@ function GroceryListPage() {
       category: cat,
       items: groups.get(cat.id) || [],
     }));
-  }, [items]);
+  }, [filteredItems]);
 
   const handleGenerate = async () => {
     if (!currentWeek?.meals.length) {
@@ -74,8 +83,38 @@ function GroceryListPage() {
     <div className="p-4 pb-32">
       <h1 className="text-xl font-semibold text-charcoal">Grocery List</h1>
       <p className="text-sm text-warm-gray mt-1">
-        {items.length} item{items.length !== 1 ? 's' : ''}
+        {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''}
+        {selectedStore !== 'all' && ` at ${STORES.find((s) => s.id === selectedStore)?.name}`}
       </p>
+
+      {/* Store filter pills */}
+      {items.length > 0 && (
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 mt-4">
+          <button
+            onClick={() => setSelectedStore('all')}
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap min-h-[44px] transition-colors ${
+              selectedStore === 'all'
+                ? 'bg-terracotta text-white'
+                : 'bg-white text-charcoal border border-charcoal/20'
+            }`}
+          >
+            All
+          </button>
+          {STORES.map((store) => (
+            <button
+              key={store.id}
+              onClick={() => setSelectedStore(store.id)}
+              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap min-h-[44px] transition-colors ${
+                selectedStore === store.id
+                  ? 'bg-terracotta text-white'
+                  : 'bg-white text-charcoal border border-charcoal/20'
+              }`}
+            >
+              {store.name}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Empty state */}
       {items.length === 0 && (
