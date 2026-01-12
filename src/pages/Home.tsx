@@ -5,6 +5,8 @@ import { useMeals } from '../hooks/useMeals';
 import { WeeklyMealCard } from '../components/planning/WeeklyMealCard';
 import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import { AddToWeekModal } from '../components/planning/AddToWeekModal';
+import { EditServingsModal } from '../components/planning/EditServingsModal';
+import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import type { WeeklyMealEntry } from '../types';
 
 /**
@@ -19,9 +21,17 @@ function formatWeekId(weekId: string): string {
 
 function Home() {
   const { householdCode } = useHousehold();
-  const { currentWeek, loading: weekLoading, weekId, addMealToWeek } = useWeeklyPlan(householdCode);
+  const { currentWeek, loading: weekLoading, weekId, addMealToWeek, removeMealFromWeek, updateServings } = useWeeklyPlan(householdCode);
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  // Edit servings modal state
+  const [editingEntry, setEditingEntry] = useState<WeeklyMealEntry | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  // Remove confirmation dialog state
+  const [removingEntry, setRemovingEntry] = useState<WeeklyMealEntry | null>(null);
+  const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
 
   // Helper to get meal name by ID
   const getMealName = (mealId: string): string => {
@@ -42,13 +52,39 @@ function Home() {
     await addMealToWeek(mealId, servings);
   };
 
-  // Stub handlers - will be wired in 05-03
+  // Edit servings handlers
   const handleEditServings = (entry: WeeklyMealEntry) => {
-    console.log('Edit servings:', entry);
+    setEditingEntry(entry);
+    setIsEditModalOpen(true);
   };
 
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingEntry(null);
+  };
+
+  const handleSaveServings = async (servings: number) => {
+    if (editingEntry) {
+      await updateServings(editingEntry.mealId, servings);
+    }
+  };
+
+  // Remove meal handlers
   const handleRemove = (entry: WeeklyMealEntry) => {
-    console.log('Remove from week:', entry);
+    setRemovingEntry(entry);
+    setIsRemoveDialogOpen(true);
+  };
+
+  const handleCloseRemoveDialog = () => {
+    setIsRemoveDialogOpen(false);
+    setRemovingEntry(null);
+  };
+
+  const handleConfirmRemove = async () => {
+    if (removingEntry) {
+      await removeMealFromWeek(removingEntry.mealId);
+      handleCloseRemoveDialog();
+    }
   };
 
   const isLoading = weekLoading || mealsLoading;
@@ -103,6 +139,26 @@ function Home() {
         onClose={handleCloseModal}
         meals={meals}
         onAdd={handleAddMealToWeek}
+      />
+
+      {/* Edit Servings Modal */}
+      <EditServingsModal
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        mealName={editingEntry ? getMealName(editingEntry.mealId) : ''}
+        currentServings={editingEntry?.servings ?? 1}
+        onSave={handleSaveServings}
+      />
+
+      {/* Remove Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={isRemoveDialogOpen}
+        onClose={handleCloseRemoveDialog}
+        onConfirm={handleConfirmRemove}
+        title="Remove from Week"
+        message={`Remove ${removingEntry ? getMealName(removingEntry.mealId) : ''} from this week's plan?`}
+        confirmText="Remove"
+        confirmVariant="danger"
       />
     </div>
   );
