@@ -4,20 +4,34 @@ import { useMeals } from '../hooks/useMeals';
 import { MealCard } from '../components/meals/MealCard';
 import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import { AddMealModal } from '../components/meals/AddMealModal';
+import { EditMealModal } from '../components/meals/EditMealModal';
 import type { Meal } from '../types';
 
 function MealLibrary() {
   const { householdCode } = useHousehold();
-  const { meals, loading, addMeal } = useMeals(householdCode);
+  const { meals, loading, addMeal, updateMeal } = useMeals(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleEdit = (meal: Meal) => {
-    // Will be wired up in 04-03
-    console.log('Edit meal:', meal.id);
+    setEditingMeal(meal);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingMeal(null);
+  };
+
+  const handleUpdateMeal = async (updates: Omit<Meal, 'id' | 'householdCode'>) => {
+    if (editingMeal) {
+      await updateMeal(editingMeal.id, updates);
+    }
   };
 
   const handleDelete = (meal: Meal) => {
-    // Will be wired up in 04-03
+    // Will wire up delete in Task 2
     console.log('Delete meal:', meal.id);
   };
 
@@ -76,6 +90,15 @@ function MealLibrary() {
         onClose={handleCloseModal}
         onSave={handleSaveMeal}
       />
+
+      {editingMeal && (
+        <EditMealModal
+          isOpen={isEditModalOpen}
+          onClose={handleCloseEditModal}
+          meal={editingMeal}
+          onSave={handleUpdateMeal}
+        />
+      )}
     </div>
   );
 }
