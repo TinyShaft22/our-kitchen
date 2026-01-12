@@ -27,6 +27,12 @@ function GroceryListPage() {
     return items.filter((item) => item.store === selectedStore);
   }, [items, selectedStore]);
 
+  // Calculate in-cart progress for filtered items
+  const inCartCount = useMemo(() => {
+    return filteredItems.filter((item) => item.status === 'in-cart').length;
+  }, [filteredItems]);
+  const totalCount = filteredItems.length;
+
   // Group filtered items by category
   const groupedItems = useMemo(() => {
     const groups = new Map<Category, GroceryItem[]>();
@@ -113,6 +119,21 @@ function GroceryListPage() {
               {store.name}
             </button>
           ))}
+        </div>
+      )}
+
+      {/* Shopping progress bar - only when store selected */}
+      {selectedStore !== 'all' && totalCount > 0 && (
+        <div className="mt-4 mb-2">
+          <p className="text-sm text-charcoal/70 mb-1">
+            {inCartCount} of {totalCount} in cart
+          </p>
+          <div className="h-2 bg-charcoal/10 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-sage transition-all duration-300"
+              style={{ width: `${(inCartCount / totalCount) * 100}%` }}
+            />
+          </div>
         </div>
       )}
 
