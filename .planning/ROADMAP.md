@@ -101,7 +101,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 2. Firebase Setup | 2/2 | Complete | 2026-01-11 |
 | 3. Data Layer | 3/3 | Complete | 2026-01-12 |
 | 4. Meal Library | 3/3 | Complete | 2026-01-12 |
-| 5. Weekly Planning | 1/3 | In progress | - |
+| 5. Weekly Planning | 2/3 | In progress | - |
 | 6. Grocery Generation | 0/TBD | Not started | - |
 | 7. Shopping Mode | 0/TBD | Not started | - |
 | 8. Voice & Staples | 0/TBD | Not started | - |
