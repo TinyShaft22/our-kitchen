@@ -50,7 +50,7 @@ None
 **Goal**: Add, edit, delete meals with ingredients; floating + button for quick add
 **Depends on**: Phase 3
 **Research**: Unlikely (CRUD operations, internal patterns)
-**Plans**: TBD
+**Plans**: 3 (04-01: Meal List UI, 04-02: Add Meal Modal, 04-03: Edit/Delete Actions)
 
 ### Phase 5: Weekly Planning
 **Goal**: Select meals from library for the week, simple list (no day assignments)
@@ -100,7 +100,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 1. Foundation | 2/2 | Complete | 2026-01-11 |
 | 2. Firebase Setup | 2/2 | Complete | 2026-01-11 |
 | 3. Data Layer | 3/3 | Complete | 2026-01-12 |
-| 4. Meal Library | 0/TBD | Not started | - |
+| 4. Meal Library | 1/3 | In progress | - |
 | 5. Weekly Planning | 0/TBD | Not started | - |
 | 6. Grocery Generation | 0/TBD | Not started | - |
 | 7. Shopping Mode | 0/TBD | Not started | - |
