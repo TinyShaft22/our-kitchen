@@ -5,14 +5,17 @@ import { MealCard } from '../components/meals/MealCard';
 import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import { AddMealModal } from '../components/meals/AddMealModal';
 import { EditMealModal } from '../components/meals/EditMealModal';
+import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import type { Meal } from '../types';
 
 function MealLibrary() {
   const { householdCode } = useHousehold();
-  const { meals, loading, addMeal, updateMeal } = useMeals(householdCode);
+  const { meals, loading, addMeal, updateMeal, deleteMeal } = useMeals(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [deletingMeal, setDeletingMeal] = useState<Meal | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const handleEdit = (meal: Meal) => {
     setEditingMeal(meal);
@@ -31,8 +34,20 @@ function MealLibrary() {
   };
 
   const handleDelete = (meal: Meal) => {
-    // Will wire up delete in Task 2
-    console.log('Delete meal:', meal.id);
+    setDeletingMeal(meal);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+    setDeletingMeal(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (deletingMeal) {
+      await deleteMeal(deletingMeal.id);
+      handleCloseDeleteDialog();
+    }
   };
 
   const handleAddClick = () => {
@@ -99,6 +114,16 @@ function MealLibrary() {
           onSave={handleUpdateMeal}
         />
       )}
+
+      <ConfirmDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+        title="Delete Meal"
+        message={`Are you sure you want to delete "${deletingMeal?.name}"? This cannot be undone.`}
+        confirmText="Delete"
+        confirmVariant="danger"
+      />
     </div>
   );
 }
