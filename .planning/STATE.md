@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** Phase 5 — Weekly Planning
+**Current focus:** Phase 6 — Grocery Generation
 
 ## Current Position
 
-Phase: 5 of 10 (Weekly Planning)
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-01-12 — Completed 05-03-PLAN.md (Edit/Remove Actions)
+Phase: 6 of 10 (Grocery Generation)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-01-12 — Completed 06-01-PLAN.md (Core Generation Logic)
 
-Progress: ███████████████░ 55%
+Progress: ████████████████░ 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
-- Average duration: 4.4 min
-- Total execution time: 0.67 hours
+- Total plans completed: 14
+- Average duration: 4 min
+- Total execution time: 0.93 hours
 
 **By Phase:**
 
@@ -30,11 +30,13 @@ Progress: ███████████████░ 55%
 | 1 | 2 | 10 min | 5 min |
 | 2 | 2 | 7 min | 3.5 min |
 | 3 | 3 | 15 min | 5 min |
-| 4 | 2 | 8 min | 4 min |
+| 4 | 3 | 12 min | 4 min |
+| 5 | 3 | 10 min | 3.3 min |
+| 6 | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-02 (5 min), 03-03 (5 min), 04-01 (4 min), 04-02 (4 min)
-- Trend: Stable
+- Last 5 plans: 04-03 (4 min), 05-01 (3 min), 05-02 (3 min), 05-03 (4 min), 06-01 (2 min)
+- Trend: Improving
 
 ## Accumulated Context
 
@@ -61,6 +63,8 @@ Recent decisions affecting current work:
 | 04-01 | Components in feature subdirectories | meals/, ui/ under src/components/ for organization |
 | 04-02 | Bottom-sheet modal pattern | Mobile-friendly touch interaction for data entry |
 | 04-02 | Dynamic ingredient list | Add/remove buttons vs fixed input count |
+| 06-01 | GroceryItemInput intermediate type | Excludes id/householdCode/status/source (added by hook) |
+| 06-01 | Case-insensitive duplicate matching | Lowercase name + unit match, first occurrence casing kept |
 
 ### Deferred Issues
 
@@ -76,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-12T04:44:25Z
-Stopped at: Completed Phase 5 (05-03-PLAN.md)
+Last session: 2026-01-12T04:53:02Z
+Stopped at: Completed 06-01-PLAN.md (Core Generation Logic)
 Resume file: None

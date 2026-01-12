@@ -62,7 +62,7 @@ None
 **Goal**: Auto-generate grocery list from weekly meals, combine quantities, organize by store/category
 **Depends on**: Phase 5
 **Research**: Unlikely (data transformation logic)
-**Plans**: TBD
+**Plans**: 2 (06-01: Core Generation Logic, 06-02: Generate Button UI)
 
 ### Phase 7: Shopping Mode
 **Goal**: Filter by store, track items in cart, complete shopping trip
@@ -102,7 +102,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 3. Data Layer | 3/3 | Complete | 2026-01-12 |
 | 4. Meal Library | 3/3 | Complete | 2026-01-12 |
 | 5. Weekly Planning | 3/3 | Complete | 2026-01-12 |
-| 6. Grocery Generation | 0/TBD | Not started | - |
+| 6. Grocery Generation | 1/2 | In progress | - |
 | 7. Shopping Mode | 0/TBD | Not started | - |
 | 8. Voice & Staples | 0/TBD | Not started | - |
 | 9. Baking Corner | 0/TBD | Not started | - |
