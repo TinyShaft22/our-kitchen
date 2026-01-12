@@ -6,15 +6,23 @@ type Tab = 'create' | 'join';
 export default function JoinHousehold() {
   const [activeTab, setActiveTab] = useState<Tab>('create');
   const [code, setCode] = useState('');
+  const [customCode, setCustomCode] = useState('');
   const { loading, error, createHousehold, joinHousehold } = useHousehold();
 
   const handleCreate = async () => {
     try {
-      await createHousehold();
+      // Use custom code if provided, otherwise generate random
+      await createHousehold(customCode || undefined);
       // Success - householdCode will update, App will re-render
     } catch {
       // Error is already set in hook
     }
+  };
+
+  const handleCustomCodeChange = (value: string) => {
+    // Only allow digits, max 4 characters
+    const digits = value.replace(/\D/g, '').slice(0, 4);
+    setCustomCode(digits);
   };
 
   const handleJoin = async () => {
@@ -67,12 +75,27 @@ export default function JoinHousehold() {
         {/* Content */}
         {activeTab === 'create' ? (
           <div className="text-center">
-            <p className="text-charcoal mb-6">
-              Start a new household and share the code with your family.
+            <p className="text-charcoal mb-4">
+              Choose your own 4-digit code or leave blank for random.
+            </p>
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={4}
+              value={customCode}
+              onChange={(e) => handleCustomCodeChange(e.target.value)}
+              placeholder="1234"
+              className="w-32 h-14 text-center text-2xl tracking-widest border-2 border-gray-200 rounded-soft focus:border-terracotta focus:outline-none mx-auto block mb-4"
+            />
+            <p className="text-sm text-warm-gray mb-4">
+              {customCode.length === 4
+                ? `Your code: ${customCode}`
+                : 'Leave empty for random code'}
             </p>
             <button
               onClick={handleCreate}
-              disabled={loading}
+              disabled={loading || (customCode.length > 0 && customCode.length < 4)}
               className="w-full h-11 bg-terracotta text-white rounded-soft font-medium hover:bg-terracotta/90 disabled:opacity-50 transition-colors"
             >
               {loading ? 'Creating...' : 'Create Household'}

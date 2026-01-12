@@ -8,7 +8,7 @@ interface UseHouseholdReturn {
   householdCode: string | null;
   loading: boolean;
   error: string | null;
-  createHousehold: () => Promise<string>;
+  createHousehold: (customCode?: string) => Promise<string>;
   joinHousehold: (code: string) => Promise<boolean>;
   leaveHousehold: () => void;
 }
@@ -30,11 +30,37 @@ export function useHousehold(): UseHouseholdReturn {
     return String(Math.floor(1000 + Math.random() * 9000));
   };
 
-  const createHousehold = useCallback(async (): Promise<string> => {
+  const createHousehold = useCallback(async (customCode?: string): Promise<string> => {
     setError(null);
     setLoading(true);
 
     try {
+      // If custom code provided, validate and use it
+      if (customCode) {
+        if (!/^\d{4}$/.test(customCode)) {
+          throw new Error('Code must be exactly 4 digits');
+        }
+
+        const docRef = doc(db, 'households', customCode);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          throw new Error('This code is already taken. Try a different one.');
+        }
+
+        // Create household with custom code
+        await setDoc(docRef, {
+          members: [],
+          createdAt: serverTimestamp(),
+        });
+
+        localStorage.setItem(STORAGE_KEY, customCode);
+        setHouseholdCode(customCode);
+        setLoading(false);
+        return customCode;
+      }
+
+      // Otherwise, generate a random code
       let code: string;
       let attempts = 0;
       const maxAttempts = 10;
