@@ -8,20 +8,24 @@ import { generateGroceryItems } from '../utils/generateGroceryItems';
 import { GroceryItemCard } from '../components/grocery/GroceryItemCard';
 import { StapleCard } from '../components/grocery/StapleCard';
 import { AddStapleModal } from '../components/grocery/AddStapleModal';
+import { EditStapleModal } from '../components/grocery/EditStapleModal';
+import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { CATEGORIES, STORES } from '../types';
-import type { GroceryItem, Category, Store } from '../types';
+import type { GroceryItem, Category, Store, Staple } from '../types';
 
 function GroceryListPage() {
   const { householdCode } = useHousehold();
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
   const { items, loading: groceryLoading, generateFromWeeklyPlan, updateStatus, completeTrip } = useGroceryList(householdCode);
-  const { staples, enabledStaples, loading: staplesLoading, addStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
+  const { staples, enabledStaples, loading: staplesLoading, addStaple, updateStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
   const [generating, setGenerating] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [selectedStore, setSelectedStore] = useState<Store | 'all'>('all');
   const [staplesExpanded, setStaplesExpanded] = useState(false);
   const [showAddStaple, setShowAddStaple] = useState(false);
+  const [editingStaple, setEditingStaple] = useState<Staple | null>(null);
+  const [deleteConfirmStaple, setDeleteConfirmStaple] = useState<Staple | null>(null);
 
   // Combined loading state
   const loading = mealsLoading || weekLoading || groceryLoading || staplesLoading;
@@ -213,11 +217,8 @@ function GroceryListPage() {
                   key={staple.id}
                   staple={staple}
                   onToggle={(enabled) => toggleEnabled(staple.id, enabled)}
-                  onEdit={() => {
-                    // Edit functionality to be added in future phase
-                    console.log('Edit staple:', staple.id);
-                  }}
-                  onDelete={() => deleteStaple(staple.id)}
+                  onEdit={() => setEditingStaple(staple)}
+                  onDelete={() => setDeleteConfirmStaple(staple)}
                 />
               ))
             )}
@@ -291,6 +292,35 @@ function GroceryListPage() {
         onSave={async (staple) => {
           await addStaple(staple);
         }}
+      />
+
+      {/* Edit Staple Modal */}
+      {editingStaple && (
+        <EditStapleModal
+          isOpen={!!editingStaple}
+          onClose={() => setEditingStaple(null)}
+          staple={editingStaple}
+          onSave={async (updates) => {
+            await updateStaple(editingStaple.id, updates);
+            setEditingStaple(null);
+          }}
+        />
+      )}
+
+      {/* Delete Staple Confirmation */}
+      <ConfirmDialog
+        isOpen={!!deleteConfirmStaple}
+        onClose={() => setDeleteConfirmStaple(null)}
+        onConfirm={async () => {
+          if (deleteConfirmStaple) {
+            await deleteStaple(deleteConfirmStaple.id);
+            setDeleteConfirmStaple(null);
+          }
+        }}
+        title="Delete Staple"
+        message={`Are you sure you want to delete "${deleteConfirmStaple?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        confirmVariant="danger"
       />
     </div>
   );
