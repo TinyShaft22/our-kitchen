@@ -5,6 +5,7 @@ import {
   persistentMultipleTabManager,
   type Firestore,
 } from 'firebase/firestore';
+import { getFunctions, type Functions } from 'firebase/functions';
 
 // Firebase configuration from environment variables
 const firebaseConfig = {
@@ -37,4 +38,7 @@ try {
   db = getFirestore(app);
 }
 
-export { app, db };
+// Initialize Cloud Functions
+const functions: Functions = getFunctions(app);
+
+export { app, db, functions };
