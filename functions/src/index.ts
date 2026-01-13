@@ -37,7 +37,11 @@ interface ParseTranscriptResponse {
 export const parseGroceryTranscript = onCall<ParseTranscriptRequest>(
   {
     secrets: [openRouterKey],
-    cors: true,
+    cors: [
+      'https://tinyshaft.netlify.app',
+      'http://localhost:5173',
+      'http://localhost:5174',
+    ],
     maxInstances: 10,
     invoker: 'public', // Allow unauthenticated invocations from web app
   },
