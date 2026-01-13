@@ -17,7 +17,7 @@ import type { GroceryItem, Category, Store, Staple } from '../types';
 function GroceryListPage() {
   const { householdCode } = useHousehold();
   const { meals, loading: mealsLoading } = useMeals(householdCode);
-  const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
+  const { currentWeek, loading: weekLoading, toggleAlreadyHave } = useWeeklyPlan(householdCode);
   const { items, loading: groceryLoading, addItem, generateFromWeeklyPlan, updateStatus, updateItem, deleteItem, completeTrip } = useGroceryList(householdCode);
   const { staples, enabledStaples, loading: staplesLoading, addStaple, updateStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
   const [completing, setCompleting] = useState(false);
@@ -26,6 +26,7 @@ function GroceryListPage() {
   const initialLoadComplete = useRef(false);
   const [selectedStore, setSelectedStore] = useState<Store | 'all'>('all');
   const [staplesExpanded, setStaplesExpanded] = useState(false);
+  const [alreadyHaveExpanded, setAlreadyHaveExpanded] = useState(false);
   const [showAddStaple, setShowAddStaple] = useState(false);
   const [editingStaple, setEditingStaple] = useState<Staple | null>(null);
   const [deleteConfirmStaple, setDeleteConfirmStaple] = useState<Staple | null>(null);
@@ -243,11 +244,66 @@ function GroceryListPage() {
         )}
       </div>
 
+      {/* Already Have section - collapsible */}
+      {(currentWeek?.alreadyHave?.length ?? 0) > 0 && (
+        <div className="mt-4">
+          <button
+            onClick={() => setAlreadyHaveExpanded(!alreadyHaveExpanded)}
+            className="w-full flex items-center justify-between py-2"
+          >
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-semibold text-charcoal">Already Have</h2>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-charcoal/10 text-charcoal/70">
+                {currentWeek?.alreadyHave?.length ?? 0}
+              </span>
+            </div>
+            <span
+              className={`text-charcoal/50 transition-transform ${
+                alreadyHaveExpanded ? 'rotate-180' : ''
+              }`}
+            >
+              ▼
+            </span>
+          </button>
+
+          {/* Collapsed summary */}
+          {!alreadyHaveExpanded && (
+            <p className="text-sm text-charcoal/60 -mt-1">
+              {currentWeek?.alreadyHave?.length ?? 0} item{(currentWeek?.alreadyHave?.length ?? 0) !== 1 ? 's' : ''} excluded this week
+            </p>
+          )}
+
+          {/* Expanded already have list */}
+          {alreadyHaveExpanded && (
+            <div className="space-y-2 mt-2">
+              {currentWeek?.alreadyHave?.map((ingredientName) => (
+                <div
+                  key={ingredientName}
+                  className="flex items-center justify-between bg-white rounded-soft shadow-soft p-3"
+                >
+                  <span className="text-charcoal capitalize">{ingredientName}</span>
+                  <button
+                    onClick={() => toggleAlreadyHave(ingredientName)}
+                    className="flex items-center gap-1 text-sm text-terracotta hover:text-terracotta/80 transition-colors"
+                    aria-label={`Re-add ${ingredientName} to grocery list`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                      <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                    </svg>
+                    Re-add
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Empty state */}
       {items.length === 0 && (
         <div className="mt-8 text-center">
           <p className="text-warm-gray">No items yet.</p>
-          <p className="text-warm-gray mt-1">Generate from your weekly plan!</p>
+          <p className="text-warm-gray mt-1">Add meals to your weekly plan to auto-generate!</p>
         </div>
       )}
 
@@ -269,6 +325,9 @@ function GroceryListPage() {
                     }
                     onDelete={() => deleteItem(item.id)}
                     onStoreChange={(store) => updateItem(item.id, { store })}
+                    onToggleAlreadyHave={
+                      item.source === 'meal' ? () => toggleAlreadyHave(item.name) : undefined
+                    }
                   />
                 ))}
               </div>
