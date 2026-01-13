@@ -67,6 +67,7 @@ export interface WeeklyMeal {
   weekId: string;
   meals: WeeklyMealEntry[];
   householdCode: string;
+  alreadyHave?: string[]; // Ingredient names (lowercase) to exclude from grocery generation
 }
 
 // GroceryItem status type
