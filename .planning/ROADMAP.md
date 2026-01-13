@@ -147,6 +147,6 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 9. Baking Corner | v1.0 | 3/3 | Complete | 2026-01-13 |
 | 10. PWA & Polish | v1.0 | 2/3 | In progress | - |
 | 11. Simplify Ingredients | v1.1 | 1/1 | Complete | 2026-01-13 |
-| 12. Auto-Populate Grocery | v1.1 | 0/2 | Not started | - |
+| 12. Auto-Populate Grocery | v1.1 | 1/2 | In progress | - |
 | 13. Recipe Instructions | v1.1 | 0/? | Not started | - |
 | 14. Meal Images | v1.1 | 0/? | Not started | - |

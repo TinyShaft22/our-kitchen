@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-11)
 
 ## Current Position
 
-Phase: 11 of 14 (Simplify Ingredients)
-Plan: 1 of 1 in current phase
-Status: Phase complete
-Last activity: 2026-01-13 — Completed 11-01-PLAN.md
+Phase: 12 of 14 (Auto-Populate Grocery)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-01-13 — Completed 12-01-PLAN.md
 
-Progress: ██████████████████████░░ 92%
+Progress: ███████████████████████░ 96%
 
 ## Performance Metrics
 
@@ -71,17 +71,14 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-13
-Stopped at: Completed Phase 11 (Simplify Ingredients)
+Stopped at: Completed 12-01-PLAN.md (data model for alreadyHave)
 Resume file: None
 
 ## Next Steps
 
-**Completed:** Phase 11: Simplify Ingredients ✅
-- Plan 11-01: ✅ Simplified Ingredient interface, IngredientInput, grocery generation
-
-**Next:** Phase 12: Auto-Populate Grocery
-- Real-time sync from weekly meals to grocery list
-- "Already have" toggle per ingredient per week
+**Current:** Phase 12: Auto-Populate Grocery
+- Plan 12-01: ✅ alreadyHave data model, hook method, exclusion logic
+- Plan 12-02: ⏳ Auto-sync UI integration
 
 **Remaining v1.1 phases:**
 - Phase 13: Recipe Instructions
