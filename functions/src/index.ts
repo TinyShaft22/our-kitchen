@@ -39,6 +39,7 @@ export const parseGroceryTranscript = onCall<ParseTranscriptRequest>(
     secrets: [openRouterKey],
     cors: true,
     maxInstances: 10,
+    invoker: 'public', // Allow unauthenticated invocations from web app
   },
   async (request): Promise<ParseTranscriptResponse> => {
     const { transcript } = request.data;
