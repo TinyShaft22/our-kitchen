@@ -11,8 +11,6 @@ interface AddMealModalProps {
 // Default ingredient values for new ingredients
 const createDefaultIngredient = (): Ingredient => ({
   name: '',
-  qty: 1,
-  unit: '',
   category: 'produce',
   defaultStore: 'safeway',
 });
