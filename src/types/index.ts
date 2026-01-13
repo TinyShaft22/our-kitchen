@@ -1,7 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 
 // Store type - the stores available in the app
-export type Store = 'costco' | 'trader-joes' | 'safeway' | 'bel-air';
+export type Store = 'costco' | 'trader-joes' | 'safeway' | 'bel-air' | 'walmart' | 'winco';
 
 // Category type - grocery item categories
 export type Category =
@@ -21,6 +21,8 @@ export const STORES: { id: Store; name: string }[] = [
   { id: 'trader-joes', name: "Trader Joe's" },
   { id: 'safeway', name: 'Safeway' },
   { id: 'bel-air', name: 'Bel Air' },
+  { id: 'walmart', name: 'Walmart' },
+  { id: 'winco', name: 'WinCo' },
 ];
 
 // Category options for UI display
