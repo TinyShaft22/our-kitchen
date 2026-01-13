@@ -4,6 +4,8 @@ import {
   onSnapshot,
   setDoc,
   updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import type { WeeklyMeal, WeeklyMealEntry } from '../types';
@@ -16,6 +18,7 @@ interface UseWeeklyPlanReturn {
   addMealToWeek: (mealId: string, servings: number) => Promise<void>;
   removeMealFromWeek: (mealId: string) => Promise<void>;
   updateServings: (mealId: string, servings: number) => Promise<void>;
+  toggleAlreadyHave: (ingredientName: string) => Promise<void>;
 }
 
 /**
@@ -198,6 +201,49 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
     [householdCode, weekId, currentWeek]
   );
 
+  const toggleAlreadyHave = useCallback(
+    async (ingredientName: string): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        // Normalize to lowercase for consistent matching
+        const normalizedName = ingredientName.toLowerCase().trim();
+
+        if (!currentWeek) {
+          // Create the document with the alreadyHave array
+          await setDoc(weekRef, {
+            weekId,
+            householdCode,
+            meals: [],
+            alreadyHave: [normalizedName],
+          });
+        } else {
+          // Check if ingredient is already in alreadyHave
+          const alreadyHaveList = currentWeek.alreadyHave ?? [];
+          const isAlreadyMarked = alreadyHaveList.includes(normalizedName);
+
+          if (isAlreadyMarked) {
+            // Remove from alreadyHave
+            await updateDoc(weekRef, { alreadyHave: arrayRemove(normalizedName) });
+          } else {
+            // Add to alreadyHave
+            await updateDoc(weekRef, { alreadyHave: arrayUnion(normalizedName) });
+          }
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to toggle already have';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
   return {
     currentWeek,
     loading,
@@ -206,5 +252,6 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
     addMealToWeek,
     removeMealFromWeek,
     updateServings,
+    toggleAlreadyHave,
   };
 }
