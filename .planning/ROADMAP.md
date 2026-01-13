@@ -20,7 +20,7 @@ None
 - [x] **Phase 4: Meal Library** - CRUD for meals with ingredients, quick add floating button
 - [x] **Phase 5: Weekly Planning** - Select meals for the week from library
 - [x] **Phase 6: Grocery Generation** - Auto-generate list from weekly meals, quantity combining
-- [ ] **Phase 7: Shopping Mode** - Store filtering, in-cart tracking, trip completion
+- [x] **Phase 7: Shopping Mode** - Store filtering, in-cart tracking, trip completion
 - [ ] **Phase 8: Voice & Staples** - Web Speech API input, always-grab staples section
 - [ ] **Phase 9: Baking Corner** - Bella's inventory tracking, restock to grocery list
 - [ ] **Phase 10: PWA & Polish** - Service worker, offline support, warm UI theme
@@ -103,7 +103,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 4. Meal Library | 3/3 | Complete | 2026-01-12 |
 | 5. Weekly Planning | 3/3 | Complete | 2026-01-12 |
 | 6. Grocery Generation | 2/2 | Complete | 2026-01-12 |
-| 7. Shopping Mode | 1/2 | In progress | - |
+| 7. Shopping Mode | 2/2 | Complete | 2026-01-12 |
 | 8. Voice & Staples | 0/TBD | Not started | - |
 | 9. Baking Corner | 0/TBD | Not started | - |
 | 10. PWA & Polish | 0/TBD | Not started | - |
