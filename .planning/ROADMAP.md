@@ -4,6 +4,11 @@
 
 Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Start with project foundation and Firebase auth, build up the meal library and planning features, then add grocery list generation with shopping mode, and finish with voice input, baking corner, and PWA polish.
 
+## Milestones
+
+- 🚧 **v1.0 MVP** - Phases 1-10 (in progress)
+- 📋 **v1.1 Meal & Grocery Refactor** - Phases 11-14 (planned)
+
 ## Domain Expertise
 
 None
@@ -22,8 +27,12 @@ None
 - [x] **Phase 6: Grocery Generation** - Auto-generate list from weekly meals, quantity combining
 - [x] **Phase 7: Shopping Mode** - Store filtering, in-cart tracking, trip completion
 - [x] **Phase 8: Voice & Staples** - Web Speech API input, always-grab staples section
-- [ ] **Phase 9: Baking Corner** - Bella's inventory tracking, restock to grocery list
+- [x] **Phase 9: Baking Corner** - Bella's inventory tracking, restock to grocery list
 - [ ] **Phase 10: PWA & Polish** - Service worker, offline support, warm UI theme
+- [ ] **Phase 11: Simplify Ingredients** - Remove qty/unit, streamline to name/category/store
+- [ ] **Phase 12: Auto-Populate Grocery** - Real-time sync with "already have" toggle
+- [ ] **Phase 13: Recipe Instructions** - Markdown notes for cooking instructions
+- [ ] **Phase 14: Meal Images** - Firebase Storage for meal photos
 
 ## Phase Details
 
@@ -89,20 +98,55 @@ None
 **Research**: Unlikely (standard Vite PWA patterns, theme already applied)
 **Plans**: 3 (10-01: PWA Setup, 10-02: Icons & iOS, 10-03: Final Polish)
 
+---
+
+### 📋 v1.1 Meal & Grocery Refactor (Planned)
+
+**Milestone Goal:** Simplify ingredient tracking, add real-time grocery sync with "already have" toggle, and enhance meals with recipes and images.
+
+### Phase 11: Simplify Ingredients
+**Goal**: Remove qty/unit from ingredients, simplify to name/category/store only
+**Depends on**: Phase 10
+**Research**: Unlikely (internal refactor, existing patterns)
+**Plans**: TBD
+
+### Phase 12: Auto-Populate Grocery
+**Goal**: Real-time sync from weekly meals to grocery list with "already have" checkboxes per ingredient per week
+**Depends on**: Phase 11
+**Research**: Unlikely (internal logic, Firestore patterns exist)
+**Plans**: TBD
+
+### Phase 13: Recipe Instructions
+**Goal**: Add markdown notes field to meals for cooking instructions, display in expandable section on Meals page
+**Depends on**: Phase 12
+**Research**: Unlikely (simple text field, markdown rendering)
+**Plans**: TBD
+
+### Phase 14: Meal Images
+**Goal**: Firebase Storage integration for uploading/capturing meal photos, display as thumbnail and in detail view
+**Depends on**: Phase 13
+**Research**: Likely (Firebase Storage setup, image upload handling)
+**Research topics**: Firebase Storage setup, image compression, camera capture on mobile
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10
+Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 → 14
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Foundation | 2/2 | Complete | 2026-01-11 |
-| 2. Firebase Setup | 2/2 | Complete | 2026-01-11 |
-| 3. Data Layer | 3/3 | Complete | 2026-01-12 |
-| 4. Meal Library | 3/3 | Complete | 2026-01-12 |
-| 5. Weekly Planning | 3/3 | Complete | 2026-01-12 |
-| 6. Grocery Generation | 2/2 | Complete | 2026-01-12 |
-| 7. Shopping Mode | 2/2 | Complete | 2026-01-12 |
-| 8. Voice & Staples | 3/3 | Complete | 2026-01-13 |
-| 9. Baking Corner | 3/3 | Complete | 2026-01-13 |
-| 10. PWA & Polish | 2/3 | In progress | - |
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 1. Foundation | v1.0 | 2/2 | Complete | 2026-01-11 |
+| 2. Firebase Setup | v1.0 | 2/2 | Complete | 2026-01-11 |
+| 3. Data Layer | v1.0 | 3/3 | Complete | 2026-01-12 |
+| 4. Meal Library | v1.0 | 3/3 | Complete | 2026-01-12 |
+| 5. Weekly Planning | v1.0 | 3/3 | Complete | 2026-01-12 |
+| 6. Grocery Generation | v1.0 | 2/2 | Complete | 2026-01-12 |
+| 7. Shopping Mode | v1.0 | 2/2 | Complete | 2026-01-12 |
+| 8. Voice & Staples | v1.0 | 3/3 | Complete | 2026-01-13 |
+| 9. Baking Corner | v1.0 | 3/3 | Complete | 2026-01-13 |
+| 10. PWA & Polish | v1.0 | 2/3 | In progress | - |
+| 11. Simplify Ingredients | v1.1 | 0/? | Not started | - |
+| 12. Auto-Populate Grocery | v1.1 | 0/? | Not started | - |
+| 13. Recipe Instructions | v1.1 | 0/? | Not started | - |
+| 14. Meal Images | v1.1 | 0/? | Not started | - |

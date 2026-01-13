@@ -76,7 +76,17 @@ Resume file: None
 
 ## Next Steps
 
-Phase 10: PWA & Polish
-- Plan 10-01: Install vite-plugin-pwa, configure manifest & service worker
-- Plan 10-02: Create app icons for all platforms, iOS meta tags
+**Current:** Phase 10: PWA & Polish
+- Plan 10-01: ✅ Install vite-plugin-pwa, configure manifest & service worker
+- Plan 10-02: ✅ Create app icons for all platforms, iOS meta tags
 - Plan 10-03: Final polish, testing, and completion
+
+**After v1.0:** Milestone v1.1 Meal & Grocery Refactor (Phases 11-14)
+- Phase 11: Simplify Ingredients
+- Phase 12: Auto-Populate Grocery
+- Phase 13: Recipe Instructions
+- Phase 14: Meal Images
+
+## Roadmap Evolution
+
+- 2026-01-13: Milestone v1.1 created — Meal & Grocery Refactor, 4 phases (11-14)
