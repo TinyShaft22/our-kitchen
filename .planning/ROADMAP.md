@@ -30,7 +30,7 @@ None
 - [x] **Phase 9: Baking Corner** - Bella's inventory tracking, restock to grocery list
 - [ ] **Phase 10: PWA & Polish** - Service worker, offline support, warm UI theme
 - [x] **Phase 11: Simplify Ingredients** - Remove qty/unit, streamline to name/category/store
-- [ ] **Phase 12: Auto-Populate Grocery** - Real-time sync with "already have" toggle
+- [x] **Phase 12: Auto-Populate Grocery** - Real-time sync with "already have" toggle
 - [ ] **Phase 13: Recipe Instructions** - Markdown notes for cooking instructions
 - [ ] **Phase 14: Meal Images** - Firebase Storage for meal photos
 
@@ -147,6 +147,6 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 9. Baking Corner | v1.0 | 3/3 | Complete | 2026-01-13 |
 | 10. PWA & Polish | v1.0 | 2/3 | In progress | - |
 | 11. Simplify Ingredients | v1.1 | 1/1 | Complete | 2026-01-13 |
-| 12. Auto-Populate Grocery | v1.1 | 1/2 | In progress | - |
+| 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
 | 13. Recipe Instructions | v1.1 | 0/? | Not started | - |
 | 14. Meal Images | v1.1 | 0/? | Not started | - |
