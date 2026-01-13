@@ -52,6 +52,7 @@ export interface Meal {
   servings: number;
   ingredients: Ingredient[];
   isBaking: boolean;
+  instructions?: string;
   householdCode: string;
 }
 

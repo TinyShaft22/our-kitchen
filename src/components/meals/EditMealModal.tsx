@@ -20,6 +20,7 @@ export function EditMealModal({ isOpen, onClose, meal, onSave }: EditMealModalPr
   const [name, setName] = useState(meal.name);
   const [servings, setServings] = useState(meal.servings);
   const [isBaking, setIsBaking] = useState(meal.isBaking);
+  const [instructions, setInstructions] = useState(meal.instructions || '');
   const [ingredients, setIngredients] = useState<Ingredient[]>(meal.ingredients);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +30,7 @@ export function EditMealModal({ isOpen, onClose, meal, onSave }: EditMealModalPr
     setName(meal.name);
     setServings(meal.servings);
     setIsBaking(meal.isBaking);
+    setInstructions(meal.instructions || '');
     setIngredients(meal.ingredients);
     setError(null);
   }, [meal]);
@@ -74,6 +76,7 @@ export function EditMealModal({ isOpen, onClose, meal, onSave }: EditMealModalPr
         name: name.trim(),
         servings,
         isBaking,
+        instructions: instructions.trim() || undefined,
         ingredients: validIngredients,
       });
       handleClose();
@@ -189,6 +192,24 @@ export function EditMealModal({ isOpen, onClose, meal, onSave }: EditMealModalPr
                 }`}
               />
             </button>
+          </div>
+
+          {/* Instructions */}
+          <div>
+            <label
+              htmlFor="edit-instructions"
+              className="block text-sm font-medium text-charcoal mb-1"
+            >
+              Instructions (optional)
+            </label>
+            <textarea
+              id="edit-instructions"
+              value={instructions}
+              onChange={(e) => setInstructions(e.target.value)}
+              placeholder="Add cooking steps, tips, or notes..."
+              rows={4}
+              className="w-full px-3 py-2 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta resize-y"
+            />
           </div>
 
           {/* Ingredients Section */}

@@ -19,6 +19,7 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
   const [name, setName] = useState('');
   const [servings, setServings] = useState(4);
   const [isBaking, setIsBaking] = useState(false);
+  const [instructions, setInstructions] = useState('');
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,6 +28,7 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
     setName('');
     setServings(4);
     setIsBaking(false);
+    setInstructions('');
     setIngredients([]);
     setError(null);
   };
@@ -72,6 +74,7 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
         name: name.trim(),
         servings,
         isBaking,
+        instructions: instructions.trim() || undefined,
         ingredients: validIngredients,
       });
       handleClose();
@@ -187,6 +190,24 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
                 }`}
               />
             </button>
+          </div>
+
+          {/* Instructions */}
+          <div>
+            <label
+              htmlFor="instructions"
+              className="block text-sm font-medium text-charcoal mb-1"
+            >
+              Instructions (optional)
+            </label>
+            <textarea
+              id="instructions"
+              value={instructions}
+              onChange={(e) => setInstructions(e.target.value)}
+              placeholder="Add cooking steps, tips, or notes..."
+              rows={4}
+              className="w-full px-3 py-2 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta resize-y"
+            />
           </div>
 
           {/* Ingredients Section */}
