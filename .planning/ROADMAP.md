@@ -114,7 +114,7 @@ None
 **Goal**: Real-time sync from weekly meals to grocery list with "already have" checkboxes per ingredient per week
 **Depends on**: Phase 11
 **Research**: Unlikely (internal logic, Firestore patterns exist)
-**Plans**: TBD
+**Plans**: 2 (12-01: Data Model & Hook, 12-02: Auto-Sync & UI)
 
 ### Phase 13: Recipe Instructions
 **Goal**: Add markdown notes field to meals for cooking instructions, display in expandable section on Meals page
@@ -147,6 +147,6 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 9. Baking Corner | v1.0 | 3/3 | Complete | 2026-01-13 |
 | 10. PWA & Polish | v1.0 | 2/3 | In progress | - |
 | 11. Simplify Ingredients | v1.1 | 1/1 | Complete | 2026-01-13 |
-| 12. Auto-Populate Grocery | v1.1 | 0/? | Not started | - |
+| 12. Auto-Populate Grocery | v1.1 | 0/2 | Not started | - |
 | 13. Recipe Instructions | v1.1 | 0/? | Not started | - |
 | 14. Meal Images | v1.1 | 0/? | Not started | - |
