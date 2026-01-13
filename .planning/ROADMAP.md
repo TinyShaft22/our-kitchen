@@ -75,7 +75,7 @@ None
 **Depends on**: Phase 4
 **Research**: Likely (Web Speech API)
 **Research topics**: Web Speech API browser support, mobile Safari implementation quirks
-**Plans**: TBD
+**Plans**: 3 (08-01: Staples UI, 08-02: Voice Input, 08-03: Voice-to-Staple Integration)
 
 ### Phase 9: Baking Corner
 **Goal**: Bella's baking inventory with quantities, restock items to grocery list
@@ -104,6 +104,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 5. Weekly Planning | 3/3 | Complete | 2026-01-12 |
 | 6. Grocery Generation | 2/2 | Complete | 2026-01-12 |
 | 7. Shopping Mode | 2/2 | Complete | 2026-01-12 |
-| 8. Voice & Staples | 0/TBD | Not started | - |
+| 8. Voice & Staples | 1/3 | In progress | - |
 | 9. Baking Corner | 0/TBD | Not started | - |
 | 10. PWA & Polish | 0/TBD | Not started | - |
