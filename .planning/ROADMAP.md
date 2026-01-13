@@ -104,6 +104,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 5. Weekly Planning | 3/3 | Complete | 2026-01-12 |
 | 6. Grocery Generation | 2/2 | Complete | 2026-01-12 |
 | 7. Shopping Mode | 2/2 | Complete | 2026-01-12 |
-| 8. Voice & Staples | 1/3 | In progress | - |
+| 8. Voice & Staples | 2/3 | In progress | - |
 | 9. Baking Corner | 0/TBD | Not started | - |
 | 10. PWA & Polish | 0/TBD | Not started | - |
