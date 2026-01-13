@@ -18,15 +18,21 @@ export interface GroceryItemInput {
  * Transforms weekly planned meals into a combined grocery list by:
  * 1. Collecting unique ingredients by name (case-insensitive)
  * 2. Each ingredient becomes qty=1, unit='item'
+ * 3. Excluding ingredients in the alreadyHave list
  *
  * @param meals - Array of available meals with ingredients
  * @param weeklyEntries - Array of weekly plan entries with mealId and servings
+ * @param alreadyHave - Optional array of ingredient names (lowercase) to exclude
  * @returns Array of grocery item inputs ready for database insertion
  */
 export function generateGroceryItems(
   meals: Meal[],
-  weeklyEntries: WeeklyMealEntry[]
+  weeklyEntries: WeeklyMealEntry[],
+  alreadyHave: string[] = []
 ): GroceryItemInput[] {
+  // Create a Set for O(1) lookup of already-have ingredients
+  const alreadyHaveSet = new Set(alreadyHave.map((name) => name.toLowerCase().trim()));
+
   // Map to track unique ingredients: key is lowercased name
   const uniqueMap = new Map<string, GroceryItemInput>();
 
@@ -53,6 +59,11 @@ export function generateGroceryItems(
 
       // Create key for deduplication (case-insensitive name only)
       const key = ingredient.name.toLowerCase().trim();
+
+      // Skip ingredients that user already has
+      if (alreadyHaveSet.has(key)) {
+        continue;
+      }
 
       // Only add if not already present (first occurrence wins)
       if (!uniqueMap.has(key)) {
