@@ -40,27 +40,7 @@ export function IngredientInput({
         </button>
       </div>
 
-      {/* Row 2: Qty and Unit */}
-      <div className="flex gap-2">
-        <input
-          type="number"
-          value={ingredient.qty}
-          onChange={(e) => handleChange('qty', parseFloat(e.target.value) || 0)}
-          min="0"
-          step="0.25"
-          placeholder="Qty"
-          className="w-20 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
-        />
-        <input
-          type="text"
-          value={ingredient.unit}
-          onChange={(e) => handleChange('unit', e.target.value)}
-          placeholder="Unit (e.g., cups)"
-          className="flex-1 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
-        />
-      </div>
-
-      {/* Row 3: Category and Store */}
+      {/* Row 2: Category and Store */}
       <div className="flex gap-2">
         <select
           value={ingredient.category}

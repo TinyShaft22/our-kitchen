@@ -38,11 +38,9 @@ export const CATEGORIES: { id: Category; name: string }[] = [
   { id: 'baking', name: 'Baking' },
 ];
 
-// Ingredient - used within meals
+// Ingredient - used within meals (simplified: no qty/unit, just what you need)
 export interface Ingredient {
   name: string;
-  qty: number;
-  unit: string;
   category: Category;
   defaultStore: Store;
 }
