@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useHousehold } from '../hooks/useHousehold';
 import { useMeals } from '../hooks/useMeals';
 import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
@@ -20,8 +20,10 @@ function GroceryListPage() {
   const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
   const { items, loading: groceryLoading, addItem, generateFromWeeklyPlan, updateStatus, updateItem, deleteItem, completeTrip } = useGroceryList(householdCode);
   const { staples, enabledStaples, loading: staplesLoading, addStaple, updateStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
-  const [generating, setGenerating] = useState(false);
   const [completing, setCompleting] = useState(false);
+
+  // Ref to track if initial load is complete
+  const initialLoadComplete = useRef(false);
   const [selectedStore, setSelectedStore] = useState<Store | 'all'>('all');
   const [staplesExpanded, setStaplesExpanded] = useState(false);
   const [showAddStaple, setShowAddStaple] = useState(false);
@@ -31,6 +33,35 @@ function GroceryListPage() {
 
   // Combined loading state
   const loading = mealsLoading || weekLoading || groceryLoading || staplesLoading;
+
+  // Auto-sync effect: regenerate grocery list when dependencies change
+  useEffect(() => {
+    // Skip if still loading initial data
+    if (loading) {
+      return;
+    }
+
+    // Mark initial load as complete
+    if (!initialLoadComplete.current) {
+      initialLoadComplete.current = true;
+    }
+
+    // Debounce regeneration to avoid rapid-fire updates
+    const timeoutId = setTimeout(async () => {
+      try {
+        const alreadyHave = currentWeek?.alreadyHave || [];
+        const generatedItems = currentWeek?.meals.length
+          ? generateGroceryItems(meals, currentWeek.meals, alreadyHave)
+          : [];
+        await generateFromWeeklyPlan(generatedItems, enabledStaples);
+      } catch (err) {
+        console.error('Failed to auto-generate grocery list:', err);
+      }
+    }, 300);
+
+    // Cleanup timeout on dependency change or unmount
+    return () => clearTimeout(timeoutId);
+  }, [loading, currentWeek?.meals, currentWeek?.alreadyHave, enabledStaples, meals, generateFromWeeklyPlan]);
 
   // Filter items by selected store
   const filteredItems = useMemo(() => {
@@ -72,24 +103,6 @@ function GroceryListPage() {
       items: groups.get(cat.id) || [],
     }));
   }, [filteredItems]);
-
-  const handleGenerate = async () => {
-    if (!currentWeek?.meals.length && enabledStaples.length === 0) {
-      return;
-    }
-
-    setGenerating(true);
-    try {
-      const generatedItems = currentWeek?.meals.length
-        ? generateGroceryItems(meals, currentWeek.meals)
-        : [];
-      await generateFromWeeklyPlan(generatedItems, enabledStaples);
-    } catch (err) {
-      console.error('Failed to generate grocery list:', err);
-    } finally {
-      setGenerating(false);
-    }
-  };
 
   const handleCompleteTrip = async () => {
     if (selectedStore === 'all') return;
@@ -279,26 +292,10 @@ function GroceryListPage() {
       {!isShoppingMode && (
         <button
           onClick={() => setShowVoiceModal(true)}
-          className="fixed bottom-24 left-4 w-14 h-14 bg-terracotta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors"
+          className="fixed bottom-24 right-4 w-14 h-14 bg-terracotta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors"
           aria-label="Add item by voice"
         >
           <span className="text-xl">🎙️</span>
-        </button>
-      )}
-
-      {/* Generate FAB - hidden during shopping mode */}
-      {!isShoppingMode && (
-        <button
-          onClick={handleGenerate}
-          disabled={generating || (!currentWeek?.meals.length && enabledStaples.length === 0)}
-          className="fixed bottom-24 right-4 w-14 h-14 bg-terracotta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Generate grocery list from weekly meals and staples"
-        >
-          {generating ? (
-            <span className="text-sm">...</span>
-          ) : (
-            <span className="text-xl">🛒</span>
-          )}
         </button>
       )}
 
