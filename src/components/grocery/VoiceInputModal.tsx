@@ -1,8 +1,14 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 import { parseGroceryItems } from '../../utils/parseGroceryItems';
 import { CATEGORIES } from '../../types';
-import type { GroceryItem } from '../../types';
+import type { GroceryItem, Category, Store } from '../../types';
+
+interface ParsedItem {
+  name: string;
+  category: Category;
+  store: Store;
+}
 
 interface VoiceInputModalProps {
   isOpen: boolean;
@@ -23,21 +29,44 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
 
   const [textInput, setTextInput] = useState('');
   const [saving, setSaving] = useState(false);
+  const [items, setItems] = useState<ParsedItem[]>([]);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editValue, setEditValue] = useState('');
 
   // Reset state when modal opens/closes
   useEffect(() => {
     if (isOpen) {
       resetTranscript();
       setTextInput('');
+      setItems([]);
+      setEditingIndex(null);
     } else {
       stopListening();
     }
   }, [isOpen, resetTranscript, stopListening]);
 
+  // Parse transcript into items when it changes (only when not editing)
+  useEffect(() => {
+    if (transcript && editingIndex === null) {
+      const parsed = parseGroceryItems(transcript);
+      setItems(parsed);
+    }
+  }, [transcript, editingIndex]);
+
+  // Parse text input for non-voice fallback
+  useEffect(() => {
+    if (!isSupported && textInput && editingIndex === null) {
+      const parsed = parseGroceryItems(textInput);
+      setItems(parsed);
+    }
+  }, [isSupported, textInput, editingIndex]);
+
   const handleClose = () => {
     stopListening();
     resetTranscript();
     setTextInput('');
+    setItems([]);
+    setEditingIndex(null);
     onClose();
   };
 
@@ -49,22 +78,62 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
     }
   };
 
-  // Parse the current input into items
-  const currentValue = isSupported ? transcript : textInput;
-  const parsedItems = useMemo(() => {
-    if (!currentValue.trim()) return [];
-    return parseGroceryItems(currentValue);
-  }, [currentValue]);
+  const handleRemoveItem = (index: number) => {
+    setItems((prev) => prev.filter((_, i) => i !== index));
+    if (editingIndex === index) {
+      setEditingIndex(null);
+    }
+  };
 
-  const canAdd = parsedItems.length > 0;
+  const handleStartEdit = (index: number) => {
+    setEditingIndex(index);
+    setEditValue(items[index].name);
+  };
+
+  const handleSaveEdit = () => {
+    if (editingIndex === null) return;
+
+    const trimmedValue = editValue.trim();
+    if (trimmedValue) {
+      // Re-parse to get correct category for edited name
+      const parsed = parseGroceryItems(trimmedValue);
+      if (parsed.length > 0) {
+        setItems((prev) =>
+          prev.map((item, i) =>
+            i === editingIndex
+              ? { ...item, name: parsed[0].name, category: parsed[0].category }
+              : item
+          )
+        );
+      }
+    }
+    setEditingIndex(null);
+    setEditValue('');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingIndex(null);
+    setEditValue('');
+  };
+
+  const handleAddNewItem = () => {
+    setItems((prev) => [
+      ...prev,
+      { name: '', category: 'pantry', store: 'safeway' },
+    ]);
+    // Start editing the new item
+    setEditingIndex(items.length);
+    setEditValue('');
+  };
 
   const handleAddItems = async () => {
-    if (parsedItems.length === 0) return;
+    // Filter out empty items
+    const validItems = items.filter((item) => item.name.trim().length > 0);
+    if (validItems.length === 0) return;
 
     setSaving(true);
     try {
-      // Add all parsed items
-      for (const item of parsedItems) {
+      for (const item of validItems) {
         await onAddItem({
           name: item.name,
           qty: 1,
@@ -83,12 +152,14 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
     }
   };
 
-  // Get category name for display
   const getCategoryName = (categoryId: string) => {
     return CATEGORIES.find((c) => c.id === categoryId)?.name || categoryId;
   };
 
   if (!isOpen) return null;
+
+  const validItemCount = items.filter((item) => item.name.trim().length > 0).length;
+  const canAdd = validItemCount > 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -100,11 +171,11 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
       />
 
       {/* Modal Content */}
-      <div className="relative z-10 flex flex-col items-center gap-6 px-8 py-12 w-full max-w-sm">
+      <div className="relative z-10 flex flex-col items-center gap-4 px-6 py-8 w-full max-w-sm max-h-[90vh] overflow-y-auto">
         {/* Cancel button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+          className="absolute top-2 right-2 w-11 h-11 flex items-center justify-center rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-colors"
           aria-label="Cancel"
         >
           <span className="text-2xl">&times;</span>
@@ -112,7 +183,7 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
 
         {/* Title */}
         <h2 className="text-xl font-semibold text-white">
-          {isSupported ? 'Say items' : 'Type items'}
+          {isSupported ? 'Voice Input' : 'Quick Add'}
         </h2>
 
         {/* Voice input (if supported) */}
@@ -121,7 +192,7 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
             {/* Microphone button */}
             <button
               onClick={handleMicClick}
-              className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl transition-all ${
+              className={`w-20 h-20 rounded-full flex items-center justify-center text-3xl transition-all ${
                 isListening
                   ? 'bg-sage animate-pulse shadow-lg shadow-sage/50'
                   : 'bg-terracotta hover:bg-terracotta/90'
@@ -129,20 +200,30 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
               aria-label={isListening ? 'Stop listening' : 'Start listening'}
             >
               <span role="img" aria-hidden="true">
-                {isListening ? '...' : '🎙️'}
+                {isListening ? '🔴' : '🎙️'}
               </span>
             </button>
 
             {/* Status text */}
             <p className="text-white/60 text-sm text-center">
-              {isListening ? 'Listening...' : 'Tap to speak'}
-              <br />
-              <span className="text-xs">Say multiple items: "eggs and milk"</span>
+              {isListening ? (
+                <>
+                  <span className="text-sage font-medium">Listening...</span>
+                  <br />
+                  Tap mic to stop
+                </>
+              ) : (
+                <>
+                  Tap mic to start
+                  <br />
+                  <span className="text-xs">Say multiple items: "eggs, milk, and bread"</span>
+                </>
+              )}
             </p>
 
             {/* Error message */}
             {error && (
-              <div className="bg-red-500/20 text-red-300 px-4 py-2 rounded-soft text-sm text-center max-w-full">
+              <div className="bg-red-500/20 text-red-300 px-4 py-2 rounded-soft text-sm text-center w-full">
                 {error}
               </div>
             )}
@@ -151,7 +232,7 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
             {transcript && (
               <div className="bg-white/10 rounded-soft px-4 py-3 w-full">
                 <p className="text-white/60 text-xs mb-1">You said:</p>
-                <p className="text-white text-lg text-center">{transcript}</p>
+                <p className="text-white text-sm">{transcript}</p>
               </div>
             )}
           </>
@@ -163,41 +244,93 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
                 type="text"
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
-                placeholder="e.g., eggs and milk, bread"
+                placeholder="e.g., eggs, milk, bread"
                 className="w-full h-12 px-4 rounded-soft border border-white/20 bg-white/10 text-white placeholder:text-white/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
                 autoFocus
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && canAdd) {
-                    handleAddItems();
-                  }
-                }}
               />
             </div>
             <p className="text-white/60 text-sm text-center">
-              Voice input not supported.
-              <br />
-              <span className="text-xs">Separate items with "and" or commas</span>
+              <span className="text-xs">Separate items with commas or "and"</span>
             </p>
           </>
         )}
 
-        {/* Parsed items preview */}
-        {parsedItems.length > 0 && (
-          <div className="w-full space-y-2">
+        {/* Items list */}
+        {items.length > 0 && (
+          <div className="w-full space-y-2 mt-2">
             <p className="text-white/60 text-xs">
-              {parsedItems.length} item{parsedItems.length !== 1 ? 's' : ''} detected:
+              {validItemCount} item{validItemCount !== 1 ? 's' : ''} detected:
             </p>
-            <div className="space-y-1 max-h-32 overflow-y-auto">
-              {parsedItems.map((item, index) => (
+            <div className="space-y-1 max-h-48 overflow-y-auto">
+              {items.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between bg-white/10 rounded px-3 py-2"
+                  className="flex items-center gap-2 bg-white/10 rounded px-3 py-2"
                 >
-                  <span className="text-white font-medium">{item.name}</span>
-                  <span className="text-white/50 text-xs">{getCategoryName(item.category)}</span>
+                  {editingIndex === index ? (
+                    /* Edit mode */
+                    <>
+                      <input
+                        type="text"
+                        value={editValue}
+                        onChange={(e) => setEditValue(e.target.value)}
+                        className="flex-1 h-8 px-2 rounded bg-white/20 text-white text-sm focus:outline-none focus:ring-1 focus:ring-terracotta"
+                        autoFocus
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') handleSaveEdit();
+                          if (e.key === 'Escape') handleCancelEdit();
+                        }}
+                      />
+                      <button
+                        onClick={handleSaveEdit}
+                        className="w-8 h-8 flex items-center justify-center text-sage hover:bg-white/10 rounded"
+                        aria-label="Save"
+                      >
+                        ✓
+                      </button>
+                      <button
+                        onClick={handleCancelEdit}
+                        className="w-8 h-8 flex items-center justify-center text-white/50 hover:bg-white/10 rounded"
+                        aria-label="Cancel"
+                      >
+                        ✕
+                      </button>
+                    </>
+                  ) : (
+                    /* View mode */
+                    <>
+                      <button
+                        onClick={() => handleStartEdit(index)}
+                        className="flex-1 text-left"
+                      >
+                        <span className="text-white font-medium text-sm">
+                          {item.name || <span className="text-white/40 italic">Empty</span>}
+                        </span>
+                      </button>
+                      <span className="text-white/40 text-xs">
+                        {getCategoryName(item.category)}
+                      </span>
+                      <button
+                        onClick={() => handleRemoveItem(index)}
+                        className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-white/10 rounded transition-colors"
+                        aria-label="Remove item"
+                      >
+                        ✕
+                      </button>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
+
+            {/* Add item button */}
+            <button
+              onClick={handleAddNewItem}
+              className="w-full flex items-center justify-center gap-2 py-2 text-white/60 hover:text-white hover:bg-white/10 rounded transition-colors text-sm"
+            >
+              <span>+</span>
+              <span>Add another item</span>
+            </button>
           </div>
         )}
 
@@ -206,11 +339,22 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
           <button
             onClick={handleAddItems}
             disabled={saving}
-            className="w-full bg-terracotta text-white py-3 rounded-soft font-semibold hover:bg-terracotta/90 active:bg-terracotta/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-terracotta text-white py-3 rounded-soft font-semibold hover:bg-terracotta/90 active:bg-terracotta/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors mt-2"
           >
             {saving
               ? 'Adding...'
-              : `Add ${parsedItems.length} item${parsedItems.length !== 1 ? 's' : ''}`}
+              : `Add ${validItemCount} item${validItemCount !== 1 ? 's' : ''}`}
+          </button>
+        )}
+
+        {/* Show add button even with no items (for manual entry) */}
+        {items.length === 0 && !transcript && !textInput && (
+          <button
+            onClick={handleAddNewItem}
+            className="w-full flex items-center justify-center gap-2 py-3 text-white/60 hover:text-white bg-white/10 hover:bg-white/20 rounded-soft transition-colors text-sm mt-4"
+          >
+            <span>+</span>
+            <span>Add item manually</span>
           </button>
         )}
       </div>

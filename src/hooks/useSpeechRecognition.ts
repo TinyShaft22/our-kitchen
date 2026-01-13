@@ -84,28 +84,31 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     setIsSupported(true);
 
     const recognition = new SpeechRecognition();
-    recognition.continuous = false; // Single phrase capture
+    recognition.continuous = true; // Keep listening until manually stopped
     recognition.interimResults = true; // Show results as speaking
     recognition.lang = 'en-US';
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
-      let finalTranscript = '';
-      let interimTranscript = '';
+      let fullTranscript = '';
 
-      for (let i = event.resultIndex; i < event.results.length; i++) {
+      // Build the complete transcript from all results
+      for (let i = 0; i < event.results.length; i++) {
         const result = event.results[i];
-        if (result.isFinal) {
-          finalTranscript += result[0].transcript;
-        } else {
-          interimTranscript += result[0].transcript;
+        fullTranscript += result[0].transcript;
+        // Add separator between phrases for clarity
+        if (result.isFinal && i < event.results.length - 1) {
+          fullTranscript += ', ';
         }
       }
 
-      // Show final transcript if available, otherwise show interim
-      setTranscript(finalTranscript || interimTranscript);
+      setTranscript(fullTranscript);
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      // In continuous mode, 'no-speech' is not really an error
+      if (event.error === 'no-speech') {
+        return;
+      }
       setError(getErrorMessage(event.error));
       setIsListening(false);
     };
