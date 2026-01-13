@@ -64,9 +64,10 @@ function Home() {
   };
 
   const handleSaveServings = async (servings: number) => {
-    if (editingEntry) {
-      await updateServings(editingEntry.mealId, servings);
+    if (!editingEntry) {
+      throw new Error('No meal selected for editing');
     }
+    await updateServings(editingEntry.mealId, servings);
   };
 
   // Remove meal handlers
