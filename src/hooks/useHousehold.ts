@@ -3,6 +3,7 @@ import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 const STORAGE_KEY = 'householdCode';
+const HOUSEHOLD_CHANGED_EVENT = 'householdChanged';
 
 interface UseHouseholdReturn {
   householdCode: string | null;
@@ -18,11 +19,20 @@ export function useHousehold(): UseHouseholdReturn {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Load from localStorage on mount
+  // Load from localStorage on mount and listen for changes from other hook instances
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     setHouseholdCode(stored);
     setLoading(false);
+
+    // Listen for household changes from other hook instances
+    const handleHouseholdChange = () => {
+      const updated = localStorage.getItem(STORAGE_KEY);
+      setHouseholdCode(updated);
+    };
+
+    window.addEventListener(HOUSEHOLD_CHANGED_EVENT, handleHouseholdChange);
+    return () => window.removeEventListener(HOUSEHOLD_CHANGED_EVENT, handleHouseholdChange);
   }, []);
 
   // Generate a random 4-digit code (1000-9999)
@@ -55,6 +65,7 @@ export function useHousehold(): UseHouseholdReturn {
         });
 
         localStorage.setItem(STORAGE_KEY, customCode);
+        window.dispatchEvent(new Event(HOUSEHOLD_CHANGED_EVENT));
         setHouseholdCode(customCode);
         setLoading(false);
         return customCode;
@@ -78,8 +89,9 @@ export function useHousehold(): UseHouseholdReturn {
             createdAt: serverTimestamp(),
           });
 
-          // Save to localStorage
+          // Save to localStorage and notify other instances
           localStorage.setItem(STORAGE_KEY, code);
+          window.dispatchEvent(new Event(HOUSEHOLD_CHANGED_EVENT));
           setHouseholdCode(code);
           setLoading(false);
           return code;
@@ -115,8 +127,9 @@ export function useHousehold(): UseHouseholdReturn {
         throw new Error('Invalid code');
       }
 
-      // Save to localStorage
+      // Save to localStorage and notify other instances
       localStorage.setItem(STORAGE_KEY, code);
+      window.dispatchEvent(new Event(HOUSEHOLD_CHANGED_EVENT));
       setHouseholdCode(code);
       setLoading(false);
       return true;
@@ -130,6 +143,7 @@ export function useHousehold(): UseHouseholdReturn {
 
   const leaveHousehold = useCallback((): void => {
     localStorage.removeItem(STORAGE_KEY);
+    window.dispatchEvent(new Event(HOUSEHOLD_CHANGED_EVENT));
     setHouseholdCode(null);
     setError(null);
   }, []);
