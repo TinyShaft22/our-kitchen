@@ -18,7 +18,7 @@ function GroceryListPage() {
   const { householdCode } = useHousehold();
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
-  const { items, loading: groceryLoading, addItem, generateFromWeeklyPlan, updateStatus, completeTrip } = useGroceryList(householdCode);
+  const { items, loading: groceryLoading, addItem, generateFromWeeklyPlan, updateStatus, updateItem, deleteItem, completeTrip } = useGroceryList(householdCode);
   const { staples, enabledStaples, loading: staplesLoading, addStaple, updateStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
   const [generating, setGenerating] = useState(false);
   const [completing, setCompleting] = useState(false);
@@ -254,6 +254,8 @@ function GroceryListPage() {
                     onToggleInCart={() =>
                       updateStatus(item.id, item.status === 'in-cart' ? 'need' : 'in-cart')
                     }
+                    onDelete={() => deleteItem(item.id)}
+                    onStoreChange={(store) => updateItem(item.id, { store })}
                   />
                 ))}
               </div>

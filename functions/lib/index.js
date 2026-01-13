@@ -17,6 +17,8 @@ const VALID_CATEGORIES = [
     'beverages',
     'baking',
 ];
+// Valid stores
+const VALID_STORES = ['costco', 'trader-joes', 'safeway', 'bel-air'];
 // Allowed origins for CORS
 const ALLOWED_ORIGINS = [
     'https://tinyshaft.netlify.app',
@@ -72,7 +74,7 @@ exports.parseGroceryTranscript = (0, https_1.onRequest)({
                 messages: [
                     {
                         role: 'system',
-                        content: `You are a grocery list parser. Extract ONLY grocery/food items from the user's speech transcript.
+                        content: `You are a grocery list parser. Extract grocery/food items from the user's speech transcript, including which store to get them from if mentioned.
 
 RULES:
 1. ONLY extract actual grocery items (food, drinks, household supplies)
@@ -81,6 +83,15 @@ RULES:
 4. Separate items that are said together (e.g., "eggs and milk" → two items: "Eggs", "Milk")
 5. Capitalize item names properly (e.g., "milk" → "Milk")
 6. Assign the most appropriate category to each item
+7. If the user mentions a store (Costco, Trader Joe's, Safeway, Bel Air), assign that store to the items
+8. Items mentioned after a store name belong to that store until a new store is mentioned
+9. If no store is mentioned, use "safeway" as the default
+
+STORES (use exactly these IDs):
+- costco: Costco
+- trader-joes: Trader Joe's (also matches "Trader Joe's", "TJs", "Trader Joes")
+- safeway: Safeway
+- bel-air: Bel Air (also matches "Bel-Air", "Belair")
 
 CATEGORIES (use exactly these):
 - produce: fruits, vegetables, herbs
@@ -93,10 +104,13 @@ CATEGORIES (use exactly these):
 - beverages: drinks, juice, soda, coffee, tea
 - baking: flour, sugar, baking supplies
 
-Respond with ONLY a JSON array of items. If no valid grocery items are found, return an empty array.
+Respond with ONLY a JSON array of items. Each item must have: name, category, store. If no valid grocery items are found, return an empty array.
 
-Example input: "um let me think eggs and milk also some bread and uh maybe bananas"
-Example output: [{"name":"Eggs","category":"dairy"},{"name":"Milk","category":"dairy"},{"name":"Bread","category":"bakery"},{"name":"Bananas","category":"produce"}]`,
+Example input: "from Costco I need eggs and milk, and from Safeway get bread and bananas"
+Example output: [{"name":"Eggs","category":"dairy","store":"costco"},{"name":"Milk","category":"dairy","store":"costco"},{"name":"Bread","category":"bakery","store":"safeway"},{"name":"Bananas","category":"produce","store":"safeway"}]
+
+Example input: "eggs milk bread"
+Example output: [{"name":"Eggs","category":"dairy","store":"safeway"},{"name":"Milk","category":"dairy","store":"safeway"},{"name":"Bread","category":"bakery","store":"safeway"}]`,
                     },
                     {
                         role: 'user',
@@ -135,7 +149,9 @@ Example output: [{"name":"Eggs","category":"dairy"},{"name":"Milk","category":"d
             category: VALID_CATEGORIES.includes(item.category)
                 ? item.category
                 : 'pantry',
-            store: 'safeway',
+            store: item.store && VALID_STORES.includes(item.store)
+                ? item.store
+                : 'safeway',
         }));
         res.status(200).json({ result: { items } });
     }
