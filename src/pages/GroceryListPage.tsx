@@ -3,8 +3,11 @@ import { useHousehold } from '../hooks/useHousehold';
 import { useMeals } from '../hooks/useMeals';
 import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
 import { useGroceryList } from '../hooks/useGroceryList';
+import { useStaples } from '../hooks/useStaples';
 import { generateGroceryItems } from '../utils/generateGroceryItems';
 import { GroceryItemCard } from '../components/grocery/GroceryItemCard';
+import { StapleCard } from '../components/grocery/StapleCard';
+import { AddStapleModal } from '../components/grocery/AddStapleModal';
 import { CATEGORIES, STORES } from '../types';
 import type { GroceryItem, Category, Store } from '../types';
 
@@ -13,12 +16,15 @@ function GroceryListPage() {
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
   const { items, loading: groceryLoading, generateFromWeeklyPlan, updateStatus, completeTrip } = useGroceryList(householdCode);
+  const { staples, enabledStaples, loading: staplesLoading, addStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
   const [generating, setGenerating] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [selectedStore, setSelectedStore] = useState<Store | 'all'>('all');
+  const [staplesExpanded, setStaplesExpanded] = useState(false);
+  const [showAddStaple, setShowAddStaple] = useState(false);
 
   // Combined loading state
-  const loading = mealsLoading || weekLoading || groceryLoading;
+  const loading = mealsLoading || weekLoading || groceryLoading || staplesLoading;
 
   // Filter items by selected store
   const filteredItems = useMemo(() => {
@@ -154,6 +160,71 @@ function GroceryListPage() {
         </div>
       )}
 
+      {/* Staples section - collapsible */}
+      <div className="mt-4">
+        <button
+          onClick={() => setStaplesExpanded(!staplesExpanded)}
+          className="w-full flex items-center justify-between py-2"
+        >
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-charcoal">Staples</h2>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-charcoal/10 text-charcoal/70">
+              {enabledStaples.length}/{staples.length}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowAddStaple(true);
+              }}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-terracotta text-white text-lg hover:bg-terracotta/90"
+              aria-label="Add staple"
+            >
+              +
+            </button>
+            <span
+              className={`text-charcoal/50 transition-transform ${
+                staplesExpanded ? 'rotate-180' : ''
+              }`}
+            >
+              ▼
+            </span>
+          </div>
+        </button>
+
+        {/* Collapsed summary */}
+        {!staplesExpanded && staples.length > 0 && (
+          <p className="text-sm text-charcoal/60 -mt-1">
+            {enabledStaples.length} of {staples.length} enabled
+          </p>
+        )}
+
+        {/* Expanded staple list */}
+        {staplesExpanded && (
+          <div className="space-y-2 mt-2">
+            {staples.length === 0 ? (
+              <p className="text-sm text-charcoal/60 text-center py-4">
+                No staples yet. Add items you always need!
+              </p>
+            ) : (
+              staples.map((staple) => (
+                <StapleCard
+                  key={staple.id}
+                  staple={staple}
+                  onToggle={(enabled) => toggleEnabled(staple.id, enabled)}
+                  onEdit={() => {
+                    // Edit functionality to be added in future phase
+                    console.log('Edit staple:', staple.id);
+                  }}
+                  onDelete={() => deleteStaple(staple.id)}
+                />
+              ))
+            )}
+          </div>
+        )}
+      </div>
+
       {/* Empty state */}
       {items.length === 0 && (
         <div className="mt-8 text-center">
@@ -212,6 +283,15 @@ function GroceryListPage() {
           )}
         </button>
       )}
+
+      {/* Add Staple Modal */}
+      <AddStapleModal
+        isOpen={showAddStaple}
+        onClose={() => setShowAddStaple(false)}
+        onSave={async (staple) => {
+          await addStaple(staple);
+        }}
+      />
     </div>
   );
 }
