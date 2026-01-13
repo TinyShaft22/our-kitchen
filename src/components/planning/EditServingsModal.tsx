@@ -53,7 +53,7 @@ export function EditServingsModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-charcoal/50"
@@ -62,7 +62,7 @@ export function EditServingsModal({
       />
 
       {/* Modal Panel */}
-      <div className="relative bg-cream rounded-t-softer w-full max-w-lg shadow-lg">
+      <div className="relative bg-cream rounded-softer w-full max-w-lg shadow-lg">
         {/* Header */}
         <div className="border-b border-charcoal/10 px-4 py-3 flex items-center justify-between">
           <button

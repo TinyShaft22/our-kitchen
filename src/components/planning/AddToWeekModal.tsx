@@ -55,7 +55,7 @@ export function AddToWeekModal({ isOpen, onClose, meals, onAdd }: AddToWeekModal
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-charcoal/50"
@@ -64,7 +64,7 @@ export function AddToWeekModal({ isOpen, onClose, meals, onAdd }: AddToWeekModal
       />
 
       {/* Modal Panel */}
-      <div className="relative bg-cream rounded-t-softer w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-lg">
+      <div className="relative bg-cream rounded-softer w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-lg">
         {/* Header */}
         <div className="sticky top-0 bg-cream border-b border-charcoal/10 px-4 py-3 flex items-center justify-between z-10">
           {selectedMeal ? (
