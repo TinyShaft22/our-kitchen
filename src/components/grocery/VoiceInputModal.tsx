@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { httpsCallable } from 'firebase/functions';
-import { functions } from '../../config/firebase';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 import { CATEGORIES } from '../../types';
 import type { GroceryItem, Category, Store } from '../../types';
@@ -11,21 +9,32 @@ interface ParsedItem {
   store: Store;
 }
 
-interface ParseTranscriptResponse {
-  items: ParsedItem[];
-}
-
 interface VoiceInputModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAddItem: (item: Omit<GroceryItem, 'id' | 'householdCode'>) => Promise<string>;
 }
 
-// Cloud function to parse transcript
-const parseGroceryTranscript = httpsCallable<{ transcript: string }, ParseTranscriptResponse>(
-  functions,
-  'parseGroceryTranscript'
-);
+// Cloud function URL
+const FUNCTION_URL = 'https://us-central1-grocery-store-app-c3aa5.cloudfunctions.net/parseGroceryTranscript';
+
+// Call the cloud function directly via HTTP
+async function parseGroceryTranscript(transcript: string): Promise<ParsedItem[]> {
+  const response = await fetch(FUNCTION_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ data: { transcript } }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to process transcript');
+  }
+
+  const data = await response.json();
+  return data.result?.items || [];
+}
 
 export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalProps) {
   const {
@@ -77,8 +86,8 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
     setProcessError(null);
 
     try {
-      const result = await parseGroceryTranscript({ transcript: text });
-      setItems(result.data.items);
+      const items = await parseGroceryTranscript(text);
+      setItems(items);
     } catch (err) {
       console.error('Failed to process transcript:', err);
       setProcessError('Failed to process. Please try again.');

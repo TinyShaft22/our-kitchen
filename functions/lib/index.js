@@ -17,21 +17,48 @@ const VALID_CATEGORIES = [
     'beverages',
     'baking',
 ];
-// The Cloud Function to parse grocery transcript
-exports.parseGroceryTranscript = (0, https_1.onCall)({
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+    'https://tinyshaft.netlify.app',
+    'http://localhost:5173',
+    'http://localhost:5174',
+];
+// Cloud Function to parse grocery transcript
+exports.parseGroceryTranscript = (0, https_1.onRequest)({
     secrets: [openRouterKey],
-    cors: true,
     maxInstances: 10,
-}, async (request) => {
-    const { transcript } = request.data;
-    if (!transcript || typeof transcript !== 'string') {
-        throw new https_1.HttpsError('invalid-argument', 'Transcript is required');
+    // Note: Public access must be set manually in Cloud Run console
+}, async (req, res) => {
+    // Handle CORS
+    const origin = req.headers.origin || '';
+    if (ALLOWED_ORIGINS.includes(origin)) {
+        res.set('Access-Control-Allow-Origin', origin);
     }
-    const apiKey = openRouterKey.value();
-    if (!apiKey) {
-        throw new https_1.HttpsError('internal', 'OpenRouter API key not configured');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.set('Access-Control-Max-Age', '3600');
+    // Handle preflight OPTIONS request
+    if (req.method === 'OPTIONS') {
+        res.status(204).send('');
+        return;
+    }
+    // Only allow POST
+    if (req.method !== 'POST') {
+        res.status(405).json({ error: 'Method not allowed' });
+        return;
     }
     try {
+        const { data } = req.body;
+        const transcript = data?.transcript;
+        if (!transcript || typeof transcript !== 'string') {
+            res.status(400).json({ error: 'Transcript is required' });
+            return;
+        }
+        const apiKey = openRouterKey.value();
+        if (!apiKey) {
+            res.status(500).json({ error: 'OpenRouter API key not configured' });
+            return;
+        }
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -83,18 +110,18 @@ Example output: [{"name":"Eggs","category":"dairy"},{"name":"Milk","category":"d
         if (!response.ok) {
             const errorText = await response.text();
             console.error('OpenRouter API error:', errorText);
-            throw new https_1.HttpsError('internal', 'Failed to process transcript');
+            res.status(500).json({ error: 'Failed to process transcript' });
+            return;
         }
-        const data = await response.json();
-        const content = data.choices?.[0]?.message?.content || '[]';
+        const responseData = await response.json();
+        const content = responseData.choices?.[0]?.message?.content || '[]';
         // Parse the JSON response
         let parsedItems;
         try {
-            // Handle potential markdown code blocks in response
             const jsonStr = content.replace(/```json\n?|\n?```/g, '').trim();
             parsedItems = JSON.parse(jsonStr);
         }
-        catch (parseError) {
+        catch {
             console.error('Failed to parse LLM response:', content);
             parsedItems = [];
         }
@@ -108,16 +135,13 @@ Example output: [{"name":"Eggs","category":"dairy"},{"name":"Milk","category":"d
             category: VALID_CATEGORIES.includes(item.category)
                 ? item.category
                 : 'pantry',
-            store: 'safeway', // Default store
+            store: 'safeway',
         }));
-        return { items };
+        res.status(200).json({ result: { items } });
     }
     catch (error) {
         console.error('Error processing transcript:', error);
-        if (error instanceof https_1.HttpsError) {
-            throw error;
-        }
-        throw new https_1.HttpsError('internal', 'Failed to process transcript');
+        res.status(500).json({ error: 'Failed to process transcript' });
     }
 });
 //# sourceMappingURL=index.js.map

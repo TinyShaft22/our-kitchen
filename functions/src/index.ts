@@ -1,4 +1,4 @@
-import { onCall, HttpsError } from 'firebase-functions/v2/https';
+import { onRequest } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 
 // Define the secret for OpenRouter API key
@@ -25,39 +25,57 @@ interface ParsedItem {
   store: string;
 }
 
-interface ParseTranscriptRequest {
-  transcript: string;
-}
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+  'https://tinyshaft.netlify.app',
+  'http://localhost:5173',
+  'http://localhost:5174',
+];
 
-interface ParseTranscriptResponse {
-  items: ParsedItem[];
-}
-
-// The Cloud Function to parse grocery transcript
-export const parseGroceryTranscript = onCall<ParseTranscriptRequest>(
+// Cloud Function to parse grocery transcript
+export const parseGroceryTranscript = onRequest(
   {
     secrets: [openRouterKey],
-    cors: [
-      'https://tinyshaft.netlify.app',
-      'http://localhost:5173',
-      'http://localhost:5174',
-    ],
     maxInstances: 10,
-    invoker: 'public', // Allow unauthenticated invocations from web app
+    // Note: Public access must be set manually in Cloud Run console
   },
-  async (request): Promise<ParseTranscriptResponse> => {
-    const { transcript } = request.data;
+  async (req, res) => {
+    // Handle CORS
+    const origin = req.headers.origin || '';
+    if (ALLOWED_ORIGINS.includes(origin as string)) {
+      res.set('Access-Control-Allow-Origin', origin);
+    }
+    res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.set('Access-Control-Max-Age', '3600');
 
-    if (!transcript || typeof transcript !== 'string') {
-      throw new HttpsError('invalid-argument', 'Transcript is required');
+    // Handle preflight OPTIONS request
+    if (req.method === 'OPTIONS') {
+      res.status(204).send('');
+      return;
     }
 
-    const apiKey = openRouterKey.value();
-    if (!apiKey) {
-      throw new HttpsError('internal', 'OpenRouter API key not configured');
+    // Only allow POST
+    if (req.method !== 'POST') {
+      res.status(405).json({ error: 'Method not allowed' });
+      return;
     }
 
     try {
+      const { data } = req.body;
+      const transcript = data?.transcript;
+
+      if (!transcript || typeof transcript !== 'string') {
+        res.status(400).json({ error: 'Transcript is required' });
+        return;
+      }
+
+      const apiKey = openRouterKey.value();
+      if (!apiKey) {
+        res.status(500).json({ error: 'OpenRouter API key not configured' });
+        return;
+      }
+
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -110,19 +128,19 @@ Example output: [{"name":"Eggs","category":"dairy"},{"name":"Milk","category":"d
       if (!response.ok) {
         const errorText = await response.text();
         console.error('OpenRouter API error:', errorText);
-        throw new HttpsError('internal', 'Failed to process transcript');
+        res.status(500).json({ error: 'Failed to process transcript' });
+        return;
       }
 
-      const data = await response.json();
-      const content = data.choices?.[0]?.message?.content || '[]';
+      const responseData = await response.json();
+      const content = responseData.choices?.[0]?.message?.content || '[]';
 
       // Parse the JSON response
       let parsedItems: Array<{ name: string; category: string }>;
       try {
-        // Handle potential markdown code blocks in response
         const jsonStr = content.replace(/```json\n?|\n?```/g, '').trim();
         parsedItems = JSON.parse(jsonStr);
-      } catch (parseError) {
+      } catch {
         console.error('Failed to parse LLM response:', content);
         parsedItems = [];
       }
@@ -140,16 +158,13 @@ Example output: [{"name":"Eggs","category":"dairy"},{"name":"Milk","category":"d
           category: VALID_CATEGORIES.includes(item.category as Category)
             ? (item.category as Category)
             : 'pantry',
-          store: 'safeway', // Default store
+          store: 'safeway',
         }));
 
-      return { items };
+      res.status(200).json({ result: { items } });
     } catch (error) {
       console.error('Error processing transcript:', error);
-      if (error instanceof HttpsError) {
-        throw error;
-      }
-      throw new HttpsError('internal', 'Failed to process transcript');
+      res.status(500).json({ error: 'Failed to process transcript' });
     }
   }
 );
