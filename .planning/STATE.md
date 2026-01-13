@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** Phase 11 complete — ready for Phase 12
+**Current focus:** Phase 13 complete — ready for Phase 14
 
 ## Current Position
 
-Phase: 12 of 14 (Auto-Populate Grocery)
-Plan: 2 of 2 in current phase
+Phase: 13 of 14 (Recipe Instructions)
+Plan: 1 of 1 in current phase
 Status: Phase complete
-Last activity: 2026-01-13 — Completed 12-02-PLAN.md
+Last activity: 2026-01-13 — Completed 13-01-PLAN.md
 
 Progress: ████████████████████████ 100%
 
@@ -71,20 +71,18 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-13
-Stopped at: Completed 12-02-PLAN.md (auto-sync UI, already have feature)
+Stopped at: Completed 13-01-PLAN.md (recipe instructions)
 Resume file: None
 
 ## Next Steps
 
-**Current:** Phase 12: Auto-Populate Grocery ✅ COMPLETE
-- Plan 12-01: ✅ alreadyHave data model, hook method, exclusion logic
-- Plan 12-02: ✅ Auto-sync UI, Already Have section
+**Current:** Phase 13: Recipe Instructions ✅ COMPLETE
+- Plan 13-01: ✅ Instructions field, modal textareas, expandable MealCard section
 
-**Next:** Phase 13: Recipe Instructions
-- Add markdown notes field for cooking instructions
+**Next:** Phase 14: Meal Images
+- Firebase Storage for uploading/capturing meal photos
 
 **Remaining v1.1 phases:**
-- Phase 13: Recipe Instructions
 - Phase 14: Meal Images
 
 ## Roadmap Evolution

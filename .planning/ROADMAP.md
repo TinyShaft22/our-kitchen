@@ -31,7 +31,7 @@ None
 - [ ] **Phase 10: PWA & Polish** - Service worker, offline support, warm UI theme
 - [x] **Phase 11: Simplify Ingredients** - Remove qty/unit, streamline to name/category/store
 - [x] **Phase 12: Auto-Populate Grocery** - Real-time sync with "already have" toggle
-- [ ] **Phase 13: Recipe Instructions** - Markdown notes for cooking instructions
+- [x] **Phase 13: Recipe Instructions** - Markdown notes for cooking instructions
 - [ ] **Phase 14: Meal Images** - Firebase Storage for meal photos
 
 ## Phase Details
@@ -148,5 +148,5 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 10. PWA & Polish | v1.0 | 2/3 | In progress | - |
 | 11. Simplify Ingredients | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
-| 13. Recipe Instructions | v1.1 | 0/1 | Not started | - |
+| 13. Recipe Instructions | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 14. Meal Images | v1.1 | 0/? | Not started | - |
