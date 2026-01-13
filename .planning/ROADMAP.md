@@ -81,7 +81,7 @@ None
 **Goal**: Bella's baking inventory with quantities, restock items to grocery list
 **Depends on**: Phase 6
 **Research**: Unlikely (same patterns as meal library)
-**Plans**: TBD
+**Plans**: 3 (09-01: Inventory Display, 09-02: CRUD Modals, 09-03: Restock Integration)
 
 ### Phase 10: PWA & Polish
 **Goal**: Installable PWA, offline-capable, warm & cozy UI theme applied
@@ -105,5 +105,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Grocery Generation | 2/2 | Complete | 2026-01-12 |
 | 7. Shopping Mode | 2/2 | Complete | 2026-01-12 |
 | 8. Voice & Staples | 3/3 | Complete | 2026-01-13 |
-| 9. Baking Corner | 0/TBD | Not started | - |
+| 9. Baking Corner | 3/3 | Complete | 2026-01-13 |
 | 10. PWA & Polish | 0/TBD | Not started | - |

@@ -73,7 +73,7 @@ export interface WeeklyMeal {
 export type GroceryStatus = 'need' | 'out' | 'in-cart' | 'bought';
 
 // GroceryItem source type
-export type GrocerySource = 'meal' | 'manual' | 'quick-add' | 'staple';
+export type GrocerySource = 'meal' | 'manual' | 'quick-add' | 'staple' | 'baking';
 
 // GroceryItem - an item on the grocery list
 export interface GroceryItem {

@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** Phase 8 complete — Ready for Phase 9
+**Current focus:** Phase 9 complete — Ready for Phase 10 (PWA & Polish)
 
 ## Current Position
 
 Phase: 9 of 10 (Baking Corner)
-Plan: 0 of TBD in current phase
-Status: Not started
-Last activity: 2026-01-13 — Completed Phase 8 (Voice & Staples)
+Plan: 3 of 3 in current phase
+Status: Complete
+Last activity: 2026-01-13 — Completed Phase 9 (Baking Corner)
 
-Progress: █████████████████████░ 85%
+Progress: ██████████████████████░ 90%
 
 ## Performance Metrics
 
