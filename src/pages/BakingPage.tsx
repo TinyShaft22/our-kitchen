@@ -104,10 +104,10 @@ function BakingPage() {
     try {
       await addItem({
         name: essential.name,
-        qty: essential.qty,
-        unit: essential.unit,
+        qty: 1,
+        unit: 'each',
         category: 'baking',
-        store: 'safeway', // Default store for baking items
+        store: essential.store,
         status: 'need',
         source: 'baking',
       });
@@ -133,10 +133,10 @@ function BakingPage() {
         lowStockItems.map((essential) =>
           addItem({
             name: essential.name,
-            qty: essential.qty,
-            unit: essential.unit,
+            qty: 1,
+            unit: 'each',
             category: 'baking',
-            store: 'safeway',
+            store: essential.store,
             status: 'need',
             source: 'baking',
           })

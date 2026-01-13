@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import type { BakingEssential, BakingStatus } from '../../types';
-
-const BAKING_UNITS = ['cups', 'oz', 'lbs', 'tbsp', 'tsp', 'each', 'bags', 'boxes'];
+import type { BakingEssential, BakingStatus, Store } from '../../types';
+import { STORES } from '../../types';
 
 const STATUS_OPTIONS: { id: BakingStatus; label: string }[] = [
   { id: 'stocked', label: 'Stocked' },
@@ -18,8 +17,7 @@ interface EditBakingModalProps {
 
 export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBakingModalProps) {
   const [name, setName] = useState('');
-  const [qty, setQty] = useState('');
-  const [unit, setUnit] = useState('cups');
+  const [store, setStore] = useState<Store>('costco');
   const [status, setStatus] = useState<BakingStatus>('stocked');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,8 +26,7 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
   useEffect(() => {
     if (essential) {
       setName(essential.name);
-      setQty(essential.qty.toString());
-      setUnit(essential.unit);
+      setStore(essential.store || 'costco');
       setStatus(essential.status);
       setError(null);
     }
@@ -48,10 +45,6 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
       setError('Name is required');
       return;
     }
-    if (!qty || parseFloat(qty) <= 0) {
-      setError('Quantity must be greater than 0');
-      return;
-    }
 
     setSaving(true);
     setError(null);
@@ -59,8 +52,7 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
     try {
       await onSave(essential.id, {
         name: name.trim(),
-        qty: parseFloat(qty),
-        unit,
+        store,
         status,
       });
       handleClose();
@@ -74,7 +66,7 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
   if (!isOpen || !essential) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-charcoal/50"
@@ -83,7 +75,7 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
       />
 
       {/* Modal Panel */}
-      <div className="relative bg-cream rounded-t-softer w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-lg">
+      <div className="relative bg-cream rounded-softer w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-lg">
         {/* Header */}
         <div className="sticky top-0 bg-cream border-b border-charcoal/10 px-4 py-3 flex items-center justify-between z-10">
           <button
@@ -131,41 +123,23 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
             />
           </div>
 
-          {/* Quantity and Unit (side by side) */}
-          <div className="flex gap-3">
-            <div className="flex-1">
-              <label htmlFor="edit-baking-qty" className="block text-sm font-medium text-charcoal mb-1">
-                Quantity
-              </label>
-              <input
-                id="edit-baking-qty"
-                type="number"
-                inputMode="decimal"
-                min="0"
-                step="0.25"
-                value={qty}
-                onChange={(e) => setQty(e.target.value)}
-                placeholder="2"
-                className="w-full h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
-              />
-            </div>
-            <div className="flex-1">
-              <label htmlFor="edit-baking-unit" className="block text-sm font-medium text-charcoal mb-1">
-                Unit
-              </label>
-              <select
-                id="edit-baking-unit"
-                value={unit}
-                onChange={(e) => setUnit(e.target.value)}
-                className="w-full h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
-              >
-                {BAKING_UNITS.map((u) => (
-                  <option key={u} value={u}>
-                    {u}
-                  </option>
-                ))}
-              </select>
-            </div>
+          {/* Store */}
+          <div>
+            <label htmlFor="edit-baking-store" className="block text-sm font-medium text-charcoal mb-1">
+              Store
+            </label>
+            <select
+              id="edit-baking-store"
+              value={store}
+              onChange={(e) => setStore(e.target.value as Store)}
+              className="w-full h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
+            >
+              {STORES.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Status */}

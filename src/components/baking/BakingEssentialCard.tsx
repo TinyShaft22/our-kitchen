@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { BakingEssential, BakingStatus } from '../../types';
+import { STORES } from '../../types';
 
 interface BakingEssentialCardProps {
   essential: BakingEssential;
@@ -46,6 +47,7 @@ export function BakingEssentialCard({
 
   const statusConfig = STATUS_CONFIG[essential.status];
   const needsRestock = essential.status === 'low' || essential.status === 'out';
+  const storeName = STORES.find((s) => s.id === essential.store)?.name || essential.store;
 
   const handleStatusCycle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -65,12 +67,10 @@ export function BakingEssentialCard({
       className="bg-white rounded-soft shadow-soft p-3 min-h-[44px] flex items-center justify-between gap-3"
       onClick={() => setShowActions(!showActions)}
     >
-      {/* Left side: Name and quantity */}
+      {/* Left side: Name and store */}
       <div className="flex-1 min-w-0">
         <p className="font-medium text-charcoal truncate">{essential.name}</p>
-        <p className="text-sm text-charcoal/60">
-          {essential.qty} {essential.unit}
-        </p>
+        <p className="text-sm text-charcoal/60">{storeName}</p>
       </div>
 
       {/* Action buttons (shown on tap) */}

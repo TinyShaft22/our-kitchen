@@ -105,8 +105,7 @@ export type BakingStatus = 'stocked' | 'low' | 'out';
 export interface BakingEssential {
   id: string;
   name: string;
-  qty: number;
-  unit: string;
+  store: Store;
   status: BakingStatus;
   householdCode: string;
 }
