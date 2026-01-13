@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** Phase 10 in progress — PWA & Polish
+**Current focus:** Phase 11 complete — ready for Phase 12
 
 ## Current Position
 
-Phase: 10 of 10 (PWA & Polish)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-01-13 — Completed Plan 10-02 (Icons & iOS)
+Phase: 11 of 14 (Simplify Ingredients)
+Plan: 1 of 1 in current phase
+Status: Phase complete
+Last activity: 2026-01-13 — Completed 11-01-PLAN.md
 
-Progress: ██████████████████████░ 90%
+Progress: ██████████████████████░░ 92%
 
 ## Performance Metrics
 
@@ -71,19 +71,19 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-13
-Stopped at: Completed Phase 8 (Voice & Staples) including AI-powered voice parsing
+Stopped at: Completed Phase 11 (Simplify Ingredients)
 Resume file: None
 
 ## Next Steps
 
-**Current:** Phase 10: PWA & Polish
-- Plan 10-01: ✅ Install vite-plugin-pwa, configure manifest & service worker
-- Plan 10-02: ✅ Create app icons for all platforms, iOS meta tags
-- Plan 10-03: Final polish, testing, and completion
+**Completed:** Phase 11: Simplify Ingredients ✅
+- Plan 11-01: ✅ Simplified Ingredient interface, IngredientInput, grocery generation
 
-**After v1.0:** Milestone v1.1 Meal & Grocery Refactor (Phases 11-14)
-- Phase 11: Simplify Ingredients
-- Phase 12: Auto-Populate Grocery
+**Next:** Phase 12: Auto-Populate Grocery
+- Real-time sync from weekly meals to grocery list
+- "Already have" toggle per ingredient per week
+
+**Remaining v1.1 phases:**
 - Phase 13: Recipe Instructions
 - Phase 14: Meal Images
 
