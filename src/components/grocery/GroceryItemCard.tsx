@@ -7,10 +7,12 @@ interface GroceryItemCardProps {
   onToggleInCart?: () => void;
   onDelete?: () => void;
   onStoreChange?: (store: Store) => void;
+  onToggleAlreadyHave?: () => void;
 }
 
-export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange }: GroceryItemCardProps) {
+export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange, onToggleAlreadyHave }: GroceryItemCardProps) {
   const [showStorePicker, setShowStorePicker] = useState(false);
+  const isMealSourced = item.source === 'meal';
 
   // Get display names for store and category
   const storeName = STORES.find((s) => s.id === item.store)?.name || item.store;
@@ -36,6 +38,13 @@ export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange 
     e.stopPropagation();
     if (onDelete) {
       onDelete();
+    }
+  };
+
+  const handleAlreadyHave = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onToggleAlreadyHave) {
+      onToggleAlreadyHave();
     }
   };
 
@@ -87,6 +96,21 @@ export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange 
             <span className="text-xs px-2 py-0.5 rounded-full bg-sage/20 text-sage">
               {categoryName}
             </span>
+
+            {/* Already Have button - only for meal-sourced items */}
+            {isMealSourced && onToggleAlreadyHave && (
+              <button
+                type="button"
+                onClick={handleAlreadyHave}
+                className="w-6 h-6 flex items-center justify-center rounded-full text-charcoal/40 hover:text-charcoal/70 hover:bg-charcoal/10 transition-colors"
+                aria-label="Mark as already have"
+                title="Mark as already have"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                  <path d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" />
+                </svg>
+              </button>
+            )}
 
             {/* Delete button */}
             {onDelete && (
