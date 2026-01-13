@@ -9,6 +9,7 @@ import { GroceryItemCard } from '../components/grocery/GroceryItemCard';
 import { StapleCard } from '../components/grocery/StapleCard';
 import { AddStapleModal } from '../components/grocery/AddStapleModal';
 import { EditStapleModal } from '../components/grocery/EditStapleModal';
+import { VoiceInputModal } from '../components/grocery/VoiceInputModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { CATEGORIES, STORES } from '../types';
 import type { GroceryItem, Category, Store, Staple } from '../types';
@@ -17,7 +18,7 @@ function GroceryListPage() {
   const { householdCode } = useHousehold();
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const { currentWeek, loading: weekLoading } = useWeeklyPlan(householdCode);
-  const { items, loading: groceryLoading, generateFromWeeklyPlan, updateStatus, completeTrip } = useGroceryList(householdCode);
+  const { items, loading: groceryLoading, addItem, generateFromWeeklyPlan, updateStatus, completeTrip } = useGroceryList(householdCode);
   const { staples, enabledStaples, loading: staplesLoading, addStaple, updateStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
   const [generating, setGenerating] = useState(false);
   const [completing, setCompleting] = useState(false);
@@ -26,6 +27,7 @@ function GroceryListPage() {
   const [showAddStaple, setShowAddStaple] = useState(false);
   const [editingStaple, setEditingStaple] = useState<Staple | null>(null);
   const [deleteConfirmStaple, setDeleteConfirmStaple] = useState<Staple | null>(null);
+  const [showVoiceModal, setShowVoiceModal] = useState(false);
 
   // Combined loading state
   const loading = mealsLoading || weekLoading || groceryLoading || staplesLoading;
@@ -271,6 +273,17 @@ function GroceryListPage() {
         </button>
       )}
 
+      {/* Voice Input FAB - hidden during shopping mode */}
+      {!isShoppingMode && (
+        <button
+          onClick={() => setShowVoiceModal(true)}
+          className="fixed bottom-24 left-4 w-14 h-14 bg-terracotta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors"
+          aria-label="Add item by voice"
+        >
+          <span className="text-xl">🎙️</span>
+        </button>
+      )}
+
       {/* Generate FAB - hidden during shopping mode */}
       {!isShoppingMode && (
         <button
@@ -323,6 +336,13 @@ function GroceryListPage() {
         message={`Are you sure you want to delete "${deleteConfirmStaple?.name}"? This action cannot be undone.`}
         confirmText="Delete"
         confirmVariant="danger"
+      />
+
+      {/* Voice Input Modal */}
+      <VoiceInputModal
+        isOpen={showVoiceModal}
+        onClose={() => setShowVoiceModal(false)}
+        onAddItem={addItem}
       />
     </div>
   );
