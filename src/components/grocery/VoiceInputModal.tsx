@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
+import { parseGroceryItems } from '../../utils/parseGroceryItems';
+import { CATEGORIES } from '../../types';
 import type { GroceryItem } from '../../types';
 
 interface VoiceInputModalProps {
@@ -47,34 +49,46 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
     }
   };
 
-  const handleAddItem = async () => {
-    const itemName = isSupported ? transcript.trim() : textInput.trim();
+  // Parse the current input into items
+  const currentValue = isSupported ? transcript : textInput;
+  const parsedItems = useMemo(() => {
+    if (!currentValue.trim()) return [];
+    return parseGroceryItems(currentValue);
+  }, [currentValue]);
 
-    if (!itemName) return;
+  const canAdd = parsedItems.length > 0;
+
+  const handleAddItems = async () => {
+    if (parsedItems.length === 0) return;
 
     setSaving(true);
     try {
-      await onAddItem({
-        name: itemName,
-        qty: 1,
-        unit: 'item',
-        category: 'pantry',
-        store: 'safeway',
-        status: 'need',
-        source: 'quick-add',
-      });
+      // Add all parsed items
+      for (const item of parsedItems) {
+        await onAddItem({
+          name: item.name,
+          qty: 1,
+          unit: 'item',
+          category: item.category,
+          store: item.store,
+          status: 'need',
+          source: 'quick-add',
+        });
+      }
       handleClose();
     } catch (err) {
-      console.error('Failed to add item:', err);
+      console.error('Failed to add items:', err);
     } finally {
       setSaving(false);
     }
   };
 
-  if (!isOpen) return null;
+  // Get category name for display
+  const getCategoryName = (categoryId: string) => {
+    return CATEGORIES.find((c) => c.id === categoryId)?.name || categoryId;
+  };
 
-  const currentValue = isSupported ? transcript : textInput;
-  const canAdd = currentValue.trim().length > 0;
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -98,7 +112,7 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
 
         {/* Title */}
         <h2 className="text-xl font-semibold text-white">
-          {isSupported ? 'Say an item' : 'Type an item'}
+          {isSupported ? 'Say items' : 'Type items'}
         </h2>
 
         {/* Voice input (if supported) */}
@@ -120,8 +134,10 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
             </button>
 
             {/* Status text */}
-            <p className="text-white/60 text-sm">
+            <p className="text-white/60 text-sm text-center">
               {isListening ? 'Listening...' : 'Tap to speak'}
+              <br />
+              <span className="text-xs">Say multiple items: "eggs and milk"</span>
             </p>
 
             {/* Error message */}
@@ -134,6 +150,7 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
             {/* Transcript display */}
             {transcript && (
               <div className="bg-white/10 rounded-soft px-4 py-3 w-full">
+                <p className="text-white/60 text-xs mb-1">You said:</p>
                 <p className="text-white text-lg text-center">{transcript}</p>
               </div>
             )}
@@ -146,32 +163,54 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
                 type="text"
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
-                placeholder="e.g., Milk, Eggs, Bread"
+                placeholder="e.g., eggs and milk, bread"
                 className="w-full h-12 px-4 rounded-soft border border-white/20 bg-white/10 text-white placeholder:text-white/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && canAdd) {
-                    handleAddItem();
+                    handleAddItems();
                   }
                 }}
               />
             </div>
             <p className="text-white/60 text-sm text-center">
-              Voice input not supported in this browser.
+              Voice input not supported.
               <br />
-              Type your item instead.
+              <span className="text-xs">Separate items with "and" or commas</span>
             </p>
           </>
         )}
 
-        {/* Add Item button */}
+        {/* Parsed items preview */}
+        {parsedItems.length > 0 && (
+          <div className="w-full space-y-2">
+            <p className="text-white/60 text-xs">
+              {parsedItems.length} item{parsedItems.length !== 1 ? 's' : ''} detected:
+            </p>
+            <div className="space-y-1 max-h-32 overflow-y-auto">
+              {parsedItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between bg-white/10 rounded px-3 py-2"
+                >
+                  <span className="text-white font-medium">{item.name}</span>
+                  <span className="text-white/50 text-xs">{getCategoryName(item.category)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Add Items button */}
         {canAdd && (
           <button
-            onClick={handleAddItem}
+            onClick={handleAddItems}
             disabled={saving}
             className="w-full bg-terracotta text-white py-3 rounded-soft font-semibold hover:bg-terracotta/90 active:bg-terracotta/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {saving ? 'Adding...' : `Add "${currentValue.trim()}"`}
+            {saving
+              ? 'Adding...'
+              : `Add ${parsedItems.length} item${parsedItems.length !== 1 ? 's' : ''}`}
           </button>
         )}
       </div>
