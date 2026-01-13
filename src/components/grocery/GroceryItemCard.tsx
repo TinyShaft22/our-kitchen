@@ -11,6 +11,7 @@ export function GroceryItemCard({ item, onToggleInCart }: GroceryItemCardProps) 
   const storeName = STORES.find((s) => s.id === item.store)?.name || item.store;
   const categoryName = CATEGORIES.find((c) => c.id === item.category)?.name || item.category;
   const isInCart = item.status === 'in-cart';
+  const isStaple = item.source === 'staple';
 
   return (
     <button
@@ -25,8 +26,11 @@ export function GroceryItemCard({ item, onToggleInCart }: GroceryItemCardProps) 
           <h3 className={`font-semibold truncate ${
             isInCart ? 'line-through text-charcoal/50' : 'text-charcoal'
           }`}>
-            {isInCart && <span className="mr-1">✓</span>}
+            {isInCart && <span className="mr-1">&#10003;</span>}
             {item.name}
+            {isStaple && (
+              <span className="ml-1.5 text-xs font-normal text-charcoal/50">staple</span>
+            )}
           </h3>
           <p className={`text-sm mt-0.5 ${
             isInCart ? 'text-charcoal/40' : 'text-charcoal/70'

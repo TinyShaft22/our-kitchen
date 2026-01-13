@@ -13,7 +13,7 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { GroceryItem, GroceryStatus, Store } from '../types';
+import type { GroceryItem, GroceryStatus, Store, Staple } from '../types';
 import type { GroceryItemInput } from '../utils/generateGroceryItems';
 
 export type { GroceryItemInput } from '../utils/generateGroceryItems';
@@ -27,7 +27,7 @@ interface UseGroceryListReturn {
   deleteItem: (id: string) => Promise<void>;
   updateStatus: (id: string, status: GroceryStatus) => Promise<void>;
   clearBoughtItems: () => Promise<void>;
-  generateFromWeeklyPlan: (items: GroceryItemInput[]) => Promise<void>;
+  generateFromWeeklyPlan: (items: GroceryItemInput[], staples?: Staple[]) => Promise<void>;
   completeTrip: (store?: Store) => Promise<number>;
 }
 
@@ -226,7 +226,7 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
   );
 
   const generateFromWeeklyPlan = useCallback(
-    async (newItems: GroceryItemInput[]): Promise<void> => {
+    async (newItems: GroceryItemInput[], staples?: Staple[]): Promise<void> => {
       if (!householdCode) {
         throw new Error('No household code available');
       }
@@ -236,18 +236,30 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
         const batch = writeBatch(db);
 
         // Step 1: Delete all existing items where source === 'meal'
-        const q = query(
+        const mealQuery = query(
           groceryRef,
           where('householdCode', '==', householdCode),
           where('source', '==', 'meal')
         );
 
-        const snapshot = await getDocs(q);
-        snapshot.docs.forEach((docSnap) => {
+        const mealSnapshot = await getDocs(mealQuery);
+        mealSnapshot.docs.forEach((docSnap) => {
           batch.delete(docSnap.ref);
         });
 
-        // Step 2: Add all new items with status 'need' and source 'meal'
+        // Step 2: Delete all existing items where source === 'staple'
+        const stapleQuery = query(
+          groceryRef,
+          where('householdCode', '==', householdCode),
+          where('source', '==', 'staple')
+        );
+
+        const stapleSnapshot = await getDocs(stapleQuery);
+        stapleSnapshot.docs.forEach((docSnap) => {
+          batch.delete(docSnap.ref);
+        });
+
+        // Step 3: Add all new items with status 'need' and source 'meal'
         for (const item of newItems) {
           const newDocRef = doc(groceryRef);
           batch.set(newDocRef, {
@@ -258,7 +270,24 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
           });
         }
 
-        // Step 3: Commit the batch atomically
+        // Step 4: Add staple items with status 'need' and source 'staple'
+        if (staples && staples.length > 0) {
+          for (const staple of staples) {
+            const newDocRef = doc(groceryRef);
+            batch.set(newDocRef, {
+              name: staple.name,
+              qty: 1,
+              unit: 'item',
+              category: staple.category,
+              store: staple.store,
+              status: 'need',
+              source: 'staple',
+              householdCode,
+            });
+          }
+        }
+
+        // Step 5: Commit the batch atomically
         await batch.commit();
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to generate grocery list';

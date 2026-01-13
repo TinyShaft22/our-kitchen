@@ -72,14 +72,16 @@ function GroceryListPage() {
   }, [filteredItems]);
 
   const handleGenerate = async () => {
-    if (!currentWeek?.meals.length) {
+    if (!currentWeek?.meals.length && enabledStaples.length === 0) {
       return;
     }
 
     setGenerating(true);
     try {
-      const generatedItems = generateGroceryItems(meals, currentWeek.meals);
-      await generateFromWeeklyPlan(generatedItems);
+      const generatedItems = currentWeek?.meals.length
+        ? generateGroceryItems(meals, currentWeek.meals)
+        : [];
+      await generateFromWeeklyPlan(generatedItems, enabledStaples);
     } catch (err) {
       console.error('Failed to generate grocery list:', err);
     } finally {
@@ -273,9 +275,9 @@ function GroceryListPage() {
       {!isShoppingMode && (
         <button
           onClick={handleGenerate}
-          disabled={generating || !currentWeek?.meals.length}
+          disabled={generating || (!currentWeek?.meals.length && enabledStaples.length === 0)}
           className="fixed bottom-24 right-4 w-14 h-14 bg-terracotta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Generate grocery list from weekly meals"
+          aria-label="Generate grocery list from weekly meals and staples"
         >
           {generating ? (
             <span className="text-sm">...</span>
