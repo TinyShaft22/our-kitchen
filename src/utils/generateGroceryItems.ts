@@ -16,8 +16,8 @@ export interface GroceryItemInput {
  * Generate grocery items from weekly meal plan entries
  *
  * Transforms weekly planned meals into a combined grocery list by:
- * 1. Scaling ingredient quantities based on planned vs recipe servings
- * 2. Combining duplicates (same name AND unit) by summing quantities
+ * 1. Collecting unique ingredients by name (case-insensitive)
+ * 2. Each ingredient becomes qty=1, unit='item'
  *
  * @param meals - Array of available meals with ingredients
  * @param weeklyEntries - Array of weekly plan entries with mealId and servings
@@ -27,8 +27,8 @@ export function generateGroceryItems(
   meals: Meal[],
   weeklyEntries: WeeklyMealEntry[]
 ): GroceryItemInput[] {
-  // Map to track combined ingredients: key is "lowercaseName|unit"
-  const combinedMap = new Map<string, GroceryItemInput>();
+  // Map to track unique ingredients: key is lowercased name
+  const uniqueMap = new Map<string, GroceryItemInput>();
 
   for (const entry of weeklyEntries) {
     // Skip entries with zero or negative servings
@@ -44,36 +44,22 @@ export function generateGroceryItems(
       continue;
     }
 
-    // Skip if meal has zero servings (prevent division by zero)
-    if (meal.servings <= 0) {
-      continue;
-    }
-
-    // Calculate scaling factor
-    const scaleFactor = entry.servings / meal.servings;
-
     // Process each ingredient
     for (const ingredient of meal.ingredients) {
-      const scaledQty = ingredient.qty * scaleFactor;
-
-      // Skip ingredients with zero quantity
-      if (scaledQty <= 0) {
+      // Skip ingredients without a name
+      if (!ingredient.name.trim()) {
         continue;
       }
 
-      // Create key for deduplication (case-insensitive name + unit)
-      const key = `${ingredient.name.toLowerCase()}|${ingredient.unit.toLowerCase()}`;
+      // Create key for deduplication (case-insensitive name only)
+      const key = ingredient.name.toLowerCase().trim();
 
-      if (combinedMap.has(key)) {
-        // Add to existing quantity
-        const existing = combinedMap.get(key)!;
-        existing.qty += scaledQty;
-      } else {
-        // Create new entry (keep original casing from first occurrence)
-        combinedMap.set(key, {
-          name: ingredient.name,
-          qty: scaledQty,
-          unit: ingredient.unit,
+      // Only add if not already present (first occurrence wins)
+      if (!uniqueMap.has(key)) {
+        uniqueMap.set(key, {
+          name: ingredient.name.trim(),
+          qty: 1,
+          unit: 'item',
           category: ingredient.category,
           store: ingredient.defaultStore,
         });
@@ -82,5 +68,5 @@ export function generateGroceryItems(
   }
 
   // Convert map values to array
-  return Array.from(combinedMap.values());
+  return Array.from(uniqueMap.values());
 }
