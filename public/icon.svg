@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#FDF8F3"/>
+
+  <!-- Cooking pot body -->
+  <path d="M128 224 h256 v160 q0 48 -48 48 h-160 q-48 0 -48 -48 z" fill="#C4755B"/>
+
+  <!-- Pot rim -->
+  <rect x="112" y="208" width="288" height="32" rx="8" fill="#C4755B"/>
+
+  <!-- Lid handle -->
+  <rect x="224" y="144" width="64" height="24" rx="12" fill="#87A878"/>
+
+  <!-- Lid -->
+  <ellipse cx="256" cy="176" rx="112" ry="24" fill="#87A878"/>
+
+  <!-- Steam wisps -->
+  <path d="M192 120 q-8 -24 8 -40" stroke="#E8B86D" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M256 104 q-8 -24 8 -40" stroke="#E8B86D" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M320 120 q-8 -24 8 -40" stroke="#E8B86D" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+  <!-- Pot handles -->
+  <rect x="80" y="256" width="48" height="16" rx="8" fill="#3D3D3D"/>
+  <rect x="384" y="256" width="48" height="16" rx="8" fill="#3D3D3D"/>
+</svg>

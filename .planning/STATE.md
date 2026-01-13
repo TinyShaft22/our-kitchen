@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** Phase 9 complete — Ready for Phase 10 (PWA & Polish)
+**Current focus:** Phase 10 in progress — PWA & Polish
 
 ## Current Position
 
-Phase: 9 of 10 (Baking Corner)
-Plan: 3 of 3 in current phase
-Status: Complete
-Last activity: 2026-01-13 — Completed Phase 9 (Baking Corner)
+Phase: 10 of 10 (PWA & Polish)
+Plan: 2 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-13 — Completed Plan 10-02 (Icons & iOS)
 
 Progress: ██████████████████████░ 90%
 
@@ -76,7 +76,7 @@ Resume file: None
 
 ## Next Steps
 
-Phase 9: Baking Corner
-- Bella's baking inventory tracking
-- Quantity tracking with stocked/low/out status
-- Restock items to grocery list
+Phase 10: PWA & Polish
+- Plan 10-01: Install vite-plugin-pwa, configure manifest & service worker
+- Plan 10-02: Create app icons for all platforms, iOS meta tags
+- Plan 10-03: Final polish, testing, and completion

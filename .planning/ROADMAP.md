@@ -86,9 +86,8 @@ None
 ### Phase 10: PWA & Polish
 **Goal**: Installable PWA, offline-capable, warm & cozy UI theme applied
 **Depends on**: All phases
-**Research**: Likely (PWA setup, offline Firestore)
-**Research topics**: Vite PWA plugin configuration, Firestore offline persistence, PWA manifest for iOS
-**Plans**: TBD
+**Research**: Unlikely (standard Vite PWA patterns, theme already applied)
+**Plans**: 3 (10-01: PWA Setup, 10-02: Icons & iOS, 10-03: Final Polish)
 
 ## Progress
 
@@ -106,4 +105,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 7. Shopping Mode | 2/2 | Complete | 2026-01-12 |
 | 8. Voice & Staples | 3/3 | Complete | 2026-01-13 |
 | 9. Baking Corner | 3/3 | Complete | 2026-01-13 |
-| 10. PWA & Polish | 0/TBD | Not started | - |
+| 10. PWA & Polish | 2/3 | In progress | - |
