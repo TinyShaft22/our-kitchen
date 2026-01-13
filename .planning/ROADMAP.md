@@ -120,7 +120,7 @@ None
 **Goal**: Add markdown notes field to meals for cooking instructions, display in expandable section on Meals page
 **Depends on**: Phase 12
 **Research**: Unlikely (simple text field, markdown rendering)
-**Plans**: TBD
+**Plans**: 1 (13-01: Instructions Field & Display)
 
 ### Phase 14: Meal Images
 **Goal**: Firebase Storage integration for uploading/capturing meal photos, display as thumbnail and in detail view
@@ -148,5 +148,5 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 10. PWA & Polish | v1.0 | 2/3 | In progress | - |
 | 11. Simplify Ingredients | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
-| 13. Recipe Instructions | v1.1 | 0/? | Not started | - |
+| 13. Recipe Instructions | v1.1 | 0/1 | Not started | - |
 | 14. Meal Images | v1.1 | 0/? | Not started | - |
