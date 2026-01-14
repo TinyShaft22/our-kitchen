@@ -21,7 +21,7 @@ function formatWeekId(weekId: string): string {
 
 function Home() {
   const { householdCode } = useHousehold();
-  const { currentWeek, loading: weekLoading, weekId, addMealToWeek, removeMealFromWeek, updateServings } = useWeeklyPlan(householdCode);
+  const { currentWeek, loading: weekLoading, weekId, addMealToWeek, removeMealFromWeek, updateServings, toggleAlreadyHave } = useWeeklyPlan(householdCode);
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -33,11 +33,19 @@ function Home() {
   const [removingEntry, setRemovingEntry] = useState<WeeklyMealEntry | null>(null);
   const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
 
+  // Helper to get meal by ID
+  const getMealById = (mealId: string) => {
+    return meals.find((m) => m.id === mealId) ?? null;
+  };
+
   // Helper to get meal name by ID
   const getMealName = (mealId: string): string => {
-    const meal = meals.find((m) => m.id === mealId);
+    const meal = getMealById(mealId);
     return meal?.name ?? 'Unknown Meal';
   };
+
+  // Get alreadyHave list from current week
+  const alreadyHave = currentWeek?.alreadyHave ?? [];
 
   // Modal handlers
   const handleAddClick = () => {
@@ -122,9 +130,11 @@ function Home() {
             <WeeklyMealCard
               key={entry.mealId}
               entry={entry}
-              mealName={getMealName(entry.mealId)}
+              meal={getMealById(entry.mealId)}
+              alreadyHave={alreadyHave}
               onEditServings={handleEditServings}
               onRemove={handleRemove}
+              onToggleAlreadyHave={toggleAlreadyHave}
             />
           ))}
         </div>
