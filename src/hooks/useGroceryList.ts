@@ -27,7 +27,7 @@ interface UseGroceryListReturn {
   deleteItem: (id: string) => Promise<void>;
   updateStatus: (id: string, status: GroceryStatus) => Promise<void>;
   clearBoughtItems: () => Promise<void>;
-  generateFromWeeklyPlan: (items: GroceryItemInput[], staples?: Staple[]) => Promise<void>;
+  generateFromWeeklyPlan: (items: GroceryItemInput[], staples?: Staple[], bakingItems?: GroceryItemInput[]) => Promise<void>;
   completeTrip: (store?: Store) => Promise<number>;
 }
 
@@ -226,7 +226,7 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
   );
 
   const generateFromWeeklyPlan = useCallback(
-    async (newItems: GroceryItemInput[], staples?: Staple[]): Promise<void> => {
+    async (newItems: GroceryItemInput[], staples?: Staple[], bakingItems?: GroceryItemInput[]): Promise<void> => {
       if (!householdCode) {
         throw new Error('No household code available');
       }
@@ -259,7 +259,19 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
           batch.delete(docSnap.ref);
         });
 
-        // Step 3: Add all new items with status 'need' and source 'meal'
+        // Step 3: Delete all existing items where source === 'baking'
+        const bakingQuery = query(
+          groceryRef,
+          where('householdCode', '==', householdCode),
+          where('source', '==', 'baking')
+        );
+
+        const bakingSnapshot = await getDocs(bakingQuery);
+        bakingSnapshot.docs.forEach((docSnap) => {
+          batch.delete(docSnap.ref);
+        });
+
+        // Step 4: Add all new items with status 'need' and source 'meal'
         for (const item of newItems) {
           const newDocRef = doc(groceryRef);
           batch.set(newDocRef, {
@@ -270,7 +282,7 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
           });
         }
 
-        // Step 4: Add staple items with status 'need' and source 'staple'
+        // Step 5: Add staple items with status 'need' and source 'staple'
         if (staples && staples.length > 0) {
           for (const staple of staples) {
             const newDocRef = doc(groceryRef);
@@ -287,7 +299,20 @@ export function useGroceryList(householdCode: string | null): UseGroceryListRetu
           }
         }
 
-        // Step 5: Commit the batch atomically
+        // Step 6: Add baking items with status 'need' and source 'baking'
+        if (bakingItems && bakingItems.length > 0) {
+          for (const item of bakingItems) {
+            const newDocRef = doc(groceryRef);
+            batch.set(newDocRef, {
+              ...item,
+              status: 'need',
+              source: 'baking',
+              householdCode,
+            });
+          }
+        }
+
+        // Step 7: Commit the batch atomically
         await batch.commit();
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to generate grocery list';

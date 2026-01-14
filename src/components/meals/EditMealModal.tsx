@@ -394,6 +394,7 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: 
                     ingredient={ingredient}
                     onChange={(updated) => handleUpdateIngredient(index, updated)}
                     onRemove={() => handleRemoveIngredient(index)}
+                    isBaking={isBaking}
                   />
                 ))}
               </div>

@@ -263,6 +263,7 @@ function BakingPage() {
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
         onSave={handleAdd}
+        householdCode={householdCode || ''}
       />
 
       {/* Edit Modal */}
@@ -271,6 +272,7 @@ function BakingPage() {
         essential={editingEssential}
         onClose={() => setEditingEssential(null)}
         onSave={handleEdit}
+        householdCode={householdCode || ''}
       />
 
       {/* Delete Confirmation */}

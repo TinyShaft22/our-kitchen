@@ -1,18 +1,20 @@
 import type { Ingredient, Category, Store } from '../../types';
-import { STORES, CATEGORIES } from '../../types';
+import { STORES, CATEGORIES, BAKING_UNITS } from '../../types';
 
 interface IngredientInputProps {
   ingredient: Ingredient;
   onChange: (updated: Ingredient) => void;
   onRemove: () => void;
+  isBaking?: boolean;
 }
 
 export function IngredientInput({
   ingredient,
   onChange,
   onRemove,
+  isBaking = false,
 }: IngredientInputProps) {
-  const handleChange = (field: keyof Ingredient, value: string | number) => {
+  const handleChange = (field: keyof Ingredient, value: string | number | undefined) => {
     onChange({
       ...ingredient,
       [field]: value,
@@ -40,7 +42,37 @@ export function IngredientInput({
         </button>
       </div>
 
-      {/* Row 2: Category and Store */}
+      {/* Row 2: Quantity and Unit (only for baking recipes) */}
+      {isBaking && (
+        <div className="flex gap-2">
+          <input
+            type="number"
+            min="0"
+            step="0.25"
+            value={ingredient.qty ?? ''}
+            onChange={(e) => {
+              const val = e.target.value;
+              handleChange('qty', val === '' ? undefined : parseFloat(val));
+            }}
+            placeholder="Amount"
+            className="w-24 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
+          />
+          <select
+            value={ingredient.unit || ''}
+            onChange={(e) => handleChange('unit', e.target.value || undefined)}
+            className="flex-1 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
+          >
+            <option value="">Select unit...</option>
+            {BAKING_UNITS.map((unit) => (
+              <option key={unit} value={unit}>
+                {unit}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {/* Row 3: Category and Store */}
       <div className="flex gap-2">
         <select
           value={ingredient.category}

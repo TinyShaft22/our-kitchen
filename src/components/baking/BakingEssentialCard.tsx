@@ -64,14 +64,25 @@ export function BakingEssentialCard({
 
   return (
     <div
-      className="bg-white rounded-soft shadow-soft p-3 min-h-[44px] flex items-center justify-between gap-3"
+      className="bg-white rounded-soft shadow-soft p-3 min-h-[44px]"
       onClick={() => setShowActions(!showActions)}
     >
-      {/* Left side: Name and store */}
-      <div className="flex-1 min-w-0">
-        <p className="font-medium text-charcoal truncate">{essential.name}</p>
-        <p className="text-sm text-charcoal/60">{storeName}</p>
-      </div>
+      <div className="flex items-center justify-between gap-3">
+        {/* Left side: Photo thumbnail and Name/store */}
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          {/* Thumbnail photo (collapsed view) */}
+          {essential.imageUrl && !showActions && (
+            <img
+              src={essential.imageUrl}
+              alt={essential.name}
+              className="w-10 h-10 rounded-soft object-cover flex-shrink-0"
+            />
+          )}
+          <div className="flex-1 min-w-0">
+            <p className="font-medium text-charcoal truncate">{essential.name}</p>
+            <p className="text-sm text-charcoal/60">{storeName}</p>
+          </div>
+        </div>
 
       {/* Action buttons (shown on tap) */}
       {showActions && (
@@ -119,6 +130,18 @@ export function BakingEssentialCard({
       >
         {statusConfig.label}
       </button>
+      </div>
+
+      {/* Expanded view: Larger photo */}
+      {showActions && essential.imageUrl && (
+        <div className="mt-3 pt-3 border-t border-charcoal/10">
+          <img
+            src={essential.imageUrl}
+            alt={essential.name}
+            className="w-48 h-48 rounded-soft object-cover"
+          />
+        </div>
+      )}
     </div>
   );
 }

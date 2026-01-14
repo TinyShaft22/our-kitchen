@@ -4,7 +4,8 @@ import { useMeals } from '../hooks/useMeals';
 import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
 import { useGroceryList } from '../hooks/useGroceryList';
 import { useStaples } from '../hooks/useStaples';
-import { generateGroceryItems } from '../utils/generateGroceryItems';
+import { useBaking } from '../hooks/useBaking';
+import { generateGroceryItems, generateBakingGroceryItems } from '../utils/generateGroceryItems';
 import { GroceryItemCard } from '../components/grocery/GroceryItemCard';
 import { StapleCard } from '../components/grocery/StapleCard';
 import { AddStapleModal } from '../components/grocery/AddStapleModal';
@@ -20,6 +21,7 @@ function GroceryListPage() {
   const { currentWeek, loading: weekLoading, toggleAlreadyHave } = useWeeklyPlan(householdCode);
   const { items, loading: groceryLoading, addItem, generateFromWeeklyPlan, updateStatus, updateItem, deleteItem, completeTrip } = useGroceryList(householdCode);
   const { staples, enabledStaples, loading: staplesLoading, addStaple, updateStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
+  const { essentials, loading: bakingLoading } = useBaking(householdCode);
   const [completing, setCompleting] = useState(false);
 
   // Ref to track if initial load is complete
@@ -33,7 +35,7 @@ function GroceryListPage() {
   const [showVoiceModal, setShowVoiceModal] = useState(false);
 
   // Combined loading state
-  const loading = mealsLoading || weekLoading || groceryLoading || staplesLoading;
+  const loading = mealsLoading || weekLoading || groceryLoading || staplesLoading || bakingLoading;
 
   // Auto-sync effect: regenerate grocery list when dependencies change
   useEffect(() => {
@@ -51,10 +53,15 @@ function GroceryListPage() {
     const timeoutId = setTimeout(async () => {
       try {
         const alreadyHave = currentWeek?.alreadyHave || [];
+        // Generate regular meal grocery items (excludes baking recipes)
         const generatedItems = currentWeek?.meals.length
           ? generateGroceryItems(meals, currentWeek.meals, alreadyHave)
           : [];
-        await generateFromWeeklyPlan(generatedItems, enabledStaples);
+        // Generate baking grocery items via inventory cross-check
+        const bakingItems = currentWeek?.meals.length
+          ? generateBakingGroceryItems(meals, currentWeek.meals, essentials)
+          : [];
+        await generateFromWeeklyPlan(generatedItems, enabledStaples, bakingItems);
       } catch (err) {
         console.error('Failed to auto-generate grocery list:', err);
       }
@@ -62,7 +69,7 @@ function GroceryListPage() {
 
     // Cleanup timeout on dependency change or unmount
     return () => clearTimeout(timeoutId);
-  }, [loading, currentWeek?.meals, currentWeek?.alreadyHave, enabledStaples, meals, generateFromWeeklyPlan]);
+  }, [loading, currentWeek?.meals, currentWeek?.alreadyHave, enabledStaples, essentials, meals, generateFromWeeklyPlan]);
 
   // Filter items by selected store
   const filteredItems = useMemo(() => {
@@ -325,6 +332,7 @@ function GroceryListPage() {
                     }
                     onDelete={() => deleteItem(item.id)}
                     onStoreChange={(store) => updateItem(item.id, { store })}
+                    onCategoryChange={(category) => updateItem(item.id, { category })}
                     onToggleAlreadyHave={
                       item.source === 'meal' ? () => toggleAlreadyHave(item.name) : undefined
                     }

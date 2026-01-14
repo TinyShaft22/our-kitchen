@@ -368,6 +368,7 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode }: AddMeal
                     ingredient={ingredient}
                     onChange={(updated) => handleUpdateIngredient(index, updated)}
                     onRemove={() => handleRemoveIngredient(index)}
+                    isBaking={isBaking}
                   />
                 ))}
               </div>

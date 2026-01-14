@@ -38,11 +38,32 @@ export const CATEGORIES: { id: Category; name: string }[] = [
   { id: 'baking', name: 'Baking' },
 ];
 
-// Ingredient - used within meals (simplified: no qty/unit, just what you need)
+// Baking unit options for ingredient quantities
+export const BAKING_UNITS = [
+  'tsp',
+  'tbsp',
+  'cup',
+  'oz',
+  'lb',
+  'g',
+  'kg',
+  'ml',
+  'L',
+  'pinch',
+  'dash',
+  'each',
+  'pkg',
+] as const;
+
+export type BakingUnit = typeof BAKING_UNITS[number];
+
+// Ingredient - used within meals (simplified: no qty/unit for regular meals, optional for baking)
 export interface Ingredient {
   name: string;
   category: Category;
   defaultStore: Store;
+  qty?: number;   // Optional quantity (used for baking recipes)
+  unit?: string;  // Optional unit (used for baking recipes)
 }
 
 // Meal - a recipe with ingredients
@@ -110,6 +131,7 @@ export interface BakingEssential {
   name: string;
   store: Store;
   status: BakingStatus;
+  imageUrl?: string;
   householdCode: string;
 }
 

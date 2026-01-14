@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { storage } from '../../config/firebase';
 import type { BakingEssential, BakingStatus, Store } from '../../types';
 import { STORES } from '../../types';
 
@@ -13,14 +15,74 @@ interface EditBakingModalProps {
   essential: BakingEssential | null;
   onClose: () => void;
   onSave: (id: string, updates: Partial<Omit<BakingEssential, 'id' | 'householdCode'>>) => Promise<void>;
+  householdCode: string;
 }
 
-export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBakingModalProps) {
+export function EditBakingModal({ isOpen, essential, onClose, onSave, householdCode }: EditBakingModalProps) {
   const [name, setName] = useState('');
   const [store, setStore] = useState<Store>('costco');
   const [status, setStatus] = useState<BakingStatus>('stocked');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [removeImage, setRemoveImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Compress image before upload (max 800px width, JPEG quality 0.8)
+  const compressImage = async (file: File): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxWidth = 800;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => blob ? resolve(blob) : reject(new Error('Failed to compress')),
+          'image/jpeg',
+          0.8
+        );
+        URL.revokeObjectURL(img.src);
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (imagePreview && imagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(imagePreview);
+      }
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+      setRemoveImage(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    if (imagePreview && imagePreview.startsWith('blob:')) {
+      URL.revokeObjectURL(imagePreview);
+    }
+    setImageFile(null);
+    setImagePreview(null);
+    setRemoveImage(true);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   // Pre-fill form when essential changes
   useEffect(() => {
@@ -29,6 +91,12 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
       setStore(essential.store || 'costco');
       setStatus(essential.status);
       setError(null);
+      setImagePreview(essential.imageUrl || null);
+      setRemoveImage(false);
+      setImageFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   }, [essential]);
 
@@ -50,10 +118,48 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
     setError(null);
 
     try {
+      let imageUrl: string | undefined = essential.imageUrl;
+
+      // Handle image changes
+      if (imageFile) {
+        // New image selected - upload it
+        const filename = `${Date.now()}.jpg`;
+        const storagePath = `baking/${householdCode}/${essential.id}/${filename}`;
+
+        const compressedBlob = await compressImage(imageFile);
+        const storageRef = ref(storage, storagePath);
+        await uploadBytes(storageRef, compressedBlob);
+        imageUrl = await getDownloadURL(storageRef);
+
+        // Delete old image if it existed
+        if (essential.imageUrl) {
+          try {
+            const oldImageRef = ref(storage, essential.imageUrl);
+            await deleteObject(oldImageRef);
+          } catch {
+            // Ignore errors deleting old image (might not exist)
+          }
+        }
+      } else if (removeImage) {
+        // User wants to remove image
+        imageUrl = undefined;
+
+        // Delete old image from storage
+        if (essential.imageUrl) {
+          try {
+            const oldImageRef = ref(storage, essential.imageUrl);
+            await deleteObject(oldImageRef);
+          } catch {
+            // Ignore errors deleting old image (might not exist)
+          }
+        }
+      }
+
       await onSave(essential.id, {
         name: name.trim(),
         store,
         status,
+        imageUrl,
       });
       handleClose();
     } catch (err) {
@@ -159,6 +265,54 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave }: EditBaki
                 </option>
               ))}
             </select>
+          </div>
+
+          {/* Photo */}
+          <div>
+            <label className="block text-sm font-medium text-charcoal mb-1">
+              Photo (optional)
+            </label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageSelect}
+              className="hidden"
+              id="edit-baking-photo"
+            />
+            {imagePreview ? (
+              <div className="space-y-2">
+                <img
+                  src={imagePreview}
+                  alt="Baking essential preview"
+                  className="w-48 h-48 rounded-soft object-cover"
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="h-9 px-3 rounded-soft border border-charcoal/20 text-charcoal text-sm hover:bg-charcoal/5 transition-colors"
+                  >
+                    Change Photo
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="h-9 px-3 rounded-soft border border-red-300 text-red-600 text-sm hover:bg-red-50 transition-colors"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="h-11 px-4 rounded-soft border border-dashed border-charcoal/30 text-charcoal/60 text-sm hover:border-terracotta hover:text-terracotta transition-colors"
+              >
+                + Add Photo
+              </button>
+            )}
           </div>
         </div>
       </div>

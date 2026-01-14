@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { GroceryItem, Store } from '../../types';
+import type { GroceryItem, Store, Category } from '../../types';
 import { STORES, CATEGORIES } from '../../types';
 
 interface GroceryItemCardProps {
@@ -7,11 +7,13 @@ interface GroceryItemCardProps {
   onToggleInCart?: () => void;
   onDelete?: () => void;
   onStoreChange?: (store: Store) => void;
+  onCategoryChange?: (category: Category) => void;
   onToggleAlreadyHave?: () => void;
 }
 
-export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange, onToggleAlreadyHave }: GroceryItemCardProps) {
+export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange, onCategoryChange, onToggleAlreadyHave }: GroceryItemCardProps) {
   const [showStorePicker, setShowStorePicker] = useState(false);
+  const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const isMealSourced = item.source === 'meal';
 
   // Get display names for store and category
@@ -31,6 +33,20 @@ export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange,
     setShowStorePicker(false);
     if (onStoreChange) {
       onStoreChange(store);
+    }
+  };
+
+  const handleCategoryClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onCategoryChange) {
+      setShowCategoryPicker(true);
+    }
+  };
+
+  const handleCategorySelect = (category: Category) => {
+    setShowCategoryPicker(false);
+    if (onCategoryChange) {
+      onCategoryChange(category);
     }
   };
 
@@ -92,10 +108,17 @@ export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange,
               {storeName}
             </button>
 
-            {/* Category tag */}
-            <span className="text-xs px-2 py-0.5 rounded-full bg-sage/20 text-sage">
+            {/* Category tag - clickable */}
+            <button
+              type="button"
+              onClick={handleCategoryClick}
+              className={`text-xs px-2 py-0.5 rounded-full bg-sage/20 text-sage transition-colors ${
+                onCategoryChange ? 'hover:bg-sage/30 cursor-pointer' : ''
+              }`}
+              disabled={!onCategoryChange}
+            >
               {categoryName}
-            </span>
+            </button>
 
             {/* Already Have button - only for meal-sourced items */}
             {isMealSourced && onToggleAlreadyHave && (
@@ -150,6 +173,35 @@ export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange,
                 }`}
               >
                 {store.name}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Category picker dropdown */}
+      {showCategoryPicker && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40"
+            onClick={() => setShowCategoryPicker(false)}
+          />
+
+          {/* Dropdown */}
+          <div className="absolute right-0 top-full mt-1 z-50 bg-white rounded-soft shadow-lg border border-charcoal/10 py-1 min-w-[120px]">
+            {CATEGORIES.map((category) => (
+              <button
+                key={category.id}
+                type="button"
+                onClick={() => handleCategorySelect(category.id)}
+                className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+                  category.id === item.category
+                    ? 'bg-sage/10 text-sage font-medium'
+                    : 'text-charcoal hover:bg-charcoal/5'
+                }`}
+              >
+                {category.name}
               </button>
             ))}
           </div>
