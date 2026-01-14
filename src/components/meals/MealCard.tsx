@@ -79,23 +79,27 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
       {/* Expanded Content */}
       {isExpanded && (
         <div id={`meal-details-${meal.id}`} className="border-t border-charcoal/10">
-          {/* Large Photo */}
-          {meal.imageUrl && (
-            <img
-              src={meal.imageUrl}
-              alt={meal.name}
-              className="w-full h-48 object-cover"
-            />
-          )}
-
           {/* Details Section */}
           <div className="p-4 space-y-4">
-            {/* Servings Info */}
-            <div className="text-sm text-charcoal/70">
-              <span className="font-medium text-charcoal">Servings:</span> {meal.servings}
-              <span className="text-xs text-charcoal/50 ml-1">
-                (how many people this recipe serves)
-              </span>
+            {/* Photo and Servings Row */}
+            <div className="flex gap-4">
+              {/* Square Photo */}
+              {meal.imageUrl && (
+                <img
+                  src={meal.imageUrl}
+                  alt={meal.name}
+                  className="w-24 h-24 rounded-soft object-cover flex-shrink-0"
+                />
+              )}
+              {/* Servings Info */}
+              <div className="flex-1">
+                <div className="text-sm text-charcoal/70">
+                  <span className="font-medium text-charcoal">Servings:</span> {meal.servings}
+                </div>
+                <p className="text-xs text-charcoal/50 mt-1">
+                  How many people this recipe serves
+                </p>
+              </div>
             </div>
 
             {/* Ingredients List */}

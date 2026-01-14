@@ -98,31 +98,35 @@ export function WeeklyMealCard({
       {/* Expanded Content */}
       {isExpanded && (
         <div id={`weekly-meal-${entry.mealId}`} className="border-t border-charcoal/10">
-          {/* Large Photo */}
-          {meal?.imageUrl && (
-            <img
-              src={meal.imageUrl}
-              alt={mealName}
-              className="w-full h-48 object-cover"
-            />
-          )}
-
           {/* Details Section */}
           <div className="p-4 space-y-4">
-            {/* Servings Info */}
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-charcoal/70">
-                <span className="font-medium text-charcoal">Servings:</span> {entry.servings}
-                <span className="text-xs text-charcoal/50 ml-1">
-                  (how many people this recipe serves)
-                </span>
+            {/* Photo and Servings Row */}
+            <div className="flex gap-4 items-start">
+              {/* Square Photo */}
+              {meal?.imageUrl && (
+                <img
+                  src={meal.imageUrl}
+                  alt={mealName}
+                  className="w-24 h-24 rounded-soft object-cover flex-shrink-0"
+                />
+              )}
+              {/* Servings Info */}
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-charcoal/70">
+                    <span className="font-medium text-charcoal">Servings:</span> {entry.servings}
+                  </div>
+                  <button
+                    onClick={handleEditClick}
+                    className="h-9 px-3 rounded-soft border border-charcoal/20 text-charcoal text-sm hover:bg-charcoal/5 transition-colors"
+                  >
+                    Edit
+                  </button>
+                </div>
+                <p className="text-xs text-charcoal/50 mt-1">
+                  How many people this recipe serves
+                </p>
               </div>
-              <button
-                onClick={handleEditClick}
-                className="h-9 px-3 rounded-soft border border-charcoal/20 text-charcoal text-sm hover:bg-charcoal/5 transition-colors"
-              >
-                Edit
-              </button>
             </div>
 
             {/* Ingredients with "Already Have" toggles */}
