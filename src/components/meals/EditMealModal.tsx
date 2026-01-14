@@ -315,7 +315,6 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: 
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              capture="environment"
               onChange={handleImageSelect}
               className="hidden"
               id="edit-meal-photo"

@@ -289,7 +289,6 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode }: AddMeal
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              capture="environment"
               onChange={handleImageSelect}
               className="hidden"
               id="meal-photo"
