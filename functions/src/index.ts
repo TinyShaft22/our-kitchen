@@ -1,11 +1,14 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
+import { onRequest } from "firebase-functions/v2/https";
+import { initializeApp, getApps } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 
-// Initialize Firebase Admin SDK
-admin.initializeApp();
-
-const db = admin.firestore();
-const storage = admin.storage();
+// Helper to ensure Firebase is initialized
+function ensureInitialized() {
+  if (getApps().length === 0) {
+    initializeApp();
+  }
+}
 
 // Type definitions matching the PWA
 type Category =
@@ -108,11 +111,17 @@ function normalizeUnit(unit: string): string {
  * 
  * Returns: { success: boolean, mealId?: string, error?: string }
  */
-export const importRecipe = functions.https.onRequest(async (req, res) => {
+// Simple API key for iOS Shortcut access (not a secret - just prevents random access)
+const API_KEY = "ourkitchen2024";
+
+export const importRecipe = onRequest({ cors: true, invoker: "public" }, async (req, res) => {
+  // Initialize Firebase Admin on first call
+  ensureInitialized();
+
   // Enable CORS for iOS Shortcuts
   res.set("Access-Control-Allow-Origin", "*");
   res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Access-Control-Allow-Headers", "Content-Type, X-API-Key");
 
   // Handle preflight
   if (req.method === "OPTIONS") {
@@ -123,6 +132,13 @@ export const importRecipe = functions.https.onRequest(async (req, res) => {
   // Only allow POST
   if (req.method !== "POST") {
     res.status(405).json({ success: false, error: "Method not allowed" });
+    return;
+  }
+
+  // Check API key
+  const apiKey = req.headers["x-api-key"] || req.body?.apiKey;
+  if (apiKey !== API_KEY) {
+    res.status(401).json({ success: false, error: "Invalid API key" });
     return;
   }
 
@@ -140,6 +156,7 @@ export const importRecipe = functions.https.onRequest(async (req, res) => {
     }
 
     // Validate household exists
+    const db = getFirestore();
     const householdRef = db.collection("households").doc(data.householdCode);
     const householdDoc = await householdRef.get();
     
@@ -180,9 +197,9 @@ export const importRecipe = functions.https.onRequest(async (req, res) => {
       try {
         // Decode base64 image
         const imageBuffer = Buffer.from(data.imageBase64, "base64");
-        
+
         // Upload to Storage
-        const bucket = storage.bucket();
+        const bucket = getStorage().bucket();
         const filePath = `meals/${data.householdCode}/${mealId}/photo.jpg`;
         const file = bucket.file(filePath);
         
