@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import type { Meal } from '../../types';
 
 interface MealCardProps {
@@ -51,26 +52,38 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
         </div>
       </div>
 
-      {/* Expandable Instructions Section */}
+      {/* Expandable Recipe Section */}
       {meal.instructions && meal.instructions.trim() && (
         <>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="w-full h-10 px-4 flex items-center justify-between border-t border-charcoal/10 text-sm text-charcoal/70 hover:bg-cream/50 active:bg-cream/50 transition-colors"
             aria-expanded={isExpanded}
-            aria-controls={`instructions-${meal.id}`}
+            aria-controls={`recipe-${meal.id}`}
           >
-            <span>📝 Instructions</span>
+            <span>📝 Recipe</span>
             <span className="text-xs">{isExpanded ? '▲' : '▼'}</span>
           </button>
           {isExpanded && (
             <div
-              id={`instructions-${meal.id}`}
-              className="px-4 pb-4 bg-cream/50 rounded-b-soft"
+              id={`recipe-${meal.id}`}
+              className="px-4 pb-4 bg-cream/50 rounded-b-soft prose prose-sm prose-charcoal max-w-none"
             >
-              <p className="text-sm text-charcoal/80 whitespace-pre-wrap">
+              <ReactMarkdown
+                components={{
+                  p: ({ children }) => <p className="text-sm text-charcoal/80 mb-2 last:mb-0">{children}</p>,
+                  ul: ({ children }) => <ul className="text-sm text-charcoal/80 list-disc list-inside mb-2 last:mb-0">{children}</ul>,
+                  ol: ({ children }) => <ol className="text-sm text-charcoal/80 list-decimal list-inside mb-2 last:mb-0">{children}</ol>,
+                  li: ({ children }) => <li className="mb-1">{children}</li>,
+                  strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  h1: ({ children }) => <h3 className="text-base font-semibold text-charcoal mb-2">{children}</h3>,
+                  h2: ({ children }) => <h4 className="text-sm font-semibold text-charcoal mb-2">{children}</h4>,
+                  h3: ({ children }) => <h5 className="text-sm font-medium text-charcoal mb-1">{children}</h5>,
+                }}
+              >
                 {meal.instructions}
-              </p>
+              </ReactMarkdown>
             </div>
           )}
         </>

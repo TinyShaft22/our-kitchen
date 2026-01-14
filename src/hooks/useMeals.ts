@@ -92,8 +92,18 @@ export function useMeals(householdCode: string | null): UseMealsReturn {
 
       try {
         const mealRef = doc(db, 'meals', id);
-        // Don't allow updating householdCode - it's omitted from the type
-        await updateDoc(mealRef, updates);
+        // Filter out undefined values - Firestore doesn't accept them
+        // Use empty string for optional text fields that are cleared
+        const cleanUpdates: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(updates)) {
+          if (value !== undefined) {
+            cleanUpdates[key] = value;
+          } else if (key === 'instructions' || key === 'imageUrl') {
+            // For optional string fields, use empty string instead of undefined
+            cleanUpdates[key] = '';
+          }
+        }
+        await updateDoc(mealRef, cleanUpdates);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to update meal';
         setError(message);

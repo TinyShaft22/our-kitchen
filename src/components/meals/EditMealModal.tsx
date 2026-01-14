@@ -351,19 +351,19 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: 
             )}
           </div>
 
-          {/* Instructions */}
+          {/* Recipe */}
           <div>
             <label
               htmlFor="edit-instructions"
               className="block text-sm font-medium text-charcoal mb-1"
             >
-              Instructions (optional)
+              Recipe (optional)
             </label>
             <textarea
               id="edit-instructions"
               value={instructions}
               onChange={(e) => setInstructions(e.target.value)}
-              placeholder="Add cooking steps, tips, or notes..."
+              placeholder="Add cooking steps, tips, or notes... (supports **bold**, *italic*, - lists)"
               rows={4}
               className="w-full px-3 py-2 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta resize-y"
             />
