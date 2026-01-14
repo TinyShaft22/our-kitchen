@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../config/firebase';
 import type { Meal, Ingredient } from '../../types';
 import { IngredientInput } from './IngredientInput';
 
@@ -6,6 +8,7 @@ interface AddMealModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (meal: Omit<Meal, 'id' | 'householdCode'>) => Promise<void>;
+  householdCode: string;
 }
 
 // Default ingredient values for new ingredients
@@ -15,7 +18,7 @@ const createDefaultIngredient = (): Ingredient => ({
   defaultStore: 'safeway',
 });
 
-export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
+export function AddMealModal({ isOpen, onClose, onSave, householdCode }: AddMealModalProps) {
   const [name, setName] = useState('');
   const [servings, setServings] = useState(4);
   const [isBaking, setIsBaking] = useState(false);
@@ -23,6 +26,63 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Compress image before upload (max 800px width, JPEG quality 0.8)
+  const compressImage = async (file: File): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxWidth = 800;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => blob ? resolve(blob) : reject(new Error('Failed to compress')),
+          'image/jpeg',
+          0.8
+        );
+        URL.revokeObjectURL(img.src);
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      // Revoke previous preview URL if exists
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleRemoveImage = () => {
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+    }
+    setImageFile(null);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const resetForm = () => {
     setName('');
@@ -31,6 +91,15 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
     setInstructions('');
     setIngredients([]);
     setError(null);
+    // Clear image state and revoke object URL
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+    }
+    setImageFile(null);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleClose = () => {
@@ -70,11 +139,26 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
     setError(null);
 
     try {
+      let imageUrl: string | undefined;
+
+      // Upload image if selected
+      if (imageFile) {
+        const mealId = `meal_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+        const filename = `${Date.now()}.jpg`;
+        const storagePath = `meals/${householdCode}/${mealId}/${filename}`;
+
+        const compressedBlob = await compressImage(imageFile);
+        const storageRef = ref(storage, storagePath);
+        await uploadBytes(storageRef, compressedBlob);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+
       await onSave({
         name: name.trim(),
         servings,
         isBaking,
         instructions: instructions.trim() || undefined,
+        imageUrl,
         ingredients: validIngredients,
       });
       handleClose();
@@ -190,6 +274,55 @@ export function AddMealModal({ isOpen, onClose, onSave }: AddMealModalProps) {
                 }`}
               />
             </button>
+          </div>
+
+          {/* Photo */}
+          <div>
+            <label className="block text-sm font-medium text-charcoal mb-1">
+              Photo (optional)
+            </label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleImageSelect}
+              className="hidden"
+              id="meal-photo"
+            />
+            {imagePreview ? (
+              <div className="space-y-2">
+                <img
+                  src={imagePreview}
+                  alt="Meal preview"
+                  className="max-h-48 rounded-soft object-cover"
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="h-9 px-3 rounded-soft border border-charcoal/20 text-charcoal text-sm hover:bg-charcoal/5 transition-colors"
+                  >
+                    Change Photo
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="h-9 px-3 rounded-soft border border-red-300 text-red-600 text-sm hover:bg-red-50 transition-colors"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="h-11 px-4 rounded-soft border border-dashed border-charcoal/30 text-charcoal/60 text-sm hover:border-terracotta hover:text-terracotta transition-colors"
+              >
+                + Add Photo
+              </button>
+            )}
           </div>
 
           {/* Instructions */}

@@ -100,11 +100,14 @@ function MealLibrary() {
         ariaLabel="Add new meal"
       />
 
-      <AddMealModal
-        isOpen={isAddModalOpen}
-        onClose={handleCloseModal}
-        onSave={handleSaveMeal}
-      />
+      {householdCode && (
+        <AddMealModal
+          isOpen={isAddModalOpen}
+          onClose={handleCloseModal}
+          onSave={handleSaveMeal}
+          householdCode={householdCode}
+        />
+      )}
 
       {editingMeal && (
         <EditMealModal
