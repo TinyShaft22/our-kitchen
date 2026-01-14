@@ -3,6 +3,7 @@ import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage
 import { storage } from '../../config/firebase';
 import type { Meal, Ingredient } from '../../types';
 import { IngredientInput } from './IngredientInput';
+import { MarkdownEditor } from './MarkdownEditor';
 
 interface EditMealModalProps {
   isOpen: boolean;
@@ -265,6 +266,9 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: 
               className="block text-sm font-medium text-charcoal mb-1"
             >
               Servings
+              <span className="font-normal text-xs text-charcoal/50 ml-1">
+                (how many people this recipe serves)
+              </span>
             </label>
             <input
               id="edit-servings"
@@ -353,19 +357,14 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: 
 
           {/* Recipe */}
           <div>
-            <label
-              htmlFor="edit-instructions"
-              className="block text-sm font-medium text-charcoal mb-1"
-            >
+            <label className="block text-sm font-medium text-charcoal mb-1">
               Recipe (optional)
             </label>
-            <textarea
-              id="edit-instructions"
+            <MarkdownEditor
               value={instructions}
-              onChange={(e) => setInstructions(e.target.value)}
-              placeholder="Add cooking steps, tips, or notes... (supports **bold**, *italic*, - lists)"
+              onChange={setInstructions}
+              placeholder="Add cooking steps, tips, or notes..."
               rows={4}
-              className="w-full px-3 py-2 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta resize-y"
             />
           </div>
 
