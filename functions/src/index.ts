@@ -41,7 +41,7 @@ interface Ingredient {
 interface ImportRecipeRequest {
   name: string;
   servings: number;
-  ingredients: string[]; // Raw ingredient strings from shortcut
+  ingredients: string[] | string; // Can be array OR text with newlines
   instructions: string;
   imageBase64?: string; // Optional screenshot
   sourceUrl?: string;
@@ -168,10 +168,15 @@ export const importRecipe = onRequest({ cors: true, invoker: "public" }, async (
       return;
     }
 
-    // Parse ingredients
-    const ingredients: Ingredient[] = (data.ingredients || [])
-      .filter((i) => i && i.trim())
-      .map(parseIngredient);
+    // Parse ingredients - handle both string (newline-separated) and array
+    let ingredientList: string[] = [];
+    if (typeof data.ingredients === "string") {
+      // Split text by newlines and filter empty lines
+      ingredientList = data.ingredients.split(/[\n\r]+/).filter((i) => i.trim());
+    } else if (Array.isArray(data.ingredients)) {
+      ingredientList = data.ingredients.filter((i) => i && i.trim());
+    }
+    const ingredients: Ingredient[] = ingredientList.map(parseIngredient);
 
     // Prepare meal document
     const mealData: Record<string, unknown> = {

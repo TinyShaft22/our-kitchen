@@ -1,0 +1,11 @@
+specVersion: v1alpha1
+endpoints:
+  importRecipe:
+    httpsTrigger:
+      invoker:
+        - public
+    availableMemoryMb: 256
+    platform: gcfv2
+    region:
+      - us-central1
+    entryPoint: importRecipe
