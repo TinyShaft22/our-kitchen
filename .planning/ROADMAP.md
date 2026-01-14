@@ -125,9 +125,8 @@ None
 ### Phase 14: Meal Images
 **Goal**: Firebase Storage integration for uploading/capturing meal photos, display as thumbnail and in detail view
 **Depends on**: Phase 13
-**Research**: Likely (Firebase Storage setup, image upload handling)
-**Research topics**: Firebase Storage setup, image compression, camera capture on mobile
-**Plans**: TBD
+**Research**: Unlikely (standard Firebase Storage pattern, SDK already installed)
+**Plans**: 2 (14-01: Storage Setup & AddModal, 14-02: EditModal & MealCard Display)
 
 ## Progress
 
@@ -149,4 +148,4 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 11. Simplify Ingredients | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
 | 13. Recipe Instructions | v1.1 | 1/1 | Complete | 2026-01-13 |
-| 14. Meal Images | v1.1 | 0/? | Not started | - |
+| 14. Meal Images | v1.1 | 0/2 | Not started | - |
