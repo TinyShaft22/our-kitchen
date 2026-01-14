@@ -1,188 +1,221 @@
-import { onRequest } from 'firebase-functions/v2/https';
-import { defineSecret } from 'firebase-functions/params';
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
-// Define the secret for OpenRouter API key
-const openRouterKey = defineSecret('OPENROUTER_API_KEY');
+// Initialize Firebase Admin SDK
+admin.initializeApp();
 
-// Valid categories for grocery items
-const VALID_CATEGORIES = [
-  'produce',
-  'meat',
-  'dairy',
-  'pantry',
-  'frozen',
-  'bakery',
-  'snacks',
-  'beverages',
-  'baking',
-] as const;
+const db = admin.firestore();
+const storage = admin.storage();
 
-// Valid stores
-const VALID_STORES = ['costco', 'trader-joes', 'safeway', 'bel-air'] as const;
-type Store = (typeof VALID_STORES)[number];
+// Type definitions matching the PWA
+type Category =
+  | "produce"
+  | "meat"
+  | "dairy"
+  | "pantry"
+  | "frozen"
+  | "bakery"
+  | "snacks"
+  | "beverages"
+  | "baking";
 
-type Category = (typeof VALID_CATEGORIES)[number];
+type Store =
+  | "costco"
+  | "trader-joes"
+  | "safeway"
+  | "bel-air"
+  | "walmart"
+  | "winco";
 
-interface ParsedItem {
+interface Ingredient {
   name: string;
   category: Category;
-  store: string;
+  defaultStore: Store;
+  qty?: number;
+  unit?: string;
 }
 
-// Allowed origins for CORS
-const ALLOWED_ORIGINS = [
-  'https://tinyshaft.netlify.app',
-  'http://localhost:5173',
-  'http://localhost:5174',
-];
+interface ImportRecipeRequest {
+  name: string;
+  servings: number;
+  ingredients: string[]; // Raw ingredient strings from shortcut
+  instructions: string;
+  imageBase64?: string; // Optional screenshot
+  sourceUrl?: string;
+  householdCode: string;
+}
 
-// Cloud Function to parse grocery transcript
-export const parseGroceryTranscript = onRequest(
-  {
-    secrets: [openRouterKey],
-    maxInstances: 10,
-    // Note: Public access must be set manually in Cloud Run console
-  },
-  async (req, res) => {
-    // Handle CORS
-    const origin = req.headers.origin || '';
-    if (ALLOWED_ORIGINS.includes(origin as string)) {
-      res.set('Access-Control-Allow-Origin', origin);
-    }
-    res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.set('Access-Control-Max-Age', '3600');
+/**
+ * Parse ingredient string into structured Ingredient object
+ * Input formats: "1 cup flour", "flour", "2 tbsp sugar", etc.
+ * Default category: pantry, Default store: safeway
+ */
+function parseIngredient(raw: string): Ingredient {
+  // Remove emojis and trim
+  const cleaned = raw
+    .replace(/[\u{1F300}-\u{1F9FF}]/gu, "")
+    .replace(/^[-•*]\s*/, "")
+    .trim();
 
-    // Handle preflight OPTIONS request
-    if (req.method === 'OPTIONS') {
-      res.status(204).send('');
-      return;
-    }
+  // Try to extract quantity and unit
+  const qtyUnitMatch = cleaned.match(
+    /^([\d./]+)\s*(tsp|tbsp|cup|cups|oz|lb|lbs|g|kg|ml|L|pinch|dash|each|pkg|can|cans|cloves?|pieces?|slices?)?\s+(.+)$/i
+  );
 
-    // Only allow POST
-    if (req.method !== 'POST') {
-      res.status(405).json({ error: 'Method not allowed' });
-      return;
-    }
+  if (qtyUnitMatch) {
+    const qty = parseFloat(qtyUnitMatch[1]) || 1;
+    const unit = qtyUnitMatch[2]?.toLowerCase() || "each";
+    const name = qtyUnitMatch[3].trim();
 
-    try {
-      const { data } = req.body;
-      const transcript = data?.transcript;
-
-      if (!transcript || typeof transcript !== 'string') {
-        res.status(400).json({ error: 'Transcript is required' });
-        return;
-      }
-
-      const apiKey = openRouterKey.value();
-      if (!apiKey) {
-        res.status(500).json({ error: 'OpenRouter API key not configured' });
-        return;
-      }
-
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
-          'HTTP-Referer': 'https://our-kitchen.app',
-          'X-Title': 'Our Kitchen Grocery App',
-        },
-        body: JSON.stringify({
-          model: 'anthropic/claude-3-haiku',
-          messages: [
-            {
-              role: 'system',
-              content: `You are a grocery list parser. Extract grocery/food items from the user's speech transcript, including which store to get them from if mentioned.
-
-RULES:
-1. ONLY extract actual grocery items (food, drinks, household supplies)
-2. IGNORE conversational filler like "um", "uh", "let me think", "I need", "we should get", etc.
-3. IGNORE non-grocery statements like "keep talking", "you're doing great", "what else", etc.
-4. Separate items that are said together (e.g., "eggs and milk" → two items: "Eggs", "Milk")
-5. Capitalize item names properly (e.g., "milk" → "Milk")
-6. Assign the most appropriate category to each item
-7. If the user mentions a store (Costco, Trader Joe's, Safeway, Bel Air), assign that store to the items
-8. Items mentioned after a store name belong to that store until a new store is mentioned
-9. If no store is mentioned, use "safeway" as the default
-
-STORES (use exactly these IDs):
-- costco: Costco
-- trader-joes: Trader Joe's (also matches "Trader Joe's", "TJs", "Trader Joes")
-- safeway: Safeway
-- bel-air: Bel Air (also matches "Bel-Air", "Belair")
-
-CATEGORIES (use exactly these):
-- produce: fruits, vegetables, herbs
-- meat: meat, poultry, fish, seafood
-- dairy: milk, cheese, eggs, yogurt, butter
-- pantry: canned goods, pasta, rice, condiments, oils, spices
-- frozen: frozen foods, ice cream
-- bakery: bread, bagels, pastries
-- snacks: chips, crackers, candy, cookies
-- beverages: drinks, juice, soda, coffee, tea
-- baking: flour, sugar, baking supplies
-
-Respond with ONLY a JSON array of items. Each item must have: name, category, store. If no valid grocery items are found, return an empty array.
-
-Example input: "from Costco I need eggs and milk, and from Safeway get bread and bananas"
-Example output: [{"name":"Eggs","category":"dairy","store":"costco"},{"name":"Milk","category":"dairy","store":"costco"},{"name":"Bread","category":"bakery","store":"safeway"},{"name":"Bananas","category":"produce","store":"safeway"}]
-
-Example input: "eggs milk bread"
-Example output: [{"name":"Eggs","category":"dairy","store":"safeway"},{"name":"Milk","category":"dairy","store":"safeway"},{"name":"Bread","category":"bakery","store":"safeway"}]`,
-            },
-            {
-              role: 'user',
-              content: transcript,
-            },
-          ],
-          temperature: 0.1,
-          max_tokens: 500,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('OpenRouter API error:', errorText);
-        res.status(500).json({ error: 'Failed to process transcript' });
-        return;
-      }
-
-      const responseData = await response.json();
-      const content = responseData.choices?.[0]?.message?.content || '[]';
-
-      // Parse the JSON response
-      let parsedItems: Array<{ name: string; category: string; store?: string }>;
-      try {
-        const jsonStr = content.replace(/```json\n?|\n?```/g, '').trim();
-        parsedItems = JSON.parse(jsonStr);
-      } catch {
-        console.error('Failed to parse LLM response:', content);
-        parsedItems = [];
-      }
-
-      // Validate and normalize items
-      const items: ParsedItem[] = parsedItems
-        .filter(
-          (item): item is { name: string; category: string; store?: string } =>
-            typeof item.name === 'string' &&
-            item.name.trim().length > 0 &&
-            typeof item.category === 'string'
-        )
-        .map((item) => ({
-          name: item.name.trim(),
-          category: VALID_CATEGORIES.includes(item.category as Category)
-            ? (item.category as Category)
-            : 'pantry',
-          store: item.store && VALID_STORES.includes(item.store as Store)
-            ? (item.store as Store)
-            : 'safeway',
-        }));
-
-      res.status(200).json({ result: { items } });
-    } catch (error) {
-      console.error('Error processing transcript:', error);
-      res.status(500).json({ error: 'Failed to process transcript' });
-    }
+    return {
+      name,
+      category: "pantry",
+      defaultStore: "safeway",
+      qty,
+      unit: normalizeUnit(unit),
+    };
   }
-);
+
+  // No quantity found, just use the name
+  return {
+    name: cleaned,
+    category: "pantry",
+    defaultStore: "safeway",
+  };
+}
+
+/**
+ * Normalize unit strings (cups -> cup, lbs -> lb, etc.)
+ */
+function normalizeUnit(unit: string): string {
+  const normalized = unit.toLowerCase();
+  const mapping: Record<string, string> = {
+    cups: "cup",
+    lbs: "lb",
+    cans: "can",
+    cloves: "clove",
+    pieces: "piece",
+    slices: "slice",
+  };
+  return mapping[normalized] || normalized;
+}
+
+/**
+ * Import Recipe from iOS Shortcut
+ * 
+ * POST /importRecipe
+ * Body: ImportRecipeRequest
+ * 
+ * Returns: { success: boolean, mealId?: string, error?: string }
+ */
+export const importRecipe = functions.https.onRequest(async (req, res) => {
+  // Enable CORS for iOS Shortcuts
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle preflight
+  if (req.method === "OPTIONS") {
+    res.status(204).send("");
+    return;
+  }
+
+  // Only allow POST
+  if (req.method !== "POST") {
+    res.status(405).json({ success: false, error: "Method not allowed" });
+    return;
+  }
+
+  try {
+    const data = req.body as ImportRecipeRequest;
+
+    // Validate required fields
+    if (!data.householdCode) {
+      res.status(400).json({ success: false, error: "Missing householdCode" });
+      return;
+    }
+    if (!data.name) {
+      res.status(400).json({ success: false, error: "Missing recipe name" });
+      return;
+    }
+
+    // Validate household exists
+    const householdRef = db.collection("households").doc(data.householdCode);
+    const householdDoc = await householdRef.get();
+    
+    if (!householdDoc.exists) {
+      res.status(404).json({ 
+        success: false, 
+        error: "Household not found. Check your household code." 
+      });
+      return;
+    }
+
+    // Parse ingredients
+    const ingredients: Ingredient[] = (data.ingredients || [])
+      .filter((i) => i && i.trim())
+      .map(parseIngredient);
+
+    // Prepare meal document
+    const mealData: Record<string, unknown> = {
+      name: data.name.trim(),
+      servings: data.servings || 4,
+      ingredients,
+      isBaking: false,
+      instructions: data.instructions || "",
+      householdCode: data.householdCode,
+    };
+
+    // Add source URL if provided
+    if (data.sourceUrl) {
+      mealData.sourceUrl = data.sourceUrl;
+    }
+
+    // Create meal document first to get ID
+    const mealRef = await db.collection("meals").add(mealData);
+    const mealId = mealRef.id;
+
+    // Upload image if provided
+    if (data.imageBase64) {
+      try {
+        // Decode base64 image
+        const imageBuffer = Buffer.from(data.imageBase64, "base64");
+        
+        // Upload to Storage
+        const bucket = storage.bucket();
+        const filePath = `meals/${data.householdCode}/${mealId}/photo.jpg`;
+        const file = bucket.file(filePath);
+        
+        await file.save(imageBuffer, {
+          metadata: {
+            contentType: "image/jpeg",
+          },
+        });
+
+        // Make file publicly accessible
+        await file.makePublic();
+
+        // Get public URL
+        const imageUrl = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+
+        // Update meal with image URL
+        await mealRef.update({ imageUrl });
+      } catch (imageError) {
+        // Log but don't fail - meal was created successfully
+        console.error("Failed to upload image:", imageError);
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      mealId,
+      message: `Recipe "${data.name}" imported successfully!`,
+    });
+  } catch (error) {
+    console.error("Import recipe error:", error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : "Internal server error",
+    });
+  }
+});
