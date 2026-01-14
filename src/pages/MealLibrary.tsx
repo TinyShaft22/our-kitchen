@@ -109,12 +109,13 @@ function MealLibrary() {
         />
       )}
 
-      {editingMeal && (
+      {editingMeal && householdCode && (
         <EditMealModal
           isOpen={isEditModalOpen}
           onClose={handleCloseEditModal}
           meal={editingMeal}
           onSave={handleUpdateMeal}
+          householdCode={householdCode}
         />
       )}
 
