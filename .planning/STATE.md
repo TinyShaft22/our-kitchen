@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** Phase 13 complete — ready for Phase 14
+**Current focus:** Phase 14 in progress — 14-01 complete, ready for 14-02
 
 ## Current Position
 
-Phase: 13 of 14 (Recipe Instructions)
-Plan: 1 of 1 in current phase
-Status: Phase complete
-Last activity: 2026-01-13 — Completed 13-01-PLAN.md
+Phase: 14 of 14 (Meal Images)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-01-13 — Completed 14-01-PLAN.md
 
-Progress: ████████████████████████ 100%
+Progress: ███████████████████████░ 96%
 
 ## Performance Metrics
 
@@ -71,19 +71,17 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-13
-Stopped at: Completed 13-01-PLAN.md (recipe instructions)
+Stopped at: Completed 14-01-PLAN.md (Storage Setup & AddModal)
 Resume file: None
 
 ## Next Steps
 
-**Current:** Phase 13: Recipe Instructions ✅ COMPLETE
-- Plan 13-01: ✅ Instructions field, modal textareas, expandable MealCard section
+**Current:** Phase 14: Meal Images (In progress)
+- Plan 14-01: ✅ Storage Setup & AddModal
+- Plan 14-02: EditModal & MealCard Display (next)
 
-**Next:** Phase 14: Meal Images
-- Firebase Storage for uploading/capturing meal photos
-
-**Remaining v1.1 phases:**
-- Phase 14: Meal Images
+**Remaining v1.1 work:**
+- Phase 14 Plan 2: EditMealModal image handling, MealCard display
 
 ## Roadmap Evolution
 

@@ -148,4 +148,4 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 11. Simplify Ingredients | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
 | 13. Recipe Instructions | v1.1 | 1/1 | Complete | 2026-01-13 |
-| 14. Meal Images | v1.1 | 0/2 | Not started | - |
+| 14. Meal Images | v1.1 | 1/2 | In progress | - |
