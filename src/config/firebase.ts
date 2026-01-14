@@ -6,6 +6,7 @@ import {
   type Firestore,
 } from 'firebase/firestore';
 import { getFunctions, type Functions } from 'firebase/functions';
+import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 // Firebase configuration from environment variables
 const firebaseConfig = {
@@ -41,4 +42,7 @@ try {
 // Initialize Cloud Functions
 const functions: Functions = getFunctions(app);
 
-export { app, db, functions };
+// Initialize Firebase Storage
+const storage: FirebaseStorage = getStorage(app);
+
+export { app, db, functions, storage };
