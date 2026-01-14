@@ -88,7 +88,7 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
                 <img
                   src={meal.imageUrl}
                   alt={meal.name}
-                  className="w-24 h-24 rounded-soft object-cover flex-shrink-0"
+                  className="w-48 h-48 rounded-soft object-cover flex-shrink-0"
                 />
               )}
               {/* Servings Info */}
