@@ -12,6 +12,15 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
 
   return (
     <div className="bg-white rounded-soft shadow-soft overflow-hidden">
+      {/* Image thumbnail at top */}
+      {meal.imageUrl && (
+        <img
+          src={meal.imageUrl}
+          alt={meal.name}
+          className="w-full h-32 object-cover"
+        />
+      )}
+
       <div className="p-4">
         <div className="flex justify-between items-start">
           <div className="flex-1 min-w-0">
