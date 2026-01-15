@@ -16,28 +16,28 @@ function Navigation() {
     <>
       {/* Offline indicator banner */}
       {!isOnline && (
-        <div className="fixed bottom-16 left-0 right-0 bg-amber-100 border-t border-amber-300 px-4 py-2 text-center z-40">
+        <div className="fixed bottom-24 left-0 right-0 bg-amber-100 border-t border-amber-300 px-4 py-2 text-center z-40">
           <span className="text-amber-800 text-sm font-medium">
             📡 You're offline — changes will sync when reconnected
           </span>
         </div>
       )}
       <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-soft border-t border-charcoal/10 z-50">
-        <div className="flex justify-around items-center px-2 pb-safe">
+        <div className="flex justify-around items-center px-2 pt-2 pb-6">
           {tabs.map((tab) => (
             <NavLink
               key={tab.path}
               to={tab.path}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center min-h-[44px] min-w-[44px] px-3 py-2 transition-colors ${
+                `flex flex-col items-center justify-center min-h-[72px] min-w-[56px] px-4 py-3 transition-colors ${
                   isActive
                     ? 'text-terracotta'
                     : 'text-charcoal/60 hover:text-charcoal'
                 }`
               }
             >
-              <span className="text-xl mb-0.5">{tab.icon}</span>
-              <span className="text-xs font-medium">{tab.label}</span>
+              <span className="text-3xl mb-1">{tab.icon}</span>
+              <span className="text-sm font-medium">{tab.label}</span>
             </NavLink>
           ))}
         </div>

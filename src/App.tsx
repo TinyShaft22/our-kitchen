@@ -33,7 +33,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-cream flex flex-col">
-        <main className="flex-1 overflow-auto pb-20">
+        <main className="flex-1 overflow-auto pb-28">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/meals" element={<MealLibrary />} />
