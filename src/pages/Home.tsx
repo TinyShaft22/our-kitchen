@@ -114,7 +114,7 @@ function Home() {
   const weeklyMeals = currentWeek?.meals ?? [];
 
   return (
-    <div className="p-4">
+    <div className="p-4 pb-32">
       <h1 className="text-xl font-semibold text-charcoal mb-4">
         {formatWeekId(weekId)}
       </h1>

@@ -244,7 +244,7 @@ function MealLibrary() {
   const hasNoMeals = mainDishes.length === 0 && bakingRecipes.length === 0;
 
   return (
-    <div className="p-4">
+    <div className="p-4 pb-32">
       <h1 className="text-xl font-semibold text-charcoal mb-4">Meal Library</h1>
 
       {hasNoMeals ? (

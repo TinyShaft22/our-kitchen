@@ -17,7 +17,7 @@ function SettingsPage() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 pb-32">
       <h1 className="text-xl font-semibold text-charcoal mb-6">Settings</h1>
 
       {/* Household Info */}
