@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { useHousehold } from '../hooks/useHousehold';
+import { useMeals } from '../hooks/useMeals';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
+import { ExportMealsModal } from '../components/settings/ExportMealsModal';
+import { ImportMealsModal } from '../components/settings/ImportMealsModal';
 
 function SettingsPage() {
   const { householdCode, leaveHousehold } = useHousehold();
+  const { meals, importMeals } = useMeals(householdCode);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
 
   const handleLogout = () => {
     leaveHousehold();
@@ -21,6 +27,28 @@ function SettingsPage() {
         <p className="text-sm text-charcoal/60 mt-2">
           Share this code with family members so they can join your household.
         </p>
+      </div>
+
+      {/* Export/Import Meals */}
+      <div className="bg-white rounded-soft shadow-soft p-4 mb-4">
+        <h2 className="text-sm font-medium text-charcoal/60 mb-3">Share Meals</h2>
+        <p className="text-sm text-charcoal/60 mb-4">
+          Export your meals to share with another household, or import meals someone shared with you.
+        </p>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setShowExportModal(true)}
+            className="flex-1 h-11 rounded-soft border border-terracotta text-terracotta font-medium hover:bg-terracotta/5 transition-colors"
+          >
+            Export Meals
+          </button>
+          <button
+            onClick={() => setShowImportModal(true)}
+            className="flex-1 h-11 rounded-soft bg-terracotta text-white font-medium hover:bg-terracotta/90 transition-colors"
+          >
+            Import Meals
+          </button>
+        </div>
       </div>
 
       {/* Logout Button */}
@@ -48,6 +76,20 @@ function SettingsPage() {
         message="Are you sure you want to leave this household? You can rejoin anytime with the same code."
         confirmText="Leave"
         confirmVariant="danger"
+      />
+
+      {/* Export Modal */}
+      <ExportMealsModal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+        meals={meals}
+      />
+
+      {/* Import Modal */}
+      <ImportMealsModal
+        isOpen={showImportModal}
+        onClose={() => setShowImportModal(false)}
+        onImport={importMeals}
       />
     </div>
   );

@@ -8,6 +8,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  writeBatch,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import type { Meal } from '../types';
@@ -19,6 +20,7 @@ interface UseMealsReturn {
   addMeal: (meal: Omit<Meal, 'id' | 'householdCode'>) => Promise<string>;
   updateMeal: (id: string, updates: Partial<Omit<Meal, 'id' | 'householdCode'>>) => Promise<void>;
   deleteMeal: (id: string) => Promise<void>;
+  importMeals: (meals: Omit<Meal, 'id' | 'householdCode'>[]) => Promise<void>;
 }
 
 export function useMeals(householdCode: string | null): UseMealsReturn {
@@ -131,6 +133,38 @@ export function useMeals(householdCode: string | null): UseMealsReturn {
     [householdCode]
   );
 
+  const importMeals = useCallback(
+    async (mealsToImport: Omit<Meal, 'id' | 'householdCode'>[]): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      if (mealsToImport.length === 0) {
+        return;
+      }
+
+      try {
+        const batch = writeBatch(db);
+        const mealsRef = collection(db, 'meals');
+
+        for (const meal of mealsToImport) {
+          const newDocRef = doc(mealsRef);
+          batch.set(newDocRef, {
+            ...meal,
+            householdCode,
+          });
+        }
+
+        await batch.commit();
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to import meals';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode]
+  );
+
   return {
     meals,
     loading,
@@ -138,5 +172,6 @@ export function useMeals(householdCode: string | null): UseMealsReturn {
     addMeal,
     updateMeal,
     deleteMeal,
+    importMeals,
   };
 }
