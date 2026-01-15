@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-11)
 
 ## Current Position
 
-Phase: 15 of 15 (Nested Baking Folders)
-Plan: 1 of 3 in current phase
+Phase: 16 of 21 (Scraping Infrastructure)
+Plan: 1 of 2 in current phase
 Status: In progress
-Last activity: 2026-01-15 — Completed 15-01-PLAN.md
+Last activity: 2026-01-15 — Completed 16-01-PLAN.md
 
-Progress: █████████████████████████ 95%
+Progress: █████████████████████░░░░ 85%
 
 ## Performance Metrics
 
@@ -71,24 +71,25 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed 15-01-PLAN.md
+Stopped at: Completed 16-01-PLAN.md
 Resume file: None
 
 ## Next Steps
 
 ✅ v1.0 MVP (Phases 1-10) - Complete
 ✅ v1.1 Meal & Grocery Refactor (Phases 11-14) - Complete
-🚧 v1.2 Baking Organization (Phase 15) - In Progress
+🚧 v1.2 Baking Organization (Phase 15) - 1/3 plans complete
+🚧 v1.3 Broma Bakery Import (Phases 16-21) - In Progress
 
 **Next action:**
-Execute Phase 15 plans for nested baking folders:
+Execute Phase 16 Plan 02 for ingredient category mapping:
 
-`/gsd:execute-plan .planning/phases/15-nested-baking-folders/15-01-PLAN.md`
+`/gsd:execute-plan .planning/phases/16-scraping-infrastructure/16-02-PLAN.md`
 
-Phase 15 adds:
-- Unlimited-depth nested folders for Baking section
-- "Manage Folders" UI for organizing recipe folders
-- Step-by-step folder picker when adding baking recipes
+Phase 16-01 validated:
+- WebFetch recipe extraction pattern
+- JSON import format works end-to-end
+- PowerShell clipboard workflow for imports
 
 ## Roadmap Evolution
 
