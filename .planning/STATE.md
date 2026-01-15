@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-11)
 ## Current Position
 
 Phase: 16 of 21 (Scraping Infrastructure)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-01-15 — Completed 16-01-PLAN.md
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-01-15 — Completed 16-02-PLAN.md
 
-Progress: █████████████████████░░░░ 85%
+Progress: █████████████████████░░░░ 86%
 
 ## Performance Metrics
 
@@ -71,7 +71,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-15
-Stopped at: Completed 16-01-PLAN.md
+Stopped at: Completed 16-02-PLAN.md (Phase 16 complete)
 Resume file: None
 
 ## Next Steps
@@ -79,17 +79,17 @@ Resume file: None
 ✅ v1.0 MVP (Phases 1-10) - Complete
 ✅ v1.1 Meal & Grocery Refactor (Phases 11-14) - Complete
 🚧 v1.2 Baking Organization (Phase 15) - 1/3 plans complete
-🚧 v1.3 Broma Bakery Import (Phases 16-21) - In Progress
+✅ v1.3 Phase 16: Scraping Infrastructure - Complete
 
 **Next action:**
-Execute Phase 16 Plan 02 for ingredient category mapping:
+Plan Phase 17 to scrape all 27 cookie recipes:
 
-`/gsd:execute-plan .planning/phases/16-scraping-infrastructure/16-02-PLAN.md`
+`/gsd:plan-phase 17`
 
-Phase 16-01 validated:
-- WebFetch recipe extraction pattern
-- JSON import format works end-to-end
-- PowerShell clipboard workflow for imports
+Phase 16 delivered:
+- WebFetch recipe extraction pattern (16-01)
+- JSON import format validated end-to-end (16-01)
+- INGREDIENT-MAP.md reference for batch processing (16-02)
 
 ## Roadmap Evolution
 
