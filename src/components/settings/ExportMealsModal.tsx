@@ -20,6 +20,7 @@ interface ExportedMeal {
   servings: number;
   isBaking: boolean;
   instructions?: string;
+  subcategory?: string;
   ingredients: ExportedIngredient[];
 }
 
@@ -74,6 +75,7 @@ export function ExportMealsModal({ isOpen, onClose, meals }: ExportMealsModalPro
       servings: meal.servings,
       isBaking: meal.isBaking,
       instructions: meal.instructions || undefined,
+      subcategory: meal.subcategory || undefined,
       ingredients: meal.ingredients.map((ing: Ingredient) => ({
         name: ing.name,
         category: ing.category,

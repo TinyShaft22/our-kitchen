@@ -49,6 +49,74 @@ function CollapsibleSection({ title, count, isExpanded, onToggle, children }: Co
   );
 }
 
+interface SubcategorySectionProps {
+  title: string;
+  count: number;
+  isExpanded: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}
+
+function SubcategorySection({ title, count, isExpanded, onToggle, children }: SubcategorySectionProps) {
+  return (
+    <div className="mb-4">
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center justify-between bg-cream/50 rounded-soft px-3 py-2 mb-2 hover:bg-cream transition-colors"
+        aria-expanded={isExpanded}
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-charcoal/40 text-sm">📁</span>
+          <span className="text-sm font-medium text-charcoal">{title}</span>
+          <span className="text-xs text-charcoal/50 bg-white px-1.5 py-0.5 rounded-full">
+            {count}
+          </span>
+        </div>
+        <span
+          className={`text-charcoal/40 text-sm transition-transform duration-200 ${
+            isExpanded ? 'rotate-0' : '-rotate-90'
+          }`}
+        >
+          ▼
+        </span>
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="pl-4">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Group meals by subcategory
+interface MealsBySubcategory {
+  [subcategory: string]: Meal[];
+}
+
+function groupBySubcategory(meals: Meal[]): MealsBySubcategory {
+  const groups: MealsBySubcategory = {};
+
+  for (const meal of meals) {
+    const key = meal.subcategory || '';
+    if (!groups[key]) {
+      groups[key] = [];
+    }
+    groups[key].push(meal);
+  }
+
+  // Sort meals within each group
+  for (const key of Object.keys(groups)) {
+    groups[key].sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  return groups;
+}
+
 function MealLibrary() {
   const { householdCode } = useHousehold();
   const { meals, loading, addMeal, updateMeal, deleteMeal } = useMeals(householdCode);
@@ -59,11 +127,13 @@ function MealLibrary() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [mainDishesExpanded, setMainDishesExpanded] = useState(true);
   const [bakingExpanded, setBakingExpanded] = useState(true);
+  const [expandedSubcategories, setExpandedSubcategories] = useState<Set<string>>(new Set());
 
-  // Split meals into main dishes and baking recipes
-  const { mainDishes, bakingRecipes } = useMemo(() => {
+  // Split meals into main dishes and baking recipes, grouped by subcategory
+  const { mainDishes, bakingRecipes, mainBySubcategory, bakingBySubcategory, existingSubcategories } = useMemo(() => {
     const main: Meal[] = [];
     const baking: Meal[] = [];
+    const subcategorySet = new Set<string>();
 
     for (const meal of meals) {
       if (meal.isBaking) {
@@ -71,14 +141,49 @@ function MealLibrary() {
       } else {
         main.push(meal);
       }
+      if (meal.subcategory) {
+        subcategorySet.add(meal.subcategory);
+      }
     }
 
-    // Sort alphabetically within each category
-    main.sort((a, b) => a.name.localeCompare(b.name));
-    baking.sort((a, b) => a.name.localeCompare(b.name));
-
-    return { mainDishes: main, bakingRecipes: baking };
+    return {
+      mainDishes: main,
+      bakingRecipes: baking,
+      mainBySubcategory: groupBySubcategory(main),
+      bakingBySubcategory: groupBySubcategory(baking),
+      existingSubcategories: Array.from(subcategorySet).sort(),
+    };
   }, [meals]);
+
+  // Get sorted subcategory keys with "Uncategorized" first
+  const getSortedSubcategoryKeys = (groups: MealsBySubcategory): string[] => {
+    const keys = Object.keys(groups).sort();
+    // Move empty string (uncategorized) to front if it exists
+    const uncatIndex = keys.indexOf('');
+    if (uncatIndex > 0) {
+      keys.splice(uncatIndex, 1);
+      keys.unshift('');
+    }
+    return keys;
+  };
+
+  const toggleSubcategory = (key: string) => {
+    setExpandedSubcategories((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
+      return next;
+    });
+  };
+
+  // Check if we need to show subcategories (more than just uncategorized)
+  const hasMainSubcategories = Object.keys(mainBySubcategory).length > 1 ||
+    (Object.keys(mainBySubcategory).length === 1 && !mainBySubcategory['']);
+  const hasBakingSubcategories = Object.keys(bakingBySubcategory).length > 1 ||
+    (Object.keys(bakingBySubcategory).length === 1 && !bakingBySubcategory['']);
 
   const handleEdit = (meal: Meal) => {
     setEditingMeal(meal);
@@ -157,16 +262,46 @@ function MealLibrary() {
               isExpanded={mainDishesExpanded}
               onToggle={() => setMainDishesExpanded(!mainDishesExpanded)}
             >
-              <div className="grid grid-cols-1 gap-4">
-                {mainDishes.map((meal) => (
-                  <MealCard
-                    key={meal.id}
-                    meal={meal}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                  />
-                ))}
-              </div>
+              {hasMainSubcategories ? (
+                // Show with subcategory folders
+                getSortedSubcategoryKeys(mainBySubcategory).map((subcatKey) => {
+                  const subcatMeals = mainBySubcategory[subcatKey];
+                  const displayName = subcatKey || 'Uncategorized';
+                  const expandKey = `main-${subcatKey}`;
+                  return (
+                    <SubcategorySection
+                      key={subcatKey}
+                      title={displayName}
+                      count={subcatMeals.length}
+                      isExpanded={expandedSubcategories.has(expandKey)}
+                      onToggle={() => toggleSubcategory(expandKey)}
+                    >
+                      <div className="grid grid-cols-1 gap-4">
+                        {subcatMeals.map((meal) => (
+                          <MealCard
+                            key={meal.id}
+                            meal={meal}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                          />
+                        ))}
+                      </div>
+                    </SubcategorySection>
+                  );
+                })
+              ) : (
+                // No subcategories, show flat list
+                <div className="grid grid-cols-1 gap-4">
+                  {mainDishes.map((meal) => (
+                    <MealCard
+                      key={meal.id}
+                      meal={meal}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
+                  ))}
+                </div>
+              )}
             </CollapsibleSection>
           )}
 
@@ -178,16 +313,46 @@ function MealLibrary() {
               isExpanded={bakingExpanded}
               onToggle={() => setBakingExpanded(!bakingExpanded)}
             >
-              <div className="grid grid-cols-1 gap-4">
-                {bakingRecipes.map((meal) => (
-                  <MealCard
-                    key={meal.id}
-                    meal={meal}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                  />
-                ))}
-              </div>
+              {hasBakingSubcategories ? (
+                // Show with subcategory folders
+                getSortedSubcategoryKeys(bakingBySubcategory).map((subcatKey) => {
+                  const subcatMeals = bakingBySubcategory[subcatKey];
+                  const displayName = subcatKey || 'Uncategorized';
+                  const expandKey = `baking-${subcatKey}`;
+                  return (
+                    <SubcategorySection
+                      key={subcatKey}
+                      title={displayName}
+                      count={subcatMeals.length}
+                      isExpanded={expandedSubcategories.has(expandKey)}
+                      onToggle={() => toggleSubcategory(expandKey)}
+                    >
+                      <div className="grid grid-cols-1 gap-4">
+                        {subcatMeals.map((meal) => (
+                          <MealCard
+                            key={meal.id}
+                            meal={meal}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                          />
+                        ))}
+                      </div>
+                    </SubcategorySection>
+                  );
+                })
+              ) : (
+                // No subcategories, show flat list
+                <div className="grid grid-cols-1 gap-4">
+                  {bakingRecipes.map((meal) => (
+                    <MealCard
+                      key={meal.id}
+                      meal={meal}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
+                  ))}
+                </div>
+              )}
             </CollapsibleSection>
           )}
         </>
@@ -204,6 +369,7 @@ function MealLibrary() {
           onClose={handleCloseModal}
           onSave={handleSaveMeal}
           householdCode={householdCode}
+          existingSubcategories={existingSubcategories}
         />
       )}
 
@@ -214,6 +380,7 @@ function MealLibrary() {
           meal={editingMeal}
           onSave={handleUpdateMeal}
           householdCode={householdCode}
+          existingSubcategories={existingSubcategories}
         />
       )}
 

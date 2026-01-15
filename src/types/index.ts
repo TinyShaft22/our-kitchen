@@ -75,6 +75,7 @@ export interface Meal {
   isBaking: boolean;
   instructions?: string;
   imageUrl?: string;
+  subcategory?: string;  // Optional folder/group name (e.g., "Indian", "Broma Recipes")
   householdCode: string;
 }
 

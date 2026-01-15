@@ -137,6 +137,10 @@ function validateAndParseExport(jsonString: string): { meals: ParsedMeal[]; erro
       meal.instructions = mealData.instructions;
     }
 
+    if (typeof mealData.subcategory === 'string' && mealData.subcategory.trim()) {
+      meal.subcategory = mealData.subcategory;
+    }
+
     meals.push(meal);
   }
 

@@ -11,6 +11,7 @@ interface EditMealModalProps {
   meal: Meal;
   onSave: (updates: Omit<Meal, 'id' | 'householdCode'>) => Promise<void>;
   householdCode: string;
+  existingSubcategories?: string[];
 }
 
 // Default ingredient values for new ingredients
@@ -20,10 +21,13 @@ const createDefaultIngredient = (): Ingredient => ({
   defaultStore: 'safeway',
 });
 
-export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: EditMealModalProps) {
+export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, existingSubcategories = [] }: EditMealModalProps) {
   const [name, setName] = useState(meal.name);
   const [servings, setServings] = useState(meal.servings);
   const [isBaking, setIsBaking] = useState(meal.isBaking);
+  const [subcategory, setSubcategory] = useState(meal.subcategory || '');
+  const [isCreatingNewSubcategory, setIsCreatingNewSubcategory] = useState(false);
+  const [newSubcategoryName, setNewSubcategoryName] = useState('');
   const [instructions, setInstructions] = useState(meal.instructions || '');
   const [ingredients, setIngredients] = useState<Ingredient[]>(meal.ingredients);
   const [saving, setSaving] = useState(false);
@@ -94,6 +98,9 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: 
     setName(meal.name);
     setServings(meal.servings);
     setIsBaking(meal.isBaking);
+    setSubcategory(meal.subcategory || '');
+    setIsCreatingNewSubcategory(false);
+    setNewSubcategoryName('');
     setInstructions(meal.instructions || '');
     setIngredients(meal.ingredients);
     setError(null);
@@ -180,14 +187,27 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: 
         }
       }
 
-      await onSave({
+      const mealData: Omit<Meal, 'id' | 'householdCode'> = {
         name: name.trim(),
         servings,
         isBaking,
-        instructions: instructions.trim() || undefined,
-        imageUrl,
         ingredients: validIngredients,
-      });
+      };
+
+      // Only include optional fields if they have values (Firestore rejects undefined)
+      if (instructions.trim()) {
+        mealData.instructions = instructions.trim();
+      }
+      if (imageUrl) {
+        mealData.imageUrl = imageUrl;
+      }
+      // Use new subcategory name if creating, otherwise use selected
+      const finalSubcategory = isCreatingNewSubcategory ? newSubcategoryName.trim() : subcategory;
+      if (finalSubcategory) {
+        mealData.subcategory = finalSubcategory;
+      }
+
+      await onSave(mealData);
       handleClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update meal');
@@ -304,6 +324,58 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode }: 
                 }`}
               />
             </button>
+          </div>
+
+          {/* Subcategory */}
+          <div>
+            <label className="block text-sm font-medium text-charcoal mb-1">
+              Folder
+              <span className="font-normal text-xs text-charcoal/50 ml-1">
+                (optional)
+              </span>
+            </label>
+            {isCreatingNewSubcategory ? (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newSubcategoryName}
+                  onChange={(e) => setNewSubcategoryName(e.target.value)}
+                  placeholder="Enter folder name..."
+                  className="flex-1 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCreatingNewSubcategory(false);
+                    setNewSubcategoryName('');
+                  }}
+                  className="h-11 px-3 rounded-soft border border-charcoal/20 text-charcoal/60 hover:bg-charcoal/5"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <select
+                  value={subcategory}
+                  onChange={(e) => setSubcategory(e.target.value)}
+                  className="flex-1 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
+                >
+                  <option value="">No folder</option>
+                  {existingSubcategories.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={() => setIsCreatingNewSubcategory(true)}
+                  className="h-11 px-3 rounded-soft border border-charcoal/20 text-terracotta hover:bg-terracotta/5 whitespace-nowrap"
+                >
+                  + New
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Photo */}
