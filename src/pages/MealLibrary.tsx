@@ -249,9 +249,11 @@ function MealLibrary() {
   const [mainDishesExpanded, setMainDishesExpanded] = useState(true);
   const [bakingExpanded, setBakingExpanded] = useState(true);
   const [expandedSubcategories, setExpandedSubcategories] = useState<Set<string>>(new Set());
+  const [expandedBakingPaths, setExpandedBakingPaths] = useState<Set<string>>(new Set());
+  const [isFolderManagerOpen, setIsFolderManagerOpen] = useState(false);
 
   // Split meals into main dishes and baking recipes, grouped by subcategory
-  const { mainDishes, bakingRecipes, mainBySubcategory, bakingBySubcategory, existingSubcategories } = useMemo(() => {
+  const { mainDishes, bakingRecipes, mainBySubcategory, existingSubcategories } = useMemo(() => {
     const main: Meal[] = [];
     const baking: Meal[] = [];
     const subcategorySet = new Set<string>();
@@ -271,10 +273,42 @@ function MealLibrary() {
       mainDishes: main,
       bakingRecipes: baking,
       mainBySubcategory: groupBySubcategory(main),
-      bakingBySubcategory: groupBySubcategory(baking),
       existingSubcategories: Array.from(subcategorySet).sort(),
     };
   }, [meals]);
+
+  // Build folder tree for baking recipes (nested folders)
+  const bakingFolderTree = useMemo(
+    () => buildFolderTree(bakingRecipes),
+    [bakingRecipes]
+  );
+
+  // Extract all baking paths for FolderManagerModal
+  const existingBakingPaths = useMemo(
+    () => getAllFolderPaths(bakingRecipes),
+    [bakingRecipes]
+  );
+
+  // Toggle baking folder expansion
+  const toggleBakingPath = (path: string) => {
+    setExpandedBakingPaths((prev) => {
+      const next = new Set(prev);
+      if (next.has(path)) {
+        next.delete(path);
+      } else {
+        next.add(path);
+      }
+      return next;
+    });
+  };
+
+  // Handle creating new folder (adds to existingBakingPaths via meal updates)
+  const handleCreateFolder = (path: string) => {
+    // Folders are implicitly created when a meal is assigned to them
+    // For now, just close the modal - the path will be available when adding/editing meals
+    // In a future enhancement, we could store empty folder paths in Firestore
+    console.log('Folder created:', path);
+  };
 
   // Get sorted subcategory keys with "Uncategorized" first
   const getSortedSubcategoryKeys = (groups: MealsBySubcategory): string[] => {
@@ -300,11 +334,9 @@ function MealLibrary() {
     });
   };
 
-  // Check if we need to show subcategories (more than just uncategorized)
+  // Check if we need to show subcategories for Main Dishes (more than just uncategorized)
   const hasMainSubcategories = Object.keys(mainBySubcategory).length > 1 ||
     (Object.keys(mainBySubcategory).length === 1 && !mainBySubcategory['']);
-  const hasBakingSubcategories = Object.keys(bakingBySubcategory).length > 1 ||
-    (Object.keys(bakingBySubcategory).length === 1 && !bakingBySubcategory['']);
 
   const handleEdit = (meal: Meal) => {
     setEditingMeal(meal);
@@ -426,55 +458,56 @@ function MealLibrary() {
             </CollapsibleSection>
           )}
 
-          {/* Baking & Desserts Section */}
+          {/* Baking & Desserts Section - with nested folders */}
           {bakingRecipes.length > 0 && (
-            <CollapsibleSection
-              title="Baking & Desserts"
-              count={bakingRecipes.length}
-              isExpanded={bakingExpanded}
-              onToggle={() => setBakingExpanded(!bakingExpanded)}
-            >
-              {hasBakingSubcategories ? (
-                // Show with subcategory folders
-                getSortedSubcategoryKeys(bakingBySubcategory).map((subcatKey) => {
-                  const subcatMeals = bakingBySubcategory[subcatKey];
-                  const displayName = subcatKey || 'Uncategorized';
-                  const expandKey = `baking-${subcatKey}`;
-                  return (
-                    <SubcategorySection
-                      key={subcatKey}
-                      title={displayName}
-                      count={subcatMeals.length}
-                      isExpanded={expandedSubcategories.has(expandKey)}
-                      onToggle={() => toggleSubcategory(expandKey)}
-                    >
-                      <div className="grid grid-cols-1 gap-4">
-                        {subcatMeals.map((meal) => (
-                          <MealCard
-                            key={meal.id}
-                            meal={meal}
-                            onEdit={handleEdit}
-                            onDelete={handleDelete}
-                          />
-                        ))}
-                      </div>
-                    </SubcategorySection>
-                  );
-                })
-              ) : (
-                // No subcategories, show flat list
-                <div className="grid grid-cols-1 gap-4">
-                  {bakingRecipes.map((meal) => (
-                    <MealCard
-                      key={meal.id}
-                      meal={meal}
-                      onEdit={handleEdit}
-                      onDelete={handleDelete}
-                    />
-                  ))}
-                </div>
-              )}
-            </CollapsibleSection>
+            <div className="mb-6">
+              {/* Custom header with Manage Folders button */}
+              <div className="flex items-center gap-2 bg-white rounded-soft shadow-soft px-4 py-3 mb-3">
+                <button
+                  onClick={() => setBakingExpanded(!bakingExpanded)}
+                  className="flex-1 flex items-center justify-between hover:bg-cream/50 -mx-2 px-2 py-1 rounded-soft transition-colors"
+                  aria-expanded={bakingExpanded}
+                >
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-lg font-semibold text-charcoal">Baking & Desserts</h2>
+                    <span className="text-sm text-charcoal/60 bg-cream px-2 py-0.5 rounded-full">
+                      {bakingRecipes.length}
+                    </span>
+                  </div>
+                  <span
+                    className={`text-terracotta text-xl transition-transform duration-200 ${
+                      bakingExpanded ? 'rotate-0' : '-rotate-90'
+                    }`}
+                  >
+                    ▼
+                  </span>
+                </button>
+                {/* Manage Folders button */}
+                <button
+                  onClick={() => setIsFolderManagerOpen(true)}
+                  className="flex items-center gap-1 px-3 py-1.5 text-sm bg-sage/30 hover:bg-sage/50 text-charcoal rounded-soft transition-colors"
+                  aria-label="Manage baking folders"
+                >
+                  <span>📁</span>
+                  <span className="hidden sm:inline">Manage</span>
+                </button>
+              </div>
+              {/* Collapsible content */}
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  bakingExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <NestedFolderSection
+                  node={bakingFolderTree}
+                  depth={0}
+                  expandedPaths={expandedBakingPaths}
+                  onToggle={toggleBakingPath}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              </div>
+            </div>
           )}
         </>
       )}
@@ -513,6 +546,13 @@ function MealLibrary() {
         message={`Are you sure you want to delete "${deletingMeal?.name}"? This cannot be undone.`}
         confirmText="Delete"
         confirmVariant="danger"
+      />
+
+      <FolderManagerModal
+        isOpen={isFolderManagerOpen}
+        onClose={() => setIsFolderManagerOpen(false)}
+        existingPaths={existingBakingPaths}
+        onCreateFolder={handleCreateFolder}
       />
     </div>
   );
