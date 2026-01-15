@@ -6,6 +6,8 @@ import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import { AddMealModal } from '../components/meals/AddMealModal';
 import { EditMealModal } from '../components/meals/EditMealModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
+import { FolderManagerModal } from '../components/meals/FolderManagerModal';
+import { buildFolderTree, getAllFolderPaths, type FolderTreeNode } from '../utils/subcategoryUtils';
 import type { Meal } from '../types';
 
 interface CollapsibleSectionProps {
@@ -87,6 +89,125 @@ function SubcategorySection({ title, count, isExpanded, onToggle, children }: Su
       >
         <div className="pl-4">
           {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Nested folder section for Baking (recursive)
+interface NestedFolderSectionProps {
+  node: FolderTreeNode;
+  depth: number;
+  expandedPaths: Set<string>;
+  onToggle: (path: string) => void;
+  onEdit: (meal: Meal) => void;
+  onDelete: (meal: Meal) => void;
+}
+
+function NestedFolderSection({
+  node,
+  depth,
+  expandedPaths,
+  onToggle,
+  onEdit,
+  onDelete,
+}: NestedFolderSectionProps) {
+  // Root node (empty name) renders children directly without header
+  if (!node.name) {
+    return (
+      <>
+        {/* Render child folders first */}
+        {Array.from(node.children.values()).map((child) => (
+          <NestedFolderSection
+            key={child.fullPath}
+            node={child}
+            depth={depth}
+            expandedPaths={expandedPaths}
+            onToggle={onToggle}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        ))}
+        {/* Then render meals at root level */}
+        {node.meals.length > 0 && (
+          <div className="grid grid-cols-1 gap-4 mb-4">
+            {node.meals
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((meal) => (
+                <MealCard
+                  key={meal.id}
+                  meal={meal}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
+          </div>
+        )}
+      </>
+    );
+  }
+
+  const isExpanded = expandedPaths.has(node.fullPath);
+
+  return (
+    <div className="mb-4" style={{ marginLeft: `${depth * 16}px` }}>
+      {/* Folder header */}
+      <button
+        onClick={() => onToggle(node.fullPath)}
+        className="w-full flex items-center justify-between bg-cream/50 rounded-soft px-3 py-2 mb-2 hover:bg-cream transition-colors"
+        aria-expanded={isExpanded}
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-charcoal/40 text-sm">{isExpanded ? '📂' : '📁'}</span>
+          <span className="text-sm font-medium text-charcoal">{node.name}</span>
+          <span className="text-xs text-charcoal/50 bg-white px-1.5 py-0.5 rounded-full">
+            {node.totalMealCount}
+          </span>
+        </div>
+        <span
+          className={`text-charcoal/40 text-sm transition-transform duration-200 ${
+            isExpanded ? 'rotate-0' : '-rotate-90'
+          }`}
+        >
+          ▼
+        </span>
+      </button>
+
+      {/* Expanded content */}
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="pl-4">
+          {/* Render child folders first */}
+          {Array.from(node.children.values()).map((child) => (
+            <NestedFolderSection
+              key={child.fullPath}
+              node={child}
+              depth={0}
+              expandedPaths={expandedPaths}
+              onToggle={onToggle}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+          ))}
+          {/* Then render meals at this level */}
+          {node.meals.length > 0 && (
+            <div className="grid grid-cols-1 gap-4 mb-2">
+              {node.meals
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((meal) => (
+                  <MealCard
+                    key={meal.id}
+                    meal={meal}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                  />
+                ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
