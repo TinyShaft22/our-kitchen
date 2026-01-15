@@ -170,4 +170,4 @@ Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 | 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
 | 13. Recipe Instructions | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 14. Meal Images | v1.1 | 2/2 | Complete | 2026-01-14 |
-| 15. Nested Baking Folders | v1.2 | 0/3 | Planned | - |
+| 15. Nested Baking Folders | v1.2 | 1/3 | In progress | - |
