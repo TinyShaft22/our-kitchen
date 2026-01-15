@@ -8,8 +8,8 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 
 - ✅ **v1.0 MVP** - Phases 1-10 (complete)
 - ✅ **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
-- 🚧 **v1.2 Baking Organization** - Phase 15 (in progress)
-- 🔜 **v1.3 Broma Bakery Import** - Phases 16-21 (planned)
+- ✅ **v1.2 Baking Organization** - Phase 15 (complete)
+- 🚧 **v1.3 Broma Bakery Import** - Phases 16-21 (in progress)
 
 ## Domain Expertise
 
@@ -35,7 +35,7 @@ None
 - [x] **Phase 12: Auto-Populate Grocery** - Real-time sync with "already have" toggle
 - [x] **Phase 13: Recipe Instructions** - Markdown notes for cooking instructions
 - [x] **Phase 14: Meal Images** - Firebase Storage for meal photos
-- [ ] **Phase 15: Nested Baking Folders** - Unlimited-depth nested folders for Baking section
+- [x] **Phase 15: Nested Baking Folders** - Unlimited-depth nested folders for Baking section
 
 ## Phase Details
 
@@ -221,7 +221,7 @@ Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 | 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
 | 13. Recipe Instructions | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 14. Meal Images | v1.1 | 2/2 | Complete | 2026-01-14 |
-| 15. Nested Baking Folders | v1.2 | 1/3 | In progress | - |
+| 15. Nested Baking Folders | v1.2 | 3/3 | Complete | 2026-01-15 |
 | 16. Scraping Infrastructure | v1.3 | 2/2 | Complete | 2026-01-15 |
 | 17. Cookies Batch | v1.3 | 0/2 | Not started | - |
 | 18. Bars Batch | v1.3 | 0/2 | Not started | - |

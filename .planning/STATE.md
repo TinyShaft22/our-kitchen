@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-01-11)
 Phase: 16 of 21 (Scraping Infrastructure)
 Plan: 2 of 2 in current phase
 Status: Phase complete
-Last activity: 2026-01-15 — Completed 16-02-PLAN.md
+Last activity: 2026-01-15 — Completed Phase 15 (Nested Baking Folders)
 
 Progress: █████████████████████░░░░ 86%
 
@@ -78,13 +78,19 @@ Resume file: None
 
 ✅ v1.0 MVP (Phases 1-10) - Complete
 ✅ v1.1 Meal & Grocery Refactor (Phases 11-14) - Complete
-🚧 v1.2 Baking Organization (Phase 15) - 1/3 plans complete
+✅ v1.2 Baking Organization (Phase 15) - Complete
 ✅ v1.3 Phase 16: Scraping Infrastructure - Complete
 
 **Next action:**
 Plan Phase 17 to scrape all 27 cookie recipes:
 
 `/gsd:plan-phase 17`
+
+Phase 15 delivered:
+- FolderTreeNode and buildFolderTree utilities (15-01)
+- FolderManagerModal for folder management (15-01)
+- NestedFolderSection recursive display (15-02)
+- NestedFolderPicker for Add/Edit modals (15-03)
 
 Phase 16 delivered:
 - WebFetch recipe extraction pattern (16-01)
