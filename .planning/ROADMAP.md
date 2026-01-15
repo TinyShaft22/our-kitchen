@@ -9,6 +9,7 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 - ✅ **v1.0 MVP** - Phases 1-10 (complete)
 - ✅ **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
 - 🚧 **v1.2 Baking Organization** - Phase 15 (in progress)
+- 🔜 **v1.3 Broma Bakery Import** - Phases 16-21 (planned)
 
 ## Domain Expertise
 
@@ -149,6 +150,56 @@ None
 - Step-by-step folder picker in Add/Edit meal modals
 - Main Dishes section unchanged (flat folders)
 
+---
+
+### 📋 v1.3 Broma Bakery Import
+
+**Milestone Goal:** Scrape 91 recipes from Broma Bakery (Cookies, Bars, Muffins, Brownies) and import via JSON into the food app with proper markdown formatting.
+
+### Phase 16: Scraping Infrastructure
+**Goal**: Test scrape one recipe, validate JSON format works with import system
+**Depends on**: Phase 15
+**Research**: Likely (recipe page structure, ingredient parsing patterns)
+**Plans**: 2 (16-01: Test Scrape & Format, 16-02: Ingredient Category Mapping)
+
+### Phase 17: Cookies Batch
+**Goal**: Scrape all 27 cookie recipes, generate import-ready JSON
+**Depends on**: Phase 16
+**Research**: Unlikely (pattern established)
+**Plans**: 2 (17-01: Scrape Cookies, 17-02: Generate JSON)
+
+### Phase 18: Bars Batch
+**Goal**: Scrape all 25 bar recipes, generate import-ready JSON
+**Depends on**: Phase 16
+**Research**: Unlikely (pattern established)
+**Plans**: 2 (18-01: Scrape Bars, 18-02: Generate JSON)
+
+### Phase 19: Muffins Batch
+**Goal**: Scrape all 18 muffin recipes, generate import-ready JSON
+**Depends on**: Phase 16
+**Research**: Unlikely (pattern established)
+**Plans**: 2 (19-01: Scrape Muffins, 19-02: Generate JSON)
+
+### Phase 20: Brownies Batch
+**Goal**: Scrape all 21 brownie recipes, generate import-ready JSON
+**Depends on**: Phase 16
+**Research**: Unlikely (pattern established)
+**Plans**: 2 (20-01: Scrape Brownies, 20-02: Generate JSON)
+
+### Phase 21: Import & Verification
+**Goal**: Import all JSON files via Settings, verify recipes display correctly
+**Depends on**: Phases 17-20
+**Research**: Unlikely (using existing import feature)
+**Plans**: 2 (21-01: Import All Batches, 21-02: Verify & Fix Issues)
+
+**Recipe Format:**
+- Markdown instructions with ## headers, bullet lists, numbered steps
+- Original recipe link at bottom
+- Ingredients mapped to app categories (baking, dairy, pantry, produce)
+- Subcategory set to type (Cookies, Bars, Muffins, Brownies)
+
+---
+
 ## Progress
 
 **Execution Order:**
@@ -171,3 +222,9 @@ Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 | 13. Recipe Instructions | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 14. Meal Images | v1.1 | 2/2 | Complete | 2026-01-14 |
 | 15. Nested Baking Folders | v1.2 | 1/3 | In progress | - |
+| 16. Scraping Infrastructure | v1.3 | 0/2 | Not started | - |
+| 17. Cookies Batch | v1.3 | 0/2 | Not started | - |
+| 18. Bars Batch | v1.3 | 0/2 | Not started | - |
+| 19. Muffins Batch | v1.3 | 0/2 | Not started | - |
+| 20. Brownies Batch | v1.3 | 0/2 | Not started | - |
+| 21. Import & Verification | v1.3 | 0/2 | Not started | - |
