@@ -8,6 +8,7 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 
 - ✅ **v1.0 MVP** - Phases 1-10 (complete)
 - ✅ **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
+- 🚧 **v1.2 Baking Organization** - Phase 15 (in progress)
 
 ## Domain Expertise
 
@@ -33,6 +34,7 @@ None
 - [x] **Phase 12: Auto-Populate Grocery** - Real-time sync with "already have" toggle
 - [x] **Phase 13: Recipe Instructions** - Markdown notes for cooking instructions
 - [x] **Phase 14: Meal Images** - Firebase Storage for meal photos
+- [ ] **Phase 15: Nested Baking Folders** - Unlimited-depth nested folders for Baking section
 
 ## Phase Details
 
@@ -128,10 +130,29 @@ None
 **Research**: Unlikely (standard Firebase Storage pattern, SDK already installed)
 **Plans**: 2 (14-01: Storage Setup & AddModal, 14-02: EditModal & MealCard Display)
 
+---
+
+### 📋 v1.2 Baking Organization
+
+**Milestone Goal:** Add nested folder support to the Baking section for organizing imported recipes (e.g., Broma > Cookies, Broma > Brownies).
+
+### Phase 15: Nested Baking Folders
+**Goal**: Unlimited-depth nested folders for Baking section only, with folder manager and step-by-step folder creation
+**Depends on**: Phase 14
+**Research**: Unlikely (internal UI patterns, path-based string approach)
+**Plans**: 3 (15-01: Utilities & FolderManager, 15-02: Nested Display, 15-03: Folder Picker in Modals)
+
+**Key features:**
+- Path-based subcategory format: "Broma/Cookies/Holiday"
+- Recursive folder rendering with expand/collapse at each level
+- "Manage Folders" button for dedicated folder organization
+- Step-by-step folder picker in Add/Edit meal modals
+- Main Dishes section unchanged (flat folders)
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 → 14
+Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -149,3 +170,4 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
 | 13. Recipe Instructions | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 14. Meal Images | v1.1 | 2/2 | Complete | 2026-01-14 |
+| 15. Nested Baking Folders | v1.2 | 0/3 | Planned | - |
