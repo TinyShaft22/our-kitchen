@@ -168,11 +168,14 @@ export const importRecipe = onRequest({ cors: true, invoker: "public" }, async (
       return;
     }
 
-    // Parse ingredients - handle both string (newline-separated) and array
+    // Parse ingredients - handle string (various separators) or array
     let ingredientList: string[] = [];
     if (typeof data.ingredients === "string") {
-      // Split text by newlines and filter empty lines
-      ingredientList = data.ingredients.split(/[\n\r]+/).filter((i) => i.trim());
+      // Split by newlines, commas, semicolons, or " and "
+      ingredientList = data.ingredients
+        .split(/[\n\r,;]+|\s+and\s+/i)
+        .map((i) => i.trim())
+        .filter((i) => i && i.length > 0);
     } else if (Array.isArray(data.ingredients)) {
       ingredientList = data.ingredients.filter((i) => i && i.trim());
     }
