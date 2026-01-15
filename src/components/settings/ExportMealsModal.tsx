@@ -34,6 +34,8 @@ export function ExportMealsModal({ isOpen, onClose, meals }: ExportMealsModalPro
   const [sharing, setSharing] = useState(false);
   const [shareSuccess, setShareSuccess] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
+  const [showManualCopy, setShowManualCopy] = useState(false);
+  const [exportJson, setExportJson] = useState<string>('');
 
   // Select all meals by default when modal opens
   useEffect(() => {
@@ -41,6 +43,8 @@ export function ExportMealsModal({ isOpen, onClose, meals }: ExportMealsModalPro
       setSelectedMealIds(new Set(meals.map((m) => m.id)));
       setShareSuccess(null);
       setShareError(null);
+      setShowManualCopy(false);
+      setExportJson('');
     }
   }, [isOpen, meals]);
 
@@ -108,9 +112,15 @@ export function ExportMealsModal({ isOpen, onClose, meals }: ExportMealsModalPro
         });
         setShareSuccess('Meals shared successfully!');
       } else {
-        // Fallback: copy to clipboard
-        await navigator.clipboard.writeText(jsonString);
-        setShareSuccess('Copied to clipboard! Paste this JSON to import on another device.');
+        // Fallback: try clipboard, then manual copy
+        try {
+          await navigator.clipboard.writeText(jsonString);
+          setShareSuccess('Copied to clipboard! Paste this JSON to import on another device.');
+        } catch {
+          // Clipboard failed, show manual copy UI
+          setExportJson(jsonString);
+          setShowManualCopy(true);
+        }
       }
     } catch (err) {
       // User cancelled share dialog - not an error
@@ -118,7 +128,11 @@ export function ExportMealsModal({ isOpen, onClose, meals }: ExportMealsModalPro
         setSharing(false);
         return;
       }
-      setShareError(err instanceof Error ? err.message : 'Failed to share meals');
+      // For other errors, show manual copy as fallback
+      const exportData = createExportData();
+      const jsonString = JSON.stringify(exportData, null, 2);
+      setExportJson(jsonString);
+      setShowManualCopy(true);
     } finally {
       setSharing(false);
     }
@@ -155,81 +169,112 @@ export function ExportMealsModal({ isOpen, onClose, meals }: ExportMealsModalPro
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4">
-          {/* Select/Deselect buttons */}
-          <div className="flex gap-2 mb-4">
-            <button
-              onClick={handleSelectAll}
-              disabled={allSelected}
-              className="flex-1 h-10 rounded-soft border border-charcoal/20 text-sm font-medium text-charcoal hover:bg-charcoal/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Select All
-            </button>
-            <button
-              onClick={handleDeselectAll}
-              disabled={selectedCount === 0}
-              className="flex-1 h-10 rounded-soft border border-charcoal/20 text-sm font-medium text-charcoal hover:bg-charcoal/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Deselect All
-            </button>
-          </div>
-
-          {/* Meals list */}
-          {meals.length === 0 ? (
-            <p className="text-center text-charcoal/60 py-8">
-              No meals to export. Add some meals first!
-            </p>
+          {showManualCopy ? (
+            <>
+              {/* Manual copy view */}
+              <div className="mb-4">
+                <p className="text-sm text-charcoal mb-2">
+                  Copy this text and send it to the other household:
+                </p>
+                <textarea
+                  readOnly
+                  value={exportJson}
+                  onFocus={(e) => e.target.select()}
+                  rows={10}
+                  className="w-full px-3 py-2 rounded-soft border border-charcoal/20 bg-white text-charcoal font-mono text-xs resize-none"
+                />
+              </div>
+              <button
+                onClick={() => {
+                  setShowManualCopy(false);
+                  setExportJson('');
+                }}
+                className="text-sm text-terracotta hover:text-terracotta/80"
+              >
+                ← Back to meal selection
+              </button>
+            </>
           ) : (
-            <div className="space-y-2">
-              {meals.map((meal) => (
-                <label
-                  key={meal.id}
-                  className="flex items-center gap-3 p-3 bg-white rounded-soft border border-charcoal/10 cursor-pointer hover:border-terracotta/50 transition-colors"
+            <>
+              {/* Select/Deselect buttons */}
+              <div className="flex gap-2 mb-4">
+                <button
+                  onClick={handleSelectAll}
+                  disabled={allSelected}
+                  className="flex-1 h-10 rounded-soft border border-charcoal/20 text-sm font-medium text-charcoal hover:bg-charcoal/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  <input
-                    type="checkbox"
-                    checked={selectedMealIds.has(meal.id)}
-                    onChange={() => handleToggleMeal(meal.id)}
-                    className="w-5 h-5 rounded border-charcoal/30 text-terracotta focus:ring-terracotta"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-charcoal truncate">
-                      {meal.name}
-                    </div>
-                    <div className="text-sm text-charcoal/60">
-                      {meal.ingredients.length} ingredient{meal.ingredients.length !== 1 ? 's' : ''}
-                      {meal.isBaking && ' · Baking'}
-                    </div>
-                  </div>
-                </label>
-              ))}
-            </div>
-          )}
+                  Select All
+                </button>
+                <button
+                  onClick={handleDeselectAll}
+                  disabled={selectedCount === 0}
+                  className="flex-1 h-10 rounded-soft border border-charcoal/20 text-sm font-medium text-charcoal hover:bg-charcoal/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Deselect All
+                </button>
+              </div>
 
-          {/* Success/Error messages */}
-          {shareSuccess && (
-            <div className="mt-4 bg-green-100 text-green-700 px-4 py-3 rounded-soft text-sm">
-              {shareSuccess}
-            </div>
-          )}
-          {shareError && (
-            <div className="mt-4 bg-red-100 text-red-700 px-4 py-3 rounded-soft text-sm">
-              {shareError}
-            </div>
+              {/* Meals list */}
+              {meals.length === 0 ? (
+                <p className="text-center text-charcoal/60 py-8">
+                  No meals to export. Add some meals first!
+                </p>
+              ) : (
+                <div className="space-y-2">
+                  {meals.map((meal) => (
+                    <label
+                      key={meal.id}
+                      className="flex items-center gap-3 p-3 bg-white rounded-soft border border-charcoal/10 cursor-pointer hover:border-terracotta/50 transition-colors"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedMealIds.has(meal.id)}
+                        onChange={() => handleToggleMeal(meal.id)}
+                        className="w-5 h-5 rounded border-charcoal/30 text-terracotta focus:ring-terracotta"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium text-charcoal truncate">
+                          {meal.name}
+                        </div>
+                        <div className="text-sm text-charcoal/60">
+                          {meal.ingredients.length} ingredient{meal.ingredients.length !== 1 ? 's' : ''}
+                          {meal.isBaking && ' · Baking'}
+                        </div>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              {/* Success/Error messages */}
+              {shareSuccess && (
+                <div className="mt-4 bg-green-100 text-green-700 px-4 py-3 rounded-soft text-sm">
+                  {shareSuccess}
+                </div>
+              )}
+              {shareError && (
+                <div className="mt-4 bg-red-100 text-red-700 px-4 py-3 rounded-soft text-sm">
+                  {shareError}
+                </div>
+              )}
+            </>
           )}
         </div>
 
         {/* Footer */}
-        <div className="border-t border-charcoal/10 p-4">
-          <button
-            onClick={handleShare}
-            disabled={selectedCount === 0 || sharing}
-            className="w-full h-12 rounded-soft bg-terracotta text-white font-medium hover:bg-terracotta/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {sharing
-              ? 'Sharing...'
-              : `Share ${selectedCount} Meal${selectedCount !== 1 ? 's' : ''}`}
-          </button>
-        </div>
+        {!showManualCopy && (
+          <div className="border-t border-charcoal/10 p-4">
+            <button
+              onClick={handleShare}
+              disabled={selectedCount === 0 || sharing}
+              className="w-full h-12 rounded-soft bg-terracotta text-white font-medium hover:bg-terracotta/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {sharing
+                ? 'Sharing...'
+                : `Share ${selectedCount} Meal${selectedCount !== 1 ? 's' : ''}`}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
