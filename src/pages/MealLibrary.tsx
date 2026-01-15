@@ -524,6 +524,7 @@ function MealLibrary() {
           onSave={handleSaveMeal}
           householdCode={householdCode}
           existingSubcategories={existingSubcategories}
+          existingBakingPaths={existingBakingPaths}
         />
       )}
 

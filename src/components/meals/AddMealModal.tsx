@@ -4,6 +4,7 @@ import { storage } from '../../config/firebase';
 import type { Meal, Ingredient } from '../../types';
 import { IngredientInput } from './IngredientInput';
 import { MarkdownEditor } from './MarkdownEditor';
+import { NestedFolderPicker } from './NestedFolderPicker';
 
 interface AddMealModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface AddMealModalProps {
   onSave: (meal: Omit<Meal, 'id' | 'householdCode'>) => Promise<void>;
   householdCode: string;
   existingSubcategories?: string[];
+  existingBakingPaths?: string[];
 }
 
 // Default ingredient values for new ingredients
@@ -20,13 +22,11 @@ const createDefaultIngredient = (): Ingredient => ({
   defaultStore: 'safeway',
 });
 
-export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingSubcategories = [] }: AddMealModalProps) {
+export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingSubcategories = [], existingBakingPaths = [] }: AddMealModalProps) {
   const [name, setName] = useState('');
   const [servings, setServings] = useState(4);
   const [isBaking, setIsBaking] = useState(false);
   const [subcategory, setSubcategory] = useState('');
-  const [isCreatingNewSubcategory, setIsCreatingNewSubcategory] = useState(false);
-  const [newSubcategoryName, setNewSubcategoryName] = useState('');
   const [instructions, setInstructions] = useState('');
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [saving, setSaving] = useState(false);
@@ -94,8 +94,6 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
     setServings(4);
     setIsBaking(false);
     setSubcategory('');
-    setIsCreatingNewSubcategory(false);
-    setNewSubcategoryName('');
     setInstructions('');
     setIngredients([]);
     setError(null);
@@ -175,10 +173,9 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
       if (imageUrl) {
         mealData.imageUrl = imageUrl;
       }
-      // Use new subcategory name if creating, otherwise use selected
-      const finalSubcategory = isCreatingNewSubcategory ? newSubcategoryName.trim() : subcategory;
-      if (finalSubcategory) {
-        mealData.subcategory = finalSubcategory;
+      // NestedFolderPicker handles folder creation, just use subcategory directly
+      if (subcategory) {
+        mealData.subcategory = subcategory;
       }
 
       await onSave(mealData);
@@ -300,7 +297,7 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
             </button>
           </div>
 
-          {/* Subcategory */}
+          {/* Folder */}
           <div>
             <label className="block text-sm font-medium text-charcoal mb-1">
               Folder
@@ -308,48 +305,12 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
                 (optional)
               </span>
             </label>
-            {isCreatingNewSubcategory ? (
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={newSubcategoryName}
-                  onChange={(e) => setNewSubcategoryName(e.target.value)}
-                  placeholder="Enter folder name..."
-                  className="flex-1 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
-                  autoFocus
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsCreatingNewSubcategory(false);
-                    setNewSubcategoryName('');
-                  }}
-                  className="h-11 px-3 rounded-soft border border-charcoal/20 text-charcoal/60 hover:bg-charcoal/5"
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <div className="flex gap-2">
-                <select
-                  value={subcategory}
-                  onChange={(e) => setSubcategory(e.target.value)}
-                  className="flex-1 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
-                >
-                  <option value="">No folder</option>
-                  {existingSubcategories.map((cat) => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={() => setIsCreatingNewSubcategory(true)}
-                  className="h-11 px-3 rounded-soft border border-charcoal/20 text-terracotta hover:bg-terracotta/5 whitespace-nowrap"
-                >
-                  + New
-                </button>
-              </div>
-            )}
+            <NestedFolderPicker
+              value={subcategory}
+              onChange={setSubcategory}
+              existingPaths={isBaking ? existingBakingPaths : existingSubcategories}
+              isBaking={isBaking}
+            />
           </div>
 
           {/* Photo */}
