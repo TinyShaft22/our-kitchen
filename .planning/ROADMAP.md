@@ -6,8 +6,8 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 
 ## Milestones
 
-- 🚧 **v1.0 MVP** - Phases 1-10 (in progress)
-- 📋 **v1.1 Meal & Grocery Refactor** - Phases 11-14 (planned)
+- ✅ **v1.0 MVP** - Phases 1-10 (complete)
+- ✅ **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
 
 ## Domain Expertise
 
@@ -28,7 +28,7 @@ None
 - [x] **Phase 7: Shopping Mode** - Store filtering, in-cart tracking, trip completion
 - [x] **Phase 8: Voice & Staples** - Web Speech API input, always-grab staples section
 - [x] **Phase 9: Baking Corner** - Bella's inventory tracking, restock to grocery list
-- [ ] **Phase 10: PWA & Polish** - Service worker, offline support, warm UI theme
+- [x] **Phase 10: PWA & Polish** - Service worker, offline support, warm UI theme
 - [x] **Phase 11: Simplify Ingredients** - Remove qty/unit, streamline to name/category/store
 - [x] **Phase 12: Auto-Populate Grocery** - Real-time sync with "already have" toggle
 - [x] **Phase 13: Recipe Instructions** - Markdown notes for cooking instructions
@@ -144,7 +144,7 @@ Phases execute in numeric order: 1 → 2 → ... → 10 → 11 → 12 → 13 →
 | 7. Shopping Mode | v1.0 | 2/2 | Complete | 2026-01-12 |
 | 8. Voice & Staples | v1.0 | 3/3 | Complete | 2026-01-13 |
 | 9. Baking Corner | v1.0 | 3/3 | Complete | 2026-01-13 |
-| 10. PWA & Polish | v1.0 | 2/3 | In progress | - |
+| 10. PWA & Polish | v1.0 | 3/3 | Complete | 2026-01-15 |
 | 11. Simplify Ingredients | v1.1 | 1/1 | Complete | 2026-01-13 |
 | 12. Auto-Populate Grocery | v1.1 | 2/2 | Complete | 2026-01-13 |
 | 13. Recipe Instructions | v1.1 | 1/1 | Complete | 2026-01-13 |
