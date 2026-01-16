@@ -169,22 +169,22 @@ None
 **Plans**: 2 (17-01: Scrape Cookies, 17-02: Generate JSON)
 
 ### Phase 18: Bars Batch
-**Goal**: Scrape all 25 bar recipes, generate import-ready JSON
+**Goal**: Scrape all 25 bar recipes, extract image URLs, generate import-ready JSON
 **Depends on**: Phase 16
 **Research**: Unlikely (pattern established)
-**Plans**: 2 (18-01: Scrape Bars, 18-02: Generate JSON)
+**Plans**: 2 (18-01: Scrape Bars, 18-02: Generate JSON + Images)
 
 ### Phase 19: Muffins Batch
-**Goal**: Scrape all 18 muffin recipes, generate import-ready JSON
+**Goal**: Scrape all 18 muffin recipes, extract image URLs, generate import-ready JSON
 **Depends on**: Phase 16
 **Research**: Unlikely (pattern established)
-**Plans**: 2 (19-01: Scrape Muffins, 19-02: Generate JSON)
+**Plans**: 2 (19-01: Scrape Muffins, 19-02: Generate JSON + Images)
 
 ### Phase 20: Brownies Batch
-**Goal**: Scrape all 21 brownie recipes, generate import-ready JSON
+**Goal**: Scrape all 21 brownie recipes, extract image URLs, generate import-ready JSON
 **Depends on**: Phase 16
 **Research**: Unlikely (pattern established)
-**Plans**: 2 (20-01: Scrape Brownies, 20-02: Generate JSON)
+**Plans**: 2 (20-01: Scrape Brownies, 20-02: Generate JSON + Images)
 
 ### Phase 21: Import & Verification
 **Goal**: Import all JSON files via Settings, verify recipes display correctly
@@ -197,6 +197,18 @@ None
 - Original recipe link at bottom
 - Ingredients mapped to app categories (baking, dairy, pantry, produce)
 - Subcategory set to type (Cookies, Bars, Muffins, Brownies)
+
+### Phase 22: Recipe Image Upload
+**Goal**: Upload images from Broma Bakery to imported recipes using Claude-in-Chrome browser automation
+**Depends on**: Phase 21
+**Research**: Unlikely (using existing image upload feature + Claude-in-Chrome MCP)
+**Plans**: 1 (22-01: Image Upload Workflow)
+
+**Workflow:**
+- PowerShell handoff with Claude-in-Chrome MCP
+- For each recipe: download og:image URL, upload to meal's photo field
+- Uses extracted image URLs from {category}-images.json files
+- Batch process per category (Cookies, Bars, Muffins, Brownies)
 
 ---
 
