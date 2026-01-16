@@ -55,7 +55,7 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
               {meal.name}
             </h3>
             <p className="text-xs text-warm-gray">
-              {meal.servings} servings • {meal.ingredients.length} ingredient{meal.ingredients.length !== 1 ? 's' : ''}
+              {meal.isBaking ? `Qty: ${meal.servings}` : `${meal.servings} servings`} • {meal.ingredients.length} ingredient{meal.ingredients.length !== 1 ? 's' : ''}
             </p>
           </div>
         </div>
@@ -91,13 +91,13 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
                   className="w-48 h-48 rounded-soft object-cover flex-shrink-0"
                 />
               )}
-              {/* Servings Info */}
+              {/* Servings/Quantity Info */}
               <div className="flex-1">
                 <div className="text-sm text-charcoal/70">
-                  <span className="font-medium text-charcoal">Servings:</span> {meal.servings}
+                  <span className="font-medium text-charcoal">{meal.isBaking ? 'Quantity:' : 'Servings:'}</span> {meal.servings}
                 </div>
                 <p className="text-xs text-charcoal/50 mt-1">
-                  How many people this recipe serves
+                  {meal.isBaking ? 'How many this recipe makes' : 'How many people this recipe serves'}
                 </p>
               </div>
             </div>

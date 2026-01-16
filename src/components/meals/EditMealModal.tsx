@@ -276,15 +276,15 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
             />
           </div>
 
-          {/* Servings */}
+          {/* Servings/Quantity */}
           <div>
             <label
               htmlFor="edit-servings"
               className="block text-sm font-medium text-charcoal mb-1"
             >
-              Servings
+              {isBaking ? 'Quantity' : 'Servings'}
               <span className="font-normal text-xs text-charcoal/50 ml-1">
-                (how many people this recipe serves)
+                ({isBaking ? 'how many this recipe makes' : 'how many people this recipe serves'})
               </span>
             </label>
             <input
