@@ -1,0 +1,677 @@
+{
+  "version": 1,
+  "meals": [
+    {
+      "name": "Gluten Free Blondies",
+      "servings": 9,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "gluten-free flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Gluten Free Blondies\n\n**Yield:** 9 large blondies\n**Prep:** 10 min | **Bake:** 25-30 min\n\n### Ingredients\n- 1/2 cup unsalted butter, melted\n- 1 cup packed light brown sugar\n- 1 large egg + 1 large egg yolk, room temperature\n- 1 teaspoon vanilla extract\n- 1 cup gluten-free flour (Bob's Red Mill 1:1 or King Arthur recommended)\n- 1/4 teaspoon baking powder\n- 1/2 teaspoon salt\n- 1 cup dark chocolate chips\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line 8x8-inch pan with parchment paper.\n\n2. Mix wet ingredients - Whisk melted butter and brown sugar together until combined.\n\n3. Add eggs - Whisk in egg, extra yolk, and vanilla.\n\n4. Add dry ingredients - Add flour, baking powder, and salt. Fold with spatula until just combined (no flour streaks). Gently fold in chocolate chips.\n\n5. Bake - Scrape batter into prepared pan, spreading to edges. Bake 25-30 minutes until edges are set and golden brown. Center may look underbaked.\n\n6. Cool and serve - Cool completely in pan on rack. Use parchment paper to lift out, then cut and serve.\n\n---\n[Original recipe](https://bromabakery.com/gluten-free-blondies-recipe/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Caramel Apple Cheesecake Crumble Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "ginger", "category": "baking", "defaultStore": "costco" },
+        { "name": "nutmeg", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+        { "name": "sour cream", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "apples", "category": "produce", "defaultStore": "costco" },
+        { "name": "caramels", "category": "pantry", "defaultStore": "safeway" }
+      ],
+      "instructions": "## Caramel Apple Cheesecake Crumble Bars\n\n**Yield:** 16 servings\n**Prep:** 40 min | **Bake:** 35 min\n\n### Ingredients\n\n**Crust and Crumb Topping:**\n- 1/2 cup unsalted butter, melted\n- 1/3 cup granulated sugar\n- 1/3 cup packed light brown sugar\n- 1 1/2 cups all-purpose flour\n- 1 teaspoon ground cinnamon\n- 1/2 teaspoon ground ginger\n- 1/4 teaspoon ground nutmeg\n- 1/2 teaspoon salt\n\n**Cheesecake Layer:**\n- 16 ounces cream cheese, room temperature\n- 1/4 cup sour cream, room temperature\n- 1 cup granulated sugar\n- 2 large eggs, room temperature\n- 1 tablespoon vanilla extract\n- 1/4 teaspoon salt\n- 1/2 cup salted caramel (optional topping)\n\n**Apple Layer:**\n- 1 medium apple, peeled, cored, diced\n- 1 tablespoon packed light brown sugar\n- 2 teaspoons ground cinnamon\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 325°F; line 9x9-inch pan with parchment paper.\n\n2. Make crust - Mix melted butter, sugars, flour, spices, and salt until resembling wet sand. Press half into pan bottom firmly; reserve remaining mixture.\n\n3. Make cheesecake - Beat cream cheese, sour cream, and sugar until smooth (30 seconds). Add eggs, vanilla, and salt. Beat until smooth.\n\n4. Add apple layer - Combine apple pieces with brown sugar and cinnamon; sprinkle over cheesecake. Press gently into batter. Crumble reserved mixture over apples.\n\n5. Bake - 35-40 minutes until puffed and set at edges with slight wobble in center.\n\n6. Cool slowly - Turn off oven; crack door open. Leave cheesecake inside 30 minutes.\n\n7. Chill and serve - Refrigerate minimum 2 hours or overnight. Drizzle with salted caramel, slice, and serve.\n\n---\n[Original recipe](https://bromabakery.com/caramel-apple-cheesecake-crumble-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Pumpkin Snickerdoodle Blondies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "pumpkin puree", "category": "pantry", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "egg yolks", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+        { "name": "cream of tartar", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "ginger", "category": "baking", "defaultStore": "costco" },
+        { "name": "nutmeg", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Pumpkin Snickerdoodle Blondies\n\n**Yield:** 16 servings\n**Prep:** 20 min | **Bake:** 20 min\n\n### Ingredients\n\n**Blondies:**\n- 1/2 cup pumpkin puree, dried\n- 1/2 cup unsalted butter, melted\n- 1/2 cup packed light brown sugar\n- 1/2 cup granulated sugar\n- 1 large egg yolk\n- 1 teaspoon vanilla extract\n- 1 1/4 cups all-purpose flour\n- 1/2 teaspoon baking soda\n- 1/4 teaspoon cream of tartar\n- 1/2 teaspoon salt\n- 1 teaspoon ground cinnamon\n- 1/4 teaspoon ground ginger\n- 1/8 teaspoon ground nutmeg\n\n**Cinnamon Sugar Coating:**\n- 1/4 cup granulated sugar\n- 1 tablespoon ground cinnamon\n- Pinch of salt\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F; line 8x8-inch pan with parchment paper.\n\n2. Dry pumpkin - Blot pumpkin puree on paper towels; squeeze to remove excess moisture.\n\n3. Mix wet ingredients - Combine dried pumpkin, melted butter, both sugars; whisk together. Add egg yolk and vanilla; mix well.\n\n4. Add dry ingredients - Add flour, baking soda, cream of tartar, salt, cinnamon, ginger, nutmeg; mix until combined.\n\n5. Add topping - Combine cinnamon sugar ingredients; sprinkle over batter.\n\n6. Bake - 18-22 minutes until edges set but center slightly gooey. Cool before eating.\n\n---\n[Original recipe](https://bromabakery.com/pumpkin-snickerdoodle-blondies/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Cookie Dough Ice Cream Sandwiches",
+      "servings": 12,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla ice cream", "category": "frozen", "defaultStore": "costco" }
+      ],
+      "instructions": "## Cookie Dough Ice Cream Sandwiches\n\n**Yield:** 12 servings\n**Prep:** 45 min | **Bake:** 7 min | **Chill:** 3 hours\n\n### Ingredients\n- 2 cups all-purpose flour\n- 3/4 cup unsalted butter, melted\n- 3/4 cup packed light brown sugar\n- 1/2 cup granulated sugar\n- 2 tablespoons milk\n- 1 tablespoon vanilla extract\n- 1/2 teaspoon salt\n- 1 cup mini chocolate chips\n- 1 quart vanilla ice cream, slightly softened\n\n### Instructions\n\n1. Heat-treat flour - Heat-treat flour at 350°F for 7-8 minutes until it reaches 165°F internally, stirring halfway through. Cool completely.\n\n2. Prep pans - Line two 8x8-inch square pans with parchment paper on all sides.\n\n3. Make dough - Combine melted butter, brown sugar, granulated sugar, milk, and vanilla extract. Add cooled flour and salt; fold until no streaks remain. Add chocolate chips and fold to combine.\n\n4. Shape dough layers - Divide dough in half, spreading each into an even layer in prepared pans. Freeze for 30 minutes.\n\n5. Assemble - Spread softened ice cream over one chilled dough layer. Remove second dough slab from freezer, invert onto ice cream, and press gently to seal.\n\n6. Freeze and serve - Cover with plastic wrap and freeze at least 3 hours. Slice into desired-sized sandwiches.\n\n---\n[Original recipe](https://bromabakery.com/cookie-dough-ice-cream-sandwiches/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "S'mores Blondies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "graham crackers", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "marshmallow fluff", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## S'mores Blondies\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Bake:** 22 min\n\n### Ingredients\n- 1/2 cup unsalted butter, melted\n- 3/4 cup packed light brown sugar\n- 1 large egg at room temperature\n- 1 tablespoon vanilla extract\n- 1 cup all-purpose flour\n- 3/4 cup graham cracker crumbs\n- 1/4 teaspoon baking powder\n- 1/2 teaspoon salt\n- Pinch of cinnamon (optional)\n- 1 1/2 cups marshmallow fluff\n- 4.4 oz chocolate bar, broken into pieces\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line an 8x8-inch pan with parchment paper on all sides.\n\n2. Mix wet ingredients - Whisk melted butter and brown sugar together. Add egg and vanilla, mixing until glossy.\n\n3. Add dry ingredients - Fold in flour, graham cracker crumbs, baking powder, salt, and cinnamon.\n\n4. Layer bottom - Transfer half the batter to the prepared pan, spreading evenly to edges.\n\n5. Add fluff layer - Spread marshmallow fluff over bottom layer using a greased spatula.\n\n6. Add top layer - Form remaining dough into flat discs, placing over fluff to cover most of it. Press chocolate pieces on top.\n\n7. Bake - 20-25 minutes until golden brown and firm to touch. Cool slightly before slicing.\n\n---\n[Original recipe](https://bromabakery.com/smores-blondies/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Tiramisu Blondies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "espresso powder", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "heavy cream", "category": "dairy", "defaultStore": "costco" },
+        { "name": "mascarpone", "category": "dairy", "defaultStore": "trader-joes" },
+        { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Tiramisu Blondies\n\n**Yield:** 16 servings\n**Prep:** 1 hour | **Bake:** 20-25 min\n\n### Ingredients\n\n**Blondies:**\n- 1/2 cup unsalted butter, melted\n- 1 cup packed light brown sugar\n- 1 large egg + 1 large egg yolk\n- 1 teaspoon vanilla extract\n- 1 cup all-purpose flour\n- 1 tablespoon espresso powder\n- 1/2 teaspoon salt\n- 1/4 teaspoon baking powder\n\n**Espresso Soak:**\n- 1/4 cup warm water\n- 1 tablespoon espresso powder\n- 1 teaspoon cocoa powder\n\n**Tiramisu Cream:**\n- 1 cup heavy whipping cream\n- 8 ounces mascarpone (cold)\n- 1 cup powdered sugar\n- 1 teaspoon vanilla extract\n- Pinch of salt\n- Cocoa powder for dusting\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line 8x8-inch pan with parchment paper.\n\n2. Mix blondie batter - Whisk melted butter and brown sugar together. Add egg, egg yolk, and vanilla; mix well. Fold in flour, espresso powder, salt, and baking powder.\n\n3. Bake - Spread batter evenly in prepared pan. Bake 20-25 minutes until golden brown and set on edges.\n\n4. Make espresso soak - Combine warm water, espresso powder, and cocoa powder. Brush mixture onto cooled blondies.\n\n5. Make cream - Beat heavy cream, mascarpone, powdered sugar, vanilla, and salt until stiffened (about 1 minute).\n\n6. Assemble - Spread mascarpone cream over blondies. Dust generously with cocoa powder. Refrigerate 30 minutes before slicing.\n\n---\n[Original recipe](https://bromabakery.com/tiramisu-blondies/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "The Best Carmelitas",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "old fashioned oats", "category": "pantry", "defaultStore": "costco" },
+        { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "egg yolks", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "caramels", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "heavy cream", "category": "dairy", "defaultStore": "costco" }
+      ],
+      "instructions": "## The Best Carmelitas\n\n**Yield:** 16 bars\n**Prep:** 40 min | **Bake:** 30 min\n\n### Ingredients\n\n**Base and Topping:**\n- 1 cup unsalted butter, browned\n- 1 cup packed light brown sugar\n- 1 1/3 cups all-purpose flour\n- 1 1/3 cups old fashioned oats\n- 3/4 teaspoon baking soda\n- 3/4 teaspoon salt\n- 1 large egg yolk\n- 2 teaspoons vanilla extract\n- 1 cup semi-sweet or dark chocolate chips\n\n**Caramel Layer:**\n- 40 soft caramels (Werther's recommended)\n- 1/2 cup heavy cream\n- 1 teaspoon vanilla extract\n- 1/4 teaspoon salt\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F; line 9x9-inch pan with parchment paper.\n\n2. Brown butter - Brown butter over medium heat until golden and nutty; cool slightly.\n\n3. Make dough - Combine brown sugar, flour, oats, baking soda, and salt; add browned butter, egg yolk, and vanilla; stir until dough forms.\n\n4. Add bottom layer - Add chocolate chips; transfer half the dough to prepared pan.\n\n5. Make caramel - Melt caramels with heavy cream over low-medium heat; stir in salt and vanilla.\n\n6. Assemble - Pour caramel over bottom layer; press remaining dough on top.\n\n7. Bake - 30 minutes until golden brown; cool completely before slicing.\n\n---\n[Original recipe](https://bromabakery.com/the-best-carmelitas/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Baklava Blondies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "honey", "category": "pantry", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "pistachios", "category": "pantry", "defaultStore": "costco" },
+        { "name": "walnuts", "category": "pantry", "defaultStore": "costco" },
+        { "name": "lemons", "category": "produce", "defaultStore": "costco" },
+        { "name": "heavy cream", "category": "dairy", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Baklava Blondies\n\n**Yield:** 16 blondies\n**Prep:** 1 hour | **Bake:** 25 min\n\n### Ingredients\n\n**Blondies:**\n- 1/2 cup unsalted butter, melted\n- 3/4 cup packed light brown sugar\n- 2 tablespoons honey\n- 1 egg + 1 egg yolk\n- 1 teaspoon vanilla extract\n- 1 cup all-purpose flour\n- 1/4 teaspoon baking powder\n- 1/2 teaspoon salt\n- 1/3 cup pistachios, chopped\n- 1/3 cup walnuts, chopped\n\n**Honey Caramel:**\n- 3 tablespoons unsalted butter\n- 1/3 cup honey\n- 1 lemon rind strip\n- 2 teaspoons lemon juice\n- 3 tablespoons heavy cream\n- 1/4 teaspoon ground cinnamon\n- Heavy pinch of salt\n- 1/3 cup pistachios, chopped\n- 1/3 cup walnuts, chopped\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line 8x8-inch pan with parchment paper.\n\n2. Mix blondie batter - Whisk melted butter, brown sugar, and honey together. Add egg, egg yolk, and vanilla; whisk to combine. Fold in flour, baking powder, and salt. Gently fold in chopped nuts.\n\n3. Bake - Transfer batter to prepared pan and bake 25 minutes until golden brown.\n\n4. Make honey caramel - Combine butter and honey in saucepan over medium heat with lemon rind. Simmer until mixture reduces by half (about 15 minutes). Add cream, lemon juice, cinnamon, and salt; cook 10 more minutes until thickened.\n\n5. Top and chill - Sprinkle nuts over cooled blondies and pour caramel sauce over top. Refrigerate at least 2 hours until set.\n\n6. Cut and serve - Cut into squares (or triangles) with a sharp knife.\n\n---\n[Original recipe](https://bromabakery.com/baklava-blondies/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Brown Sugar Peach Crumb Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "peaches", "category": "produce", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Brown Sugar Peach Crumb Bars\n\n**Yield:** 16 servings\n**Prep:** 20 min | **Bake:** 40 min\n\n### Ingredients\n\n**Peach Filling:**\n- 4 ripe peaches, pitted and sliced\n- 1/3 cup packed light brown sugar\n- 1 tablespoon all-purpose flour\n- 1/4 teaspoon ground cinnamon (optional)\n\n**Crumb Bars:**\n- 3/4 cup unsalted butter, room temperature\n- 1/2 cup packed light brown sugar\n- 2 teaspoons pure vanilla extract\n- 1 2/3 cups all-purpose flour\n- 1/2 teaspoon salt\n- 1/2 teaspoon baking powder\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line an 8x8-inch square pan with parchment paper on all sides.\n\n2. Make filling - Pit and slice peaches into 1/4-inch thick slices. Cook 2/3 of the sliced peaches with brown sugar, flour, and cinnamon for 10 minutes until peaches break down into jam. Add uncooked peaches and stir.\n\n3. Make crumb dough - Combine softened butter, brown sugar, vanilla, flour, salt, and baking powder. Mix until mixture clumps together and forms dough.\n\n4. Assemble - Press approximately 2/3 of mixture into prepared pan. Spread peach jam over crust to edges. Sprinkle remaining topping in clusters over peaches.\n\n5. Bake - 35-40 minutes until peaches bubble and top is golden brown. Cool completely before slicing.\n\n---\n[Original recipe](https://bromabakery.com/brown-sugar-peach-crumb-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Strawberry Rhubarb Crumble Bars",
+      "servings": 20,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "rhubarb", "category": "produce", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "cornstarch", "category": "baking", "defaultStore": "costco" },
+        { "name": "fresh strawberries", "category": "produce", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "orange zest", "category": "produce", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Strawberry Rhubarb Crumble Bars\n\n**Yield:** 16-24 servings\n**Prep:** 40 min | **Bake:** 25-30 min\n\n### Ingredients\n\n**Strawberry Rhubarb Jam:**\n- 2 cups rhubarb, cut into 1/4-inch pieces\n- 3/4 cup granulated sugar\n- 2 tablespoons cornstarch\n- 1 quart strawberries, washed, hulled, and quartered\n\n**Crumble:**\n- 1 cup unsalted butter, room temperature\n- 1 1/4 cups granulated sugar\n- 1 large egg, room temperature\n- 2 teaspoons vanilla extract\n- Zest of 1/2 orange\n- 3 cups all-purpose flour\n- 1 teaspoon baking powder\n- 1 teaspoon salt\n\n### Instructions\n\n1. Make jam - Combine rhubarb, sugar, and cornstarch in a saucepan over medium heat. Cook 5 minutes until rhubarb breaks down, then add strawberries. Cook 8 more minutes until jammy. Cool.\n\n2. Preheat and prep - Preheat oven to 350°F. Line 9x13-inch pan with parchment paper.\n\n3. Make crumble - Beat butter and sugar until combined. Add egg, vanilla, and orange zest. Mix in flour, baking powder, and salt until crumbly dough forms.\n\n4. Assemble - Press 2/3 of dough into prepared pan as crust. Spread jam evenly over crust. Crumble remaining dough into clusters and sprinkle over jam.\n\n5. Bake - 25-30 minutes until jam bubbles at edges and top is golden brown. Cool completely before slicing.\n\n---\n[Original recipe](https://bromabakery.com/strawberry-rhubarb-crumble-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Cowboy Cookie Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "old fashioned oats", "category": "pantry", "defaultStore": "costco" },
+        { "name": "shredded coconut", "category": "pantry", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "pecans", "category": "pantry", "defaultStore": "costco" }
+      ],
+      "instructions": "## Cowboy Cookie Bars\n\n**Yield:** 16 bars\n**Prep:** 15 min | **Bake:** 25-30 min\n\n### Ingredients\n- 1/2 cup unsalted butter, melted and cooled\n- 1 cup packed light brown sugar\n- 1 egg + 1 egg yolk, room temperature\n- 2 teaspoons vanilla extract\n- 3/4 cup all purpose flour\n- 1/2 teaspoon ground cinnamon\n- 1/4 teaspoon baking powder\n- 1/2 teaspoon salt\n- 1/2 cup old fashioned oats\n- 1/2 cup shredded coconut\n- 1/2 cup semisweet chocolate chips\n- 1/3 cup pecans, roughly chopped\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line 8x8-inch pan with parchment paper.\n\n2. Mix wet ingredients - Whisk melted butter and brown sugar together. Add egg, yolk, and vanilla; mix well.\n\n3. Add dry ingredients - Fold in flour, cinnamon, baking powder, and salt until just combined.\n\n4. Add mix-ins - Fold in oats, coconut, chocolate chips, and pecans until distributed evenly.\n\n5. Bake - Transfer batter to prepared pan, spreading to edges. Bake 25-30 minutes until golden brown and set on edges; center remains slightly undercooked.\n\n6. Cool and cut - Cool completely, then cut into 9 or 16 squares as desired.\n\n---\n[Original recipe](https://bromabakery.com/cowboy-cookie-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "7 Layer Bar Rice Krispie Treats",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "shredded coconut", "category": "pantry", "defaultStore": "costco" },
+        { "name": "rice krispies cereal", "category": "pantry", "defaultStore": "costco" },
+        { "name": "marshmallows", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "graham crackers", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "butterscotch chips", "category": "baking", "defaultStore": "safeway" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "walnuts", "category": "pantry", "defaultStore": "costco" }
+      ],
+      "instructions": "## 7 Layer Bar Rice Krispie Treats\n\n**Yield:** 16 servings\n**Prep:** 20 min | **Cook:** 5 min | **Chill:** 1 hour\n\n### Ingredients\n- 1/2 cup shredded coconut\n- 5 cups Rice Krispies cereal\n- 16 ounces marshmallows\n- 1/3 cup unsalted butter\n- 1 teaspoon vanilla extract\n- 1/4 teaspoon salt\n- 1/2 cup graham cracker pieces\n- 1/2 cup butterscotch chips\n- 1/2 cup chocolate chips\n- 1/2 cup walnuts, finely chopped\n\n### Instructions\n\n1. Toast coconut - Preheat oven to 350°F; line baking sheet with parchment paper. Spread coconut in even layer and bake 5-7 minutes, stirring midway.\n\n2. Prep pan - Line 9x9-inch pan with parchment on all sides; grease with cooking spray. Pour Rice Krispies and toasted coconut into large mixing bowl.\n\n3. Melt marshmallows - Melt butter in medium saucepan over medium-low heat. Add marshmallows, vanilla extract, and salt; cook until completely melted. Remove from heat.\n\n4. Combine - Pour melted marshmallow mixture into cereal bowl. Fold together until evenly combined. Fold in graham crackers, butterscotch chips, chocolate chips, and walnuts (reserve some for topping).\n\n5. Press and chill - Transfer mixture to prepared pan. Use wet spatula to pat into even layer. Top with reserved toppings. Refrigerate 20 minutes, then cut into 16 squares.\n\n---\n[Original recipe](https://bromabakery.com/7-layer-bar-rice-krispie-treats/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Peppermint Bark Rice Krispie Treats",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "marshmallows", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "rice krispies cereal", "category": "pantry", "defaultStore": "costco" },
+        { "name": "peppermint candies", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "white chocolate chips", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "coconut oil", "category": "pantry", "defaultStore": "trader-joes" }
+      ],
+      "instructions": "## Peppermint Bark Rice Krispie Treats\n\n**Yield:** 16 bars\n**Prep:** 20 min | **Chill:** 30 min\n\n### Ingredients\n- 6 tablespoons unsalted butter\n- 12 ounces marshmallows (about 6 1/2 cups)\n- 5 1/2 cups Rice Krispie cereal\n- 1/2 cup crushed peppermint candies, divided\n- Pinch of salt\n- 8 ounces dark or bittersweet chocolate, chopped\n- 4 ounces white chocolate, chopped\n- 1 tablespoon coconut oil\n\n### Instructions\n\n1. Prep pan - Line 8x8-inch pan with parchment paper; grease with cooking spray.\n\n2. Melt marshmallows - Melt butter over medium-low heat; add marshmallows, stirring until melted (3-5 minutes). Remove from heat; fold in cereal until coated.\n\n3. Add peppermints - Add most crushed peppermints (reserve some for topping); fold until combined. Transfer to pan; press gently into even layer. Refrigerate.\n\n4. Melt chocolates - Microwave dark chocolate with coconut oil on high in 30-second intervals until melted. Microwave white chocolate on high in 15-second intervals until melted.\n\n5. Add chocolate topping - Top bars with dark chocolate spread evenly. Add white chocolate dollops (6-8) and create swirls with toothpick. Top with remaining peppermints.\n\n6. Chill and serve - Refrigerate 30 minutes. Cut into squares and serve.\n\n---\n[Original recipe](https://bromabakery.com/peppermint-bark-rice-krispie-treats/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Bourbon Chocolate Pecan Pie Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "honey", "category": "pantry", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "bourbon", "category": "pantry", "defaultStore": "costco" },
+        { "name": "pecans", "category": "pantry", "defaultStore": "costco" },
+        { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Bourbon Chocolate Pecan Pie Bars\n\n**Yield:** 16 bars\n**Prep:** 2 hours 20 min | **Bake:** 50 min\n\n### Ingredients\n\n**Crust:**\n- 1 1/2 cups all-purpose flour\n- 1/4 cup light brown sugar, packed\n- 1/2 cup unsalted butter, room temperature\n- 2 ounces cream cheese, room temperature\n- 2 teaspoons vanilla extract\n- 1/2 teaspoon salt\n\n**Pecan Pie Filling:**\n- 3/4 cup honey\n- 3/4 cup light brown sugar, packed\n- 2 large eggs, room temperature\n- 2 tablespoons unsalted butter, melted\n- 1/2 teaspoon salt\n- 1 tablespoon vanilla extract\n- 2 tablespoons bourbon (optional)\n- 2 1/2 cups chopped pecans (roasted & salted preferred)\n- 4 ounces bittersweet chocolate, roughly chopped\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line an 8x8-inch pan with parchment paper.\n\n2. Make crust - Combine flour, brown sugar, butter, cream cheese, vanilla, and salt in stand mixer. Beat until mixture forms clumps. Press into pan and bake 10 minutes until lightly golden.\n\n3. Make filling - Whisk together honey, brown sugar, eggs, melted butter, salt, vanilla extract, and bourbon.\n\n4. Add toppings - Chop chocolate and pecans; toss together.\n\n5. Assemble and bake - Remove crust from oven, top with pecan-chocolate mixture, then pour sugar mixture evenly over top. Bake 30 minutes, then cover with foil and bake additional 10 minutes.\n\n6. Cool and serve - Cool at least 2 hours in refrigerator before cutting and serving.\n\n---\n[Original recipe](https://bromabakery.com/bourbon-chocolate-pecan-pie-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Key Lime Pie Cheesecake Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "graham crackers", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+        { "name": "lime zest", "category": "produce", "defaultStore": "costco" },
+        { "name": "lime juice", "category": "produce", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "sour cream", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" }
+      ],
+      "instructions": "## Key Lime Pie Cheesecake Bars\n\n**Yield:** 16 servings\n**Prep:** 20 min | **Bake:** 35-40 min\n\n### Ingredients\n\n**Graham Cracker Crust:**\n- 1 1/2 cups graham cracker crumbs (about 12 full sheets)\n- 1/2 cup unsalted butter, melted\n- 5 tablespoons granulated sugar\n- Pinch salt\n\n**Cheesecake Layer:**\n- 2 (8-ounce) packages full fat cream cheese, room temperature\n- 1 cup granulated sugar\n- 2 tablespoons key lime zest\n- 1/4 cup key lime juice\n- 2 teaspoons vanilla extract\n- 1/2 cup sour cream, room temperature\n- 2 large eggs, room temperature\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 325°F; line 9x9-inch pan with parchment paper.\n\n2. Make crust - Mix graham cracker crumbs, melted butter, sugar, and salt until combined. Press firmly into prepared pan.\n\n3. Make cheesecake - Beat softened cream cheese, lime zest, and sugar for 2 minutes until smooth. Add lime juice, vanilla, and sour cream; mix until combined. Add eggs one at a time, beating just until combined.\n\n4. Bake - Pour batter over crust. Drop pan on counter several times to remove air bubbles. Bake 35-40 minutes on middle rack, rotating halfway through. Center will be slightly wobbly.\n\n5. Cool slowly - Turn off oven; open door slightly. Leave cheesecake inside for 30 minutes. Remove and cool on rack for 1 hour, then refrigerate.\n\n6. Slice and serve - Slice into 16 squares. Top with whipped cream and lime zest if desired.\n\n---\n[Original recipe](https://bromabakery.com/key-lime-pie-cheesecake-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Ted Lasso Biscuits",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "almond extract", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "coarse sugar", "category": "baking", "defaultStore": "trader-joes" }
+      ],
+      "instructions": "## Ted Lasso Biscuits\n\n**Yield:** 1 pan (8x8 inches)\n**Prep:** 15 min | **Bake:** 40 min\n\n### Ingredients\n- 2 cups all-purpose flour\n- 2/3 cup granulated sugar\n- 1/2 teaspoon salt\n- 1 teaspoon vanilla extract\n- 1/4 teaspoon almond extract\n- 1 cup unsalted butter, cold and cut into cubes\n- Coarse sugar for topping (optional)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F and line an 8x8-inch pan with parchment on all sides.\n\n2. Make dough - Combine flour, sugar, salt, vanilla, almond extract, and butter in a food processor. Pulse until the mixture forms a dough around the processor blades.\n\n3. Press into pan - Press the dough into the prepared pan, spreading into an even layer with your hands.\n\n4. Add topping - Sprinkle the tops generously with coarse sugar.\n\n5. Bake - 35-40 minutes until light golden brown. Cool completely before slicing.\n\n---\n[Original recipe](https://bromabakery.com/ted-lasso-biscuits/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "White Chocolate Funfetti Rice Krispie Treats",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "marshmallows", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "rice krispies cereal", "category": "pantry", "defaultStore": "costco" },
+        { "name": "sprinkles", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "white chocolate chips", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## White Chocolate Funfetti Rice Krispie Treats\n\n**Yield:** 16 servings\n**Prep:** 10 min | **Chill:** 50 min\n\n### Ingredients\n- 1/2 cup unsalted butter\n- 16 ounces marshmallows\n- 6 cups rice krispies cereal\n- 1/3 cup rainbow sprinkles, plus more for topping\n- 1 cup white chocolate chips\n- Pinch of salt\n\n### Instructions\n\n1. Prep pan - Line a 9x9 pan with parchment paper and grease with cooking spray.\n\n2. Melt butter and marshmallows - Melt butter in a saucepan over medium heat; add marshmallows and stir until fully melted, then remove from heat.\n\n3. Combine - Pour marshmallow mixture into a large bowl with rice krispies cereal; fold together until evenly coated.\n\n4. Add mix-ins - Gently fold in rainbow sprinkles and white chocolate chips.\n\n5. Press and top - Transfer mixture to prepared pan and spread into an even layer using a greased spatula. Optional: top with additional white chocolate chips and sprinkles.\n\n6. Chill and serve - Refrigerate until set, then cut into 16 squares.\n\n---\n[Original recipe](https://bromabakery.com/funfetti-rice-krispie-treats/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Peanut Butter and Fluff Rice Krispie Treats",
+      "servings": 12,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "marshmallows", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "rice krispies cereal", "category": "pantry", "defaultStore": "costco" },
+        { "name": "peanut butter", "category": "pantry", "defaultStore": "costco" },
+        { "name": "marshmallow fluff", "category": "pantry", "defaultStore": "safeway" }
+      ],
+      "instructions": "## Peanut Butter and Fluff Rice Krispie Treats\n\n**Yield:** 12 servings\n**Prep:** 15 min | **Chill:** 1 hour\n\n### Ingredients\n- 16 oz marshmallows (1 standard bag or ~8 cups mini marshmallows)\n- 1/2 cup unsalted butter\n- Pinch of salt\n- 6 cups Rice Krispies Cereal\n- 1/3 cup creamy peanut butter, melted\n- 1/3 cup marshmallow fluff\n\n### Instructions\n\n1. Prep pan - Line a 9x9 pan with parchment paper and spray with cooking spray.\n\n2. Melt marshmallows - Melt butter in large pot over medium heat; add marshmallows and salt; stir until fully melted; remove from heat.\n\n3. Combine cereal - Fold in Rice Krispies to fully coat cereal.\n\n4. Add swirls - Microwave peanut butter for 15 seconds until slightly melted. Drop melted peanut butter and fluff into batter; fold a few times to create thick swirls (don't fully mix).\n\n5. Press and chill - Spoon mixture into prepared pan; press into even layer using cooking spray-coated spatula. Cool at least 1 hour before slicing into twelve treats.\n\n---\n[Original recipe](https://bromabakery.com/peanut-butter-and-fluff-rice-krispie-treats/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Cranberry Orange Shortbread",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "orange zest", "category": "produce", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "dried cranberries", "category": "pantry", "defaultStore": "costco" },
+        { "name": "white chocolate chips", "category": "baking", "defaultStore": "trader-joes" }
+      ],
+      "instructions": "## Cranberry Orange Shortbread\n\n**Yield:** 16 bars\n**Prep:** 10 min | **Bake:** 25 min\n\n### Ingredients\n- 10 tablespoons unsalted butter, cold and cubed\n- 1 1/4 cups all purpose flour\n- 1/2 cup granulated sugar\n- 2 tablespoons fresh orange zest\n- 1/4 teaspoon salt\n- 1/2 cup dried cranberries\n- 4 ounces white chocolate, melted\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F and line an 8x8-inch pan with parchment paper on all sides.\n\n2. Make dough - In a food processor, combine flour, sugar, salt, orange zest, and butter. Pulse until just combined and mixture forms a dough ball. Remove from processor and stir in cranberries.\n\n3. Press and bake - Press dough into prepared pan, spreading into an even layer with your hands. Bake 20-30 minutes until light golden brown.\n\n4. Add chocolate - Allow bars to cool completely. Drizzle cooled bars with melted white chocolate using a spoon. Refrigerate for 30 minutes or freeze briefly to set.\n\n5. Cut and serve - Cut into rectangles with a sharp knife.\n\n---\n[Original recipe](https://bromabakery.com/cranberry-orange-shortbread/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "No Bake Pecan Pie Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "pecan shortbread cookies", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "corn syrup", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "pecans", "category": "pantry", "defaultStore": "costco" }
+      ],
+      "instructions": "## No Bake Pecan Pie Bars\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Chill:** 1 hour\n\n### Ingredients\n\n**Crust:**\n- 20 pecan shortbread cookies\n- 5 tablespoons unsalted butter, melted\n- Pinch of salt\n\n**Pecan Filling:**\n- 1 cup brown sugar\n- 1 cup light corn syrup\n- 2 teaspoons vanilla extract\n- 3 cups pecan pieces\n- 1/4 teaspoon salt\n\n### Instructions\n\n1. Prep pan - Line an 8x8 square pan with parchment paper on all sides.\n\n2. Make crust - Combine pecan shortbread cookies, melted butter, and salt in a food processor; pulse until clumped together. Press mixture into prepared pan using a flat-bottomed measuring cup. Refrigerate to set.\n\n3. Make filling - Combine brown sugar and corn syrup in a medium heavy-bottomed saucepan. Cook over medium-high heat until boiling. Allow mixture to boil for 30 seconds before removing from heat. Stir in vanilla extract, salt, and pecan pieces.\n\n4. Assemble - Quickly pour mixture over prepared crust, spreading evenly with a rubber spatula.\n\n5. Chill and serve - Refrigerate for at least 1 hour or overnight. Slice with a sharp knife before serving.\n\n---\n[Original recipe](https://bromabakery.com/no-bake-pecan-pie-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Cheesecake Swirled Pumpkin Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "pumpkin puree", "category": "pantry", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "egg yolks", "category": "dairy", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" }
+      ],
+      "instructions": "## Cheesecake Swirled Pumpkin Bars\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Bake:** 25 min\n\n### Ingredients\n\n**Pumpkin Bars:**\n- 1/2 cup unsalted butter\n- 1/2 cup brown sugar\n- 1/2 cup granulated sugar\n- 1/3 cup pure pumpkin puree\n- 2 teaspoons vanilla extract\n- 1 egg yolk\n- 1 cup all-purpose flour\n- 1/2 teaspoon baking soda\n- 1/4 teaspoon baking powder\n- 1/2 teaspoon salt\n- 2 teaspoons ground cinnamon\n\n**Cream Cheese Swirl:**\n- 6 ounces cream cheese, room temperature\n- 1 egg, room temperature\n- 1/3 cup granulated sugar\n- Pinch salt\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F; line 8x8 pan with parchment paper.\n\n2. Make pumpkin batter - Combine butter and sugars; microwave 30 seconds, stir, repeat twice until glossy. Add pumpkin puree and vanilla; mix well, then add egg yolk. Fold in flour, baking soda, baking powder, and salt until combined.\n\n3. Add to pan - Transfer batter to prepared pan in even layer.\n\n4. Make cream cheese swirl - Mix cream cheese filling ingredients until smooth and lump-free.\n\n5. Create swirl - Drop cream cheese by large spoonfuls onto batter; swirl with butter knife (avoid over-swirling).\n\n6. Bake - 25 minutes until edges set and center puffs slightly but remains gooey. Cool before slicing into 16 bars.\n\n---\n[Original recipe](https://bromabakery.com/cheesecake-swirled-pumpkin-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Salted Caramel Scotcheroos",
+      "servings": 20,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "salted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "heavy cream", "category": "dairy", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "peanut butter", "category": "pantry", "defaultStore": "costco" },
+        { "name": "rice krispies cereal", "category": "pantry", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Salted Caramel Scotcheroos\n\n**Yield:** 20 squares (2-inch)\n**Prep:** 1 hour | **Cook:** 30 min\n\n### Ingredients\n\n**Salted Caramel:**\n- 1 cup granulated sugar\n- 6 tablespoons salted butter\n- 1/2 cup heavy cream\n- 1 teaspoon salt\n\n**Scotcheroos:**\n- 1 cup creamy peanut butter\n- 6 cups rice krispies\n- 4 cups semi-sweet chocolate chips\n\n### Instructions\n\n1. Prep pan - Grease a 9x13 baking pan with butter, then line with parchment paper.\n\n2. Make caramel - In a small saucepan, heat sugar on low until completely melted, swirling gently every 20 seconds. This takes 10-15 minutes. Remove from heat and stir in butter (mixture will bubble vigorously). Add heavy cream and sea salt, stirring until combined. Whisk in peanut butter.\n\n3. Combine with cereal - Pour rice krispies into a large mixing bowl. Add salted caramel peanut butter mixture and fold gently to combine.\n\n4. Press into pan - Place mixture into prepared pan, pressing evenly.\n\n5. Add chocolate - Heat chocolate chips in a double boiler over low heat until fully melted. Pour over krispies, smoothing to edges.\n\n6. Cool and cut - Allow to cool completely (about 1 hour) before cutting into 2-inch squares.\n\n---\n[Original recipe](https://bromabakery.com/salted-caramel-scotcheroos/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Baklava Cheesecake Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "phyllo dough", "category": "frozen", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+        { "name": "sour cream", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "honey", "category": "pantry", "defaultStore": "costco" },
+        { "name": "pistachios", "category": "pantry", "defaultStore": "costco" },
+        { "name": "walnuts", "category": "pantry", "defaultStore": "costco" },
+        { "name": "lemon juice", "category": "produce", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Baklava Cheesecake Bars\n\n**Yield:** 16 servings\n**Prep:** 20 min | **Bake:** 30-40 min\n\n### Ingredients\n\n**Crust & Cheesecake:**\n- 6 sheets phyllo dough, defrosted\n- 1/4 cup butter, melted\n- 16 oz cream cheese, room temperature\n- 1/3 cup sour cream\n- 2 eggs, room temperature\n- 2/3 cup granulated sugar\n- 2 teaspoons vanilla extract\n- 2 tablespoons honey\n\n**Baklava Topping:**\n- 1/2 cup honey\n- 3/4 cup water\n- 1 cup pistachios, finely chopped\n- 1 cup walnuts, finely chopped\n- 1 tablespoon lemon juice\n- 1/4 teaspoon salt\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 325°F; line 9-inch square pan with parchment paper.\n\n2. Make crust - Layer 12 sheets of phyllo dough with melted butter between each layer. Blind bake phyllo for 15 minutes until golden brown.\n\n3. Make cheesecake - Beat softened cream cheese, sour cream, honey, and sugar until smooth; add vanilla and eggs one at a time.\n\n4. Bake cheesecake - Pour cheesecake batter over crust; drop pan to release air bubbles. Bake 40 minutes on middle rack, rotating halfway (center will be wobbly).\n\n5. Cool slowly - Turn off oven; crack door slightly and cool cheesecake for 1 hour.\n\n6. Make topping - Heat honey and water until reduced by half, then add nuts, lemon juice, and salt.\n\n7. Finish - Pour topping over cooled cheesecake; cover with foil and refrigerate overnight. Slice into 8 large or 16 smaller pieces.\n\n---\n[Original recipe](https://bromabakery.com/baklava-cheesecake-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Golden Graham S'mores Bars",
+      "servings": 12,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "marshmallows", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "golden grahams cereal", "category": "pantry", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Golden Graham S'mores Bars\n\n**Yield:** 12 bars\n**Prep:** 5 min | **Chill:** 30 min\n\n### Ingredients\n- 1/3 cup unsalted butter\n- Pinch of salt\n- 16 ounce bag of marshmallows\n- 5 1/2 cups Golden Grahams\n- 1/2 cup milk chocolate (roughly chopped Hershey's bars)\n- 1 1/2 cups mini marshmallows (for folding into bars)\n\n### Instructions\n\n1. Prep pan - Grease a 9x9 pan with cooking spray.\n\n2. Melt butter and marshmallows - In a large pot over medium heat, melt the butter. Add regular marshmallows and salt; stir with a rubber spatula, scraping sides until melted. Remove from heat immediately.\n\n3. Combine with cereal - In a large bowl, add Golden Grahams cereal and pour marshmallow mixture over it; fold together using a rubber spatula.\n\n4. Add mix-ins - Stir in chocolate and mini marshmallows.\n\n5. Press and chill - Spoon mixture into prepared pan, pressing down into an even layer. Place in refrigerator to set for at least 20 minutes.\n\n6. Cut and serve - Cut into 12 rectangles with a sharp knife.\n\n---\n[Original recipe](https://bromabakery.com/golden-graham-smores-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Oreo Cheesecake Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "Oreos", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+        { "name": "sour cream", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Oreo Cheesecake Bars\n\n**Yield:** 16 squares\n**Prep:** 10 min | **Bake:** 45 min\n\n### Ingredients\n\n**Oreo Crust:**\n- 20 Oreo cookies, finely crushed\n- 1/3 cup unsalted butter, melted\n- Pinch of salt\n\n**Cheesecake:**\n- 2 packages (8 oz each) cream cheese, room temperature\n- 1/2 cup sour cream, room temperature\n- 3/4 cup granulated sugar\n- 2 large eggs, room temperature\n- 2 teaspoons vanilla extract\n- 16 Oreo cookies, finely crushed\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 325°F and line a 9x9 square pan with parchment paper.\n\n2. Make crust - Mix Oreo crumbs, melted butter, and salt until combined. Press firmly into pan as an even layer.\n\n3. Make cheesecake - Beat softened cream cheese, sour cream, and sugar for 2 minutes until smooth and creamy. Add vanilla extract, then add eggs one at a time, beating until just combined. Fold in crushed Oreo cookies.\n\n4. Bake - Pour batter over crust. Drop pan on counter several times to remove air bubbles. Bake for 45 minutes on middle rack, rotating halfway. Center will be slightly wobbly.\n\n5. Cool slowly - At 45 minutes, sprinkle additional Oreo pieces on top if desired. Turn off oven and open door slightly. Leave cheesecake in oven for 1 hour to cool gradually.\n\n6. Chill and serve - Remove and cool on rack for 1 hour, then refrigerate. Slice into 16 squares using a sharp knife.\n\n---\n[Original recipe](https://bromabakery.com/oreo-cheesecake-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "The Best Chocolate Chip Blondies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## The Best Chocolate Chip Blondies\n\n**Yield:** 16 servings\n**Prep:** 10 min | **Bake:** 25-30 min\n\n### Ingredients\n- 1/2 cup unsalted butter, melted\n- 1 cup packed light brown sugar\n- 1 large egg + 1 large egg yolk, room temperature\n- 1 tablespoon vanilla extract\n- 1/4 teaspoon baking powder\n- 1/2 teaspoon salt\n- 1 cup all-purpose flour\n- 1 cup semisweet chocolate chips (optional)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line an 8x8 pan with parchment paper.\n\n2. Mix wet ingredients - Whisk together melted butter and brown sugar in a large bowl. Add egg, egg yolk, and vanilla; mix well.\n\n3. Add dry ingredients - In a separate bowl, combine baking powder, salt, and flour. Fold dry ingredients into wet mixture until just combined. Fold in chocolate chips without overmixing.\n\n4. Bake - Spread batter evenly into prepared pan. Bake 25-30 minutes until golden brown with set edges. Center will be undercooked but continues cooking as it cools.\n\n5. Cool and serve - Cool completely before cutting into squares.\n\n---\n[Original recipe](https://bromabakery.com/the-best-chewy-blondies/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Lucky Charms Rice Krispie Treats",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "marshmallows", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "lucky charms cereal", "category": "pantry", "defaultStore": "costco" }
+      ],
+      "instructions": "## Lucky Charms Rice Krispie Treats\n\n**Yield:** 16 bars\n**Prep:** 5 min | **Cook:** 5 min | **Chill:** 30 min\n\n### Ingredients\n- 1/3 cup unsalted butter\n- Pinch of salt\n- 12 ounce bag of marshmallows\n- 5 1/2 cups Lucky Charms cereal\n\n### Instructions\n\n1. Prep pan - Grease a 9x9 pan with cooking spray.\n\n2. Melt butter and marshmallows - In a large pot over medium heat, melt the butter. Add the marshmallows and salt; stir with a rubber spatula, scraping sides to prevent burning. Remove from heat immediately once marshmallows are melted.\n\n3. Combine with cereal - Add the Lucky Charms cereal, folding to coat completely.\n\n4. Press into pan - Spoon mixture into prepared pan, pressing down into an even layer.\n\n5. Chill and serve - Refrigerate for at least 20 minutes. Once set, cut into 12 rectangles using a sharp knife.\n\n---\n[Original recipe](https://bromabakery.com/lucky-charms-rice-krispie-treats/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Chewy Funfetti Blondies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "sprinkles", "category": "pantry", "defaultStore": "safeway" }
+      ],
+      "instructions": "## Chewy Funfetti Blondies\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Bake:** 30 min\n\n### Ingredients\n- 1/2 cup butter, melted\n- 1 cup granulated sugar\n- 1 egg and 1 egg yolk\n- 1 tablespoon vanilla extract\n- 1/4 teaspoon baking powder\n- 1 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1/4 cup rainbow sprinkles\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line an 8x8 pan with parchment paper.\n\n2. Mix wet ingredients - In a large mixing bowl, whisk together melted butter and sugar. Add eggs, egg yolk, and vanilla extract; mix well.\n\n3. Add dry ingredients - In a separate bowl, stir together baking powder, salt, and flour. Fold dry ingredients into wet ingredients until just combined. Fold in sprinkles without overmixing.\n\n4. Bake - Pour batter into prepared pan, spreading into an even layer. Bake for 30 minutes until golden brown, set on edges, and puffed. Center will still be undercooked but will set as it cools.\n\n5. Cool and serve - Once cooled, cut into 9 large or 16 smaller squares.\n\n---\n[Original recipe](https://bromabakery.com/chewy-funfetti-blondies/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Bourbon Snickerdoodle Blondies",
+      "servings": 9,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "bourbon", "category": "pantry", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "cream of tartar", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Bourbon Snickerdoodle Blondies\n\n**Yield:** 9 large blondies\n**Prep:** 10 min | **Bake:** 35 min\n\n### Ingredients\n- 1/2 cup unsalted butter, melted and cooled slightly\n- 1 cup granulated sugar\n- 1 egg, room temperature\n- 2 tablespoons bourbon whiskey\n- 1 1/4 cups all-purpose flour\n- 3/4 teaspoons cream of tartar\n- 1/4 teaspoon salt\n- 1 tablespoon granulated sugar (for topping)\n- 1 teaspoon cinnamon (for topping)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line an 8x8 baking pan with parchment paper.\n\n2. Mix wet ingredients - In a standing mixer with paddle attachment, cream melted butter and sugar on high speed for 30 seconds. Add egg and bourbon; mix for another 30 seconds.\n\n3. Add dry ingredients - In a separate bowl, combine flour, cream of tartar, and salt. Fold dry ingredients into wet mixture until combined. Place into prepared pan.\n\n4. Add topping and bake - Mix together sugar and cinnamon; sprinkle over batter. Bake for 30-35 minutes until a knife in center comes out mostly clean. Cool completely before cutting into squares.\n\n---\n[Original recipe](https://bromabakery.com/bourbon-snickerdoodle-blondies/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "White Chocolate Cranberry Crumb Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "old fashioned oats", "category": "pantry", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "fresh cranberries", "category": "produce", "defaultStore": "costco" },
+        { "name": "orange zest", "category": "produce", "defaultStore": "costco" },
+        { "name": "white chocolate chips", "category": "baking", "defaultStore": "trader-joes" }
+      ],
+      "instructions": "## White Chocolate Cranberry Crumb Bars\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Bake:** 30-40 min\n\n### Ingredients\n\n**Cookie Bar:**\n- 2/3 cup old fashioned oats\n- 2 1/2 cups all purpose flour\n- 2/3 cup granulated sugar\n- 2/3 cup brown sugar, packed\n- 1 teaspoon baking soda\n- 3/4 teaspoon salt\n- 1 cup unsalted butter, cold and cubed\n- 1 egg, room temperature\n- 2 tablespoons milk\n- 2 teaspoons vanilla extract\n\n**Cranberry Layer:**\n- 4 cups fresh whole cranberries\n- 1 cup granulated sugar\n- 2 tablespoons flour\n- 1 teaspoon vanilla extract\n- 1 tablespoon orange zest\n- Pinch of salt\n\n**White Chocolate Drizzle:**\n- 1/2 cup white chocolate chips, melted\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F; line 9x9 pan with parchment paper.\n\n2. Make dough - Combine oats, flour, sugars, baking soda, and salt. Cut cold butter into dry mixture until resembling wet sand. Make well in center; add egg and milk; mix until dough forms.\n\n3. Add bottom layer - Press 2/3 of mixture into prepared pan.\n\n4. Make cranberry layer - Combine all cranberry layer ingredients; spread over crust.\n\n5. Add topping - Sprinkle remaining dough over cranberries; pat gently.\n\n6. Bake - 30-40 minutes until crust is golden and cranberries bubble.\n\n7. Finish - Cool completely before drizzling with white chocolate and slicing.\n\n---\n[Original recipe](https://bromabakery.com/cranberry-crumb-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Browned Butter Mummy Rice Krispie Treats",
+      "servings": 12,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "marshmallows", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "rice krispies cereal", "category": "pantry", "defaultStore": "costco" },
+        { "name": "white chocolate chips", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "coconut oil", "category": "pantry", "defaultStore": "trader-joes" },
+        { "name": "candy eyes", "category": "baking", "defaultStore": "safeway" }
+      ],
+      "instructions": "## Browned Butter Mummy Rice Krispie Treats\n\n**Yield:** 12 rectangles\n**Prep:** 15 min | **Chill:** 40 min\n\n### Ingredients\n- 1/3 cup unsalted butter\n- Pinch of salt\n- 1 teaspoon vanilla extract\n- 16 ounces bag of marshmallows\n- 5 cups Rice Krispies cereal\n- 2 cups white chocolate chips\n- 1 teaspoon coconut oil\n- Sprinkle googly eyes\n\n### Instructions\n\n1. Prep pan - Grease a 9x9 pan with cooking spray.\n\n2. Brown butter - Brown the butter over medium heat, stirring constantly until golden brown with nutty aroma.\n\n3. Melt marshmallows - Add marshmallows and salt; stir with rubber spatula, scraping sides. Remove from heat and stir in vanilla.\n\n4. Combine with cereal - Add Rice Krispies, folding to coat completely. Spoon mixture into prepared pan, pressing down evenly.\n\n5. Chill and cut - Refrigerate 20 minutes, then cut into 12 rectangles.\n\n6. Decorate - Melt white chocolate and coconut oil in 15-second microwave increments. Dip treats 2/3 way into white chocolate; place googly eyes. Pipe white chocolate drizzles over treats to create mummy effect.\n\n7. Set and serve - Refrigerate 20 minutes to set.\n\n---\n[Original recipe](https://bromabakery.com/browned-butter-mummy-rice-krispie-treats/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Maple Chai Blondies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "maple syrup", "category": "pantry", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "cardamom", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "ginger", "category": "baking", "defaultStore": "costco" },
+        { "name": "nutmeg", "category": "baking", "defaultStore": "costco" },
+        { "name": "black pepper", "category": "pantry", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "walnuts", "category": "pantry", "defaultStore": "costco" },
+        { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "heavy cream", "category": "dairy", "defaultStore": "costco" }
+      ],
+      "instructions": "## Maple Chai Blondies\n\n**Yield:** 16 servings (or 8 large)\n**Prep:** 15 min | **Bake:** 30 min\n\n### Ingredients\n\n**Blondies:**\n- 1/2 cup unsalted butter, melted\n- 3/4 cup brown sugar\n- 2 tablespoons pure maple syrup\n- 1 egg, room temperature\n- 1 teaspoon vanilla extract\n- 1 cup all-purpose flour\n- 1 teaspoon ground cardamom\n- 1 teaspoon cinnamon\n- 1/2 teaspoon ginger\n- 1/4 teaspoon nutmeg\n- Pinch of black pepper\n- 1/2 teaspoon baking powder\n- 1/2 teaspoon salt\n- 1/3 cup toasted, chopped walnuts\n\n**Maple Glaze:**\n- 3/4 cup powdered sugar\n- 1 tablespoon pure maple syrup\n- 2 tablespoons heavy cream or milk\n- Pinch of salt\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line an 8x8 pan with parchment paper.\n\n2. Mix wet ingredients - Whisk together melted butter, maple syrup, and brown sugar. Add egg and vanilla; mix well.\n\n3. Add dry ingredients - In separate bowl, stir together baking powder, spices, salt, and flour. Fold wet ingredients into dry until just combined. Fold in toasted nuts.\n\n4. Bake - Pour batter into prepared pan, spreading evenly. Bake 30 minutes until golden brown and edges are set; middle will remain undercooked.\n\n5. Make glaze - While cooling, whisk together powdered sugar, maple syrup, cream, and salt until creamy.\n\n6. Finish - Pour glaze over cooled blondies. Allow to harden before cutting into squares.\n\n---\n[Original recipe](https://bromabakery.com/maple-chai-blondies/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Peanut Butter and Jelly Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "peanut butter", "category": "pantry", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "jam", "category": "pantry", "defaultStore": "costco" }
+      ],
+      "instructions": "## Peanut Butter and Jelly Bars\n\n**Yield:** 16 servings\n**Prep:** 10 min | **Bake:** 30 min\n\n### Ingredients\n- 1/2 cup unsalted butter, softened\n- 3/4 cup creamy peanut butter\n- 1/2 cup granulated sugar\n- 1 teaspoon vanilla extract\n- 2 cups all purpose flour\n- 1/4 teaspoon salt\n- 3/4 cup jam (any flavor)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line a 9x9 pan with parchment on all sides.\n\n2. Make dough - In a stand mixer with paddle attachment, combine butter, peanut butter, sugar, flour, salt, and vanilla. Beat until dough starts to come together, about 2 minutes. Dough will be crumbly.\n\n3. Assemble - Press 2/3 of shortbread dough into prepared pan. Top with jam spread into an even layer. Crumble remaining dough over jam, leaving some jam visible.\n\n4. Bake - 25-30 minutes until golden brown. Allow to cool before cutting into desired sizes.\n\n---\n[Original recipe](https://bromabakery.com/peanut-butter-and-jelly-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Carrot Cake Cheesecake Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "carrots", "category": "produce", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "orange zest", "category": "produce", "defaultStore": "costco" },
+        { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Carrot Cake Cheesecake Bars\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Bake:** 30 min\n\n### Ingredients\n\n**Carrot Cake:**\n- 1 1/4 cup brown sugar\n- 3/4 cup butter, melted\n- 1 egg + 1 egg yolk\n- 1 1/2 cup grated carrots\n- 1 teaspoon vanilla extract\n- 1 1/4 cups all purpose flour\n- 1 1/2 teaspoons cinnamon\n- 1/4 teaspoon baking powder\n- 1/2 teaspoon salt\n- 1 teaspoon orange zest (optional)\n\n**Cheesecake Swirl:**\n- 4 ounces cream cheese, room temperature\n- 1 egg, room temperature\n- 1/4 cup granulated sugar\n- 1 teaspoon vanilla extract\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F and line a 9x9 square pan with parchment paper.\n\n2. Make carrot batter - Combine brown sugar and butter in a mixing bowl; whisk to combine. Add vanilla, eggs, and carrots; mix. Add flour, cinnamon, baking powder, salt, and orange zest; mix until just combined.\n\n3. Add to pan - Pour carrot batter into prepared pan.\n\n4. Make cheesecake swirl - Combine softened cream cheese, egg, granulated sugar, and vanilla; beat until creamy and homogenous.\n\n5. Create swirl - Drop dollops of cheesecake batter on carrot batter; use a butter knife to make big swirls.\n\n6. Bake - 30 minutes or until a knife inserted in the middle comes out mostly clean. Allow bars to cool completely before slicing.\n\n---\n[Original recipe](https://bromabakery.com/carrot-cake-cheesecake-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Peanut Butter S'mores Bars",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "peanut butter", "category": "pantry", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "graham crackers", "category": "pantry", "defaultStore": "safeway" },
+        { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "marshmallows", "category": "pantry", "defaultStore": "safeway" }
+      ],
+      "instructions": "## Peanut Butter S'mores Bars\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Bake:** 30 min\n\n### Ingredients\n- 1/4 cup unsalted butter, room temperature\n- 1/2 cup natural peanut butter\n- 3/4 cup packed light brown sugar\n- 1 large egg, room temperature\n- 1 teaspoon vanilla extract\n- 3/4 cup all-purpose flour\n- 3/4 cup graham cracker crumbs\n- 1/2 teaspoon baking soda\n- 3/4 teaspoon salt\n- 2/3 cup chocolate (chopped Hershey's bars or similar)\n- 2/3 cup mini marshmallows\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F; line 8x8-inch pan with parchment paper.\n\n2. Mix wet ingredients - In stand mixer with paddle attachment, combine butter and peanut butter; beat on medium until homogeneous. Add brown sugar and mix well; scrape bowl, then add egg and vanilla extract.\n\n3. Add dry ingredients - Scrape bowl again; add flour, graham cracker crumbs, baking soda, and salt; mix until combined.\n\n4. Add mix-ins - Fold in marshmallows and chocolate; transfer to prepared pan in even layer.\n\n5. Bake - 25-30 minutes until edges are set and knife inserted in center comes out mostly clean; cool before slicing.\n\n---\n[Original recipe](https://bromabakery.com/peanut-butter-smores-bars/)",
+      "subcategory": "Broma/Bars"
+    },
+    {
+      "name": "Zingy Ginger Molasses Blondies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "molasses", "category": "pantry", "defaultStore": "trader-joes" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "ginger", "category": "baking", "defaultStore": "costco" },
+        { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+        { "name": "cloves", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "fresh ginger", "category": "produce", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "white chocolate chips", "category": "baking", "defaultStore": "trader-joes" }
+      ],
+      "instructions": "## Zingy Ginger Molasses Blondies\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Bake:** 35 min\n\n### Ingredients\n\n**Blondies:**\n- 1 cup unsalted butter, melted and cooled\n- 1 1/4 cup packed brown sugar\n- 4 tablespoons molasses\n- 2 eggs, room temperature\n- 2 teaspoons vanilla extract\n- 3/4 teaspoon baking powder\n- 1/2 teaspoon salt\n- 2 teaspoons ground ginger\n- 1 1/2 teaspoon ground cinnamon\n- 1/4 teaspoon cloves\n- 1 teaspoon fresh ginger, finely chopped\n- 2 1/4 cups all purpose flour\n\n**Topping:**\n- 1/4 cup granulated sugar\n- 1 teaspoon ground cinnamon\n- 4 ounces white chocolate, finely chopped\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F; line 9x9 pan with parchment paper.\n\n2. Mix wet ingredients - Whisk together melted butter, brown sugar, and molasses until combined. Add eggs, vanilla, and fresh ginger; mix to incorporate.\n\n3. Add dry ingredients - In separate bowl, sift together flour, ginger, cinnamon, cloves, baking powder, and salt. Fold dry ingredients into wet mixture without overmixing.\n\n4. Add topping - Combine granulated sugar, cinnamon, and salt for topping. Spread batter evenly in prepared pan; sprinkle cinnamon sugar topping, patting slightly.\n\n5. Bake - 20-30 minutes until edges set but center remains slightly gooey.\n\n6. Finish - Cool completely, then drizzle with melted white chocolate; allow 30 minutes to set before slicing.\n\n---\n[Original recipe](https://bromabakery.com/zingy-ginger-molasses-blondies/)",
+      "subcategory": "Broma/Bars"
+    }
+  ]
+}
