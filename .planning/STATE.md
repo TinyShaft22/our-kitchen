@@ -58,7 +58,7 @@ Recent decisions affecting current work:
 
 ### Deferred Issues
 
-None yet.
+- **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. Shows simple input instead. JSON imports with subcategory paths will still work correctly. Fix later.
 
 ### Pending Todos
 
