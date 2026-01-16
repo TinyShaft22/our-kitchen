@@ -332,6 +332,7 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
               </span>
             </label>
             <NestedFolderPicker
+              key={isBaking ? 'baking' : 'main'}
               value={subcategory}
               onChange={setSubcategory}
               existingPaths={isBaking ? existingBakingPaths : existingSubcategories}
