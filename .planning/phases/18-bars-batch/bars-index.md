@@ -1,9 +1,12 @@
 # Broma Bakery Bars Index
 
-**Total recipes:** 71
+**Total recipes found:** 71
+**Recipes scraped:** 36 (first half)
 **Source:** https://bromabakery.com/category/recipes/desserts/bars/
 **Pages:** 5
 **Scraped:** 2026-01-16
+
+**Scope decision:** Limited to 36 recipes (3 batches of 12) to keep phase manageable.
 
 ---
 
@@ -95,4 +98,9 @@
 
 ---
 
-**Note:** Total count (71) significantly exceeds the expected 25 from roadmap. Plan will scrape all recipes using multiple batch files.
+**Scraped Recipes (1-36):**
+- Batch 1 (bars-batch-1.md): Recipes 1-12
+- Batch 2 (bars-batch-2.md): Recipes 13-24
+- Batch 3 (bars-batch-3.md): Recipes 25-36
+
+**Not scraped (37-71):** Remaining 35 recipes deferred.
