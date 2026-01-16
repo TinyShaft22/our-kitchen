@@ -169,10 +169,11 @@ None
 **Plans**: 2 (17-01: Scrape Cookies, 17-02: Generate JSON)
 
 ### Phase 18: Bars Batch
-**Goal**: Scrape all 25 bar recipes, extract image URLs, generate import-ready JSON
+**Goal**: Scrape bar recipes (36 of 71 found), extract image URLs, generate import-ready JSON
 **Depends on**: Phase 16
 **Research**: Unlikely (pattern established)
 **Plans**: 2 (18-01: Scrape Bars, 18-02: Generate JSON + Images)
+**Note**: Original estimate was 25 recipes; actual category has 71. Scoped to 36 (first half).
 
 ### Phase 19: Muffins Batch
 **Goal**: Scrape all 18 muffin recipes, extract image URLs, generate import-ready JSON
@@ -236,7 +237,7 @@ Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 | 15. Nested Baking Folders | v1.2 | 3/3 | Complete | 2026-01-15 |
 | 16. Scraping Infrastructure | v1.3 | 2/2 | Complete | 2026-01-15 |
 | 17. Cookies Batch | v1.3 | 2/2 | Complete | 2026-01-16 |
-| 18. Bars Batch | v1.3 | 0/2 | Not started | - |
+| 18. Bars Batch | v1.3 | 1/2 | In progress | - |
 | 19. Muffins Batch | v1.3 | 0/2 | Not started | - |
 | 20. Brownies Batch | v1.3 | 0/2 | Not started | - |
 | 21. Import & Verification | v1.3 | 0/2 | Not started | - |
