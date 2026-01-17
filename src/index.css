@@ -143,12 +143,6 @@ h2, .text-section-title {
   font-optical-sizing: auto;
 }
 
-/* Subtle background texture */
-.bg-texture {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  background-blend-mode: soft-light;
-}
-
 /* Animation utilities */
 @keyframes fade-in-up {
   from {
@@ -216,17 +210,6 @@ h2, .text-section-title {
   }
 }
 
-@keyframes confetti-pop {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.5) rotate(180deg);
-    opacity: 0;
-  }
-}
-
 @keyframes confetti-fall {
   0% {
     transform: translateY(0) rotate(0deg);
@@ -244,15 +227,6 @@ h2, .text-section-title {
   }
   50% {
     box-shadow: 0 0 12px 4px var(--glow-color, rgba(196, 117, 91, 0.4));
-  }
-}
-
-@keyframes slide-indicator {
-  from {
-    transform: translateX(var(--from-x, 0));
-  }
-  to {
-    transform: translateX(var(--to-x, 0));
   }
 }
 
@@ -280,16 +254,6 @@ h2, .text-section-title {
 .animate-glow-pulse {
   animation: glow-pulse 2s ease-in-out infinite;
 }
-
-/* Stagger animation delays for lists */
-.stagger-1 { animation-delay: 0ms; }
-.stagger-2 { animation-delay: 50ms; }
-.stagger-3 { animation-delay: 100ms; }
-.stagger-4 { animation-delay: 150ms; }
-.stagger-5 { animation-delay: 200ms; }
-.stagger-6 { animation-delay: 250ms; }
-.stagger-7 { animation-delay: 300ms; }
-.stagger-8 { animation-delay: 350ms; }
 
 /* Spring transition for expand/collapse */
 .transition-spring {
