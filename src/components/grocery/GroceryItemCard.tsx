@@ -79,10 +79,9 @@ export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange,
     <div className="relative">
       <div
         ref={cardRef}
-        className={`w-full text-left rounded-soft shadow-soft p-4 min-h-[44px] transition-all duration-300 ${
+        className={`w-full text-left rounded-soft shadow-soft hover:shadow-lifted p-4 min-h-[44px] transition-all duration-300 transition-spring ${
           isInCart ? 'bg-sage/10' : 'bg-white'
         } ${isAnimating ? 'animate-check-pop' : ''}`}
-        style={{ transitionTimingFunction: 'var(--ease-spring)' }}
       >
         <div className="flex justify-between items-start">
           {/* Main clickable area for toggle */}

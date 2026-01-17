@@ -2,6 +2,24 @@
 
 This index helps Claude identify and use the right skill for each task.
 
+## Plugins with Bundled MCP Servers (.claude/plugins/)
+
+Plugins bundle skills WITH MCP servers. The MCP only loads when the plugin is enabled, saving context.
+
+| Plugin | MCP Server | Skill | When to Use |
+|--------|------------|-------|-------------|
+| **frontend-ui** | shadcn MCP | frontend-design | **USE FOR ALL UI WORK** - Provides access to shadcn/ui component library. Browse, search, and install accessible React components. Customize with Our Kitchen theme. |
+
+**To enable a plugin:** The plugin's MCP server and skills activate together. When disabled, no context is consumed.
+
+**shadcn MCP capabilities:**
+- Browse all available shadcn/ui components
+- Search components by name or functionality
+- View component source code and usage examples
+- Install components: `pnpm dlx shadcn@latest add [component]`
+
+---
+
 ## Project-Specific Skills (.claude/skills/)
 
 These are tailored to the Our Kitchen app:
@@ -22,7 +40,7 @@ These are available across all projects:
 
 | Skill | Command | When to Use |
 |-------|---------|-------------|
-| **frontend-design** | `/frontend-design` | **USE FOR ALL UI WORK** - Creates distinctive, production-grade interfaces that avoid generic "AI slop" aesthetics. Apply when building pages, components, or any visual UI. |
+| **frontend-design** | (via plugin) | **NOW IN PLUGIN** - See `frontend-ui` plugin above. Includes shadcn MCP for component access. |
 | **webapp-testing** | `/webapp-testing` | Automated Playwright testing for the web app. Use for regression testing, visual verification, browser automation. |
 
 ### Medium Priority
@@ -49,9 +67,10 @@ These are available across all projects:
 ## Skill Usage Guidelines
 
 ### Before Building UI Components
-1. Read `/frontend-design` principles to avoid generic aesthetics
-2. Use `/scaffold-component` for consistent structure
-3. Run `/check-theme` after to verify compliance
+1. Enable `frontend-ui` plugin for shadcn MCP + design principles
+2. Use shadcn MCP to find/install accessible component primitives
+3. Use `/scaffold-component` for consistent structure
+4. Run `/check-theme` after to verify theme compliance
 
 ### After Completing Features
 1. Run `/test-flow [flow-name]` for manual UAT
@@ -73,7 +92,7 @@ Claude should automatically consider using skills when:
 
 | User Says... | Consider Using |
 |--------------|----------------|
-| "build a page/component" | `/frontend-design` + `/scaffold-component` |
+| "build a page/component" | `frontend-ui` plugin + `/scaffold-component` |
 | "test the app" | `/test-flow` or `/webapp-testing` |
 | "deploy rules" | `/deploy-firebase rules` |
 | "check if it looks right" | `/check-theme` |
@@ -83,7 +102,7 @@ Claude should automatically consider using skills when:
 
 ## Our Kitchen Theme Quick Reference
 
-When using `/frontend-design`, apply these constraints:
+When using the `frontend-ui` plugin, apply these constraints:
 
 ```
 Colors:

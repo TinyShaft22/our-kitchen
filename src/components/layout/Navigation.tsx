@@ -34,13 +34,13 @@ function Navigation() {
     <>
       {/* Offline indicator banner */}
       {!isOnline && (
-        <div className="fixed bottom-20 left-0 right-0 bg-amber-100 border-t border-amber-300 px-4 py-2 text-center z-40">
+        <div className="fixed left-0 right-0 bg-amber-100 border-t border-amber-300 px-4 py-2 text-center z-40" style={{ bottom: 'calc(5rem + env(safe-area-inset-bottom, 0px))' }}>
           <span className="text-amber-800 text-sm font-medium">
             📡 You're offline — changes will sync when reconnected
           </span>
         </div>
       )}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-soft border-t border-charcoal/10 z-50">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-soft border-t border-charcoal/10 z-50 pb-[env(safe-area-inset-bottom)]">
         {/* Sliding indicator */}
         <div
           className="absolute top-0 h-0.5 bg-terracotta transition-all duration-300"
@@ -50,7 +50,7 @@ function Navigation() {
             transitionTimingFunction: 'var(--ease-spring)',
           }}
         />
-        <div className="flex justify-around items-center px-2 pt-2 pb-4">
+        <div className="flex justify-around items-center px-2 pt-2 pb-3">
           {tabs.map((tab, index) => (
             <NavLink
               key={tab.path}

@@ -1,3 +1,14 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+
 interface ConfirmDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,46 +30,37 @@ export function ConfirmDialog({
   cancelText = 'Cancel',
   confirmVariant = 'primary',
 }: ConfirmDialogProps) {
-  if (!isOpen) return null;
-
   const confirmButtonClass =
     confirmVariant === 'danger'
-      ? 'bg-red-500 text-white hover:bg-red-600 active:bg-red-700'
-      : 'bg-terracotta text-white hover:bg-terracotta/90 active:bg-terracotta/80';
+      ? 'bg-red-500 text-white hover:bg-red-600 active:bg-red-700 border-red-500'
+      : 'bg-terracotta text-white hover:bg-terracotta/90 active:bg-terracotta/80 border-terracotta';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-charcoal/50"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      {/* Dialog Panel */}
-      <div className="relative bg-cream rounded-soft w-full max-w-sm mx-4 shadow-lg">
-        {/* Content */}
-        <div className="p-6">
-          <h2 className="text-lg font-semibold text-charcoal mb-2">{title}</h2>
-          <p className="text-sm text-charcoal/70">{message}</p>
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-3 px-6 pb-6">
-          <button
+    <AlertDialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <AlertDialogContent className="bg-cream rounded-soft max-w-sm">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-lg font-semibold text-charcoal">
+            {title}
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-sm text-charcoal/70">
+            {message}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="flex-row gap-3">
+          <AlertDialogCancel
             onClick={onClose}
-            className="flex-1 h-11 rounded-soft border border-charcoal/20 text-charcoal text-sm font-medium hover:bg-charcoal/5 active:bg-charcoal/10 transition-colors"
+            className="flex-1 h-11 rounded-soft border border-charcoal/20 text-charcoal text-sm font-medium hover:bg-charcoal/5 active:bg-charcoal/10"
           >
             {cancelText}
-          </button>
-          <button
+          </AlertDialogCancel>
+          <AlertDialogAction
             onClick={onConfirm}
-            className={`flex-1 h-11 rounded-soft text-sm font-medium transition-colors ${confirmButtonClass}`}
+            className={`flex-1 h-11 rounded-soft text-sm font-medium ${confirmButtonClass}`}
           >
             {confirmText}
-          </button>
-        </div>
-      </div>
-    </div>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

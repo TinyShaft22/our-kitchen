@@ -1,0 +1,9 @@
+{
+  "name": "frontend-ui",
+  "version": "1.0.0",
+  "description": "Frontend UI development with shadcn/ui components. Includes the shadcn MCP server for browsing, searching, and installing components directly.",
+  "author": {
+    "name": "Our Kitchen"
+  },
+  "keywords": ["frontend", "ui", "shadcn", "react", "components", "design"]
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   collection,
   query,
@@ -29,6 +29,7 @@ interface UseFoldersReturn {
 export function useFolders(householdCode: string | null): UseFoldersReturn {
   const [folders, setFolders] = useState<Folder[]>([]);
   const [loading, setLoading] = useState(true);
+  const foldersRef = useRef<Folder[]>([]);
 
   // Real-time listener for folders collection
   useEffect(() => {
@@ -40,8 +41,8 @@ export function useFolders(householdCode: string | null): UseFoldersReturn {
 
     setLoading(true);
 
-    const foldersRef = collection(db, 'folders');
-    const q = query(foldersRef, where('householdCode', '==', householdCode));
+    const foldersCollection = collection(db, 'folders');
+    const q = query(foldersCollection, where('householdCode', '==', householdCode));
 
     const unsubscribe = onSnapshot(
       q,
@@ -51,6 +52,7 @@ export function useFolders(householdCode: string | null): UseFoldersReturn {
           ...doc.data(),
         })) as Folder[];
         setFolders(folderList);
+        foldersRef.current = folderList;
         setLoading(false);
       },
       (err) => {
@@ -79,15 +81,18 @@ export function useFolders(householdCode: string | null): UseFoldersReturn {
         throw new Error('No household code available');
       }
 
+      // Use ref for current folders to avoid stale closure
+      const currentFolders = foldersRef.current;
+
       // Check if folder already exists
-      const exists = folders.some((f) => f.path === path && f.type === type);
+      const exists = currentFolders.some((f) => f.path === path && f.type === type);
       if (exists) {
-        return; // Silently skip if already exists
+        throw new Error('A folder with this name already exists');
       }
 
       try {
-        const foldersRef = collection(db, 'folders');
-        await addDoc(foldersRef, {
+        const foldersCollectionRef = collection(db, 'folders');
+        await addDoc(foldersCollectionRef, {
           path,
           type,
           householdCode,
@@ -97,7 +102,7 @@ export function useFolders(householdCode: string | null): UseFoldersReturn {
         throw err;
       }
     },
-    [householdCode, folders]
+    [householdCode]
   );
 
   const deleteFolder = useCallback(

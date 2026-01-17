@@ -5,6 +5,16 @@ import type { Meal, Ingredient } from '../../types';
 import { IngredientInput } from './IngredientInput';
 import { MarkdownEditor } from './MarkdownEditor';
 import { NestedFolderPicker } from './NestedFolderPicker';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 
 interface EditMealModalProps {
   isOpen: boolean;
@@ -213,33 +223,27 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-charcoal/50"
-        onClick={handleClose}
-        aria-hidden="true"
-      />
-
-      {/* Modal Panel */}
-      <div className="relative bg-cream rounded-softer w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-lg">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
+      <DialogContent
+        showCloseButton={false}
+        className="bg-cream rounded-softer max-w-lg max-h-[85vh] overflow-hidden flex flex-col p-0 gap-0"
+      >
         {/* Header */}
-        <div className="sticky top-0 bg-cream border-b border-charcoal/10 px-4 py-3 flex items-center justify-between z-10">
-          <button
+        <DialogHeader className="sticky top-0 bg-cream border-b border-charcoal/10 px-4 py-3 flex flex-row items-center justify-between z-10 space-y-0">
+          <Button
+            variant="ghost"
             onClick={handleClose}
-            className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-cream text-charcoal"
+            className="w-11 h-11 rounded-full hover:bg-charcoal/5 text-charcoal p-0"
             aria-label="Cancel"
           >
             <span className="text-2xl">&times;</span>
-          </button>
-          <h2 className="text-lg font-semibold text-charcoal">Edit Meal</h2>
-          <button
+          </Button>
+          <DialogTitle className="text-lg font-semibold text-charcoal">Edit Meal</DialogTitle>
+          <Button
             onClick={handleSave}
             disabled={saving}
-            className="w-11 h-11 flex items-center justify-center rounded-full bg-terracotta text-white hover:bg-terracotta/90 disabled:opacity-50"
+            className="w-11 h-11 rounded-full bg-terracotta text-white hover:bg-terracotta/90 disabled:opacity-50 p-0"
             aria-label="Update meal"
           >
             {saving ? (
@@ -247,11 +251,11 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
             ) : (
               <span className="text-lg font-bold">&#10003;</span>
             )}
-          </button>
-        </div>
+          </Button>
+        </DialogHeader>
 
-        {/* Form */}
-        <div className="p-4 space-y-4">
+        {/* Form - scrollable */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {error && (
             <div className="bg-red-100 text-red-700 px-4 py-2 rounded-soft text-sm">
               {error}
@@ -259,78 +263,54 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
           )}
 
           {/* Meal Name */}
-          <div>
-            <label
-              htmlFor="edit-meal-name"
-              className="block text-sm font-medium text-charcoal mb-1"
-            >
-              Meal Name
-            </label>
-            <input
+          <div className="space-y-1">
+            <Label htmlFor="edit-meal-name">Meal Name</Label>
+            <Input
               id="edit-meal-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Spaghetti Bolognese"
-              className="w-full h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
             />
           </div>
 
           {/* Servings/Quantity */}
-          <div>
-            <label
-              htmlFor="edit-servings"
-              className="block text-sm font-medium text-charcoal mb-1"
-            >
+          <div className="space-y-1">
+            <Label htmlFor="edit-servings">
               {isBaking ? 'Quantity' : 'Servings'}
               <span className="font-normal text-xs text-charcoal/50 ml-1">
                 ({isBaking ? 'how many this recipe makes' : 'how many people this recipe serves'})
               </span>
-            </label>
-            <input
+            </Label>
+            <Input
               id="edit-servings"
               type="number"
-              min="1"
-              max="99"
+              min={1}
+              max={99}
               value={servings}
               onChange={(e) => setServings(Math.max(1, parseInt(e.target.value) || 1))}
-              className="w-24 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
+              className="w-24"
             />
           </div>
 
           {/* Baking Toggle */}
           <div className="flex items-center justify-between">
-            <label
-              htmlFor="edit-is-baking"
-              className="text-sm font-medium text-charcoal"
-            >
-              Baking Recipe
-            </label>
-            <button
+            <Label htmlFor="edit-is-baking">Baking Recipe</Label>
+            <Switch
               id="edit-is-baking"
-              role="switch"
-              aria-checked={isBaking}
-              onClick={() => setIsBaking(!isBaking)}
-              className={`relative w-12 h-7 rounded-full transition-colors ${
-                isBaking ? 'bg-terracotta' : 'bg-charcoal/20'
-              }`}
-            >
-              <span
-                className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform ${
-                  isBaking ? 'translate-x-5' : 'translate-x-0'
-                }`}
-              />
-            </button>
+              checked={isBaking}
+              onCheckedChange={setIsBaking}
+            />
           </div>
 
           {/* Folder */}
-          <div>
-            <label className="block text-sm font-medium text-charcoal mb-1">
+          <div className="space-y-1">
+            <Label>
               Folder
               <span className="font-normal text-xs text-charcoal/50 ml-1">
                 (optional)
               </span>
-            </label>
+            </Label>
             <NestedFolderPicker
               key={isBaking ? 'baking' : 'main'}
               value={subcategory}
@@ -341,10 +321,8 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
           </div>
 
           {/* Photo */}
-          <div>
-            <label className="block text-sm font-medium text-charcoal mb-1">
-              Photo (optional)
-            </label>
+          <div className="space-y-1">
+            <Label>Photo (optional)</Label>
             <input
               ref={fileInputRef}
               type="file"
@@ -361,38 +339,39 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
                   className="max-h-48 rounded-soft object-cover"
                 />
                 <div className="flex gap-2">
-                  <button
+                  <Button
                     type="button"
+                    variant="outline"
                     onClick={() => fileInputRef.current?.click()}
-                    className="h-9 px-3 rounded-soft border border-charcoal/20 text-charcoal text-sm hover:bg-charcoal/5 transition-colors"
+                    className="h-9 px-3 rounded-soft border-charcoal/20 text-charcoal text-sm hover:bg-charcoal/5"
                   >
                     Change Photo
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="outline"
                     onClick={handleRemoveImage}
-                    className="h-9 px-3 rounded-soft border border-red-300 text-red-600 text-sm hover:bg-red-50 transition-colors"
+                    className="h-9 px-3 rounded-soft border-red-300 text-red-600 text-sm hover:bg-red-50"
                   >
                     Remove
-                  </button>
+                  </Button>
                 </div>
               </div>
             ) : (
-              <button
+              <Button
                 type="button"
+                variant="outline"
                 onClick={() => fileInputRef.current?.click()}
-                className="h-11 px-4 rounded-soft border border-dashed border-charcoal/30 text-charcoal/60 text-sm hover:border-terracotta hover:text-terracotta transition-colors"
+                className="h-11 px-4 rounded-soft border-dashed border-charcoal/30 text-charcoal/60 text-sm hover:border-terracotta hover:text-terracotta"
               >
                 + Add Photo
-              </button>
+              </Button>
             )}
           </div>
 
           {/* Recipe */}
-          <div>
-            <label className="block text-sm font-medium text-charcoal mb-1">
-              Recipe (optional)
-            </label>
+          <div className="space-y-1">
+            <Label>Recipe (optional)</Label>
             <MarkdownEditor
               value={instructions}
               onChange={setInstructions}
@@ -407,13 +386,13 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
               <h3 className="text-sm font-medium text-charcoal">
                 Ingredients ({ingredients.length})
               </h3>
-              <button
+              <Button
                 type="button"
                 onClick={handleAddIngredient}
-                className="h-11 px-4 rounded-soft bg-terracotta text-white text-sm font-medium hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors"
+                className="h-11 px-4 rounded-soft bg-terracotta text-white text-sm font-medium hover:bg-terracotta/90 active:bg-terracotta/80"
               >
                 + Add Ingredient
-              </button>
+              </Button>
             </div>
 
             {ingredients.length === 0 ? (
@@ -435,7 +414,7 @@ export function EditMealModal({ isOpen, onClose, meal, onSave, householdCode, ex
             )}
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

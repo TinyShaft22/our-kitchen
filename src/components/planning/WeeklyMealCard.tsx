@@ -46,10 +46,10 @@ export function WeeklyMealCard({
   const alreadyHaveCount = ingredients.filter((ing) => isAlreadyHave(ing.name)).length;
 
   return (
-    <div className="bg-white rounded-soft shadow-soft overflow-hidden">
+    <div className="bg-white rounded-soft shadow-soft hover:shadow-lifted overflow-hidden transition-shadow duration-200 transition-spring">
       {/* Collapsed Header - Always visible, clickable to expand */}
       <div
-        className="flex items-center justify-between p-4 cursor-pointer hover:bg-cream/30 transition-colors"
+        className="flex items-center justify-between p-4 cursor-pointer hover:bg-cream/30 transition-colors duration-200 transition-spring"
         onClick={() => setIsExpanded(!isExpanded)}
         role="button"
         aria-expanded={isExpanded}
@@ -80,9 +80,13 @@ export function WeeklyMealCard({
         </div>
 
         <div className="flex items-center gap-2 ml-2">
-          {/* Expand indicator */}
-          <span className="text-xs text-charcoal/50">
-            {isExpanded ? '▲' : '▼'}
+          {/* Expand indicator with spring animation */}
+          <span
+            className={`text-xs text-charcoal/50 transition-transform duration-300 transition-spring ${
+              isExpanded ? 'rotate-180' : 'rotate-0'
+            }`}
+          >
+            ▼
           </span>
           {/* Delete button */}
           <button

@@ -9,50 +9,82 @@ service cloud.firestore {
       allow update, delete: if false; // Households are permanent
     }
 
-    // All other collections require matching householdCode field
+    // Helper function for collection rules
+    // For reads: allow if document has householdCode (client query filters by code)
+    // For creates: allow if householdCode is provided in new document
+    // For updates: allow if document has householdCode and it's not being changed
+    // For deletes: allow if document has householdCode
+
     match /meals/{mealId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null; // For creates
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
 
     match /weeklyMeals/{weekId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null;
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
 
     match /groceryList/{itemId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null;
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
 
     match /staples/{stapleId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null;
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
 
     match /bakingEssentials/{itemId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null;
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
 
     match /boughtHistory/{historyId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null;
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
 
     match /folders/{folderId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null;
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
 
     match /snacks/{snackId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null;
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
 
     match /scannedProducts/{productId} {
-      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
-                          || resource == null;
+      allow read: if resource.data.householdCode != null;
+      allow create: if request.resource.data.householdCode != null;
+      allow update: if resource.data.householdCode != null
+                    && request.resource.data.householdCode == resource.data.householdCode;
+      allow delete: if resource.data.householdCode != null;
     }
   }
 }

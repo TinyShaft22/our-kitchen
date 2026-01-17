@@ -1,5 +1,14 @@
 import ReactMarkdown from 'react-markdown';
 import type { Meal } from '../../types';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetFooter,
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 
 interface MealDetailModalProps {
   meal: Meal | null;
@@ -10,22 +19,17 @@ interface MealDetailModalProps {
 }
 
 export function MealDetailModal({ meal, isOpen, onClose, onEdit, onDelete }: MealDetailModalProps) {
-  if (!isOpen || !meal) return null;
+  if (!meal) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      {/* Modal Panel - slides up on mobile */}
-      <div className="relative bg-cream rounded-t-2xl sm:rounded-softer w-full sm:max-w-lg max-h-[90vh] overflow-hidden shadow-xl animate-fade-in-up">
+    <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <SheetContent
+        side="bottom"
+        className="bg-cream rounded-t-2xl max-h-[85vh] overflow-hidden flex flex-col p-0"
+      >
         {/* Hero Image */}
         {meal.imageUrl ? (
-          <div className="relative h-56 sm:h-64">
+          <div className="relative h-48 sm:h-56 flex-shrink-0">
             <img
               src={meal.imageUrl}
               alt={meal.name}
@@ -33,50 +37,33 @@ export function MealDetailModal({ meal, isOpen, onClose, onEdit, onDelete }: Mea
             />
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent" />
 
-            {/* Close button on image */}
-            <button
-              onClick={onClose}
-              className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-md hover:bg-white transition-colors"
-              aria-label="Close"
-            >
-              <span className="text-charcoal text-xl">&times;</span>
-            </button>
-
             {/* Title on image */}
-            <div className="absolute inset-x-0 bottom-0 p-4">
-              <h2 className="font-display text-2xl font-semibold text-white drop-shadow-lg">
+            <SheetHeader className="absolute inset-x-0 bottom-0 p-4 space-y-0">
+              <SheetTitle className="font-display text-2xl font-semibold text-white drop-shadow-lg">
                 {meal.name}
-              </h2>
-              <p className="text-white/80 text-sm mt-1">
+              </SheetTitle>
+              <SheetDescription className="text-white/80 text-sm mt-1">
                 {meal.isBaking ? `Makes ${meal.servings}` : `${meal.servings} servings`} • {meal.ingredients.length} ingredients
-              </p>
-            </div>
+              </SheetDescription>
+            </SheetHeader>
           </div>
         ) : (
           /* Header without image */
-          <div className="relative bg-gradient-to-br from-cream via-terracotta/5 to-sage/10 p-4 pt-14">
-            <button
-              onClick={onClose}
-              className="absolute top-3 right-3 w-10 h-10 rounded-full bg-charcoal/10 flex items-center justify-center hover:bg-charcoal/20 transition-colors"
-              aria-label="Close"
-            >
-              <span className="text-charcoal text-xl">&times;</span>
-            </button>
-
-            <div className="text-center mb-2">
+          <SheetHeader className="bg-gradient-to-br from-cream via-terracotta/5 to-sage/10 p-4 pt-10 text-center flex-shrink-0">
+            <div className="mb-2">
               <span className="text-5xl opacity-30">{meal.isBaking ? '🧁' : '🍽️'}</span>
             </div>
-            <h2 className="font-display text-2xl font-semibold text-charcoal text-center">
+            <SheetTitle className="font-display text-2xl font-semibold text-charcoal">
               {meal.name}
-            </h2>
-            <p className="text-charcoal/60 text-sm text-center mt-1">
+            </SheetTitle>
+            <SheetDescription className="text-charcoal/60 text-sm mt-1">
               {meal.isBaking ? `Makes ${meal.servings}` : `${meal.servings} servings`} • {meal.ingredients.length} ingredients
-            </p>
-          </div>
+            </SheetDescription>
+          </SheetHeader>
         )}
 
-        {/* Content */}
-        <div className="overflow-y-auto max-h-[50vh] p-4 space-y-4">
+        {/* Content - scrollable */}
+        <div className="flex-1 overflow-y-auto min-h-0 p-4 space-y-4">
           {/* Ingredients */}
           <div>
             <h3 className="font-display font-semibold text-charcoal mb-2">Ingredients</h3>
@@ -132,29 +119,30 @@ export function MealDetailModal({ meal, isOpen, onClose, onEdit, onDelete }: Mea
         </div>
 
         {/* Actions */}
-        <div className="border-t border-charcoal/10 p-4 flex gap-3">
-          <button
+        <SheetFooter className="border-t border-charcoal/10 p-4 flex-row gap-3 flex-shrink-0">
+          <Button
             onClick={() => {
               onEdit(meal);
               onClose();
             }}
-            className="flex-1 h-12 rounded-soft bg-terracotta text-white font-medium hover:bg-terracotta/90 transition-colors flex items-center justify-center gap-2"
+            className="flex-1 h-12 rounded-soft bg-terracotta text-white font-medium hover:bg-terracotta/90"
           >
             <span>✏️</span>
             <span>Edit</span>
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="outline"
             onClick={() => {
               onDelete(meal);
               onClose();
             }}
-            className="w-12 h-12 rounded-soft border border-red-300 text-red-500 hover:bg-red-50 transition-colors flex items-center justify-center"
+            className="w-12 h-12 rounded-soft border-red-300 text-red-500 hover:bg-red-50 hover:text-red-600"
             aria-label="Delete"
           >
             <span>🗑️</span>
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }

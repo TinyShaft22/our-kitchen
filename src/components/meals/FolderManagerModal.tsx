@@ -1,4 +1,13 @@
 import { useState, useMemo } from 'react';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetFooter,
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 
 interface FolderManagerModalProps {
   isOpen: boolean;
@@ -73,6 +82,8 @@ export function FolderManagerModal({
   const [newFolderName, setNewFolderName] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [deletingPath, setDeletingPath] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   // Build tree from paths
   const folderTree = useMemo(
@@ -103,8 +114,6 @@ export function FolderManagerModal({
     setNewFolderName('');
     setError(null);
   };
-
-  const [saving, setSaving] = useState(false);
 
   const handleSaveFolder = async () => {
     const trimmedName = newFolderName.trim();
@@ -156,10 +165,6 @@ export function FolderManagerModal({
       handleCancelAdd();
     }
   };
-
-  if (!isOpen) return null;
-
-  const [deleting, setDeleting] = useState(false);
 
   const handleDeleteFolder = async (path: string) => {
     if (onDeleteFolder) {
@@ -253,20 +258,23 @@ export function FolderManagerModal({
           {isConfirmingDelete && (
             <div className="flex items-center gap-2">
               <span className="text-sm text-red-600">{deleting ? 'Deleting...' : 'Delete?'}</span>
-              <button
+              <Button
                 onClick={() => handleDeleteFolder(node.fullPath)}
                 disabled={deleting}
-                className="px-3 py-1 rounded-soft bg-red-500 text-white text-sm hover:bg-red-600 transition-colors disabled:opacity-50"
+                size="sm"
+                className="px-3 py-1 rounded-soft bg-red-500 text-white text-sm hover:bg-red-600 disabled:opacity-50 h-auto"
               >
                 {deleting ? '...' : 'Yes'}
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => setDeletingPath(null)}
                 disabled={deleting}
-                className="px-3 py-1 rounded-soft bg-charcoal/10 text-charcoal text-sm hover:bg-charcoal/20 transition-colors disabled:opacity-50"
+                variant="ghost"
+                size="sm"
+                className="px-3 py-1 rounded-soft bg-charcoal/10 text-charcoal text-sm hover:bg-charcoal/20 disabled:opacity-50 h-auto"
               >
                 No
-              </button>
+              </Button>
             </div>
           )}
         </div>
@@ -292,10 +300,10 @@ export function FolderManagerModal({
               className="flex-1 h-10 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/30"
               autoFocus
             />
-            <button
+            <Button
               onClick={handleSaveFolder}
               disabled={saving}
-              className="w-10 h-10 flex items-center justify-center rounded-soft bg-terracotta text-white hover:bg-terracotta/90 shadow-soft transition-all disabled:opacity-50"
+              className="w-10 h-10 rounded-soft bg-terracotta text-white hover:bg-terracotta/90 shadow-soft disabled:opacity-50 p-0"
               aria-label="Save folder"
             >
               {saving ? (
@@ -305,16 +313,17 @@ export function FolderManagerModal({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               )}
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleCancelAdd}
-              className="w-10 h-10 flex items-center justify-center rounded-soft hover:bg-charcoal/10 text-charcoal/60 transition-colors"
+              variant="ghost"
+              className="w-10 h-10 rounded-soft hover:bg-charcoal/10 text-charcoal/60 p-0"
               aria-label="Cancel"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
-            </button>
+            </Button>
           </div>
         )}
 
@@ -326,34 +335,20 @@ export function FolderManagerModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      {/* Modal Panel */}
-      <div className="relative bg-cream rounded-t-2xl sm:rounded-softer w-full sm:max-w-md max-h-[85vh] overflow-hidden shadow-xl flex flex-col animate-fade-in-up">
+    <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <SheetContent
+        side="right"
+        className="bg-cream w-full sm:max-w-md flex flex-col p-0"
+      >
         {/* Header */}
-        <div className="bg-gradient-to-r from-honey/20 to-terracotta/10 border-b border-charcoal/10 px-5 py-4 flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-display font-semibold text-charcoal">
-              {title}
-            </h2>
-            <p className="text-sm text-charcoal/60 mt-0.5">Organize your recipes into folders</p>
-          </div>
-          <button
-            onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/50 text-charcoal transition-colors"
-            aria-label="Close"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
+        <SheetHeader className="bg-gradient-to-r from-honey/20 to-terracotta/10 border-b border-charcoal/10 px-5 py-4 space-y-0">
+          <SheetTitle className="text-xl font-display font-semibold text-charcoal">
+            {title}
+          </SheetTitle>
+          <SheetDescription className="text-sm text-charcoal/60 mt-0.5">
+            Organize your recipes into folders
+          </SheetDescription>
+        </SheetHeader>
 
         {/* Error */}
         {error && (
@@ -399,10 +394,10 @@ export function FolderManagerModal({
                 className="flex-1 h-10 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/30"
                 autoFocus
               />
-              <button
+              <Button
                 onClick={handleSaveFolder}
                 disabled={saving}
-                className="w-10 h-10 flex items-center justify-center rounded-soft bg-terracotta text-white hover:bg-terracotta/90 shadow-soft transition-all disabled:opacity-50"
+                className="w-10 h-10 rounded-soft bg-terracotta text-white hover:bg-terracotta/90 shadow-soft disabled:opacity-50 p-0"
                 aria-label="Save folder"
               >
                 {saving ? (
@@ -412,35 +407,35 @@ export function FolderManagerModal({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 )}
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={handleCancelAdd}
-                className="w-10 h-10 flex items-center justify-center rounded-soft hover:bg-charcoal/10 text-charcoal/60 transition-colors"
+                variant="ghost"
+                className="w-10 h-10 rounded-soft hover:bg-charcoal/10 text-charcoal/60 p-0"
                 aria-label="Cancel"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-              </button>
+              </Button>
             </div>
           )}
         </div>
 
         {/* Footer with Add Root Folder button */}
-        <div className="border-t border-charcoal/10 p-4 bg-white/50">
-          <button
+        <SheetFooter className="border-t border-charcoal/10 p-4 bg-white/50">
+          <Button
             onClick={() => handleStartAdd('')}
             disabled={addingToPath !== null}
-            className="w-full h-12 flex items-center justify-center gap-2 rounded-soft bg-terracotta hover:bg-terracotta/90 text-white font-medium shadow-soft disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            style={{ transitionTimingFunction: 'var(--ease-spring)' }}
+            className="w-full h-12 rounded-soft bg-terracotta hover:bg-terracotta/90 text-white font-medium shadow-soft disabled:opacity-50"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
             <span>Add New Folder</span>
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }

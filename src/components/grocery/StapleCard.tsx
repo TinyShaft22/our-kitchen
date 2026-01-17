@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Staple } from '../../types';
 import { STORES, CATEGORIES } from '../../types';
+import { Switch } from '@/components/ui/switch';
 
 interface StapleCardProps {
   staple: Staple;
@@ -17,7 +18,7 @@ export function StapleCard({ staple, onToggle, onEdit, onDelete }: StapleCardPro
 
   return (
     <div
-      className="bg-white rounded-soft shadow-soft p-3 min-h-[44px] flex items-center justify-between gap-3"
+      className="bg-white rounded-soft shadow-soft hover:shadow-lifted p-3 min-h-[44px] flex items-center justify-between gap-3 transition-shadow duration-200 transition-spring cursor-pointer"
       onClick={() => setShowActions(!showActions)}
     >
       {/* Left side: Name and badges */}
@@ -60,23 +61,14 @@ export function StapleCard({ staple, onToggle, onEdit, onDelete }: StapleCardPro
       )}
 
       {/* Right side: Toggle switch */}
-      <button
-        role="switch"
-        aria-checked={staple.enabled}
-        onClick={(e) => {
-          e.stopPropagation();
-          onToggle(!staple.enabled);
+      <Switch
+        checked={staple.enabled}
+        onCheckedChange={(checked) => {
+          onToggle(checked);
         }}
-        className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${
-          staple.enabled ? 'bg-sage' : 'bg-charcoal/20'
-        }`}
-      >
-        <span
-          className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform ${
-            staple.enabled ? 'translate-x-5' : 'translate-x-0'
-          }`}
-        />
-      </button>
+        onClick={(e) => e.stopPropagation()}
+        aria-label={`Toggle ${staple.name}`}
+      />
     </div>
   );
 }

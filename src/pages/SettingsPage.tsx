@@ -17,9 +17,14 @@ function SettingsPage() {
   };
 
   return (
-    <div className="p-4 pb-32">
-      <h1 className="text-xl font-semibold text-charcoal mb-6">Settings</h1>
+    <div className="pb-32">
+      {/* Hero section */}
+      <div className="hero-gradient px-4 pt-6 pb-4 mb-4">
+        <h1 className="text-2xl font-display font-semibold text-charcoal">Settings</h1>
+        <p className="text-charcoal/60 text-sm mt-1">Manage your household</p>
+      </div>
 
+      <div className="px-4">
       {/* Household Info */}
       <div className="bg-white rounded-soft shadow-soft p-4 mb-4">
         <h2 className="text-sm font-medium text-charcoal/60 mb-2">Household Code</h2>
@@ -66,6 +71,7 @@ function SettingsPage() {
           <span className="text-red-600 text-xl">→</span>
         </div>
       </button>
+      </div>
 
       {/* Logout Confirmation */}
       <ConfirmDialog

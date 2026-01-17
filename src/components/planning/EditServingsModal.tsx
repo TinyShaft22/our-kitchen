@@ -1,4 +1,13 @@
 import { useState, useEffect } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface EditServingsModalProps {
   isOpen: boolean;
@@ -50,31 +59,25 @@ export function EditServingsModal({
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-charcoal/50"
-        onClick={handleClose}
-        aria-hidden="true"
-      />
-
-      {/* Modal Panel */}
-      <div className="relative bg-cream rounded-softer w-full max-w-lg shadow-lg">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
+      <DialogContent
+        showCloseButton={false}
+        className="bg-cream rounded-softer max-w-sm p-0 gap-0"
+      >
         {/* Header */}
-        <div className="border-b border-charcoal/10 px-4 py-3 flex items-center justify-between">
-          <button
+        <DialogHeader className="border-b border-charcoal/10 px-4 py-3 flex flex-row items-center justify-between space-y-0">
+          <Button
+            variant="ghost"
             onClick={handleClose}
-            className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-cream text-charcoal"
+            className="w-11 h-11 rounded-full hover:bg-charcoal/5 text-charcoal p-0"
             aria-label="Cancel"
           >
             <span className="text-2xl">&times;</span>
-          </button>
-          <h2 className="text-lg font-semibold text-charcoal">Edit Servings</h2>
+          </Button>
+          <DialogTitle className="text-lg font-semibold text-charcoal">Edit Servings</DialogTitle>
           <div className="w-11" /> {/* Spacer for centering */}
-        </div>
+        </DialogHeader>
 
         {/* Content */}
         <div className="p-4 space-y-4">
@@ -85,50 +88,44 @@ export function EditServingsModal({
           )}
 
           {/* Meal Name (read-only) */}
-          <div>
-            <label className="block text-sm font-medium text-charcoal mb-1">
-              Meal
-            </label>
+          <div className="space-y-1">
+            <Label>Meal</Label>
             <p className="text-charcoal/70">{mealName}</p>
           </div>
 
           {/* Servings Input */}
-          <div>
-            <label
-              htmlFor="edit-servings"
-              className="block text-sm font-medium text-charcoal mb-1"
-            >
-              Servings
-            </label>
-            <input
-              id="edit-servings"
+          <div className="space-y-1">
+            <Label htmlFor="edit-servings-input">Servings</Label>
+            <Input
+              id="edit-servings-input"
               type="number"
-              min="1"
-              max="99"
+              min={1}
+              max={99}
               value={servings}
               onChange={(e) => setServings(Math.max(1, parseInt(e.target.value) || 1))}
-              className="w-24 h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
+              className="w-24"
             />
           </div>
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-2">
-            <button
+            <Button
+              variant="outline"
               onClick={handleClose}
-              className="flex-1 h-11 rounded-soft border border-charcoal/20 text-charcoal text-sm font-medium hover:bg-charcoal/5 active:bg-charcoal/10 transition-colors"
+              className="flex-1 h-11 rounded-soft border-charcoal/20 text-charcoal hover:bg-charcoal/5"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleSave}
               disabled={saving}
-              className="flex-1 h-11 rounded-soft bg-terracotta text-white text-sm font-medium hover:bg-terracotta/90 active:bg-terracotta/80 disabled:opacity-50 transition-colors"
+              className="flex-1 h-11 rounded-soft bg-terracotta text-white hover:bg-terracotta/90 disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save'}
-            </button>
+            </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

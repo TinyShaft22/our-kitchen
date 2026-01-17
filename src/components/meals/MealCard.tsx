@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import type { Meal } from '../../types';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface MealCardProps {
   meal: Meal;
@@ -22,20 +32,16 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
     onDelete(meal);
   };
 
-  const handleCancelDelete = () => {
-    setShowDeleteConfirm(false);
-  };
-
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Don't toggle expand when clicking edit
     onEdit(meal);
   };
 
   return (
-    <div className="bg-white rounded-soft shadow-soft overflow-hidden">
+    <div className="bg-white rounded-soft shadow-soft hover:shadow-lifted overflow-hidden transition-shadow duration-200 transition-spring">
       {/* Collapsed Header - Always visible, clickable to expand */}
       <div
-        className="flex items-center justify-between p-4 cursor-pointer hover:bg-cream/30 transition-colors"
+        className="flex items-center justify-between p-4 cursor-pointer hover:bg-cream/30 transition-colors duration-200 transition-spring"
         onClick={() => setIsExpanded(!isExpanded)}
         role="button"
         aria-expanded={isExpanded}
@@ -63,11 +69,9 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
         <div className="flex items-center gap-2 ml-2">
           {/* Expand indicator with spring animation */}
           <span
-            className="text-xs text-charcoal/50 transition-transform duration-300"
-            style={{
-              transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-              transitionTimingFunction: 'var(--ease-spring)',
-            }}
+            className={`text-xs text-charcoal/50 transition-transform duration-300 transition-spring ${
+              isExpanded ? 'rotate-180' : 'rotate-0'
+            }`}
           >
             ▼
           </span>
@@ -85,12 +89,9 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
       {/* Expanded Content with spring animation */}
       <div
         id={`meal-details-${meal.id}`}
-        className="border-t border-charcoal/10 overflow-hidden transition-all duration-300"
-        style={{
-          maxHeight: isExpanded ? '2000px' : '0',
-          opacity: isExpanded ? 1 : 0,
-          transitionTimingFunction: 'var(--ease-spring)',
-        }}
+        className={`border-t border-charcoal/10 overflow-hidden transition-all duration-300 transition-spring ${
+          isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
       >
         {isExpanded && (
           <div className="p-4 space-y-4">
@@ -194,37 +195,25 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
       </div>
 
       {/* Delete Confirmation Dialog */}
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-charcoal/50"
-            onClick={handleCancelDelete}
-            aria-hidden="true"
-          />
-          <div className="relative bg-cream rounded-softer p-6 w-full max-w-sm shadow-lg">
-            <h3 className="text-lg font-semibold text-charcoal mb-2">
-              Delete Meal?
-            </h3>
-            <p className="text-sm text-charcoal/70 mb-4">
+      <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Meal?</AlertDialogTitle>
+            <AlertDialogDescription>
               Are you sure you want to delete "{meal.name}"? This cannot be undone.
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={handleCancelDelete}
-                className="flex-1 h-11 rounded-soft border border-charcoal/20 text-charcoal font-medium hover:bg-charcoal/5 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleConfirmDelete}
-                className="flex-1 h-11 rounded-soft bg-red-500 text-white font-medium hover:bg-red-600 transition-colors"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              className="bg-destructive text-white hover:bg-destructive/90"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

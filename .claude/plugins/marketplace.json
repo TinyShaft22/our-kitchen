@@ -1,0 +1,11 @@
+{
+  "name": "our-kitchen-plugins",
+  "description": "Local plugins for Our Kitchen project",
+  "plugins": [
+    {
+      "name": "frontend-ui",
+      "description": "Frontend UI development with shadcn/ui components and MCP server",
+      "path": "./frontend-ui"
+    }
+  ]
+}

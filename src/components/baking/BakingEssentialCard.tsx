@@ -67,7 +67,7 @@ export function BakingEssentialCard({
 
   return (
     <div
-      className="bg-white rounded-soft shadow-soft p-3 min-h-[44px]"
+      className="bg-white rounded-soft shadow-soft hover:shadow-lifted p-3 min-h-[44px] transition-shadow duration-200 transition-spring cursor-pointer"
       onClick={() => setShowActions(!showActions)}
     >
       <div className="flex items-center justify-between gap-3">
@@ -128,8 +128,7 @@ export function BakingEssentialCard({
       {/* Right side: Status badge (tappable to cycle) with glow effects */}
       <button
         onClick={handleStatusCycle}
-        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex-shrink-0 ${statusConfig.bgClass} ${statusConfig.textClass} ${statusConfig.glowClass}`}
-        style={{ transitionTimingFunction: 'var(--ease-spring)' }}
+        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 transition-spring flex-shrink-0 ${statusConfig.bgClass} ${statusConfig.textClass} ${statusConfig.glowClass}`}
         aria-label={`Status: ${statusConfig.label}. Tap to change.`}
       >
         {statusConfig.label}
