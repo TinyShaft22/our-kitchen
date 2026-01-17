@@ -1,0 +1,425 @@
+[
+  {
+    "name": "Anything But Basic Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "buttermilk", "category": "dairy", "defaultStore": "trader-joes" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Anything But Basic Muffins\n\n1. Preheat oven to 425°F - Line a muffin tin with 10 muffin cups and spray with oil-based spray.\n2. Combine wet ingredients - In a large bowl, combine sugar, eggs, melted butter, buttermilk, and vanilla extract.\n3. Mix dry ingredients - In a separate bowl, mix together flour, baking powder, and salt.\n4. Fold together - Fold dry ingredients into wet mixture, stirring only until combined. Having a few lumps in the batter is totally fine!\n5. Fill and bake - Scoop batter into prepared muffin cups, filling just shy of the top. Bake 5 minutes at 425°F, then lower oven to 350°F without opening the door and bake 15 additional minutes.\n6. Cool - Cool in pan for 10 minutes, then transfer to wire rack to cool completely.\n\n[Original Recipe](https://bromabakery.com/anything-but-basic-muffin-recipe/)"
+  },
+  {
+    "name": "Fluffy Chocolate Chip Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "buttermilk", "category": "dairy", "defaultStore": "trader-joes" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Fluffy Chocolate Chip Muffins\n\n1. Preheat oven to 425°F - Prepare 10 standard muffin tins with liners.\n2. Combine wet ingredients - In a large bowl, combine melted butter and sugar. Add eggs one at a time, then incorporate Greek yogurt, buttermilk, and vanilla extract.\n3. Add dry ingredients and chips - Add flour, baking powder, and salt, mixing until just starting to combine. Fold in chocolate chips until just combined. Batter will be thick.\n4. Fill tins - Scoop batter into prepared tins (about 3/4 full). Sprinkle tops with sugar if desired.\n5. Bake - Bake at 425°F for 5 minutes, then reduce to 375°F and bake 15 additional minutes until golden brown.\n6. Cool - Cool for at least 15 minutes before serving.\n\n[Original Recipe](https://bromabakery.com/fluffy-chocolate-chip-muffins/)"
+  },
+  {
+    "name": "The Best Blueberry Muffins EVER",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "fresh blueberries", "category": "produce", "defaultStore": "costco" }
+    ],
+    "instructions": "## The Best Blueberry Muffins EVER\n\n1. Preheat oven to 425°F - Grease 10 standard muffin tins and line with cupcake liners.\n2. Combine sugar and butter - Combine granulated sugar and melted butter in a large mixing bowl, whisking until combined.\n3. Add wet ingredients - Add eggs one at a time. Mix in Greek yogurt, milk, and vanilla extract.\n4. Add dry ingredients - Add flour, baking powder, and salt. Fold batter together with a silicone spatula until mostly combined—do not overmix. Toss blueberries in remaining 2 tablespoons flour, then fold into batter.\n5. Fill tins - Scoop batter into prepared muffin tins, filling about 3/4 full. Sprinkle tops with turbinado sugar if desired.\n6. Bake - Bake at 425°F for 5 minutes, then reduce oven to 375°F and bake an additional 15 minutes until golden brown.\n7. Cool - Cool for at least 15 minutes before serving.\n\n[Original Recipe](https://bromabakery.com/the-best-blueberry-muffins-ever/)"
+  },
+  {
+    "name": "Pumpkin Streusel Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "pumpkin puree", "category": "pantry", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "vegetable oil", "category": "pantry", "defaultStore": "costco" },
+      { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "ginger", "category": "baking", "defaultStore": "costco" },
+      { "name": "nutmeg", "category": "baking", "defaultStore": "costco" },
+      { "name": "cloves", "category": "baking", "defaultStore": "trader-joes" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "pecans", "category": "pantry", "defaultStore": "costco" },
+      { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Pumpkin Streusel Muffins\n\n1. Preheat oven to 375°F - Line 12 muffin cups with liners and spray with cooking spray.\n2. Combine wet ingredients - Combine pumpkin puree, sugars, vegetable oil, milk, eggs, and vanilla in a large bowl; mix well.\n3. Add dry ingredients - Add flour, baking powder, baking soda, cinnamon, nutmeg, ginger, cloves, and salt.\n4. Mix together - Stir dry ingredients into wet mixture until combined.\n5. Fill muffin cups - Distribute batter into prepared muffin cups, filling about two-thirds full.\n6. Make streusel - Mix streusel ingredients (butter, flour, brown sugar, salt, pecans) until texture resembles wet sand. Divide evenly among the 12 muffins.\n7. Bake - Bake 15-17 minutes until a knife inserted in center comes out mostly clean. Cool slightly.\n8. Make glaze - Combine all glaze ingredients (powdered sugar, milk, vanilla, salt) in a small bowl. Drizzle over cooled muffins and serve.\n\n[Original Recipe](https://bromabakery.com/pumpkin-streusel-muffins/)"
+  },
+  {
+    "name": "Blueberry Streusel Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "buttermilk", "category": "dairy", "defaultStore": "trader-joes" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "fresh blueberries", "category": "produce", "defaultStore": "costco" }
+    ],
+    "instructions": "## Blueberry Streusel Muffins\n\n1. Preheat oven to 425°F - Prepare 10 standard muffin tins with liners.\n2. Make streusel - Combine streusel ingredients (butter, sugar, flour) using a fork until texture resembles wet sand.\n3. Combine wet ingredients - Mix melted butter and sugar. Add eggs one at a time, then yogurt, buttermilk, and vanilla.\n4. Add dry ingredients - Fold in flour, baking powder, and salt until barely combined. Toss blueberries with 2 tablespoons flour, then fold into batter.\n5. Fill muffin cups - Fill muffin cups 3/4 full using a large scoop.\n6. Add streusel - Top each with approximately 2 tablespoons streusel, pressing gently.\n7. Bake - Bake at 425°F for 5 minutes, then reduce to 375°F for 15 additional minutes until golden and springy.\n8. Cool - Cool at least 15 minutes before serving.\n\n[Original Recipe](https://bromabakery.com/blueberry-streusel-muffins/)"
+  },
+  {
+    "name": "Coffee Cake Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "sour cream", "category": "dairy", "defaultStore": "costco" },
+      { "name": "buttermilk", "category": "dairy", "defaultStore": "trader-joes" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "whole milk", "category": "dairy", "defaultStore": "costco" }
+    ],
+    "instructions": "## Coffee Cake Muffins\n\n1. Preheat oven to 425°F - Grease and line 10 muffin tins with cupcake liners.\n2. Combine wet ingredients - Combine melted butter and granulated sugar. Add eggs one at a time, then incorporate sour cream, buttermilk, and vanilla extract.\n3. Add dry ingredients - Add flour, baking powder, and salt; mix until partially combined.\n4. Make cinnamon swirl - In a separate bowl, combine cinnamon sugar swirl ingredients (brown sugar, cinnamon, salt).\n5. Make crumb topping - In another bowl, mix dry crumb topping ingredients (brown sugar, flour, cinnamon), then add melted butter until clumpy.\n6. Layer batter - Fill muffin cups halfway with batter. Add a spoonful of cinnamon mixture, then top with remaining batter (about 3/4 full).\n7. Add crumb topping - Crown each muffin with crumb topping, pressing gently.\n8. Bake - Bake 5 minutes at 425°F, then reduce to 375°F and bake 15 additional minutes until golden.\n9. Make glaze - Cool 15 minutes. Mix glaze ingredients (powdered sugar, vanilla, salt, milk) and drizzle over cooled muffins.\n\n[Original Recipe](https://bromabakery.com/coffee-cake-muffins/)"
+  },
+  {
+    "name": "Chocolate Chunk Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Chocolate Chunk Muffins\n\n1. Preheat oven to 425°F - Line 9 muffin tins with muffin cups.\n2. Cream butter and sugar - Using a standing mixer with paddle attachment, cream butter and sugar on high until light and fluffy, about 3 minutes. Beat in egg for one minute, then add Greek yogurt and vanilla until combined.\n3. Mix dry ingredients - In a small bowl, mix flour, baking powder, baking soda, and salt.\n4. Combine - Incorporate dry ingredients into wet ingredients until partially combined (not fully incorporated). Fold chocolate chunks into batter until combined. Batter will be thick.\n5. Fill tins - Scoop batter into muffin tins, filling just below the liner tops. Sprinkle granulated sugar on top.\n6. Bake - Bake at 425°F for 5 minutes, then reduce oven to 375°F and bake an additional 15 minutes until golden brown and muffins spring back when touched.\n7. Cool - Cool for at least 5 minutes before serving.\n\n[Original Recipe](https://bromabakery.com/chocolate-chunk-muffins-recipe/)"
+  },
+  {
+    "name": "Blueberry Banana Cornbread Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "bananas", "category": "produce", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "coconut oil", "category": "pantry", "defaultStore": "trader-joes" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "cornstarch", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "fresh blueberries", "category": "produce", "defaultStore": "costco" }
+    ],
+    "instructions": "## Blueberry Banana Cornbread Muffins\n\n1. Preheat oven to 425°F - Line a muffin tin with 12 cupcake liners.\n2. Mash bananas - Mash ripe bananas in a large bowl. Add eggs and coconut oil; mix well.\n3. Add remaining wet ingredients - Incorporate Greek yogurt, sugar, and vanilla extract, whisking to combine.\n4. Mix dry ingredients - In a separate bowl, mix baking soda, corn flour, gluten-free flour, and salt. Fold dry ingredients into wet mixture until combined.\n5. Add blueberries - Fold in blueberries.\n6. Fill cups - Divide batter evenly among 12 cups using a large cookie scoop or 1/4-cup measure.\n7. Bake - Bake at 425°F for 5 minutes. Reduce heat to 375°F and bake 10-12 additional minutes until muffins spring back when touched.\n8. Cool - Cool before serving.\n\n[Original Recipe](https://bromabakery.com/blueberry-banana-cornbread-muffins/)"
+  },
+  {
+    "name": "Lemon Blueberry Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "lemon zest", "category": "produce", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "lemon juice", "category": "produce", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "fresh blueberries", "category": "produce", "defaultStore": "costco" }
+    ],
+    "instructions": "## Lemon Blueberry Muffins\n\n1. Preheat oven to 425°F - Grease 10 muffin tins and line with cupcake liners.\n2. Combine sugar and lemon zest - Combine sugar and lemon zest in a large bowl. Rub together with your fingers until fragrant. Add melted butter and beat until combined.\n3. Add wet ingredients - Add eggs one at a time, then blend in Greek yogurt, milk, lemon juice, vanilla extract, and lemon extract. Mix thoroughly.\n4. Add dry ingredients - Fold in flour, baking powder, and salt until mostly combined—avoid overmixing. Gently fold in blueberries.\n5. Fill tins - Distribute batter among prepared tins (about 3/4 full). Sprinkle with turbinado sugar if desired.\n6. Bake - Bake at 425°F for 5 minutes, then reduce to 375°F and bake 15 minutes more until golden and springy.\n7. Cool - Cool at least 15 minutes before serving.\n\n[Original Recipe](https://bromabakery.com/lemon-blueberry-muffins/)"
+  },
+  {
+    "name": "Bakery Style Blueberry Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "fresh blueberries", "category": "produce", "defaultStore": "costco" }
+    ],
+    "instructions": "## Bakery Style Blueberry Muffins\n\n1. Preheat oven to 425°F - Grease 8 large muffin tins and set aside.\n2. Cream butter and sugar - Using a standing mixer with paddle attachment, cream butter and sugar on high for about 3 minutes until light and fluffy. Beat in egg for one minute, then incorporate Greek yogurt and vanilla extract until combined.\n3. Mix dry ingredients - In a small bowl, mix flour, baking powder, baking soda, and salt. Reserve 2 tablespoons of dry mixture.\n4. Combine - Add remaining flour blend to wet ingredients, mixing gently until partially combined. Toss blueberries with reserved flour, then fold into batter until just combined (batter will be thick).\n5. Fill tins - Fill prepared muffin tins to the top. Sprinkle with turbinado sugar if desired.\n6. Bake - Bake 5 minutes at 425°F, reduce heat to 375°F, and bake 15 additional minutes until golden brown and springy.\n7. Cool - Cool at least 15 minutes before serving.\n\n[Original Recipe](https://bromabakery.com/bakery-style-blueberry-muffins/)"
+  },
+  {
+    "name": "Healthy Blueberry Bran Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "wheat bran", "category": "pantry", "defaultStore": "trader-joes" },
+      { "name": "raisins", "category": "pantry", "defaultStore": "costco" },
+      { "name": "whole wheat flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "buttermilk", "category": "dairy", "defaultStore": "trader-joes" },
+      { "name": "orange zest", "category": "produce", "defaultStore": "costco" },
+      { "name": "maple syrup", "category": "pantry", "defaultStore": "costco" },
+      { "name": "coconut oil", "category": "pantry", "defaultStore": "trader-joes" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "fresh blueberries", "category": "produce", "defaultStore": "costco" }
+    ],
+    "instructions": "## Healthy Blueberry Bran Muffins\n\n1. Preheat oven to 350°F - Line a 12-cup muffin tin with paper liners.\n2. Toast wheat bran - Toast wheat bran on a baking sheet for 6-8 minutes, stirring occasionally; let cool.\n3. Prepare raisins - Heat raisins with water, simmer 10 minutes until water absorbs, then puree until smooth.\n4. Mix dry ingredients - Mix toasted bran, flour, baking powder, baking soda, and salt in a large bowl.\n5. Combine wet ingredients - Separately combine raisin puree, buttermilk, orange zest, maple syrup, coconut oil, and eggs.\n6. Combine wet and dry - Combine wet and dry ingredients until just combined, fold in blueberries.\n7. Fill tins - Spoon 1/4 cup batter into each muffin tin, rounding the tops slightly.\n8. Bake - Bake 25-30 minutes until muffins feel set in center.\n\n[Original Recipe](https://bromabakery.com/blueberry-bran-breakfast-muffins/)"
+  },
+  {
+    "name": "Apple Crisp Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "apples", "category": "produce", "defaultStore": "costco" },
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vegetable oil", "category": "pantry", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "old fashioned oats", "category": "pantry", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "nutmeg", "category": "baking", "defaultStore": "costco" },
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" }
+    ],
+    "instructions": "## Apple Crisp Muffins\n\n1. Preheat oven to 350°F - Line 12 muffin cups with liners.\n2. Prepare apple - Peel and grate one medium apple using a large-holed grater.\n3. Mix muffin batter - Combine brown sugar, eggs, oil, and vanilla in a bowl. Fold in flour, baking powder, baking soda, and salt, then fold in grated apples.\n4. Make crisp topping - Mix crumble ingredients (brown sugar, flour, oatmeal, cinnamon, nutmeg, butter) separately. Use a pastry cutter to work butter through until the mixture resembles coarse sand.\n5. Assemble - Distribute batter evenly among 12 muffin cups and top with crumble mixture.\n6. Bake - Bake for 20-25 minutes, then cool slightly before serving.\n\n[Original Recipe](https://bromabakery.com/apple-crisp-muffins/)"
+  },
+  {
+    "name": "Apple Crumble Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "nutmeg", "category": "baking", "defaultStore": "costco" },
+      { "name": "ginger", "category": "baking", "defaultStore": "costco" },
+      { "name": "apples", "category": "produce", "defaultStore": "costco" },
+      { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Apple Crumble Muffins\n\n1. Preheat oven to 425°F - Prepare 12 muffin cups with liners.\n2. Make streusel - Combine streusel ingredients (butter, sugars, flour) using a fork or pastry cutter until the mixture resembles wet sand.\n3. Mix wet ingredients - Mix melted butter and sugars together. Add eggs one at a time, then Greek yogurt, milk, and vanilla.\n4. Add dry ingredients - Add flour, baking powder, spices, and salt; mix until partially combined. Fold in apple pieces.\n5. Fill muffin cups - Fill muffin cups three-quarters full using a large cookie scoop or 1/4 cup measure.\n6. Add streusel - Top each muffin with approximately 1 tablespoon streusel, pressing gently into batter.\n7. Bake - Bake at 425°F for 5 minutes, then reduce to 375°F and bake 15 additional minutes until golden.\n8. Make glaze - While baking, combine glaze ingredients (powdered sugar, milk, vanilla, salt) if desired.\n9. Cool and glaze - Cool completely before drizzling with icing.\n\n[Original Recipe](https://bromabakery.com/apple-crumble-muffins/)"
+  },
+  {
+    "name": "Apple Carrot Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "buttermilk", "category": "dairy", "defaultStore": "trader-joes" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "apples", "category": "produce", "defaultStore": "costco" },
+      { "name": "shredded coconut", "category": "pantry", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Apple Carrot Muffins\n\n1. Preheat oven to 425°F - Line a muffin tin with 10 cups and spray with oil-based spray.\n2. Combine wet ingredients - Combine brown sugar, eggs, melted butter, buttermilk, and vanilla in a large bowl.\n3. Add mix-ins - Stir in apples, carrots, and coconut until blended.\n4. Mix dry ingredients - In a separate bowl, mix flour, baking powder, and salt.\n5. Combine - Fold dry ingredients into wet mixture until just combined—lumps are acceptable.\n6. Make streusel - Combine flour, sugar, cinnamon, and salt; cut in butter with a fork until resembling wet sand.\n7. Fill and top - Fill muffin cups nearly to the top; sprinkle with streusel.\n8. Bake - Bake 5 minutes at 425°F, then reduce to 350°F and bake 15 additional minutes (don't open oven door).\n9. Cool - Cool 10 minutes in tin, then transfer to wire rack to cool completely.\n\n[Original Recipe](https://bromabakery.com/apple-carrot-muffins/)"
+  },
+  {
+    "name": "Pumpkin Chocolate Chip Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "pumpkin puree", "category": "pantry", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "vegetable oil", "category": "pantry", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "nutmeg", "category": "baking", "defaultStore": "costco" },
+      { "name": "ginger", "category": "baking", "defaultStore": "costco" },
+      { "name": "cloves", "category": "baking", "defaultStore": "trader-joes" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Pumpkin Chocolate Chip Muffins\n\n1. Preheat oven to 425°F - Line 12 muffin cups with liners and spray with cooking spray.\n2. Mix wet ingredients - Combine pumpkin puree, sugar, oil, eggs, and vanilla in a large bowl.\n3. Mix dry ingredients - In a separate bowl, mix flour, baking powder, baking soda, cinnamon, nutmeg, ginger, cloves, and salt.\n4. Combine - Fold dry ingredients into wet mixture until combined. Fold in chocolate chips.\n5. Fill cups - Fill muffin cups just over two-thirds full. Sprinkle with finishing sugar if desired.\n6. Bake - Bake at 425°F for 5 minutes, then reduce to 375°F and bake 15 additional minutes.\n7. Cool - Cool slightly before serving.\n\n[Original Recipe](https://bromabakery.com/pumpkin-chocolate-chip-muffins/)"
+  },
+  {
+    "name": "Homemade Raisin Bran Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "wheat bran", "category": "pantry", "defaultStore": "trader-joes" },
+      { "name": "raisins", "category": "pantry", "defaultStore": "costco" },
+      { "name": "buttermilk", "category": "dairy", "defaultStore": "trader-joes" },
+      { "name": "orange zest", "category": "produce", "defaultStore": "costco" },
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "vegetable oil", "category": "pantry", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Homemade Raisin Bran Muffins\n\n1. Preheat oven to 350°F - Line a 12-cup muffin tin with paper liners.\n2. Toast wheat bran - Toast wheat bran on a baking sheet for 6-8 minutes, stirring occasionally. Cool completely.\n3. Prepare raisins - Heat 1 cup raisins with 1/2 cup water, simmer 10 minutes until absorbed. Puree until smooth.\n4. Combine wet ingredients - Combine toasted bran, buttermilk/yogurt, 1 cup water, raisin puree, orange zest, and brown sugar in a large bowl. Stir in oil and eggs.\n5. Add dry ingredients - Mix flour, baking powder, baking soda, and salt. Sift into wet ingredients and stir until just combined. Fold in remaining 1/2 cup raisins.\n6. Fill tins - Spoon batter into muffin tins, mounding slightly.\n7. Bake - Bake 25-30 minutes until centers feel set.\n\n[Original Recipe](https://bromabakery.com/not-your-grandmas-bran-muffins/)"
+  },
+  {
+    "name": "Morning Glory Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "vegetable oil", "category": "pantry", "defaultStore": "costco" },
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "apples", "category": "produce", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "orange juice", "category": "produce", "defaultStore": "costco" },
+      { "name": "whole wheat flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "old fashioned oats", "category": "pantry", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "ginger", "category": "baking", "defaultStore": "costco" },
+      { "name": "nutmeg", "category": "baking", "defaultStore": "costco" },
+      { "name": "raisins", "category": "pantry", "defaultStore": "costco" },
+      { "name": "shredded coconut", "category": "pantry", "defaultStore": "costco" }
+    ],
+    "instructions": "## Morning Glory Muffins\n\n1. Preheat oven to 425°F - Line 24 muffin cups with liners and grease the tin tops.\n2. Mix wet ingredients - Whisk together oil, brown sugar, and eggs. Fold in carrots, apples, vanilla, and orange juice.\n3. Add dry ingredients - Add flours, baking soda, baking powder, salt, and spices to wet ingredients. Mix gently without overmixing.\n4. Add mix-ins - Fold in raisins and coconut.\n5. Fill cups - Scoop 1/3 cup batter into each muffin cup.\n6. Bake - Bake at 425°F for 5 minutes, then reduce to 375°F for 12 additional minutes until springy and a knife inserted comes out mostly clean.\n7. Cool - Cool before serving.\n\n[Original Recipe](https://bromabakery.com/the-best-morning-glory-muffins/)"
+  },
+  {
+    "name": "Healthy Peanut Butter Banana Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "bananas", "category": "produce", "defaultStore": "costco" },
+      { "name": "peanut butter", "category": "pantry", "defaultStore": "costco" },
+      { "name": "honey", "category": "pantry", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "old fashioned oats", "category": "pantry", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Healthy Peanut Butter Banana Muffins\n\n1. Preheat oven to 425°F - Line a muffin tin with 12 cups and spray with oil-based spray. Set aside.\n2. Mix wet ingredients - In a large bowl, combine bananas, peanut butter, honey, eggs, and vanilla. Stir until well mixed.\n3. Add dry ingredients - Add oat flour, baking powder, and salt; fold to combine.\n4. Add chocolate chips - Add chocolate chips and avoid overmixing.\n5. Fill cups - Scoop batter into prepared cups, filling just below the rim.\n6. Bake - Bake at 425°F for 5 minutes, then—without opening the oven—reduce temperature to 350°F and bake 15 additional minutes.\n7. Cool - Remove from oven and cool for 10 minutes before transferring to a wire rack to cool completely.\n\n[Original Recipe](https://bromabakery.com/healthy-peanut-butter-banana-muffins/)"
+  },
+  {
+    "name": "Pumpkin Carrot Cake Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "pumpkin puree", "category": "pantry", "defaultStore": "costco" },
+      { "name": "shredded coconut", "category": "pantry", "defaultStore": "costco" },
+      { "name": "raisins", "category": "pantry", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "vegetable oil", "category": "pantry", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "nutmeg", "category": "baking", "defaultStore": "costco" },
+      { "name": "cloves", "category": "baking", "defaultStore": "trader-joes" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "maple syrup", "category": "pantry", "defaultStore": "costco" },
+      { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+      { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Pumpkin Carrot Cake Muffins\n\n1. Preheat oven to 425°F - Line 12 muffin cups with cupcake liners.\n2. Mix wet ingredients - Mix carrots, pumpkin, coconut, raisins, sugar, oil, eggs, and vanilla in a large bowl.\n3. Combine dry ingredients - Combine flour, baking powder, baking soda, cinnamon, nutmeg, cloves, and salt in a separate bowl.\n4. Combine - Fold dry ingredients into wet mixture until just combined.\n5. Fill cups - Divide batter evenly among 12 muffin tins using a 1/3 cup measure or large ice cream scoop.\n6. Bake - Bake at 425°F for 5 minutes, then reduce to 375°F and bake 15 minutes more until a knife inserted in the center comes out mostly clean.\n7. Make glaze - Cool muffins slightly. While cooling, whisk together all glaze ingredients (maple syrup, milk, powdered sugar, salt, vanilla) until smooth.\n8. Glaze - Drizzle glaze over warm muffins and serve.\n\n[Original Recipe](https://bromabakery.com/pumpkin-carrot-cake-muffins/)"
+  },
+  {
+    "name": "Carrot Cake Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "vegetable oil", "category": "pantry", "defaultStore": "costco" },
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "greek yogurt", "category": "dairy", "defaultStore": "costco" },
+      { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+      { "name": "shredded coconut", "category": "pantry", "defaultStore": "costco" },
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "baking powder", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "raisins", "category": "pantry", "defaultStore": "costco" },
+      { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "walnuts", "category": "pantry", "defaultStore": "costco" }
+    ],
+    "instructions": "## Carrot Cake Muffins\n\n1. Preheat oven to 425°F - Grease 12 muffin tins and line with cupcake liners.\n2. Combine wet ingredients - Combine oil, brown sugar, eggs, yogurt, milk, vanilla, carrots, and coconut in a large bowl; whisk until combined.\n3. Add dry ingredients - Add flour, baking powder, salt, and cinnamon to wet ingredients; whisk until just combined. Fold in raisins if using.\n4. Fill tins - Fill muffin tins about 3/4 full using a large cookie scoop or 1/4 cup measure.\n5. Bake - Bake 5 minutes at 425°F, then reduce to 375°F and bake 15 minutes more until golden brown.\n6. Prepare glaze - Prepare glaze by mixing powdered sugar, milk, vanilla, and salt until smooth.\n7. Cool and glaze - Cool muffins completely. Microwave glaze 30 seconds to thin, then spoon over each muffin. Top with walnuts if desired.\n\n[Original Recipe](https://bromabakery.com/carrot-cake-muffins/)"
+  },
+  {
+    "name": "Cinnamon Roll Muffins",
+    "category": "baking",
+    "subcategory": "Broma/Muffins",
+    "ingredients": [
+      { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+      { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "instant yeast", "category": "baking", "defaultStore": "costco" },
+      { "name": "salt", "category": "baking", "defaultStore": "costco" },
+      { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+      { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+      { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+      { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "cinnamon", "category": "baking", "defaultStore": "costco" },
+      { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+      { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" },
+      { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" }
+    ],
+    "instructions": "## Cinnamon Roll Muffins\n\n1. Mix dough - Combine 2 cups flour, yeast, salt, and sugar. Mix together.\n2. Add wet ingredients - Warm milk and butter in microwave for 30 seconds. Add egg, milk, and butter to flour mixture.\n3. Beat dough - Beat on low speed, gradually increasing to high for 2 minutes until combined.\n4. Knead - Add remaining flour gradually until dough pulls away from bowl. Knead 10 minutes until smooth and elastic.\n5. Rise - Transfer to oiled bowl, cover, and rise 1 hour until doubled.\n6. Make filling - Mix filling ingredients (butter, brown sugar, cinnamon, salt) separately.\n7. Roll and fill - Roll dough into 18x12 inch rectangle. Spread butter and sprinkle cinnamon mixture over it.\n8. Shape rolls - Roll tightly from long end and pinch edges closed.\n9. Cut and place - Cut into 12 pieces using floss or sharp knife. Place in buttered muffin tin.\n10. Second rise - Cover and rise 1 hour until doubled and puffy.\n11. Bake - Bake at 350°F for 20 minutes until golden brown.\n12. Prepare glaze - Prepare glaze by microwaving cream cheese 15-30 seconds, then mixing with powdered sugar, milk, salt, and vanilla.\n13. Glaze and serve - Spoon glaze over cooled rolls and serve warm.\n\n[Original Recipe](https://bromabakery.com/cinnamon-roll-muffins/)"
+  }
+]
