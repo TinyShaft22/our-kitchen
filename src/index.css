@@ -26,6 +26,85 @@
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Custom utility classes - Tailwind v4 requires explicit definitions */
+@layer utilities {
+  .rounded-soft {
+    border-radius: var(--radius-soft);
+  }
+
+  .rounded-softer {
+    border-radius: var(--radius-softer);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-lifted {
+    box-shadow: var(--shadow-lifted);
+  }
+
+  .bg-cream {
+    background-color: var(--color-cream);
+  }
+
+  .bg-terracotta {
+    background-color: var(--color-terracotta);
+  }
+
+  .bg-sage {
+    background-color: var(--color-sage);
+  }
+
+  .bg-honey {
+    background-color: var(--color-honey);
+  }
+
+  .bg-charcoal {
+    background-color: var(--color-charcoal);
+  }
+
+  .text-cream {
+    color: var(--color-cream);
+  }
+
+  .text-terracotta {
+    color: var(--color-terracotta);
+  }
+
+  .text-sage {
+    color: var(--color-sage);
+  }
+
+  .text-honey {
+    color: var(--color-honey);
+  }
+
+  .text-charcoal {
+    color: var(--color-charcoal);
+  }
+
+  .border-terracotta {
+    border-color: var(--color-terracotta);
+  }
+
+  .border-sage {
+    border-color: var(--color-sage);
+  }
+
+  .border-charcoal {
+    border-color: var(--color-charcoal);
+  }
+
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+
+  .transition-spring {
+    transition-timing-function: var(--ease-spring);
+  }
+}
+
 /* Base styles */
 body {
   @apply bg-cream text-charcoal font-sans;
