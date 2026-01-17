@@ -336,7 +336,7 @@ Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 | 16. Scraping Infrastructure | v1.3 | 2/2 | Complete | 2026-01-15 |
 | 17. Cookies Batch | v1.3 | 2/2 | Complete | 2026-01-16 |
 | 18. Bars Batch | v1.3 | 2/2 | Complete | 2026-01-16 |
-| 19. Muffins Batch | v1.3 | 0/2 | Not started | - |
+| 19. Muffins Batch | v1.3 | 1/2 | In progress | - |
 | 20. Brownies Batch | v1.3 | 0/2 | Not started | - |
 | 21. Import & Verification | v1.3 | 0/2 | Not started | - |
 | 22. Recipe Image Upload | v1.3 | 0/1 | Not started | - |
