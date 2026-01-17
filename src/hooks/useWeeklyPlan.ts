@@ -8,7 +8,7 @@ import {
   arrayRemove,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { WeeklyMeal, WeeklyMealEntry } from '../types';
+import type { WeeklyMeal, WeeklyMealEntry, WeeklySnackEntry } from '../types';
 
 interface UseWeeklyPlanReturn {
   currentWeek: WeeklyMeal | null;
@@ -19,6 +19,9 @@ interface UseWeeklyPlanReturn {
   removeMealFromWeek: (mealId: string) => Promise<void>;
   updateServings: (mealId: string, servings: number) => Promise<void>;
   toggleAlreadyHave: (ingredientName: string) => Promise<void>;
+  addSnackToWeek: (snackId: string, qty: number) => Promise<void>;
+  removeSnackFromWeek: (snackId: string) => Promise<void>;
+  updateSnackQty: (snackId: string, qty: number) => Promise<void>;
 }
 
 /**
@@ -244,6 +247,107 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
     [householdCode, weekId, currentWeek]
   );
 
+  const addSnackToWeek = useCallback(
+    async (snackId: string, qty: number): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const newEntry: WeeklySnackEntry = { snackId, qty };
+
+        if (!currentWeek) {
+          // Create the document with first snack
+          await setDoc(weekRef, {
+            weekId,
+            householdCode,
+            meals: [],
+            snacks: [newEntry],
+          });
+        } else {
+          const currentSnacks = currentWeek.snacks ?? [];
+          const existingIndex = currentSnacks.findIndex((s) => s.snackId === snackId);
+
+          if (existingIndex >= 0) {
+            // Snack exists - update qty (add to existing)
+            const updatedSnacks = [...currentSnacks];
+            updatedSnacks[existingIndex] = {
+              ...updatedSnacks[existingIndex],
+              qty: updatedSnacks[existingIndex].qty + qty,
+            };
+            await updateDoc(weekRef, { snacks: updatedSnacks });
+          } else {
+            // Add new snack
+            const updatedSnacks = [...currentSnacks, newEntry];
+            await updateDoc(weekRef, { snacks: updatedSnacks });
+          }
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to add snack to week';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
+  const removeSnackFromWeek = useCallback(
+    async (snackId: string): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      if (!currentWeek) {
+        throw new Error('No weekly plan exists');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const currentSnacks = currentWeek.snacks ?? [];
+        const updatedSnacks = currentSnacks.filter((s) => s.snackId !== snackId);
+        await updateDoc(weekRef, { snacks: updatedSnacks });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to remove snack from week';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
+  const updateSnackQty = useCallback(
+    async (snackId: string, qty: number): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      if (!currentWeek) {
+        throw new Error('No weekly plan exists');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const currentSnacks = currentWeek.snacks ?? [];
+        const updatedSnacks = currentSnacks.map((s) =>
+          s.snackId === snackId ? { ...s, qty } : s
+        );
+        await updateDoc(weekRef, { snacks: updatedSnacks });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to update snack quantity';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
   return {
     currentWeek,
     loading,
@@ -253,5 +357,8 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
     removeMealFromWeek,
     updateServings,
     toggleAlreadyHave,
+    addSnackToWeek,
+    removeSnackFromWeek,
+    updateSnackQty,
   };
 }

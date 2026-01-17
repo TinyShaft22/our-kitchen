@@ -44,5 +44,15 @@ service cloud.firestore {
       allow read, write: if resource.data.householdCode == request.resource.data.householdCode
                           || resource == null;
     }
+
+    match /snacks/{snackId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null;
+    }
+
+    match /scannedProducts/{productId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null;
+    }
   }
 }

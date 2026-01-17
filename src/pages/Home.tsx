@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { useHousehold } from '../hooks/useHousehold';
 import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
 import { useMeals } from '../hooks/useMeals';
+import { useSnacks } from '../hooks/useSnacks';
 import { WeeklyMealCard } from '../components/planning/WeeklyMealCard';
+import { WeeklySnackCard } from '../components/planning/WeeklySnackCard';
 import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import { AddToWeekModal } from '../components/planning/AddToWeekModal';
+import { AddSnackToWeekModal } from '../components/planning/AddSnackToWeekModal';
 import { EditServingsModal } from '../components/planning/EditServingsModal';
+import { EditSnackQtyModal } from '../components/planning/EditSnackQtyModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
-import type { WeeklyMealEntry } from '../types';
+import type { WeeklyMealEntry, WeeklySnackEntry } from '../types';
 
 /**
  * Parse weekId (e.g., "2026-W02") into display format (e.g., "Week 02, 2026")
@@ -21,17 +25,38 @@ function formatWeekId(weekId: string): string {
 
 function Home() {
   const { householdCode } = useHousehold();
-  const { currentWeek, loading: weekLoading, weekId, addMealToWeek, removeMealFromWeek, updateServings, toggleAlreadyHave } = useWeeklyPlan(householdCode);
+  const {
+    currentWeek,
+    loading: weekLoading,
+    weekId,
+    addMealToWeek,
+    removeMealFromWeek,
+    updateServings,
+    toggleAlreadyHave,
+    addSnackToWeek,
+    removeSnackFromWeek,
+    updateSnackQty,
+  } = useWeeklyPlan(householdCode);
   const { meals, loading: mealsLoading } = useMeals(householdCode);
+  const { snacks, loading: snacksLoading } = useSnacks(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isAddSnackModalOpen, setIsAddSnackModalOpen] = useState(false);
 
   // Edit servings modal state
   const [editingEntry, setEditingEntry] = useState<WeeklyMealEntry | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  // Edit snack qty modal state
+  const [editingSnackEntry, setEditingSnackEntry] = useState<WeeklySnackEntry | null>(null);
+  const [isEditSnackModalOpen, setIsEditSnackModalOpen] = useState(false);
+
   // Remove confirmation dialog state
   const [removingEntry, setRemovingEntry] = useState<WeeklyMealEntry | null>(null);
   const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
+
+  // Remove snack confirmation dialog state
+  const [removingSnackEntry, setRemovingSnackEntry] = useState<WeeklySnackEntry | null>(null);
+  const [isRemoveSnackDialogOpen, setIsRemoveSnackDialogOpen] = useState(false);
 
   // Helper to get meal by ID
   const getMealById = (mealId: string) => {
@@ -42,6 +67,17 @@ function Home() {
   const getMealName = (mealId: string): string => {
     const meal = getMealById(mealId);
     return meal?.name ?? 'Unknown Meal';
+  };
+
+  // Helper to get snack by ID
+  const getSnackById = (snackId: string) => {
+    return snacks.find((s) => s.id === snackId) ?? null;
+  };
+
+  // Helper to get snack name by ID
+  const getSnackName = (snackId: string): string => {
+    const snack = getSnackById(snackId);
+    return snack?.name ?? 'Unknown Snack';
   };
 
   // Get alreadyHave list from current week
@@ -96,7 +132,54 @@ function Home() {
     }
   };
 
-  const isLoading = weekLoading || mealsLoading;
+  // Snack modal handlers
+  const handleAddSnackClick = () => {
+    setIsAddSnackModalOpen(true);
+  };
+
+  const handleCloseSnackModal = () => {
+    setIsAddSnackModalOpen(false);
+  };
+
+  const handleAddSnackToWeek = async (snackId: string, qty: number) => {
+    await addSnackToWeek(snackId, qty);
+  };
+
+  const handleEditSnackQty = (entry: WeeklySnackEntry) => {
+    setEditingSnackEntry(entry);
+    setIsEditSnackModalOpen(true);
+  };
+
+  const handleCloseEditSnackModal = () => {
+    setIsEditSnackModalOpen(false);
+    setEditingSnackEntry(null);
+  };
+
+  const handleSaveSnackQty = async (qty: number) => {
+    if (!editingSnackEntry) {
+      throw new Error('No snack selected for editing');
+    }
+    await updateSnackQty(editingSnackEntry.snackId, qty);
+  };
+
+  const handleRemoveSnack = (entry: WeeklySnackEntry) => {
+    setRemovingSnackEntry(entry);
+    setIsRemoveSnackDialogOpen(true);
+  };
+
+  const handleCloseRemoveSnackDialog = () => {
+    setIsRemoveSnackDialogOpen(false);
+    setRemovingSnackEntry(null);
+  };
+
+  const handleConfirmRemoveSnack = async () => {
+    if (removingSnackEntry) {
+      await removeSnackFromWeek(removingSnackEntry.snackId);
+      handleCloseRemoveSnackDialog();
+    }
+  };
+
+  const isLoading = weekLoading || mealsLoading || snacksLoading;
 
   if (isLoading) {
     return (
@@ -114,6 +197,8 @@ function Home() {
   }
 
   const weeklyMeals = currentWeek?.meals ?? [];
+  const weeklySnacks = currentWeek?.snacks ?? [];
+  const hasContent = weeklyMeals.length > 0 || weeklySnacks.length > 0;
 
   return (
     <div className="pb-32">
@@ -123,34 +208,80 @@ function Home() {
           {formatWeekId(weekId)}
         </h1>
         <p className="text-charcoal/60 text-sm mt-1">
-          {weeklyMeals.length} meal{weeklyMeals.length !== 1 ? 's' : ''} planned
+          {weeklyMeals.length} meal{weeklyMeals.length !== 1 ? 's' : ''} • {weeklySnacks.length} snack{weeklySnacks.length !== 1 ? 's' : ''}
         </p>
       </div>
 
       <div className="px-4">
-        {weeklyMeals.length === 0 ? (
+        {!hasContent ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <p className="text-warm-gray text-lg font-display">No meals planned this week.</p>
-            <p className="text-warm-gray mt-1">Tap + to add some!</p>
+            <p className="text-warm-gray text-lg font-display">Nothing planned this week.</p>
+            <p className="text-warm-gray mt-1">Tap + to add meals or snacks!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4">
-            {weeklyMeals.map((entry, index) => (
-              <div
-                key={entry.mealId}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <WeeklyMealCard
-                  entry={entry}
-                  meal={getMealById(entry.mealId)}
-                  alreadyHave={alreadyHave}
-                  onEditServings={handleEditServings}
-                  onRemove={handleRemove}
-                  onToggleAlreadyHave={toggleAlreadyHave}
-                />
+          <div className="space-y-6">
+            {/* Meals Section */}
+            {weeklyMeals.length > 0 && (
+              <div>
+                <h2 className="text-sm font-medium text-charcoal/60 mb-3 flex items-center gap-2">
+                  <span>🍽️</span> Meals ({weeklyMeals.length})
+                </h2>
+                <div className="grid grid-cols-1 gap-4">
+                  {weeklyMeals.map((entry, index) => (
+                    <div
+                      key={entry.mealId}
+                      className="animate-fade-in-up"
+                      style={{ animationDelay: `${index * 50}ms` }}
+                    >
+                      <WeeklyMealCard
+                        entry={entry}
+                        meal={getMealById(entry.mealId)}
+                        alreadyHave={alreadyHave}
+                        onEditServings={handleEditServings}
+                        onRemove={handleRemove}
+                        onToggleAlreadyHave={toggleAlreadyHave}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            )}
+
+            {/* Snacks Section */}
+            {weeklySnacks.length > 0 && (
+              <div>
+                <h2 className="text-sm font-medium text-charcoal/60 mb-3 flex items-center gap-2">
+                  <span>🍿</span> Snacks ({weeklySnacks.length})
+                </h2>
+                <div className="grid grid-cols-1 gap-3">
+                  {weeklySnacks.map((entry, index) => (
+                    <div
+                      key={entry.snackId}
+                      className="animate-fade-in-up"
+                      style={{ animationDelay: `${(weeklyMeals.length + index) * 50}ms` }}
+                    >
+                      <WeeklySnackCard
+                        entry={entry}
+                        snack={getSnackById(entry.snackId)}
+                        onEditQty={handleEditSnackQty}
+                        onRemove={handleRemoveSnack}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Quick Add Snack Button */}
+            {snacks.length > 0 && (
+              <button
+                onClick={handleAddSnackClick}
+                className="w-full py-3 border-2 border-dashed border-sage/40 rounded-soft text-sage hover:border-sage hover:bg-sage/5 transition-colors flex items-center justify-center gap-2"
+              >
+                <span>🍿</span>
+                <span>Add Snack to Week</span>
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -167,6 +298,13 @@ function Home() {
         onAdd={handleAddMealToWeek}
       />
 
+      <AddSnackToWeekModal
+        isOpen={isAddSnackModalOpen}
+        onClose={handleCloseSnackModal}
+        snacks={snacks}
+        onAdd={handleAddSnackToWeek}
+      />
+
       {/* Edit Servings Modal */}
       <EditServingsModal
         isOpen={isEditModalOpen}
@@ -176,13 +314,33 @@ function Home() {
         onSave={handleSaveServings}
       />
 
-      {/* Remove Confirmation Dialog */}
+      {/* Edit Snack Qty Modal */}
+      <EditSnackQtyModal
+        isOpen={isEditSnackModalOpen}
+        onClose={handleCloseEditSnackModal}
+        snackName={editingSnackEntry ? getSnackName(editingSnackEntry.snackId) : ''}
+        currentQty={editingSnackEntry?.qty ?? 1}
+        onSave={handleSaveSnackQty}
+      />
+
+      {/* Remove Meal Confirmation Dialog */}
       <ConfirmDialog
         isOpen={isRemoveDialogOpen}
         onClose={handleCloseRemoveDialog}
         onConfirm={handleConfirmRemove}
         title="Remove from Week"
         message={`Remove ${removingEntry ? getMealName(removingEntry.mealId) : ''} from this week's plan?`}
+        confirmText="Remove"
+        confirmVariant="danger"
+      />
+
+      {/* Remove Snack Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={isRemoveSnackDialogOpen}
+        onClose={handleCloseRemoveSnackDialog}
+        onConfirm={handleConfirmRemoveSnack}
+        title="Remove Snack"
+        message={`Remove ${removingSnackEntry ? getSnackName(removingSnackEntry.snackId) : ''} from this week's plan?`}
         confirmText="Remove"
         confirmVariant="danger"
       />

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useHousehold } from '../hooks/useHousehold';
 import { useMeals } from '../hooks/useMeals';
 import { useFolders } from '../hooks/useFolders';
+import { useSnacks } from '../hooks/useSnacks';
 import { MealCard } from '../components/meals/MealCard';
 import { MealGridCard } from '../components/meals/MealGridCard';
 import { MealDetailModal } from '../components/meals/MealDetailModal';
@@ -10,8 +11,13 @@ import { AddMealModal } from '../components/meals/AddMealModal';
 import { EditMealModal } from '../components/meals/EditMealModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { FolderManagerModal } from '../components/meals/FolderManagerModal';
+import { SnackGridCard } from '../components/snacks/SnackGridCard';
+import { SnackCard } from '../components/snacks/SnackCard';
+import { AddSnackModal } from '../components/snacks/AddSnackModal';
+import { SnackDetailModal } from '../components/snacks/SnackDetailModal';
+import { BarcodeScannerModal } from '../components/scanner/BarcodeScannerModal';
 import { buildFolderTree, getAllFolderPaths, type FolderTreeNode } from '../utils/subcategoryUtils';
-import type { Meal } from '../types';
+import type { Meal, Snack } from '../types';
 
 type ViewMode = 'list' | 'grid';
 
@@ -230,6 +236,7 @@ function MealLibrary() {
   const { householdCode } = useHousehold();
   const { meals, loading, addMeal, updateMeal, deleteMeal } = useMeals(householdCode);
   const { folders, addFolder, deleteFolder } = useFolders(householdCode);
+  const { snacks, loading: snacksLoading, addSnack, updateSnack, deleteSnack } = useSnacks(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -237,6 +244,7 @@ function MealLibrary() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [mainDishesExpanded, setMainDishesExpanded] = useState(true);
   const [bakingExpanded, setBakingExpanded] = useState(true);
+  const [snacksExpanded, setSnacksExpanded] = useState(true);
   const [expandedSubcategories, setExpandedSubcategories] = useState<Set<string>>(new Set());
   const [expandedBakingPaths, setExpandedBakingPaths] = useState<Set<string>>(new Set());
   const [isFolderManagerOpen, setIsFolderManagerOpen] = useState(false);
@@ -246,6 +254,20 @@ function MealLibrary() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  // Snack modal state
+  const [isAddSnackModalOpen, setIsAddSnackModalOpen] = useState(false);
+  const [selectedSnack, setSelectedSnack] = useState<Snack | null>(null);
+  const [isSnackDetailModalOpen, setIsSnackDetailModalOpen] = useState(false);
+  const [deletingSnack, setDeletingSnack] = useState<Snack | null>(null);
+  const [isDeleteSnackDialogOpen, setIsDeleteSnackDialogOpen] = useState(false);
+  const [isScannerModalOpen, setIsScannerModalOpen] = useState(false);
+  const [scannedProductData, setScannedProductData] = useState<{
+    name?: string;
+    brand?: string;
+    barcode?: string;
+    imageUrl?: string;
+  } | null>(null);
 
   // Split meals into main dishes and baking recipes, grouped by subcategory
   const { mainDishes, bakingRecipes, mainBySubcategory, existingSubcategories } = useMemo(() => {
@@ -420,7 +442,60 @@ function MealLibrary() {
     await addMeal(mealData);
   };
 
-  if (loading) {
+  // Snack handlers
+  const handleSnackSelect = (snack: Snack) => {
+    setSelectedSnack(snack);
+    setIsSnackDetailModalOpen(true);
+  };
+
+  const handleCloseSnackDetailModal = () => {
+    setIsSnackDetailModalOpen(false);
+    setSelectedSnack(null);
+  };
+
+  const handleEditSnack = (snack: Snack) => {
+    setSelectedSnack(snack);
+    setIsSnackDetailModalOpen(true);
+  };
+
+  const handleDeleteSnack = (snack: Snack) => {
+    setDeletingSnack(snack);
+    setIsDeleteSnackDialogOpen(true);
+  };
+
+  const handleConfirmDeleteSnack = async () => {
+    if (deletingSnack) {
+      await deleteSnack(deletingSnack.id);
+      setIsDeleteSnackDialogOpen(false);
+      setDeletingSnack(null);
+    }
+  };
+
+  const handleSaveSnackChanges = async (id: string, updates: Partial<Omit<Snack, 'id' | 'householdCode'>>) => {
+    await updateSnack(id, updates);
+  };
+
+  const handleOpenScanner = () => {
+    setIsScannerModalOpen(true);
+  };
+
+  const handleProductScanned = (product: {
+    name: string;
+    brand?: string;
+    barcode: string;
+    imageUrl?: string;
+  }) => {
+    setScannedProductData(product);
+    setIsScannerModalOpen(false);
+    setIsAddSnackModalOpen(true);
+  };
+
+  const handleAddSnackClick = () => {
+    setScannedProductData(null);
+    setIsAddSnackModalOpen(true);
+  };
+
+  if (loading || snacksLoading) {
     return (
       <div className="p-4">
         <div className="hero-gradient -mx-4 -mt-4 px-4 pt-6 pb-4 mb-4">
@@ -443,7 +518,7 @@ function MealLibrary() {
           <div>
             <h1 className="text-2xl font-display font-semibold text-charcoal">Meal Library</h1>
             <p className="text-charcoal/60 text-sm mt-1">
-              {meals.length} recipe{meals.length !== 1 ? 's' : ''}
+              {meals.length} recipe{meals.length !== 1 ? 's' : ''} • {snacks.length} snack{snacks.length !== 1 ? 's' : ''}
             </p>
           </div>
 
@@ -488,9 +563,9 @@ function MealLibrary() {
             <p className="text-warm-gray mt-1">Tap + to add one!</p>
           </div>
         ) : viewMode === 'grid' ? (
-          /* GRID VIEW - Visual, image-focused */
+          /* GRID VIEW - Visual, image-focused with folder organization */
           <div className="space-y-6">
-            {/* Main Dishes Grid */}
+            {/* Main Dishes Grid - organized by subcategory */}
             {mainDishes.length > 0 && (
               <div>
                 <h2 className="font-display font-semibold text-charcoal mb-3 flex items-center gap-2">
@@ -498,17 +573,54 @@ function MealLibrary() {
                   Main Dishes
                   <span className="text-sm font-normal text-charcoal/50">({mainDishes.length})</span>
                 </h2>
-                <div className="grid grid-cols-2 gap-3">
-                  {mainDishes
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((meal) => (
-                      <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
-                    ))}
-                </div>
+                {hasMainSubcategories ? (
+                  // Show organized by subcategory folders
+                  <div className="space-y-4">
+                    {getSortedSubcategoryKeys(mainBySubcategory).map((subcatKey) => {
+                      const subcatMeals = mainBySubcategory[subcatKey];
+                      const displayName = subcatKey || 'Uncategorized';
+                      const expandKey = `grid-main-${subcatKey}`;
+                      const isExpanded = expandedSubcategories.has(expandKey);
+                      return (
+                        <div key={subcatKey} className="bg-white/60 rounded-soft p-3">
+                          <button
+                            onClick={() => toggleSubcategory(expandKey)}
+                            className="w-full flex items-center justify-between mb-2 text-left"
+                          >
+                            <span className="font-medium text-charcoal flex items-center gap-2">
+                              <span className="text-terracotta">{isExpanded ? '📂' : '📁'}</span>
+                              {displayName}
+                              <span className="text-xs text-charcoal/50">({subcatMeals.length})</span>
+                            </span>
+                            <span className={`text-terracotta transition-transform ${isExpanded ? 'rotate-0' : '-rotate-90'}`}>▼</span>
+                          </button>
+                          {isExpanded && (
+                            <div className="grid grid-cols-6 gap-1.5">
+                              {subcatMeals
+                                .sort((a, b) => a.name.localeCompare(b.name))
+                                .map((meal) => (
+                                  <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
+                                ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  // No subcategories, show flat grid
+                  <div className="grid grid-cols-6 gap-1.5">
+                    {mainDishes
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((meal) => (
+                        <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
+                      ))}
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Baking Recipes Grid */}
+            {/* Baking Recipes Grid - organized by folder tree */}
             {bakingRecipes.length > 0 && (
               <div>
                 <h2 className="font-display font-semibold text-charcoal mb-3 flex items-center gap-2">
@@ -516,15 +628,145 @@ function MealLibrary() {
                   Baking & Desserts
                   <span className="text-sm font-normal text-charcoal/50">({bakingRecipes.length})</span>
                 </h2>
-                <div className="grid grid-cols-2 gap-3">
-                  {bakingRecipes
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((meal) => (
-                      <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
-                    ))}
-                </div>
+                {bakingFolderTree.children.size > 0 ? (
+                  // Show organized by folder tree
+                  <div className="space-y-4">
+                    {Array.from(bakingFolderTree.children.entries())
+                      .sort(([a], [b]) => a.localeCompare(b))
+                      .map(([folderName, node]) => {
+                        const expandKey = `grid-baking-${folderName}`;
+                        const isExpanded = expandedSubcategories.has(expandKey);
+                        const totalMeals = node.meals.length +
+                          Array.from(node.children.values()).reduce((sum, child) => sum + child.meals.length, 0);
+                        return (
+                          <div key={folderName} className="bg-white/60 rounded-soft p-3">
+                            <button
+                              onClick={() => toggleSubcategory(expandKey)}
+                              className="w-full flex items-center justify-between mb-2 text-left"
+                            >
+                              <span className="font-medium text-charcoal flex items-center gap-2">
+                                <span className="text-honey">{isExpanded ? '📂' : '📁'}</span>
+                                {folderName}
+                                <span className="text-xs text-charcoal/50">({totalMeals})</span>
+                              </span>
+                              <span className={`text-honey transition-transform ${isExpanded ? 'rotate-0' : '-rotate-90'}`}>▼</span>
+                            </button>
+                            {isExpanded && (
+                              <div className="space-y-3">
+                                {/* Meals directly in this folder */}
+                                {node.meals.length > 0 && (
+                                  <div className="grid grid-cols-6 gap-1.5">
+                                    {node.meals
+                                      .sort((a, b) => a.name.localeCompare(b.name))
+                                      .map((meal) => (
+                                        <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
+                                      ))}
+                                  </div>
+                                )}
+                                {/* Subfolders */}
+                                {Array.from(node.children.entries())
+                                  .sort(([a], [b]) => a.localeCompare(b))
+                                  .map(([subName, subNode]) => {
+                                    const subExpandKey = `grid-baking-${folderName}-${subName}`;
+                                    const subIsExpanded = expandedSubcategories.has(subExpandKey);
+                                    return (
+                                      <div key={subName} className="bg-cream/50 rounded-soft p-2 ml-2">
+                                        <button
+                                          onClick={() => toggleSubcategory(subExpandKey)}
+                                          className="w-full flex items-center justify-between mb-2 text-left"
+                                        >
+                                          <span className="text-sm font-medium text-charcoal flex items-center gap-2">
+                                            <span className="text-sage">{subIsExpanded ? '📂' : '📁'}</span>
+                                            {subName}
+                                            <span className="text-xs text-charcoal/50">({subNode.meals.length})</span>
+                                          </span>
+                                          <span className={`text-sage text-sm transition-transform ${subIsExpanded ? 'rotate-0' : '-rotate-90'}`}>▼</span>
+                                        </button>
+                                        {subIsExpanded && (
+                                          <div className="grid grid-cols-6 gap-1.5">
+                                            {subNode.meals
+                                              .sort((a, b) => a.name.localeCompare(b.name))
+                                              .map((meal) => (
+                                                <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
+                                              ))}
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    {/* Root level baking meals (no folder) */}
+                    {bakingFolderTree.meals.length > 0 && (
+                      <div className="bg-white/60 rounded-soft p-3">
+                        <span className="font-medium text-charcoal flex items-center gap-2 mb-2">
+                          <span className="text-honey">📄</span>
+                          Uncategorized
+                          <span className="text-xs text-charcoal/50">({bakingFolderTree.meals.length})</span>
+                        </span>
+                        <div className="grid grid-cols-6 gap-1.5">
+                          {bakingFolderTree.meals
+                            .sort((a, b) => a.name.localeCompare(b.name))
+                            .map((meal) => (
+                              <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
+                            ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  // No folders, show flat grid
+                  <div className="grid grid-cols-6 gap-1.5">
+                    {bakingRecipes
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((meal) => (
+                        <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
+                      ))}
+                  </div>
+                )}
               </div>
             )}
+
+            {/* Snacks Section - Grid View */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="font-display font-semibold text-charcoal flex items-center gap-2">
+                  <span className="text-xl">🍿</span>
+                  Snacks
+                  <span className="text-sm font-normal text-charcoal/50">({snacks.length})</span>
+                </h2>
+                <button
+                  onClick={handleOpenScanner}
+                  className="flex items-center gap-1 px-3 py-1.5 text-sm bg-sage text-white hover:bg-sage/90 rounded-soft transition-colors"
+                >
+                  <span>📷</span>
+                  <span>Scan</span>
+                </button>
+              </div>
+              {snacks.length === 0 ? (
+                <div className="bg-white/60 rounded-soft p-6 text-center">
+                  <span className="text-4xl block mb-2 opacity-40">🍿</span>
+                  <p className="text-charcoal/60">No snacks yet.</p>
+                  <button
+                    onClick={handleAddSnackClick}
+                    className="mt-3 px-4 py-2 text-sm bg-terracotta text-white rounded-soft hover:bg-terracotta/90"
+                  >
+                    + Add Snack
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-6 gap-1.5">
+                  {snacks
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((snack) => (
+                      <SnackGridCard key={snack.id} snack={snack} onSelect={handleSnackSelect} />
+                    ))}
+                </div>
+              )}
+            </div>
           </div>
         ) : (
           /* LIST VIEW - Organized with folders */
@@ -664,6 +906,70 @@ function MealLibrary() {
               </div>
             </div>
           )}
+
+          {/* Snacks Section - List View */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 bg-white rounded-soft shadow-soft px-4 py-3 mb-3">
+              <button
+                onClick={() => setSnacksExpanded(!snacksExpanded)}
+                className="flex-1 flex items-center justify-between hover:bg-cream/50 -mx-2 px-2 py-1 rounded-soft transition-colors"
+                aria-expanded={snacksExpanded}
+              >
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg font-display font-semibold text-charcoal">Snacks</h2>
+                  <span className="text-sm text-charcoal/60 bg-cream px-2 py-0.5 rounded-full">
+                    {snacks.length}
+                  </span>
+                </div>
+                <span
+                  className={`text-terracotta text-xl transition-transform duration-200 transition-spring ${
+                    snacksExpanded ? 'rotate-0' : '-rotate-90'
+                  }`}
+                >
+                  ▼
+                </span>
+              </button>
+              <button
+                onClick={handleOpenScanner}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-sage text-white hover:bg-sage/90 rounded-soft transition-colors"
+              >
+                <span>📷</span>
+                <span className="hidden sm:inline">Scan</span>
+              </button>
+              <button
+                onClick={handleAddSnackClick}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-terracotta/20 hover:bg-terracotta/30 text-terracotta rounded-soft transition-colors"
+              >
+                <span>+</span>
+                <span className="hidden sm:inline">Add</span>
+              </button>
+            </div>
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                snacksExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
+              }`}
+            >
+              {snacks.length === 0 ? (
+                <div className="text-center py-8 text-charcoal/60 bg-white/60 rounded-soft">
+                  <span className="text-4xl block mb-2 opacity-40">🍿</span>
+                  <p>No snacks yet. Scan a barcode or add manually!</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4">
+                  {snacks
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((snack) => (
+                      <SnackCard
+                        key={snack.id}
+                        snack={snack}
+                        onEdit={handleEditSnack}
+                        onDelete={handleDeleteSnack}
+                      />
+                    ))}
+                </div>
+              )}
+            </div>
+          </div>
         </>
         )}
       </div>
@@ -722,6 +1028,53 @@ function MealLibrary() {
         onClose={handleCloseDetailModal}
         onEdit={handleEdit}
         onDelete={handleDelete}
+      />
+
+      {/* Snack Modals */}
+      {householdCode && (
+        <AddSnackModal
+          isOpen={isAddSnackModalOpen}
+          onClose={() => {
+            setIsAddSnackModalOpen(false);
+            setScannedProductData(null);
+          }}
+          onSave={addSnack}
+          householdCode={householdCode}
+          onScanBarcode={handleOpenScanner}
+          prefillData={scannedProductData || undefined}
+        />
+      )}
+
+      {householdCode && (
+        <SnackDetailModal
+          snack={selectedSnack}
+          isOpen={isSnackDetailModalOpen}
+          onClose={handleCloseSnackDetailModal}
+          onSave={handleSaveSnackChanges}
+          onDelete={handleDeleteSnack}
+          householdCode={householdCode}
+        />
+      )}
+
+      <ConfirmDialog
+        isOpen={isDeleteSnackDialogOpen}
+        onClose={() => {
+          setIsDeleteSnackDialogOpen(false);
+          setDeletingSnack(null);
+        }}
+        onConfirm={handleConfirmDeleteSnack}
+        title="Delete Snack"
+        message={`Are you sure you want to delete "${deletingSnack?.name}"? This cannot be undone.`}
+        confirmText="Delete"
+        confirmVariant="danger"
+      />
+
+      {/* Barcode Scanner Modal */}
+      <BarcodeScannerModal
+        isOpen={isScannerModalOpen}
+        onClose={() => setIsScannerModalOpen(false)}
+        onProductSelected={handleProductScanned}
+        householdCode={householdCode}
       />
     </div>
   );

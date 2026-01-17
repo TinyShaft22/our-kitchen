@@ -85,11 +85,18 @@ export interface WeeklyMealEntry {
   servings: number;
 }
 
+// WeeklySnackEntry - a snack reference within a weekly plan
+export interface WeeklySnackEntry {
+  snackId: string;
+  qty: number;
+}
+
 // WeeklyMeal - the weekly meal plan
 export interface WeeklyMeal {
   id: string;
   weekId: string;
   meals: WeeklyMealEntry[];
+  snacks?: WeeklySnackEntry[]; // Optional snacks for the week
   householdCode: string;
   alreadyHave?: string[]; // Ingredient names (lowercase) to exclude from grocery generation
 }
@@ -98,7 +105,7 @@ export interface WeeklyMeal {
 export type GroceryStatus = 'need' | 'out' | 'in-cart' | 'bought';
 
 // GroceryItem source type
-export type GrocerySource = 'meal' | 'manual' | 'quick-add' | 'staple' | 'baking';
+export type GrocerySource = 'meal' | 'manual' | 'quick-add' | 'staple' | 'baking' | 'snack';
 
 // GroceryItem - an item on the grocery list
 export interface GroceryItem {
@@ -158,4 +165,28 @@ export interface BoughtHistory {
 // Household - the household document
 export interface Household {
   members: string[];
+}
+
+// Snack - a quick grab item that can be added to weekly plan
+export interface Snack {
+  id: string;
+  name: string;
+  brand?: string;
+  barcode?: string;
+  category: Category;
+  defaultStore: Store;
+  imageUrl?: string;
+  householdCode: string;
+}
+
+// ScannedProduct - cached barcode lookup result
+export interface ScannedProduct {
+  id: string;
+  barcode: string;
+  name: string;
+  brand?: string;
+  imageUrl?: string;
+  source: 'off' | 'manual'; // 'off' = Open Food Facts, 'manual' = user entered
+  householdCode: string;
+  lastUpdated: Date;
 }
