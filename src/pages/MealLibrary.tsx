@@ -1,7 +1,10 @@
 import { useState, useMemo } from 'react';
 import { useHousehold } from '../hooks/useHousehold';
 import { useMeals } from '../hooks/useMeals';
+import { useFolders } from '../hooks/useFolders';
 import { MealCard } from '../components/meals/MealCard';
+import { MealGridCard } from '../components/meals/MealGridCard';
+import { MealDetailModal } from '../components/meals/MealDetailModal';
 import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import { AddMealModal } from '../components/meals/AddMealModal';
 import { EditMealModal } from '../components/meals/EditMealModal';
@@ -10,46 +13,7 @@ import { FolderManagerModal } from '../components/meals/FolderManagerModal';
 import { buildFolderTree, getAllFolderPaths, type FolderTreeNode } from '../utils/subcategoryUtils';
 import type { Meal } from '../types';
 
-interface CollapsibleSectionProps {
-  title: string;
-  count: number;
-  isExpanded: boolean;
-  onToggle: () => void;
-  children: React.ReactNode;
-}
-
-function CollapsibleSection({ title, count, isExpanded, onToggle, children }: CollapsibleSectionProps) {
-  return (
-    <div className="mb-6">
-      <button
-        onClick={onToggle}
-        className="w-full flex items-center justify-between bg-white rounded-soft shadow-soft px-4 py-3 mb-3 hover:bg-cream/50 transition-colors"
-        aria-expanded={isExpanded}
-      >
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-display font-semibold text-charcoal">{title}</h2>
-          <span className="text-sm text-charcoal/60 bg-cream px-2 py-0.5 rounded-full">
-            {count}
-          </span>
-        </div>
-        <span
-          className={`text-terracotta text-xl transition-transform duration-200 transition-spring ${
-            isExpanded ? 'rotate-0' : '-rotate-90'
-          }`}
-        >
-          ▼
-        </span>
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 transition-spring ${
-          isExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
+type ViewMode = 'list' | 'grid';
 
 interface SubcategorySectionProps {
   title: string;
@@ -61,33 +25,45 @@ interface SubcategorySectionProps {
 
 function SubcategorySection({ title, count, isExpanded, onToggle, children }: SubcategorySectionProps) {
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between bg-cream/50 rounded-soft px-3 py-2 mb-2 hover:bg-cream transition-colors"
+        className="group w-full flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-soft px-4 py-3 mb-2 shadow-soft hover:shadow-lifted transition-all duration-200"
+        style={{ transitionTimingFunction: 'var(--ease-spring)' }}
         aria-expanded={isExpanded}
       >
-        <div className="flex items-center gap-2">
-          <span className="text-charcoal/40 text-sm">📁</span>
-          <span className="text-sm font-medium text-charcoal">{title}</span>
-          <span className="text-xs text-charcoal/50 bg-white px-1.5 py-0.5 rounded-full">
-            {count}
+        {/* Folder icon with color */}
+        <div className={`w-10 h-10 rounded-soft flex items-center justify-center transition-colors ${
+          isExpanded ? 'bg-terracotta/10' : 'bg-sage/10'
+        }`}>
+          <span className="text-xl">{isExpanded ? '📂' : '📁'}</span>
+        </div>
+
+        {/* Title and count */}
+        <div className="flex-1 text-left">
+          <span className="font-display font-medium text-charcoal">{title}</span>
+          <span className="ml-2 text-xs text-charcoal/50 bg-cream px-2 py-0.5 rounded-full">
+            {count} recipe{count !== 1 ? 's' : ''}
           </span>
         </div>
+
+        {/* Chevron */}
         <span
-          className={`text-charcoal/40 text-sm transition-transform duration-200 ${
+          className={`text-terracotta/60 text-sm transition-transform duration-200 group-hover:text-terracotta ${
             isExpanded ? 'rotate-0' : '-rotate-90'
           }`}
+          style={{ transitionTimingFunction: 'var(--ease-spring)' }}
         >
           ▼
         </span>
       </button>
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`overflow-hidden transition-all duration-300 ${
           isExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
         }`}
+        style={{ transitionTimingFunction: 'var(--ease-spring)' }}
       >
-        <div className="pl-4">
+        <div className="pl-4 border-l-2 border-sage/30 ml-5">
           {children}
         </div>
       </div>
@@ -151,24 +127,35 @@ function NestedFolderSection({
   const isExpanded = expandedPaths.has(node.fullPath);
 
   return (
-    <div className="mb-4" style={{ marginLeft: `${depth * 16}px` }}>
+    <div className="mb-3" style={{ marginLeft: `${depth * 12}px` }}>
       {/* Folder header */}
       <button
         onClick={() => onToggle(node.fullPath)}
-        className="w-full flex items-center justify-between bg-cream/50 rounded-soft px-3 py-2 mb-2 hover:bg-cream transition-colors"
+        className="group w-full flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-soft px-4 py-3 mb-2 shadow-soft hover:shadow-lifted transition-all duration-200"
+        style={{ transitionTimingFunction: 'var(--ease-spring)' }}
         aria-expanded={isExpanded}
       >
-        <div className="flex items-center gap-2">
-          <span className="text-charcoal/40 text-sm">{isExpanded ? '📂' : '📁'}</span>
-          <span className="text-sm font-medium text-charcoal">{node.name}</span>
-          <span className="text-xs text-charcoal/50 bg-white px-1.5 py-0.5 rounded-full">
-            {node.totalMealCount}
+        {/* Folder icon with color */}
+        <div className={`w-10 h-10 rounded-soft flex items-center justify-center transition-colors ${
+          isExpanded ? 'bg-honey/20' : 'bg-terracotta/10'
+        }`}>
+          <span className="text-xl">{isExpanded ? '📂' : '📁'}</span>
+        </div>
+
+        {/* Title and count */}
+        <div className="flex-1 text-left">
+          <span className="font-display font-medium text-charcoal">{node.name}</span>
+          <span className="ml-2 text-xs text-charcoal/50 bg-cream px-2 py-0.5 rounded-full">
+            {node.totalMealCount} recipe{node.totalMealCount !== 1 ? 's' : ''}
           </span>
         </div>
+
+        {/* Chevron */}
         <span
-          className={`text-charcoal/40 text-sm transition-transform duration-200 ${
+          className={`text-terracotta/60 text-sm transition-transform duration-200 group-hover:text-terracotta ${
             isExpanded ? 'rotate-0' : '-rotate-90'
           }`}
+          style={{ transitionTimingFunction: 'var(--ease-spring)' }}
         >
           ▼
         </span>
@@ -176,11 +163,12 @@ function NestedFolderSection({
 
       {/* Expanded content */}
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`overflow-hidden transition-all duration-300 ${
           isExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
         }`}
+        style={{ transitionTimingFunction: 'var(--ease-spring)' }}
       >
-        <div className="pl-4">
+        <div className="pl-4 border-l-2 border-honey/30 ml-5">
           {/* Render child folders first */}
           {Array.from(node.children.values()).map((child) => (
             <NestedFolderSection
@@ -241,6 +229,7 @@ function groupBySubcategory(meals: Meal[]): MealsBySubcategory {
 function MealLibrary() {
   const { householdCode } = useHousehold();
   const { meals, loading, addMeal, updateMeal, deleteMeal } = useMeals(householdCode);
+  const { folders, addFolder, deleteFolder } = useFolders(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -251,6 +240,12 @@ function MealLibrary() {
   const [expandedSubcategories, setExpandedSubcategories] = useState<Set<string>>(new Set());
   const [expandedBakingPaths, setExpandedBakingPaths] = useState<Set<string>>(new Set());
   const [isFolderManagerOpen, setIsFolderManagerOpen] = useState(false);
+  const [folderManagerType, setFolderManagerType] = useState<'main' | 'baking'>('baking');
+
+  // View mode and detail modal state
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   // Split meals into main dishes and baking recipes, grouped by subcategory
   const { mainDishes, bakingRecipes, mainBySubcategory, existingSubcategories } = useMemo(() => {
@@ -283,11 +278,21 @@ function MealLibrary() {
     [bakingRecipes]
   );
 
-  // Extract all baking paths for FolderManagerModal
-  const existingBakingPaths = useMemo(
-    () => getAllFolderPaths(bakingRecipes),
-    [bakingRecipes]
-  );
+  // Extract all baking paths for FolderManagerModal (combine meal paths + persisted folders)
+  const existingBakingPaths = useMemo(() => {
+    const mealPaths = getAllFolderPaths(bakingRecipes);
+    const persistedPaths = folders.filter(f => f.type === 'baking').map(f => f.path);
+    const allPaths = new Set([...mealPaths, ...persistedPaths]);
+    return Array.from(allPaths).sort();
+  }, [bakingRecipes, folders]);
+
+  // Extract all main dish paths (subcategories + persisted folders)
+  const existingMainPaths = useMemo(() => {
+    const subcatPaths = existingSubcategories;
+    const persistedPaths = folders.filter(f => f.type === 'main').map(f => f.path);
+    const allPaths = new Set([...subcatPaths, ...persistedPaths]);
+    return Array.from(allPaths).sort();
+  }, [existingSubcategories, folders]);
 
   // Toggle baking folder expansion
   const toggleBakingPath = (path: string) => {
@@ -302,12 +307,44 @@ function MealLibrary() {
     });
   };
 
-  // Handle creating new folder (adds to existingBakingPaths via meal updates)
-  const handleCreateFolder = (path: string) => {
-    // Folders are implicitly created when a meal is assigned to them
-    // For now, just close the modal - the path will be available when adding/editing meals
-    // In a future enhancement, we could store empty folder paths in Firestore
-    console.log('Folder created:', path);
+  // Open folder manager for specific type
+  const openFolderManager = (type: 'main' | 'baking') => {
+    setFolderManagerType(type);
+    setIsFolderManagerOpen(true);
+  };
+
+  // Handle creating new folder (persists to Firestore)
+  const handleCreateFolder = async (path: string) => {
+    try {
+      await addFolder(path, folderManagerType);
+    } catch (err) {
+      console.error('Failed to create folder:', err);
+      throw err;
+    }
+  };
+
+  // Handle deleting a folder by path
+  const handleDeleteFolder = async (path: string) => {
+    const folder = folders.find(f => f.path === path && f.type === folderManagerType);
+    if (folder) {
+      try {
+        await deleteFolder(folder.id);
+      } catch (err) {
+        console.error('Failed to delete folder:', err);
+        throw err;
+      }
+    }
+  };
+
+  // Handle meal selection for detail modal (grid view)
+  const handleMealSelect = (meal: Meal) => {
+    setSelectedMeal(meal);
+    setIsDetailModalOpen(true);
+  };
+
+  const handleCloseDetailModal = () => {
+    setIsDetailModalOpen(false);
+    setSelectedMeal(null);
   };
 
   // Get sorted subcategory keys with "Uncategorized" first
@@ -400,72 +437,181 @@ function MealLibrary() {
 
   return (
     <div className="pb-32">
-      {/* Hero section */}
+      {/* Hero section with view toggle */}
       <div className="hero-gradient px-4 pt-6 pb-4 mb-4">
-        <h1 className="text-2xl font-display font-semibold text-charcoal">Meal Library</h1>
-        <p className="text-charcoal/60 text-sm mt-1">
-          {meals.length} recipe{meals.length !== 1 ? 's' : ''}
-        </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-display font-semibold text-charcoal">Meal Library</h1>
+            <p className="text-charcoal/60 text-sm mt-1">
+              {meals.length} recipe{meals.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+
+          {/* View mode toggle */}
+          <div className="flex bg-white/80 rounded-soft p-1 shadow-soft">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`w-10 h-10 rounded-soft flex items-center justify-center transition-all ${
+                viewMode === 'grid'
+                  ? 'bg-terracotta text-white shadow-soft'
+                  : 'text-charcoal/60 hover:text-charcoal'
+              }`}
+              aria-label="Grid view"
+              title="Grid view"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+            </button>
+            <button
+              onClick={() => setViewMode('list')}
+              className={`w-10 h-10 rounded-soft flex items-center justify-center transition-all ${
+                viewMode === 'list'
+                  ? 'bg-terracotta text-white shadow-soft'
+                  : 'text-charcoal/60 hover:text-charcoal'
+              }`}
+              aria-label="List view"
+              title="List view"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="px-4">
-          {hasNoMeals ? (
+        {hasNoMeals ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <p className="text-warm-gray text-lg font-display">No meals yet.</p>
             <p className="text-warm-gray mt-1">Tap + to add one!</p>
           </div>
-        ) : (
-        <>
-          {/* Main Dishes Section */}
-          {mainDishes.length > 0 && (
-            <CollapsibleSection
-              title="Main Dishes"
-              count={mainDishes.length}
-              isExpanded={mainDishesExpanded}
-              onToggle={() => setMainDishesExpanded(!mainDishesExpanded)}
-            >
-              {hasMainSubcategories ? (
-                // Show with subcategory folders
-                getSortedSubcategoryKeys(mainBySubcategory).map((subcatKey) => {
-                  const subcatMeals = mainBySubcategory[subcatKey];
-                  const displayName = subcatKey || 'Uncategorized';
-                  const expandKey = `main-${subcatKey}`;
-                  return (
-                    <SubcategorySection
-                      key={subcatKey}
-                      title={displayName}
-                      count={subcatMeals.length}
-                      isExpanded={expandedSubcategories.has(expandKey)}
-                      onToggle={() => toggleSubcategory(expandKey)}
-                    >
-                      <div className="grid grid-cols-1 gap-4">
-                        {subcatMeals.map((meal) => (
-                          <MealCard
-                            key={meal.id}
-                            meal={meal}
-                            onEdit={handleEdit}
-                            onDelete={handleDelete}
-                          />
-                        ))}
-                      </div>
-                    </SubcategorySection>
-                  );
-                })
-              ) : (
-                // No subcategories, show flat list
-                <div className="grid grid-cols-1 gap-4">
-                  {mainDishes.map((meal) => (
-                    <MealCard
-                      key={meal.id}
-                      meal={meal}
-                      onEdit={handleEdit}
-                      onDelete={handleDelete}
-                    />
-                  ))}
+        ) : viewMode === 'grid' ? (
+          /* GRID VIEW - Visual, image-focused */
+          <div className="space-y-6">
+            {/* Main Dishes Grid */}
+            {mainDishes.length > 0 && (
+              <div>
+                <h2 className="font-display font-semibold text-charcoal mb-3 flex items-center gap-2">
+                  <span className="text-xl">🍽️</span>
+                  Main Dishes
+                  <span className="text-sm font-normal text-charcoal/50">({mainDishes.length})</span>
+                </h2>
+                <div className="grid grid-cols-2 gap-3">
+                  {mainDishes
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((meal) => (
+                      <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
+                    ))}
                 </div>
-              )}
-            </CollapsibleSection>
-          )}
+              </div>
+            )}
+
+            {/* Baking Recipes Grid */}
+            {bakingRecipes.length > 0 && (
+              <div>
+                <h2 className="font-display font-semibold text-charcoal mb-3 flex items-center gap-2">
+                  <span className="text-xl">🧁</span>
+                  Baking & Desserts
+                  <span className="text-sm font-normal text-charcoal/50">({bakingRecipes.length})</span>
+                </h2>
+                <div className="grid grid-cols-2 gap-3">
+                  {bakingRecipes
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((meal) => (
+                      <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          /* LIST VIEW - Organized with folders */
+          <>
+            {/* Main Dishes Section - with folders */}
+            {mainDishes.length > 0 && (
+              <div className="mb-6">
+                {/* Custom header with Manage Folders button */}
+                <div className="flex items-center gap-2 bg-white rounded-soft shadow-soft px-4 py-3 mb-3">
+                  <button
+                    onClick={() => setMainDishesExpanded(!mainDishesExpanded)}
+                    className="flex-1 flex items-center justify-between hover:bg-cream/50 -mx-2 px-2 py-1 rounded-soft transition-colors"
+                    aria-expanded={mainDishesExpanded}
+                  >
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-lg font-display font-semibold text-charcoal">Main Dishes</h2>
+                      <span className="text-sm text-charcoal/60 bg-cream px-2 py-0.5 rounded-full">
+                        {mainDishes.length}
+                      </span>
+                    </div>
+                    <span
+                      className={`text-terracotta text-xl transition-transform duration-200 transition-spring ${
+                        mainDishesExpanded ? 'rotate-0' : '-rotate-90'
+                      }`}
+                    >
+                      ▼
+                    </span>
+                  </button>
+                  {/* Manage Folders button */}
+                  <button
+                    onClick={() => openFolderManager('main')}
+                    className="flex items-center gap-1 px-3 py-1.5 text-sm bg-sage/30 hover:bg-sage/50 text-charcoal rounded-soft transition-colors"
+                    aria-label="Manage main dish folders"
+                  >
+                    <span>📁</span>
+                    <span className="hidden sm:inline">Manage</span>
+                  </button>
+                </div>
+                {/* Collapsible content */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    mainDishesExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  {hasMainSubcategories ? (
+                    // Show with subcategory folders
+                    getSortedSubcategoryKeys(mainBySubcategory).map((subcatKey) => {
+                      const subcatMeals = mainBySubcategory[subcatKey];
+                      const displayName = subcatKey || 'Uncategorized';
+                      const expandKey = `main-${subcatKey}`;
+                      return (
+                        <SubcategorySection
+                          key={subcatKey}
+                          title={displayName}
+                          count={subcatMeals.length}
+                          isExpanded={expandedSubcategories.has(expandKey)}
+                          onToggle={() => toggleSubcategory(expandKey)}
+                        >
+                          <div className="grid grid-cols-1 gap-4">
+                            {subcatMeals.map((meal) => (
+                              <MealCard
+                                key={meal.id}
+                                meal={meal}
+                                onEdit={handleEdit}
+                                onDelete={handleDelete}
+                              />
+                            ))}
+                          </div>
+                        </SubcategorySection>
+                      );
+                    })
+                  ) : (
+                    // No subcategories, show flat list
+                    <div className="grid grid-cols-1 gap-4">
+                      {mainDishes.map((meal) => (
+                        <MealCard
+                          key={meal.id}
+                          meal={meal}
+                          onEdit={handleEdit}
+                          onDelete={handleDelete}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
           {/* Baking & Desserts Section - with nested folders */}
           {bakingRecipes.length > 0 && (
@@ -493,7 +639,7 @@ function MealLibrary() {
                 </button>
                 {/* Manage Folders button */}
                 <button
-                  onClick={() => setIsFolderManagerOpen(true)}
+                  onClick={() => openFolderManager('baking')}
                   className="flex items-center gap-1 px-3 py-1.5 text-sm bg-sage/30 hover:bg-sage/50 text-charcoal rounded-soft transition-colors"
                   aria-label="Manage baking folders"
                 >
@@ -563,8 +709,19 @@ function MealLibrary() {
       <FolderManagerModal
         isOpen={isFolderManagerOpen}
         onClose={() => setIsFolderManagerOpen(false)}
-        existingPaths={existingBakingPaths}
+        existingPaths={folderManagerType === 'baking' ? existingBakingPaths : existingMainPaths}
         onCreateFolder={handleCreateFolder}
+        onDeleteFolder={handleDeleteFolder}
+        title={folderManagerType === 'baking' ? 'Manage Baking Folders' : 'Manage Main Dish Folders'}
+      />
+
+      {/* Meal detail modal for grid view */}
+      <MealDetailModal
+        meal={selectedMeal}
+        isOpen={isDetailModalOpen}
+        onClose={handleCloseDetailModal}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
       />
     </div>
   );

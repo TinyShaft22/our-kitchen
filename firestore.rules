@@ -39,5 +39,10 @@ service cloud.firestore {
       allow read, write: if resource.data.householdCode == request.resource.data.householdCode
                           || resource == null;
     }
+
+    match /folders/{folderId} {
+      allow read, write: if resource.data.householdCode == request.resource.data.householdCode
+                          || resource == null;
+    }
   }
 }

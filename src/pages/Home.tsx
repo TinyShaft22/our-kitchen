@@ -138,8 +138,8 @@ function Home() {
             {weeklyMeals.map((entry, index) => (
               <div
                 key={entry.mealId}
-                className="animate-fade-in-up opacity-0"
-                style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'forwards' }}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 <WeeklyMealCard
                   entry={entry}
