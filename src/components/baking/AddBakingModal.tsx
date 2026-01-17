@@ -129,7 +129,7 @@ export function AddBakingModal({ isOpen, onClose, onSave, householdCode }: AddBa
         name: name.trim(),
         store,
         status,
-        imageUrl,
+        ...(imageUrl && { imageUrl }),
       });
       handleClose();
     } catch (err) {

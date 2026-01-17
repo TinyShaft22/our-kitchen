@@ -61,9 +61,15 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
         </div>
 
         <div className="flex items-center gap-2 ml-2">
-          {/* Expand indicator */}
-          <span className="text-xs text-charcoal/50">
-            {isExpanded ? '▲' : '▼'}
+          {/* Expand indicator with spring animation */}
+          <span
+            className="text-xs text-charcoal/50 transition-transform duration-300"
+            style={{
+              transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+              transitionTimingFunction: 'var(--ease-spring)',
+            }}
+          >
+            ▼
           </span>
           {/* Delete button */}
           <button
@@ -76,10 +82,17 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
         </div>
       </div>
 
-      {/* Expanded Content */}
-      {isExpanded && (
-        <div id={`meal-details-${meal.id}`} className="border-t border-charcoal/10">
-          {/* Details Section */}
+      {/* Expanded Content with spring animation */}
+      <div
+        id={`meal-details-${meal.id}`}
+        className="border-t border-charcoal/10 overflow-hidden transition-all duration-300"
+        style={{
+          maxHeight: isExpanded ? '2000px' : '0',
+          opacity: isExpanded ? 1 : 0,
+          transitionTimingFunction: 'var(--ease-spring)',
+        }}
+      >
+        {isExpanded && (
           <div className="p-4 space-y-4">
             {/* Photo and Servings Row */}
             <div className="flex gap-4">
@@ -177,8 +190,8 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
               <span>Edit Meal</span>
             </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Delete Confirmation Dialog */}
       {showDeleteConfirm && (

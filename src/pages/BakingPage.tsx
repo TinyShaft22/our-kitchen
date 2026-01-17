@@ -159,47 +159,55 @@ function BakingPage() {
 
   if (loading) {
     return (
-      <div className="p-4">
-        <h1 className="text-xl font-semibold text-charcoal">🧁 Baking Corner</h1>
-        <p className="text-warm-gray mt-4">Loading...</p>
+      <div>
+        <div className="hero-gradient-honey px-4 pt-6 pb-4">
+          <h1 className="text-2xl font-display font-semibold text-charcoal">🧁 Baking Corner</h1>
+        </div>
+        <p className="text-warm-gray mt-4 px-4">Loading...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-4">
-        <h1 className="text-xl font-semibold text-charcoal">🧁 Baking Corner</h1>
-        <p className="text-terracotta mt-4">Error: {error}</p>
+      <div>
+        <div className="hero-gradient-honey px-4 pt-6 pb-4">
+          <h1 className="text-2xl font-display font-semibold text-charcoal">🧁 Baking Corner</h1>
+        </div>
+        <p className="text-terracotta mt-4 px-4">Error: {error}</p>
       </div>
     );
   }
 
   return (
-    <div className="p-4 pb-32">
-      {/* Header */}
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h1 className="text-xl font-semibold text-charcoal">🧁 Baking Corner</h1>
-          <p className="text-sm text-warm-gray mt-1">
-            {essentials.length} item{essentials.length !== 1 ? 's' : ''}
-            {lowStockItems.length > 0 && (
-              <span className="text-terracotta"> ({lowStockItems.length} need restocking)</span>
-            )}
-          </p>
-        </div>
+    <div className="pb-32">
+      {/* Hero section with honey gradient */}
+      <div className="hero-gradient-honey px-4 pt-6 pb-4">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h1 className="text-2xl font-display font-semibold text-charcoal">🧁 Baking Corner</h1>
+            <p className="text-sm text-charcoal/60 mt-1">
+              {essentials.length} item{essentials.length !== 1 ? 's' : ''}
+              {lowStockItems.length > 0 && (
+                <span className="text-terracotta font-medium"> · {lowStockItems.length} need restocking</span>
+              )}
+            </p>
+          </div>
 
-        {/* Bulk restock button */}
-        {lowStockItems.length > 0 && (
-          <button
-            onClick={handleRestockAll}
-            disabled={bulkRestocking}
-            className="px-4 py-2 rounded-full text-sm font-medium bg-terracotta text-white hover:bg-terracotta/90 disabled:opacity-50 whitespace-nowrap min-h-[44px] transition-colors"
-          >
-            {bulkRestocking ? 'Adding...' : `🛒 Restock ${lowStockItems.length}`}
-          </button>
-        )}
+          {/* Bulk restock button */}
+          {lowStockItems.length > 0 && (
+            <button
+              onClick={handleRestockAll}
+              disabled={bulkRestocking}
+              className="px-4 py-2 rounded-full text-sm font-medium bg-terracotta text-white hover:bg-terracotta/90 disabled:opacity-50 whitespace-nowrap min-h-[44px] transition-colors shadow-soft"
+            >
+              {bulkRestocking ? 'Adding...' : `🛒 Restock ${lowStockItems.length}`}
+            </button>
+          )}
+        </div>
       </div>
+
+      <div className="px-4">
 
       {/* Feedback toast */}
       {restockFeedback && (
@@ -285,6 +293,7 @@ function BakingPage() {
         confirmText="Delete"
         confirmVariant="danger"
       />
+      </div>
     </div>
   );
 }

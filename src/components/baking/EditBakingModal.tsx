@@ -155,6 +155,7 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave, householdC
         }
       }
 
+      // Pass imageUrl (can be undefined to trigger deletion in Firestore)
       await onSave(essential.id, {
         name: name.trim(),
         store,

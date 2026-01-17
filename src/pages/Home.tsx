@@ -101,9 +101,11 @@ function Home() {
   if (isLoading) {
     return (
       <div className="p-4">
-        <h1 className="text-xl font-semibold text-charcoal mb-4">
-          {formatWeekId(weekId)}
-        </h1>
+        <div className="hero-gradient -mx-4 -mt-4 px-4 pt-6 pb-4 mb-4">
+          <h1 className="text-2xl font-display font-semibold text-charcoal">
+            {formatWeekId(weekId)}
+          </h1>
+        </div>
         <div className="flex items-center justify-center py-8">
           <div className="text-warm-gray">Loading weekly plan...</div>
         </div>
@@ -114,31 +116,44 @@ function Home() {
   const weeklyMeals = currentWeek?.meals ?? [];
 
   return (
-    <div className="p-4 pb-32">
-      <h1 className="text-xl font-semibold text-charcoal mb-4">
-        {formatWeekId(weekId)}
-      </h1>
+    <div className="pb-32">
+      {/* Hero section with gradient */}
+      <div className="hero-gradient px-4 pt-6 pb-4 mb-4">
+        <h1 className="text-2xl font-display font-semibold text-charcoal">
+          {formatWeekId(weekId)}
+        </h1>
+        <p className="text-charcoal/60 text-sm mt-1">
+          {weeklyMeals.length} meal{weeklyMeals.length !== 1 ? 's' : ''} planned
+        </p>
+      </div>
 
-      {weeklyMeals.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <p className="text-warm-gray text-lg">No meals planned this week.</p>
-          <p className="text-warm-gray mt-1">Tap + to add some!</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-4">
-          {weeklyMeals.map((entry) => (
-            <WeeklyMealCard
-              key={entry.mealId}
-              entry={entry}
-              meal={getMealById(entry.mealId)}
-              alreadyHave={alreadyHave}
-              onEditServings={handleEditServings}
-              onRemove={handleRemove}
-              onToggleAlreadyHave={toggleAlreadyHave}
-            />
-          ))}
-        </div>
-      )}
+      <div className="px-4">
+        {weeklyMeals.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <p className="text-warm-gray text-lg font-display">No meals planned this week.</p>
+            <p className="text-warm-gray mt-1">Tap + to add some!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4">
+            {weeklyMeals.map((entry, index) => (
+              <div
+                key={entry.mealId}
+                className="animate-fade-in-up opacity-0"
+                style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'forwards' }}
+              >
+                <WeeklyMealCard
+                  entry={entry}
+                  meal={getMealById(entry.mealId)}
+                  alreadyHave={alreadyHave}
+                  onEditServings={handleEditServings}
+                  onRemove={handleRemove}
+                  onToggleAlreadyHave={toggleAlreadyHave}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       <FloatingActionButton
         onClick={handleAddClick}

@@ -27,13 +27,13 @@ function CollapsibleSection({ title, count, isExpanded, onToggle, children }: Co
         aria-expanded={isExpanded}
       >
         <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold text-charcoal">{title}</h2>
+          <h2 className="text-lg font-display font-semibold text-charcoal">{title}</h2>
           <span className="text-sm text-charcoal/60 bg-cream px-2 py-0.5 rounded-full">
             {count}
           </span>
         </div>
         <span
-          className={`text-terracotta text-xl transition-transform duration-200 ${
+          className={`text-terracotta text-xl transition-transform duration-200 transition-spring ${
             isExpanded ? 'rotate-0' : '-rotate-90'
           }`}
         >
@@ -41,7 +41,7 @@ function CollapsibleSection({ title, count, isExpanded, onToggle, children }: Co
         </span>
       </button>
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`overflow-hidden transition-all duration-300 transition-spring ${
           isExpanded ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
@@ -386,7 +386,9 @@ function MealLibrary() {
   if (loading) {
     return (
       <div className="p-4">
-        <h1 className="text-xl font-semibold text-charcoal mb-4">Meal Library</h1>
+        <div className="hero-gradient -mx-4 -mt-4 px-4 pt-6 pb-4 mb-4">
+          <h1 className="text-2xl font-display font-semibold text-charcoal">Meal Library</h1>
+        </div>
         <div className="flex items-center justify-center py-8">
           <div className="text-warm-gray">Loading meals...</div>
         </div>
@@ -397,15 +399,22 @@ function MealLibrary() {
   const hasNoMeals = mainDishes.length === 0 && bakingRecipes.length === 0;
 
   return (
-    <div className="p-4 pb-32">
-      <h1 className="text-xl font-semibold text-charcoal mb-4">Meal Library</h1>
+    <div className="pb-32">
+      {/* Hero section */}
+      <div className="hero-gradient px-4 pt-6 pb-4 mb-4">
+        <h1 className="text-2xl font-display font-semibold text-charcoal">Meal Library</h1>
+        <p className="text-charcoal/60 text-sm mt-1">
+          {meals.length} recipe{meals.length !== 1 ? 's' : ''}
+        </p>
+      </div>
 
-      {hasNoMeals ? (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <p className="text-warm-gray text-lg">No meals yet.</p>
-          <p className="text-warm-gray mt-1">Tap + to add one!</p>
-        </div>
-      ) : (
+      <div className="px-4">
+          {hasNoMeals ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <p className="text-warm-gray text-lg font-display">No meals yet.</p>
+            <p className="text-warm-gray mt-1">Tap + to add one!</p>
+          </div>
+        ) : (
         <>
           {/* Main Dishes Section */}
           {mainDishes.length > 0 && (
@@ -469,13 +478,13 @@ function MealLibrary() {
                   aria-expanded={bakingExpanded}
                 >
                   <div className="flex items-center gap-2">
-                    <h2 className="text-lg font-semibold text-charcoal">Baking & Desserts</h2>
+                    <h2 className="text-lg font-display font-semibold text-charcoal">Baking & Desserts</h2>
                     <span className="text-sm text-charcoal/60 bg-cream px-2 py-0.5 rounded-full">
                       {bakingRecipes.length}
                     </span>
                   </div>
                   <span
-                    className={`text-terracotta text-xl transition-transform duration-200 ${
+                    className={`text-terracotta text-xl transition-transform duration-200 transition-spring ${
                       bakingExpanded ? 'rotate-0' : '-rotate-90'
                     }`}
                   >
@@ -510,7 +519,8 @@ function MealLibrary() {
             </div>
           )}
         </>
-      )}
+        )}
+      </div>
 
       <FloatingActionButton
         onClick={handleAddClick}

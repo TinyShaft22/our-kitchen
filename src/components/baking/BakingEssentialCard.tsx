@@ -11,21 +11,24 @@ interface BakingEssentialCardProps {
   isRestocking?: boolean;
 }
 
-const STATUS_CONFIG: Record<BakingStatus, { label: string; bgClass: string; textClass: string }> = {
+const STATUS_CONFIG: Record<BakingStatus, { label: string; bgClass: string; textClass: string; glowClass: string }> = {
   stocked: {
     label: 'Stocked',
     bgClass: 'bg-sage/20',
     textClass: 'text-sage',
+    glowClass: '',
   },
   low: {
     label: 'Low',
     bgClass: 'bg-honey/30',
     textClass: 'text-amber-700',
+    glowClass: 'shadow-[0_0_8px_rgba(232,184,109,0.5)]',
   },
   out: {
     label: 'Out',
     bgClass: 'bg-terracotta/20',
     textClass: 'text-terracotta',
+    glowClass: 'shadow-[0_0_12px_rgba(196,117,91,0.6)] animate-pulse',
   },
 };
 
@@ -122,10 +125,11 @@ export function BakingEssentialCard({
         </button>
       )}
 
-      {/* Right side: Status badge (tappable to cycle) */}
+      {/* Right side: Status badge (tappable to cycle) with glow effects */}
       <button
         onClick={handleStatusCycle}
-        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors flex-shrink-0 ${statusConfig.bgClass} ${statusConfig.textClass}`}
+        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 flex-shrink-0 ${statusConfig.bgClass} ${statusConfig.textClass} ${statusConfig.glowClass}`}
+        style={{ transitionTimingFunction: 'var(--ease-spring)' }}
         aria-label={`Status: ${statusConfig.label}. Tap to change.`}
       >
         {statusConfig.label}

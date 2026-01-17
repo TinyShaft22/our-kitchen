@@ -23,6 +23,7 @@ function GroceryListPage() {
   const { staples, enabledStaples, loading: staplesLoading, addStaple, updateStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
   const { essentials, loading: bakingLoading } = useBaking(householdCode);
   const [completing, setCompleting] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // Ref to track if initial load is complete
   const initialLoadComplete = useRef(false);
@@ -117,7 +118,9 @@ function GroceryListPage() {
     setCompleting(true);
     try {
       await completeTrip(selectedStore);
-      // Items will disappear via real-time listener
+      // Show celebration animation
+      setShowCelebration(true);
+      setTimeout(() => setShowCelebration(false), 3000);
     } catch (err) {
       console.error('Failed to complete trip:', err);
     } finally {
@@ -125,25 +128,44 @@ function GroceryListPage() {
     }
   };
 
+  // Generate confetti particles
+  const confettiParticles = useMemo(() => {
+    return Array.from({ length: 50 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      delay: Math.random() * 0.5,
+      duration: 1 + Math.random() * 2,
+      color: ['#C4755B', '#87A878', '#E8B86D', '#FDF8F3'][Math.floor(Math.random() * 4)],
+      size: 6 + Math.random() * 8,
+    }));
+  }, []);
+
   // Shopping mode is active when a specific store is selected
   const isShoppingMode = selectedStore !== 'all';
 
   if (loading) {
     return (
       <div className="p-4">
-        <h1 className="text-xl font-semibold text-charcoal">Grocery List</h1>
+        <div className="hero-gradient-sage -mx-4 -mt-4 px-4 pt-6 pb-4 mb-4">
+          <h1 className="text-2xl font-display font-semibold text-charcoal">Grocery List</h1>
+        </div>
         <p className="text-warm-gray mt-4">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="p-4 pb-32">
-      <h1 className="text-xl font-semibold text-charcoal">Grocery List</h1>
-      <p className="text-sm text-warm-gray mt-1">
-        {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''}
-        {selectedStore !== 'all' && ` at ${STORES.find((s) => s.id === selectedStore)?.name}`}
-      </p>
+    <div className="pb-32">
+      {/* Hero section with sage gradient */}
+      <div className="hero-gradient-sage px-4 pt-6 pb-4">
+        <h1 className="text-2xl font-display font-semibold text-charcoal">Grocery List</h1>
+        <p className="text-sm text-charcoal/60 mt-1">
+          {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''}
+          {selectedStore !== 'all' && ` at ${STORES.find((s) => s.id === selectedStore)?.name}`}
+        </p>
+      </div>
+
+      <div className="px-4">
 
       {/* Store filter pills */}
       {items.length > 0 && (
@@ -196,7 +218,7 @@ function GroceryListPage() {
           className="w-full flex items-center justify-between py-2"
         >
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-charcoal">Staples</h2>
+            <h2 className="text-lg font-display font-semibold text-charcoal">Staples</h2>
             <span className="text-xs px-2 py-0.5 rounded-full bg-charcoal/10 text-charcoal/70">
               {enabledStaples.length}/{staples.length}
             </span>
@@ -259,7 +281,7 @@ function GroceryListPage() {
             className="w-full flex items-center justify-between py-2"
           >
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold text-charcoal">Already Have</h2>
+              <h2 className="text-lg font-display font-semibold text-charcoal">Already Have</h2>
               <span className="text-xs px-2 py-0.5 rounded-full bg-charcoal/10 text-charcoal/70">
                 {currentWeek?.alreadyHave?.length ?? 0}
               </span>
@@ -319,7 +341,7 @@ function GroceryListPage() {
         <div className="mt-6 space-y-6">
           {groupedItems.map(({ category, items: categoryItems }) => (
             <section key={category.id}>
-              <h2 className="text-lg font-semibold text-charcoal mb-3">
+              <h2 className="text-lg font-display font-semibold text-charcoal mb-3">
                 {category.name}
               </h2>
               <div className="space-y-2">
@@ -410,6 +432,37 @@ function GroceryListPage() {
         onClose={() => setShowVoiceModal(false)}
         onAddItem={addItem}
       />
+
+      {/* Celebration overlay */}
+      {showCelebration && (
+        <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden">
+          {/* Confetti particles */}
+          {confettiParticles.map((particle) => (
+            <div
+              key={particle.id}
+              className="absolute animate-bounce"
+              style={{
+                left: `${particle.left}%`,
+                top: '-20px',
+                width: `${particle.size}px`,
+                height: `${particle.size}px`,
+                backgroundColor: particle.color,
+                borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+                transform: `rotate(${Math.random() * 360}deg)`,
+                animation: `confetti-fall ${particle.duration}s ease-out forwards`,
+                animationDelay: `${particle.delay}s`,
+              }}
+            />
+          ))}
+          {/* Success message */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="bg-sage text-white px-8 py-4 rounded-softer shadow-lifted animate-bounce-in font-display text-xl font-semibold">
+              🎉 Shopping Complete!
+            </div>
+          </div>
+        </div>
+      )}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useOnlineStatus } from '../../hooks/useOnlineStatus'
+import { useEffect, useState } from 'react'
 
 const tabs = [
   { path: '/', label: 'Home', icon: '🏠' },
@@ -11,6 +12,23 @@ const tabs = [
 
 function Navigation() {
   const isOnline = useOnlineStatus()
+  const location = useLocation()
+  const [indicatorStyle, setIndicatorStyle] = useState<{ left: string; width: string }>({ left: '0%', width: '20%' })
+
+  // Calculate active tab index for indicator position
+  const activeIndex = tabs.findIndex(tab =>
+    tab.path === '/' ? location.pathname === '/' : location.pathname.startsWith(tab.path)
+  )
+
+  useEffect(() => {
+    // Update indicator position based on active tab
+    const tabWidth = 100 / tabs.length
+    const left = activeIndex * tabWidth
+    setIndicatorStyle({
+      left: `${left}%`,
+      width: `${tabWidth}%`,
+    })
+  }, [activeIndex])
 
   return (
     <>
@@ -23,20 +41,37 @@ function Navigation() {
         </div>
       )}
       <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-soft border-t border-charcoal/10 z-50">
+        {/* Sliding indicator */}
+        <div
+          className="absolute top-0 h-0.5 bg-terracotta transition-all duration-300"
+          style={{
+            left: indicatorStyle.left,
+            width: indicatorStyle.width,
+            transitionTimingFunction: 'var(--ease-spring)',
+          }}
+        />
         <div className="flex justify-around items-center px-2 pt-2 pb-4">
-          {tabs.map((tab) => (
+          {tabs.map((tab, index) => (
             <NavLink
               key={tab.path}
               to={tab.path}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center min-h-[56px] min-w-[56px] px-4 py-2 transition-colors ${
+                `flex flex-col items-center justify-center min-h-[56px] min-w-[56px] px-4 py-2 transition-all duration-200 ${
                   isActive
-                    ? 'text-terracotta'
+                    ? 'text-terracotta scale-105'
                     : 'text-charcoal/60 hover:text-charcoal'
                 }`
               }
+              style={{ transitionTimingFunction: 'var(--ease-spring)' }}
             >
-              <span className="text-3xl mb-1">{tab.icon}</span>
+              <span
+                className={`text-3xl mb-1 transition-transform duration-200 ${
+                  index === activeIndex ? 'scale-110' : ''
+                }`}
+                style={{ transitionTimingFunction: 'var(--ease-spring)' }}
+              >
+                {tab.icon}
+              </span>
               <span className="text-sm font-medium">{tab.label}</span>
             </NavLink>
           ))}

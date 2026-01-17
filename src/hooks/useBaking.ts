@@ -7,6 +7,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  deleteField,
   doc,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -78,10 +79,11 @@ export function useBaking(householdCode: string | null): UseBakingReturn {
 
       try {
         const essentialsRef = collection(db, 'bakingEssentials');
-        const docRef = await addDoc(essentialsRef, {
-          ...essential,
-          householdCode, // Auto-inject householdCode
-        });
+        // Filter out undefined values to avoid Firestore errors
+        const cleanData = Object.fromEntries(
+          Object.entries({ ...essential, householdCode }).filter(([, v]) => v !== undefined)
+        );
+        const docRef = await addDoc(essentialsRef, cleanData);
         return docRef.id;
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to add baking essential';
@@ -100,8 +102,12 @@ export function useBaking(householdCode: string | null): UseBakingReturn {
 
       try {
         const essentialRef = doc(db, 'bakingEssentials', id);
-        // Don't allow updating householdCode - it's omitted from the type
-        await updateDoc(essentialRef, updates);
+        // Handle undefined values: convert to deleteField() for Firestore
+        const cleanUpdates: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(updates)) {
+          cleanUpdates[key] = value === undefined ? deleteField() : value;
+        }
+        await updateDoc(essentialRef, cleanUpdates);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to update baking essential';
         setError(message);

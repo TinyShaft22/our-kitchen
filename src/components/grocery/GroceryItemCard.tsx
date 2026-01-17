@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type { GroceryItem, Store, Category } from '../../types';
 import { STORES, CATEGORIES } from '../../types';
 
@@ -14,6 +14,8 @@ interface GroceryItemCardProps {
 export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange, onCategoryChange, onToggleAlreadyHave }: GroceryItemCardProps) {
   const [showStorePicker, setShowStorePicker] = useState(false);
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const isMealSourced = item.source === 'meal';
 
   // Get display names for store and category
@@ -64,24 +66,42 @@ export function GroceryItemCard({ item, onToggleInCart, onDelete, onStoreChange,
     }
   };
 
+  const handleToggleInCart = () => {
+    if (onToggleInCart) {
+      setIsAnimating(true);
+      onToggleInCart();
+      // Reset animation state after it completes
+      setTimeout(() => setIsAnimating(false), 300);
+    }
+  };
+
   return (
     <div className="relative">
       <div
-        className={`w-full text-left rounded-soft shadow-soft p-4 min-h-[44px] transition-colors ${
+        ref={cardRef}
+        className={`w-full text-left rounded-soft shadow-soft p-4 min-h-[44px] transition-all duration-300 ${
           isInCart ? 'bg-sage/10' : 'bg-white'
-        }`}
+        } ${isAnimating ? 'animate-check-pop' : ''}`}
+        style={{ transitionTimingFunction: 'var(--ease-spring)' }}
       >
         <div className="flex justify-between items-start">
           {/* Main clickable area for toggle */}
           <button
             type="button"
-            onClick={onToggleInCart}
+            onClick={handleToggleInCart}
             className="flex-1 min-w-0 text-left"
           >
-            <h3 className={`font-semibold truncate ${
+            <h3 className={`font-semibold truncate transition-all duration-200 ${
               isInCart ? 'line-through text-charcoal/50' : 'text-charcoal'
             }`}>
-              {isInCart && <span className="mr-1">&#10003;</span>}
+              <span
+                className={`inline-block mr-1 transition-all duration-300 ${
+                  isInCart ? 'opacity-100 scale-100' : 'opacity-0 scale-0 w-0'
+                }`}
+                style={{ transitionTimingFunction: 'var(--ease-spring)' }}
+              >
+                ✓
+              </span>
               {item.name}
               {isStaple && (
                 <span className="ml-1.5 text-xs font-normal text-charcoal/50">staple</span>
