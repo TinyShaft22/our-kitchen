@@ -105,3 +105,4 @@ Resume with: `/gsd:plan-phase 19` for Muffins batch
 - 2026-01-15: v1.0 MVP complete — All 10 phases finished with final polish
 - 2026-01-15: v1.1 complete — All 4 enhancement phases finished
 - 2026-01-15: Milestone v1.2 created — Baking Organization, 1 phase (15)
+- 2026-01-16: Milestone v2.0 created — Alexa Integration, 8 phases (23-30)

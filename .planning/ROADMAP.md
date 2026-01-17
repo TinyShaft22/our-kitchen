@@ -9,7 +9,8 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 - ✅ **v1.0 MVP** - Phases 1-10 (complete)
 - ✅ **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
 - ✅ **v1.2 Baking Organization** - Phase 15 (complete)
-- 🚧 **v1.3 Broma Bakery Import** - Phases 16-21 (in progress)
+- 🚧 **v1.3 Broma Bakery Import** - Phases 16-22 (in progress)
+- 📋 **v2.0 Alexa Integration** - Phases 23-30 (planned)
 
 ## Domain Expertise
 
@@ -213,6 +214,103 @@ None
 
 ---
 
+### 📋 v2.0 Alexa Integration (Planned)
+
+**Milestone Goal:** Add Echo Show voice + visual integration to Our Kitchen, enabling hands-free meal browsing, recipe viewing, cooking mode, and grocery management.
+
+**Key Decisions:**
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| Invocation name | "Our Kitchen" | Matches app name |
+| Authentication | Voice PIN | User says 4-digit code to link |
+| Data freshness | Query fresh each time | Voice commands infrequent |
+| Cooking steps | Auto-parse markdown | Split on ## headers and numbered lists |
+| Visual approach | Voice-first with APL fallback | Works on all Echos |
+| API layer | REST via Cloud Functions | Reuse existing pattern |
+
+**Constraints:**
+- Free hosting: Alexa-Hosted Skills only
+- WSL development: Code in WSL, PowerShell handoff for `ask deploy`
+- Voice-only fallback: Must work on any Alexa device
+
+#### Phase 23: Alexa Setup
+**Goal**: Developer account, Alexa-Hosted Skill creation, basic "hello world" response
+**Depends on**: Phase 22
+**Research**: Likely (Alexa SDK, developer account setup)
+**Research topics**: ASK CLI setup, Alexa-Hosted Skills structure, deployment workflow
+**Plans**: TBD
+
+Plans:
+- [ ] 23-01: TBD (run /gsd:plan-phase 23 to break down)
+
+#### Phase 24: Interaction Model
+**Goal**: Define intents, slots, utterances for all voice commands (meals, recipes, cooking, groceries)
+**Depends on**: Phase 23
+**Research**: Likely (ASK interaction model schema)
+**Research topics**: Intent/slot syntax, utterance patterns, built-in slot types
+**Plans**: TBD
+
+Plans:
+- [ ] 24-01: TBD
+
+#### Phase 25: Lambda Backend
+**Goal**: Skill handler with Firebase connection via REST API, voice PIN linking
+**Depends on**: Phase 24
+**Research**: Likely (Lambda + Firebase REST integration)
+**Research topics**: Cloud Functions REST endpoints, session attributes, account linking alternatives
+**Plans**: TBD
+
+Plans:
+- [ ] 25-01: TBD
+
+#### Phase 26: APL Meal List
+**Goal**: Visual template for browsing meals (voice-first, visual optional)
+**Depends on**: Phase 25
+**Research**: Likely (APL templating language)
+**Research topics**: APL document structure, ImageList template, viewport profiles for Echo Show 5
+**Plans**: TBD
+
+Plans:
+- [ ] 26-01: TBD
+
+#### Phase 27: APL Recipe Detail
+**Goal**: Ingredients + instructions display for "Show me the recipe for {meal}"
+**Depends on**: Phase 26
+**Research**: Unlikely (extends APL pattern from Phase 26)
+**Plans**: TBD
+
+Plans:
+- [ ] 27-01: TBD
+
+#### Phase 28: Cooking Mode
+**Goal**: Step-by-step pager with voice navigation, auto-parsed markdown (## headers, numbered lists)
+**Depends on**: Phase 27
+**Research**: Unlikely (extends APL pager pattern)
+**Plans**: TBD
+
+Plans:
+- [ ] 28-01: TBD
+
+#### Phase 29: Grocery Integration
+**Goal**: "What's on my grocery list?" / "Add {item}" — list viewing and item addition via voice
+**Depends on**: Phase 28
+**Research**: Unlikely (extends voice command pattern)
+**Plans**: TBD
+
+Plans:
+- [ ] 29-01: TBD
+
+#### Phase 30: Testing & Polish
+**Goal**: End-to-end testing on Echo Show 5, refinements
+**Depends on**: Phase 29
+**Research**: Unlikely (testing/polish)
+**Plans**: TBD
+
+Plans:
+- [ ] 30-01: TBD
+
+---
+
 ## Progress
 
 **Execution Order:**
@@ -241,3 +339,12 @@ Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 | 19. Muffins Batch | v1.3 | 0/2 | Not started | - |
 | 20. Brownies Batch | v1.3 | 0/2 | Not started | - |
 | 21. Import & Verification | v1.3 | 0/2 | Not started | - |
+| 22. Recipe Image Upload | v1.3 | 0/1 | Not started | - |
+| 23. Alexa Setup | v2.0 | 0/? | Not started | - |
+| 24. Interaction Model | v2.0 | 0/? | Not started | - |
+| 25. Lambda Backend | v2.0 | 0/? | Not started | - |
+| 26. APL Meal List | v2.0 | 0/? | Not started | - |
+| 27. APL Recipe Detail | v2.0 | 0/? | Not started | - |
+| 28. Cooking Mode | v2.0 | 0/? | Not started | - |
+| 29. Grocery Integration | v2.0 | 0/? | Not started | - |
+| 30. Testing & Polish | v2.0 | 0/? | Not started | - |
