@@ -9,6 +9,7 @@ interface ManualProductEntryProps {
     name: string;
     brand?: string;
     imageUrl?: string;
+    barcode: string;
   }) => void;
   onCancel: () => void;
   onBarcodeChange?: (barcode: string) => void;
@@ -36,14 +37,18 @@ export function ManualProductEntry({
       return;
     }
 
+    const trimmedBarcode = editableBarcode.trim();
+
     // Update barcode if changed
-    if (onBarcodeChange && editableBarcode !== barcode) {
-      onBarcodeChange(editableBarcode.trim());
+    if (onBarcodeChange && trimmedBarcode !== barcode) {
+      onBarcodeChange(trimmedBarcode);
     }
 
+    // Include barcode in submit data to ensure it's available synchronously
     onSubmit({
       name: name.trim(),
       brand: brand.trim() || undefined,
+      barcode: trimmedBarcode,
     });
   };
 

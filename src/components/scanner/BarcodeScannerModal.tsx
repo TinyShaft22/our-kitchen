@@ -110,12 +110,15 @@ export function BarcodeScannerModal({
     name: string;
     brand?: string;
     imageUrl?: string;
+    barcode: string;
   }) => {
-    if (!scannedBarcode) return;
+    // Use barcode from data (provided synchronously by ManualProductEntry)
+    const barcode = data.barcode;
+    if (!barcode) return;
 
     // Cache the manually entered product
     await cacheProduct({
-      barcode: scannedBarcode,
+      barcode,
       name: data.name,
       brand: data.brand,
       imageUrl: data.imageUrl,
@@ -125,7 +128,7 @@ export function BarcodeScannerModal({
     onProductSelected({
       name: data.name,
       brand: data.brand,
-      barcode: scannedBarcode,
+      barcode,
       imageUrl: data.imageUrl,
     });
 

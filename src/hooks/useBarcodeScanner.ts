@@ -29,6 +29,10 @@ export function useBarcodeScanner(): UseBarcodeScannnerReturn {
 
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const onScanCallbackRef = useRef<((code: string) => void) | null>(null);
+  const stateRef = useRef<ScannerState>('idle');
+
+  // Keep stateRef in sync with state
+  stateRef.current = state;
 
   // Cleanup on unmount
   useEffect(() => {
@@ -41,7 +45,8 @@ export function useBarcodeScanner(): UseBarcodeScannnerReturn {
 
   const startScanning = useCallback(
     async (elementId: string, onScan: (code: string) => void): Promise<void> => {
-      if (state === 'scanning' || state === 'starting') {
+      // Use ref to check current state without causing dependency issues
+      if (stateRef.current === 'scanning' || stateRef.current === 'starting') {
         return;
       }
 
@@ -111,11 +116,12 @@ export function useBarcodeScanner(): UseBarcodeScannnerReturn {
         setState('error');
       }
     },
-    [state]
+    [] // No dependencies - uses refs for state checks
   );
 
   const stopScanning = useCallback(async (): Promise<void> => {
-    if (!scannerRef.current || state !== 'scanning') {
+    // Use ref to check current state without causing dependency issues
+    if (!scannerRef.current || stateRef.current !== 'scanning') {
       setState('idle');
       return;
     }
@@ -130,7 +136,7 @@ export function useBarcodeScanner(): UseBarcodeScannnerReturn {
       console.error('Error stopping scanner:', err);
       setState('idle');
     }
-  }, [state]);
+  }, []); // No dependencies - uses refs for state checks
 
   return {
     state,
