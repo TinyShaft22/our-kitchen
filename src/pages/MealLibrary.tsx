@@ -17,6 +17,8 @@ import { AddSnackModal } from '../components/snacks/AddSnackModal';
 import { SnackDetailModal } from '../components/snacks/SnackDetailModal';
 import { BarcodeScannerModal } from '../components/scanner/BarcodeScannerModal';
 import { buildFolderTree, getAllFolderPaths, type FolderTreeNode } from '../utils/subcategoryUtils';
+import { MealGridSkeleton } from '../components/ui/skeleton';
+import { EmptyMeals, EmptySnacks } from '../components/ui/EmptyState';
 import type { Meal, Snack } from '../types';
 
 type ViewMode = 'list' | 'grid';
@@ -497,12 +499,40 @@ function MealLibrary() {
 
   if (loading || snacksLoading) {
     return (
-      <div className="p-4">
-        <div className="hero-gradient -mx-4 -mt-4 px-4 pt-6 pb-4 mb-4">
+      <div className="pb-32">
+        <div className="hero-gradient px-4 pt-6 pb-4 mb-4">
           <h1 className="text-2xl font-display font-semibold text-charcoal">Meal Library</h1>
+          <p className="text-charcoal/60 text-sm mt-1">Loading recipes...</p>
         </div>
-        <div className="flex items-center justify-center py-8">
-          <div className="text-warm-gray">Loading meals...</div>
+        <div className="px-4 space-y-6">
+          {/* Grid skeleton for visual view */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xl">🍽️</span>
+              <div className="h-6 w-24 bg-charcoal/10 rounded animate-pulse" />
+            </div>
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} style={{ animationDelay: `${i * 50}ms` }}>
+                  <MealGridSkeleton />
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Baking section skeleton */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xl">🧁</span>
+              <div className="h-6 w-32 bg-charcoal/10 rounded animate-pulse" />
+            </div>
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} style={{ animationDelay: `${(i + 12) * 50}ms` }}>
+                  <MealGridSkeleton />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -558,10 +588,7 @@ function MealLibrary() {
 
       <div className="px-4">
         {hasNoMeals ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <p className="text-warm-gray text-lg font-display">No meals yet.</p>
-            <p className="text-warm-gray mt-1">Tap + to add one!</p>
-          </div>
+          <EmptyMeals onAdd={handleAddClick} />
         ) : viewMode === 'grid' ? (
           /* GRID VIEW - Visual, image-focused with folder organization */
           <div className="space-y-6">
@@ -595,7 +622,7 @@ function MealLibrary() {
                             <span className={`text-terracotta transition-transform ${isExpanded ? 'rotate-0' : '-rotate-90'}`}>▼</span>
                           </button>
                           {isExpanded && (
-                            <div className="grid grid-cols-6 gap-1.5">
+                            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
                               {subcatMeals
                                 .sort((a, b) => a.name.localeCompare(b.name))
                                 .map((meal) => (
@@ -609,7 +636,7 @@ function MealLibrary() {
                   </div>
                 ) : (
                   // No subcategories, show flat grid
-                  <div className="grid grid-cols-6 gap-1.5">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
                     {mainDishes
                       .sort((a, b) => a.name.localeCompare(b.name))
                       .map((meal) => (
@@ -655,7 +682,7 @@ function MealLibrary() {
                               <div className="space-y-3">
                                 {/* Meals directly in this folder */}
                                 {node.meals.length > 0 && (
-                                  <div className="grid grid-cols-6 gap-1.5">
+                                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
                                     {node.meals
                                       .sort((a, b) => a.name.localeCompare(b.name))
                                       .map((meal) => (
@@ -683,7 +710,7 @@ function MealLibrary() {
                                           <span className={`text-sage text-sm transition-transform ${subIsExpanded ? 'rotate-0' : '-rotate-90'}`}>▼</span>
                                         </button>
                                         {subIsExpanded && (
-                                          <div className="grid grid-cols-6 gap-1.5">
+                                          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
                                             {subNode.meals
                                               .sort((a, b) => a.name.localeCompare(b.name))
                                               .map((meal) => (
@@ -707,7 +734,7 @@ function MealLibrary() {
                           Uncategorized
                           <span className="text-xs text-charcoal/50">({bakingFolderTree.meals.length})</span>
                         </span>
-                        <div className="grid grid-cols-6 gap-1.5">
+                        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
                           {bakingFolderTree.meals
                             .sort((a, b) => a.name.localeCompare(b.name))
                             .map((meal) => (
@@ -719,7 +746,7 @@ function MealLibrary() {
                   </div>
                 ) : (
                   // No folders, show flat grid
-                  <div className="grid grid-cols-6 gap-1.5">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
                     {bakingRecipes
                       .sort((a, b) => a.name.localeCompare(b.name))
                       .map((meal) => (
@@ -747,18 +774,9 @@ function MealLibrary() {
                 </button>
               </div>
               {snacks.length === 0 ? (
-                <div className="bg-white/60 rounded-soft p-6 text-center">
-                  <span className="text-4xl block mb-2 opacity-40">🍿</span>
-                  <p className="text-charcoal/60">No snacks yet.</p>
-                  <button
-                    onClick={handleAddSnackClick}
-                    className="mt-3 px-4 py-2 text-sm bg-terracotta text-white rounded-soft hover:bg-terracotta/90"
-                  >
-                    + Add Snack
-                  </button>
-                </div>
+                <EmptySnacks onAdd={handleAddSnackClick} />
               ) : (
-                <div className="grid grid-cols-6 gap-1.5">
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
                   {snacks
                     .sort((a, b) => a.name.localeCompare(b.name))
                     .map((snack) => (
@@ -950,10 +968,7 @@ function MealLibrary() {
               }`}
             >
               {snacks.length === 0 ? (
-                <div className="text-center py-8 text-charcoal/60 bg-white/60 rounded-soft">
-                  <span className="text-4xl block mb-2 opacity-40">🍿</span>
-                  <p>No snacks yet. Scan a barcode or add manually!</p>
-                </div>
+                <EmptySnacks onAdd={handleAddSnackClick} />
               ) : (
                 <div className="grid grid-cols-1 gap-4">
                   {snacks
