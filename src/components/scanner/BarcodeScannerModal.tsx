@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import { useBarcodeScanner } from '../../hooks/useBarcodeScanner';
 import { useOpenFoodFacts } from '../../hooks/useOpenFoodFacts';
 import { ProductLookupResult } from './ProductLookupResult';
@@ -50,6 +50,9 @@ export function BarcodeScannerModal({
     clearResult,
   } = useOpenFoodFacts(householdCode);
 
+  // Use ref to store the scan handler so effect doesn't depend on it
+  const handleScanRef = useRef<(barcode: string) => Promise<void>>();
+
   // Handle barcode scan
   const handleScan = useCallback(
     async (barcode: string) => {
@@ -68,16 +71,21 @@ export function BarcodeScannerModal({
     [stopScanning, lookup]
   );
 
+  // Keep ref in sync with latest callback
+  handleScanRef.current = handleScan;
+
   // Start scanner when modal opens
   useEffect(() => {
     if (isOpen && view === 'scanning') {
       // Small delay to ensure DOM is ready
       const timer = setTimeout(() => {
-        startScanning('barcode-scanner-container', handleScan);
+        startScanning('barcode-scanner-container', (barcode) => {
+          handleScanRef.current?.(barcode);
+        });
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, view, startScanning, handleScan]);
+  }, [isOpen, view, startScanning]); // Removed handleScan - using ref instead
 
   // Cleanup when modal closes
   useEffect(() => {
@@ -139,9 +147,11 @@ export function BarcodeScannerModal({
     setView('scanning');
     setScannedBarcode(null);
     clearResult();
-    // Restart scanning
+    // Restart scanning - use ref wrapper for stable callback
     setTimeout(() => {
-      startScanning('barcode-scanner-container', handleScan);
+      startScanning('barcode-scanner-container', (barcode) => {
+        handleScanRef.current?.(barcode);
+      });
     }, 100);
   };
 
