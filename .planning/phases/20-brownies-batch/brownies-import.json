@@ -1,0 +1,386 @@
+{
+  "version": 1,
+  "meals": [
+    {
+      "name": "How to Make the Best Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## How to Make the Best Brownies\n\n**Yield:** 16 brownies\n**Prep:** 20 min | **Bake:** 25 min\n\n### Ingredients\n- 10 tablespoons unsalted butter\n- 1 1/4 cup packed light brown sugar\n- 2 large eggs, at room temperature\n- 1 teaspoon vanilla extract\n- 1/2 cup cocoa powder\n- 1/2 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1/2 cup semisweet chocolate chips\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line an 8x8\" baking pan with parchment paper.\n\n2. Melt butter and sugar - In a microwave-safe bowl, combine butter and sugar. Microwave for 30 seconds, stir, then repeat 4 more times until glossy.\n\n3. Add eggs - Add eggs one at a time, whisking between additions until mixture lightens. Stir in vanilla extract.\n\n4. Add dry ingredients - Fold in cocoa powder, flour, and salt until combined. Add chocolate chips and fold to combine.\n\n5. Bake - Transfer to prepared pan and bake approximately 25 minutes, testing at 20 minutes. Brownies are done when edges are set but center still has some batter when tested with a knife (may take up to 35 minutes depending on oven).\n\n---\n[Original recipe](https://bromabakery.com/how-to-make-the-best-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Brown Butter Brownies",
+      "servings": 9,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Brown Butter Brownies\n\n**Yield:** 9 brownies\n**Prep:** 20 min | **Bake:** 30 min\n\n### Ingredients\n- 3/4 cup unsalted butter\n- 3/4 cup Dutch-process cocoa powder\n- 1 teaspoon vanilla extract\n- 1 3/4 cup packed light brown sugar\n- 3 large eggs\n- 3/4 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1/2 cup semisweet or bittersweet chocolate chips (optional)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line an 8x8-inch pan with parchment paper.\n\n2. Brown the butter - Heat butter over medium-low in a small saucepan, stirring every 10-15 seconds until golden brown with nutty aroma and visible brown bits (10-15 minutes).\n\n3. Mix cocoa - Whisk cocoa powder and vanilla into the browned butter until smooth.\n\n4. Beat eggs and sugar - Beat eggs and brown sugar in a stand mixer until light, fluffy, and pale.\n\n5. Combine mixtures - Fold butter mixture into egg mixture using a rubber spatula.\n\n6. Add dry ingredients - Fold in flour and salt until combined. Add chocolate chips if desired.\n\n7. Bake - Transfer to prepared pan and bake 25 minutes, testing doneness at 20 minutes with a knife—edges should set while center remains slightly underdone (up to 35 minutes depending on oven).\n\n---\n[Original recipe](https://bromabakery.com/brown-butter-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Peppermint Bark Brownies",
+      "servings": 9,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "peppermint extract", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "peppermint candies", "category": "pantry", "defaultStore": "safeway" }
+      ],
+      "instructions": "## Peppermint Bark Brownies\n\n**Yield:** 9 large brownies\n**Prep:** 45 min | **Bake:** 25 min\n\n### Ingredients\n\n**For the Brownies:**\n- 3/4 cup butter, melted\n- 1/2 cup Dutch-processed cocoa powder\n- 2 large eggs\n- 1 1/2 cups granulated sugar\n- 1 teaspoon peppermint extract\n- 1 teaspoon vanilla extract\n- 3/4 cup all-purpose flour\n- 1/2 teaspoon salt\n\n**For the Frosting:**\n- 1/2 cup unsalted butter, room temperature\n- 2 cups powdered sugar\n- 1/2 teaspoon peppermint extract\n- 1/2 teaspoon vanilla extract\n- 1 tablespoon whole milk\n\n**For the Chocolate Ganache & Topping:**\n- 4 oz semisweet chocolate, chopped\n- 2 tablespoons unsalted butter, cut into cubes\n- Crushed peppermint candies for decorating\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line an 8x8-inch pan with parchment paper.\n\n2. Make brownie batter - Melt butter in a small saucepan over medium heat. Remove from heat, add cocoa powder, and whisk until smooth.\n\n3. Beat eggs and sugar - Beat eggs and granulated sugar in a stand mixer with whisk attachment until light and fluffy. Add vanilla and peppermint extracts.\n\n4. Combine - Fold the butter-cocoa mixture into the egg mixture using a rubber spatula.\n\n5. Add dry ingredients - Fold in flour and salt until no streaks remain.\n\n6. Bake - Transfer to prepared pan and bake approximately 25 minutes, testing for doneness at 20 minutes. Brownies should have set edges with a slightly underbaked center.\n\n7. Make frosting - Cool completely, then prepare frosting by beating unsalted butter, powdered sugar, peppermint extract, vanilla extract, and milk until fluffy (about 1 minute).\n\n8. Frost - Spread frosting evenly over cooled brownies. Refrigerate 15 minutes to set.\n\n9. Make ganache - Microwave chopped chocolate and butter in 30-second increments, stirring between each, until melted and smooth.\n\n10. Finish - Pour chocolate mixture over frosting, spreading to edges. Top with crushed peppermint candies. Refrigerate 1 hour to harden before cutting and serving.\n\n---\n[Original recipe](https://bromabakery.com/peppermint-bark-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "White Chocolate Brownies",
+      "servings": 9,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "white chocolate chips", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "sweetened condensed milk", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## White Chocolate Brownies\n\n**Yield:** 9 large brownies\n**Prep:** 10 min | **Bake:** 25 min\n\n### Ingredients\n- 1/2 cup butter, room temperature\n- 1 cup white chocolate chips\n- 1 large egg, room temperature\n- 1 can (14 oz) sweetened condensed milk\n- 1 tablespoon vanilla extract\n- 1 teaspoon salt\n- 1 1/2 cups all-purpose flour\n- Powdered sugar, for topping\n\n### Instructions\n\n1. Preheat and prep - Heat oven to 350°F. Line an 8\"x8\" dish with parchment paper and set aside.\n\n2. Melt butter and chocolate - Combine butter and white chocolate chips in a microwave-safe bowl and microwave for 30 seconds. Stir until completely melted (microwave another 10-15 seconds if needed).\n\n3. Mix wet ingredients - Add egg, sweetened condensed milk, vanilla extract, and salt, stirring to combine. Fold in flour until just combined.\n\n4. Bake - Pour mixture into prepared pan and bake for 25 minutes. Remove from oven, allow to cool in pan for 10 minutes, then transfer to a cooling rack. Allow to cool completely before serving.\n\n---\n[Original recipe](https://bromabakery.com/2015/05/white-chocolate-brownies-recipe.html)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Single Serve Fudgy Brownie",
+      "servings": 2,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "egg yolks", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Single Serve Fudgy Brownie\n\n**Yield:** 2 brownie bites\n**Prep:** 5 min | **Bake:** 18 min\n\n### Ingredients\n- 2 1/2 tablespoons unsalted butter\n- 4 tablespoons light brown sugar, packed\n- 1 large egg yolk\n- 1/4 teaspoon vanilla extract\n- 3 tablespoons cocoa powder\n- 1 tablespoon all-purpose flour\n- Pinch of salt\n- 1 tablespoon chocolate chips (optional)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease two standard muffin cups with cooking spray or line with cupcake liners.\n\n2. Melt butter and sugar - Combine butter and sugar in a microwave-safe bowl. Microwave for 30 seconds, stir, and repeat if needed until fully melted.\n\n3. Add egg - Add egg yolk and vanilla extract, whisking until the mixture lightens slightly.\n\n4. Add dry ingredients - Fold in cocoa powder, flour, and salt until no streaks remain. Add chocolate chips if using.\n\n5. Bake - Divide mixture between prepared muffin cups. Bake 16-18 minutes until edges are set but center still has some batter when tested with a knife.\n\n6. Serve - Cool slightly before serving.\n\n---\n[Original recipe](https://bromabakery.com/single-serve-fudgy-brownie/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Red Wine Brownies",
+      "servings": 12,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "red wine", "category": "beverages", "defaultStore": "costco" }
+      ],
+      "instructions": "## Red Wine Brownies\n\n**Yield:** 9-16 brownies\n**Prep:** 15 min | **Bake:** 40 min\n\n### Ingredients\n- 1/2 cup unsalted butter\n- 4 ounces bittersweet chocolate, chopped\n- 1 1/2 cups light or medium brown sugar\n- 2 eggs, room temperature\n- 3/4 cup cocoa powder\n- 1/4 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1 teaspoon vanilla extract\n- 1/4 cup red wine\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line an 8\"x8\" baking dish with parchment paper or oil.\n\n2. Melt butter and chocolate - In a small saucepan over low heat, melt the butter. Add chopped chocolate, stirring constantly until completely melted.\n\n3. Mix with sugar - In a standing mixer with whisk attachment, add brown sugar. Slowly pour melted chocolate mixture into sugar with mixer running on medium speed. Add eggs one at a time. Beat for 30 seconds until batter lightens slightly.\n\n4. Add dry ingredients - Turn mixer to low and add cocoa powder, flour, salt, vanilla extract, and wine. Beat for an additional 30 seconds.\n\n5. Bake - Pour batter into prepared pan and bake for roughly 40 minutes, or until a knife inserted in the center comes out mostly clean.\n\n---\n[Original recipe](https://bromabakery.com/2017/01/red-wine-brownies-recipe.html)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Bakery Style Whole Wheat Brownies",
+      "servings": 9,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "salted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "whole wheat flour", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Bakery Style Whole Wheat Brownies\n\n**Yield:** 9 brownies\n**Prep:** 15 min | **Bake:** 50 min\n\n### Ingredients\n- 1 1/4 cups salted butter\n- 2 1/2 cups light brown sugar\n- 4 large eggs, room temperature\n- 1 1/2 cups cocoa powder\n- 3/4 teaspoon salt\n- 2 teaspoons vanilla extract\n- 2/3 cup whole wheat flour\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line a 9\"x9\" pan with parchment paper.\n\n2. Melt butter and sugar - In a large microwave-safe bowl, combine butter and sugar. Microwave for 30 seconds, stir with a whisk. Repeat 2 more times until the mixture reaches a glossy finish.\n\n3. Add eggs - Allow mixture to cool slightly, then add eggs one at a time, whisking between each addition until the mixture lightens in color.\n\n4. Add dry ingredients - Add cocoa powder, salt, and vanilla extract. Fold in flour until just combined.\n\n5. Bake - Pour into prepared pan and bake for approximately 45 minutes, testing for doneness at 40 minutes with a knife. Baking may take up to 55 minutes depending on your oven.\n\n---\n[Original recipe](https://bromabakery.com/2018/01/secret-ingredient-bakery-style-fudge-brownies.html)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Fudgy Raspberry Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "fresh raspberries", "category": "produce", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Fudgy Raspberry Brownies\n\n**Yield:** 16 brownies\n**Prep:** 15 min | **Bake:** 30 min\n\n### Ingredients\n- 3/4 cup unsalted butter, melted\n- 3/4 cup Dutch-process cocoa powder\n- 1 teaspoon vanilla extract\n- 1 3/4 cup packed light brown sugar\n- 3 large eggs\n- 3/4 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1/2 cup fresh raspberries, frozen\n- 1/2 cup semisweet or bittersweet chocolate chips (optional)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line an 8x8-inch pan with parchment paper on all sides.\n\n2. Mix butter and cocoa - Combine melted butter, cocoa powder, and vanilla in a mixing bowl; whisk until no cocoa lumps remain.\n\n3. Beat eggs and sugar - Beat eggs and brown sugar together in a stand mixer with whisk attachment until light, fluffy, and pale.\n\n4. Combine - Fold butter mixture into egg mixture using a rubber spatula.\n\n5. Add dry ingredients - Fold in flour and salt until no streaks remain. Gently fold in raspberries and chocolate chips.\n\n6. Bake - Transfer batter to prepared pan and bake approximately 25 minutes, testing doneness at 20 minutes. Brownies are done when edges are set but center still has some batter (may take up to 35 minutes depending on oven).\n\n---\n[Original recipe](https://bromabakery.com/fudgy-raspberry-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Salted Caramel Skillet Brownie",
+      "servings": 8,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "heavy cream", "category": "dairy", "defaultStore": "costco" },
+        { "name": "kosher salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Salted Caramel Skillet Brownie\n\n**Yield:** 8 servings\n**Prep:** 30 min | **Bake:** 30 min\n\n### Ingredients\n\n**For the Caramel:**\n- 1 cup granulated sugar\n- 6 tablespoons unsalted butter, room temperature, cut into tablespoons\n- 1/2 cup heavy cream, room temperature\n- 1 to 1 1/2 teaspoons sea salt\n\n**For the Brownies:**\n- 12 tablespoons unsalted butter\n- 1 1/2 cups sugar\n- 2 eggs\n- 2 teaspoons vanilla extract\n- 1/2 teaspoon salt\n- 3/4 cup cocoa powder\n- 1/2 cup all-purpose flour\n- Flaked sea salt for garnish\n\n### Instructions\n\n**Make the Caramel:**\n\n1. Caramelize sugar - Heat sugar in a medium saucepan over medium-high heat for about 5 minutes, stirring occasionally with a spatula to ensure even cooking. The sugar will become lumpy before melting into a brownish color.\n\n2. Add butter - Once fully melted and dark amber, remove from heat immediately and stir in butter. The mixture will bubble vigorously.\n\n3. Combine - Stir butter and sugar together for 1-2 minutes until completely combined.\n\n4. Add cream and salt - Pour in heavy cream and sea salt (use 1 to 1 1/2 teaspoons based on preference). Stir until combined, then return to stove for about 30 seconds while stirring. Remove from heat and cool for 15 minutes.\n\n**Make the Brownies:**\n\n5. Preheat and prep - Preheat oven to 350°F. Generously grease a large skillet with butter.\n\n6. Make batter - Melt butter in a microwave-safe bowl. Stir in sugar, eggs, vanilla extract, and salt. Fold in cocoa powder and flour.\n\n7. Layer - Spread slightly more than half the brownie batter into the skillet. Pour 1/2 cup salted caramel over the batter, spreading evenly but not quite to the edges. Spoon remaining batter over top, sealing in as much caramel as possible.\n\n8. Bake and serve - Bake for 30 minutes. Cool for 20 minutes, then drizzle with additional caramel and top with flaked sea salt.\n\n---\n[Original recipe](https://bromabakery.com/2015/05/salted-caramel-skillet-brownie-recipe.html)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Insanely Fudgy Peanut Butter Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "peanut butter", "category": "pantry", "defaultStore": "costco" },
+        { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Insanely Fudgy Peanut Butter Brownies\n\n**Yield:** 16 brownies\n**Prep:** 30 min | **Bake:** 40 min\n\n### Ingredients\n\n**Brownie Base:**\n- 1/2 cup unsalted butter\n- 1 1/2 cups granulated sugar\n- 6 ounces bittersweet chocolate, chopped\n- 2 large eggs, at room temperature\n- 2 teaspoons vanilla extract\n- 1 cup all-purpose flour\n- 6 tablespoons cocoa powder\n- 1/2 teaspoon salt\n\n**Peanut Butter Swirl:**\n- 1/3 cup creamy peanut butter\n- 2 tablespoons unsalted butter\n- 1/4 cup powdered sugar\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line a 9x9-inch square baking pan with parchment paper on all sides.\n\n2. Melt butter and sugar - In a microwave-safe bowl, melt the butter. Remove and stir in sugar, then microwave for 30 seconds. Stir and microwave again for 60 seconds until sugars and butter bubble slightly without burning.\n\n3. Add chocolate - Remove from microwave and stir in bittersweet chocolate until melted (microwave 15 seconds more if needed). Cool slightly before whisking in eggs and vanilla until smooth and frothy.\n\n4. Add dry ingredients - Add flour, cocoa powder, and salt to wet ingredients; mix until just combined with no flour streaks remaining.\n\n5. Pour batter - Scrape batter into prepared pan and smooth into an even layer.\n\n6. Make peanut butter swirl - Heat peanut butter for 15 seconds in microwave. Stir in butter and powdered sugar until smooth. Drop spoonfuls across brownies and swirl with a knife.\n\n7. Bake - Bake 40 minutes until a knife inserted in center comes out mostly clean (a little batter is acceptable). Cool 15 minutes before removing from pan and cutting.\n\n---\n[Original recipe](https://bromabakery.com/peanut-butter-brownies-i-cant-believe-i-havent-done-this-yet/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Fudgy Gluten Free Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "gluten-free flour", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Fudgy Gluten Free Brownies\n\n**Yield:** 16 brownies\n**Prep:** 10 min | **Bake:** 30 min\n\n### Ingredients\n- 1/2 cup + 2 tablespoons unsalted butter\n- 1 cup light brown sugar\n- 2 large eggs, room temperature\n- 3/4 cup Dutch processed cocoa powder\n- 1/2 teaspoon salt\n- 1 teaspoon vanilla extract\n- 6 tablespoons gluten free flour (Bob's Red Mill 1 to 1 Baking Flour)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line an 8\"x8\" pan with parchment paper.\n\n2. Melt butter and sugar - In a microwave-safe bowl, combine butter and sugar. Microwave for 30 seconds, stir, then repeat twice more until glossy.\n\n3. Add eggs - Allow to cool slightly, then add eggs one at a time, whisking between additions until mixture lightens.\n\n4. Add dry ingredients - Add cocoa powder, salt, and vanilla. Fold in flour until just combined.\n\n5. Bake - Pour into prepared pan and bake approximately 30 minutes, testing at 25 minutes. Brownies are done when edges are set but center still has some batter on inserted knife (may take up to 45 minutes).\n\n---\n[Original recipe](https://bromabakery.com/fudgy-gluten-free-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Fudgy Nutella Brownies",
+      "servings": 12,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "nutella", "category": "pantry", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Fudgy Nutella Brownies\n\n**Yield:** 9-16 brownies\n**Prep:** 15 min | **Bake:** 30 min\n\n### Ingredients\n- 1/2 cup unsalted butter\n- 2/3 cup granulated sugar\n- 2 eggs, room temperature\n- 2/3 cup Nutella + about 1/3 cup for swirling\n- 3/4 cup all purpose flour\n- 1/4 cup Dutch process cocoa\n- 1 teaspoon vanilla\n- 1/2 teaspoon salt\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line an 8x8\" pan with parchment paper.\n\n2. Melt butter and sugar - Combine butter and sugar in a microwave-safe bowl. Microwave 30 seconds, stir, repeat twice until glossy.\n\n3. Add eggs - Cool slightly, then add eggs one at a time, whisking between additions until lightened (about 2 minutes).\n\n4. Add Nutella - Mix in 2/3 cup Nutella and vanilla extract.\n\n5. Add dry ingredients - Fold in cocoa powder, flour, and salt until just combined.\n\n6. Swirl - Pour into prepared pan. Drop remaining 1/3 cup Nutella by tablespoon on top; swirl with a butter knife creating ribbons.\n\n7. Bake - Bake approximately 30 minutes until edges are set but center has slight batter when tested with a knife.\n\n8. Cool - Cool before slicing.\n\n---\n[Original recipe](https://bromabakery.com/nutella-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Buckeye Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "peanut butter", "category": "pantry", "defaultStore": "costco" },
+        { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "heavy cream", "category": "dairy", "defaultStore": "costco" }
+      ],
+      "instructions": "## Buckeye Brownies\n\n**Yield:** 16 brownies\n**Prep:** 20 min | **Total:** 1 hour\n\n### Ingredients\n\n**For the brownies:**\n- 10 tablespoons unsalted butter\n- 1 1/4 cup packed light brown sugar\n- 2 large eggs, at room temperature\n- 1 teaspoon vanilla extract\n- 1/2 cup cocoa powder\n- 1/2 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1/2 cup semisweet chocolate chips\n\n**For the peanut butter topping:**\n- 1/2 cup creamy peanut butter, room temperature\n- 4 tablespoons unsalted butter, room temperature\n- 1 cup powdered sugar\n- Pinch of salt\n- 1 teaspoon vanilla extract\n\n**For the chocolate ganache:**\n- 1 1/2 cups semisweet chocolate chips\n- 3 tablespoons heavy cream\n\n### Instructions\n\n1. Make brownies - Prepare brownies according to directions (see Best Brownies recipe), fully lining the pan with parchment paper on all sides. Allow to cool completely.\n\n2. Make peanut butter topping - Combine softened butter and peanut butter, beating for about 1 minute. Add powdered sugar, salt, and vanilla, stirring until no clumps remain. Spread evenly over cooled brownies.\n\n3. Make ganache - Microwave chocolate chips and heavy cream in 30-second intervals, stirring between each, until completely melted. Pour ganache over peanut butter layer and spread evenly.\n\n4. Set and serve - Refrigerate until set, at least 1 hour. Slice and serve. Store in airtight container for up to 1 week.\n\n---\n[Original recipe](https://bromabakery.com/buckeye-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Fudgy Chocolate Brownie Pie",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "pie crust", "category": "frozen", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Fudgy Chocolate Brownie Pie\n\n**Yield:** 16 servings\n**Prep:** 15 min | **Bake:** 25-30 min\n\n### Ingredients\n- 1 unbaked 9-inch pie crust\n- 3 large eggs, room temperature\n- 1/4 cup light brown sugar, packed\n- 1/4 cup granulated sugar\n- 1/2 cup unsalted butter, melted\n- 2/3 cup Ghirardelli 60% Bittersweet Chocolate Chips\n- 2 teaspoons vanilla extract\n- 1/3 cup all-purpose flour\n- 1/3 cup Dutch Processed cocoa powder\n- 1/2 teaspoon salt\n\n### Instructions\n\n1. Preheat - Preheat oven to 350°F.\n\n2. Prepare crust - Roll out pie dough and fit into 9-inch dish.\n\n3. Chill crust - Crimp edges and freeze while preparing filling.\n\n4. Beat eggs and sugar - Beat eggs and sugar until light and fluffy (3 minutes).\n\n5. Melt butter and chocolate - Melt butter and chocolate together until smooth.\n\n6. Combine - Combine chocolate mixture with egg mixture.\n\n7. Add vanilla - Add vanilla extract and mix well.\n\n8. Add dry ingredients - Fold in flour, salt, and cocoa powder.\n\n9. Fill crust - Pour filling into chilled crust.\n\n10. Bake - Bake at 350°F for 25-30 minutes until golden.\n\n11. Cool - Cool for 1 hour, then refrigerate.\n\n12. Serve - Slice and serve.\n\n---\n[Original recipe](https://bromabakery.com/fudgy-chocolate-brownie-pie/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Triple Chocolate Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "espresso powder", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "whole milk", "category": "dairy", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Triple Chocolate Brownies\n\n**Yield:** 15-18 brownies\n**Prep:** 20 min | **Bake:** 30 min\n\n### Ingredients\n- 4 oz bittersweet chocolate, chopped\n- 12 tablespoons butter, cut into small cubes\n- 3 eggs\n- 1 cup granulated sugar\n- 1/2 cup light brown sugar\n- 2 teaspoons vanilla extract\n- 1 tablespoon coffee\n- 1/2 cup whole milk\n- 1 cup flour\n- 1 cup cocoa powder\n- 1/2 teaspoon baking soda\n- 1 teaspoon salt\n- 1 cup bittersweet chocolate chips\n- Sea salt, for sprinkling (optional)\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Line a 9x13 baking pan with parchment paper and set aside.\n\n2. Melt chocolate and butter - In a microwave-safe mixing bowl, combine the bittersweet chocolate and butter. Stir to combine, then microwave in 30 second intervals until the mixture melts completely. Stir vigorously with a fork or whisk in between each interval to help with the melting process.\n\n3. Add wet ingredients - Once melted, add both sugars, milk, coffee, vanilla extract, and eggs into the chocolate mixture, stirring until combined (make sure your chocolate mixture has cooled slightly as to not cook the eggs).\n\n4. Add dry ingredients - Fold in the flour, cocoa powder, baking soda, and salt, stirring until just combined. Finally, fold in the bittersweet chocolate chips and stir until even throughout.\n\n5. Bake - Pour into lined baking pan and cook for approximately 30 minutes. If using sea salt, sprinkle over brownies once removed from oven. Allow to cool for 10 minutes before cutting.\n\n---\n[Original recipe](https://bromabakery.com/triple-chocolate-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Fudgy Mocha Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "espresso powder", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Fudgy Mocha Brownies\n\n**Yield:** 16 brownies\n**Prep:** 15 min | **Bake:** 25 min\n\n### Ingredients\n- 10 tablespoons unsalted butter\n- 1 1/4 cup packed light brown sugar\n- 2 large eggs, at room temperature\n- 2 tablespoons espresso powder\n- 1 teaspoon vanilla extract\n- 1/2 cup Dutch process cocoa powder\n- 1/2 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1/2 cup semisweet chocolate chips\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line an 8x8\" baking pan with parchment paper.\n\n2. Melt butter and sugar - In a microwave-safe bowl, combine butter and sugar. Microwave 30 seconds, stir, and repeat 4 more times until glossy.\n\n3. Add eggs - Add eggs one at a time, whisking between additions. Whisk vigorously until mixture lightens. Add vanilla and espresso powder; mix well.\n\n4. Add dry ingredients - Fold in cocoa powder, flour, and salt until combined. Fold in chocolate chips.\n\n5. Bake - Transfer to prepared pan and bake 25 minutes, testing doneness at 20 minutes. Brownies are done when the edge is set, but a knife inserted into the middle still comes out with a bit of brownie batter on it.\n\n---\n[Original recipe](https://bromabakery.com/fudgy-mocha-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Fudgy Oreo Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "Oreos", "category": "pantry", "defaultStore": "safeway" }
+      ],
+      "instructions": "## Fudgy Oreo Brownies\n\n**Yield:** 16 brownies\n**Prep:** 10 min | **Bake:** 50 min\n\n### Ingredients\n- 1 1/4 cups unsalted butter\n- 2 1/2 cups packed light brown sugar\n- 4 large eggs, at room temperature\n- 1 1/2 cups Dutch processed cocoa powder\n- 3/4 teaspoon salt\n- 2 teaspoons vanilla extract\n- 2/3 cup all-purpose flour\n- 16 Oreo cookies, crumbled into pieces\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Grease and line a 9\"x9\" pan with parchment paper.\n\n2. Melt butter and sugar - In a microwave-safe bowl, combine butter and sugar. Microwave for 30 seconds, stir, then repeat twice more until glossy.\n\n3. Add eggs - Cool slightly, then add eggs one at a time, whisking between additions until color lightens.\n\n4. Add dry ingredients - Fold in cocoa powder, salt, and vanilla, then flour and Oreo pieces.\n\n5. Bake - Pour into prepared pan and bake 45 minutes (test for doneness starting at 40 minutes; may take up to 55 minutes).\n\n---\n[Original recipe](https://bromabakery.com/fudgy-oreo-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "The BEST Cheesecake Brownies",
+      "servings": 16,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "cream cheese", "category": "dairy", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "granulated sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "dark chocolate chips", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## The BEST Cheesecake Brownies\n\n**Yield:** 16 brownies\n**Prep:** 15 min | **Bake:** 30 min\n\n### Ingredients\n\n**Cheesecake Layer:**\n- 4 ounces cream cheese, softened\n- 1 egg, room temperature\n- 1/4 cup granulated sugar\n- 1 teaspoon vanilla extract\n\n**Brownie Layer:**\n- 1/2 cup butter\n- 1 cup granulated sugar\n- 2 eggs plus 1 yolk\n- 1 teaspoon vanilla extract\n- 4 oz bittersweet chocolate, finely chopped\n- 3/4 cup all purpose flour\n- 1/4 cup cocoa powder\n- 1/2 teaspoon salt\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F; line 9x9 pan with parchment paper.\n\n2. Make cheesecake layer - Mix cheesecake ingredients in stand mixer until combined (about 2 minutes); don't overbeat.\n\n3. Make brownie base - Melt butter and sugar via microwave, then microwave 30 more seconds and again for 60 seconds.\n\n4. Add chocolate - Stir bittersweet chocolate into hot mixture until melted completely.\n\n5. Add eggs - Add eggs, yolk, and vanilla; beat until combined. Mix in flour, cocoa powder, and salt.\n\n6. Thin some batter - Remove 1/2 cup brownie batter; whisk with 2 tablespoons water to thin it.\n\n7. Assemble - Pour remaining batter into prepared pan; add cheesecake layer on top. Drizzle thinned batter and swirl gently.\n\n8. Bake - Bake 30 minutes until knife inserted in center comes out mostly clean. Cool completely; refrigerate 1 hour before serving.\n\n---\n[Original recipe](https://bromabakery.com/the-best-cheesecake-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Cookie Butter Swirled Brownies",
+      "servings": 9,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "cookie butter", "category": "pantry", "defaultStore": "trader-joes" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Cookie Butter Swirled Brownies\n\n**Yield:** 9 brownies\n**Prep:** 15 min | **Bake:** 45 min\n\n### Ingredients\n- 3/4 cup cookie butter, melted\n- 10 tablespoons unsalted butter\n- 1 1/4 cup packed light brown sugar\n- 2 large eggs, at room temperature\n- 1 teaspoon vanilla extract\n- 1/2 cup cocoa powder\n- 1/2 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1/2 cup semisweet chocolate chips\n\n### Instructions\n\n1. Preheat and prep - Heat oven to 350°F. Line a 9x9 square pan with parchment paper.\n\n2. Make brownie batter - In a microwave-safe bowl, combine butter and sugar. Microwave for 30 seconds, stir, then repeat 4 more times until glossy. Add eggs one at a time, whisking between additions until mixture lightens. Stir in vanilla extract. Fold in cocoa powder, flour, and salt until combined. Add chocolate chips and fold to combine.\n\n3. Swirl - Pour batter into prepared pan. Drop 5 large dollops of cookie butter on top (like dice pattern). Using a butter knife, drag it through the batter creating huge swirls and allowing the batter and cookie butter to marble a little. Don't over mix!\n\n4. Bake - Bake 45 minutes until a knife inserted in the center comes out mostly clean. Cool and serve.\n\n---\n[Original recipe](https://bromabakery.com/cookie-butter-swirled-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Halva Brownies",
+      "servings": 9,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "halva", "category": "pantry", "defaultStore": "trader-joes" },
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "chocolate chips", "category": "baking", "defaultStore": "costco" }
+      ],
+      "instructions": "## Halva Brownies\n\n**Yield:** 9 brownies\n**Prep:** 10 min | **Bake:** 45 min\n\n### Ingredients\n- 8 ounces Halva\n- 3 tablespoons water\n- 10 tablespoons unsalted butter\n- 1 1/4 cup packed light brown sugar\n- 2 large eggs, at room temperature\n- 1 teaspoon vanilla extract\n- 1/2 cup cocoa powder\n- 1/2 cup all-purpose flour\n- 1/2 teaspoon salt\n- 1/2 cup semisweet chocolate chips\n\n### Instructions\n\n1. Preheat and prep - Preheat oven and prepare brownie batter: combine butter and sugar. Microwave for 30 seconds, stir, then repeat 4 more times until glossy. Add eggs one at a time, whisking between additions until mixture lightens. Stir in vanilla extract. Fold in cocoa powder, flour, and salt until combined. Add chocolate chips and fold to combine. Pour batter into a 9x9 pan.\n\n2. Prepare halva - Melt halva with water over medium heat until runny and combined. The mixture should match the brownie batter's thickness; add more water if needed for easy swirling.\n\n3. Swirl - Drop halva globs onto brownies and swirl with a butter knife to create marbling without overmixing.\n\n4. Bake - Bake 40-50 minutes until edges are firm and a knife inserted in the center comes out mostly clean.\n\n5. Serve - Allow to cool before serving. Option to sprinkle with sesame seeds for an added crunch!\n\n---\n[Original recipe](https://bromabakery.com/halva-brownies/)",
+      "subcategory": "Broma/Brownies"
+    },
+    {
+      "name": "Espresso Brownie Sandwich Cookies",
+      "servings": 18,
+      "isBaking": true,
+      "ingredients": [
+        { "name": "unsalted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "light brown sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "eggs", "category": "dairy", "defaultStore": "costco" },
+        { "name": "vanilla extract", "category": "baking", "defaultStore": "costco" },
+        { "name": "salt", "category": "baking", "defaultStore": "costco" },
+        { "name": "Dutch-process cocoa powder", "category": "baking", "defaultStore": "costco" },
+        { "name": "all-purpose flour", "category": "baking", "defaultStore": "costco" },
+        { "name": "baking soda", "category": "baking", "defaultStore": "costco" },
+        { "name": "salted butter", "category": "dairy", "defaultStore": "costco" },
+        { "name": "espresso powder", "category": "baking", "defaultStore": "trader-joes" },
+        { "name": "powdered sugar", "category": "baking", "defaultStore": "costco" },
+        { "name": "whole milk", "category": "dairy", "defaultStore": "costco" }
+      ],
+      "instructions": "## Espresso Brownie Sandwich Cookies\n\n**Yield:** 18 sandwich cookies\n**Prep:** 20 min | **Bake:** 7 min\n\n### Ingredients\n\n**For the cookies:**\n- 1/2 cup butter, room temperature\n- 1 cup light brown sugar\n- 1 large egg, room temperature\n- 1 teaspoon vanilla extract\n- 1/2 teaspoon salt\n- 1 cup cocoa\n- 1/2 cup flour\n- 1/2 teaspoon baking soda\n\n**For the espresso buttercream:**\n- 6 tablespoons salted butter\n- 2 tablespoons instant espresso powder\n- 1 1/4 cups powdered sugar\n- 1 teaspoon milk\n\n### Instructions\n\n1. Preheat and prep - Preheat oven to 350°F. Prepare two baking sheets with parchment paper.\n\n2. Make cookie dough - Cream butter and brown sugar for 2 minutes; add egg, vanilla, and salt, beating 1 minute more.\n\n3. Add dry ingredients - Mix in cocoa, flour, and baking soda on low speed until combined.\n\n4. Shape cookies - Scoop dough using a 1/2 oz cookie scoop, roll into circles, place on sheets, and flatten slightly.\n\n5. Bake - Bake 7 minutes; cool on baking sheets to room temperature.\n\n6. Make buttercream - Beat buttercream ingredients until light and fluffy; transfer to piping bag.\n\n7. Assemble - Pipe approximately 1 tablespoon frosting onto half the cookies, sandwich with remaining cookies. Refrigerate; keeps 5 days.\n\n---\n[Original recipe](https://bromabakery.com/espresso-brownie-sandwich-cookies/)",
+      "subcategory": "Broma/Brownies"
+    }
+  ]
+}
