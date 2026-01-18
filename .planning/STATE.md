@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-11)
 ## Current Position
 
 Phase: 20 of 22 (Brownies Batch)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-01-18 — Completed 20-01-PLAN.md
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-01-18 — Completed 20-02-PLAN.md
 
-Progress: ██████████████████████░░░ 92%
+Progress: ███████████████████████░░ 96%
 
 ## Performance Metrics
 
@@ -71,9 +71,9 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-18
-Stopped at: Completed 20-01-PLAN.md (brownies scraping)
+Stopped at: Completed 20-02-PLAN.md (brownies JSON generation)
 Resume file: None
-Resume with: `/gsd:execute-plan .planning/phases/20-brownies-batch/20-02-PLAN.md`
+Resume with: `/gsd:plan-phase 21`
 
 ## Next Steps
 
@@ -84,20 +84,20 @@ Resume with: `/gsd:execute-plan .planning/phases/20-brownies-batch/20-02-PLAN.md
 ✅ v1.3 Phase 17: Cookies Batch - Complete
 ✅ v1.3 Phase 18: Bars Batch - Complete
 ✅ v1.3 Phase 19: Muffins Batch - Complete
-🚧 v1.3 Phase 20: Brownies Batch - In progress (1/2 plans done)
+✅ v1.3 Phase 20: Brownies Batch - Complete
 
 **Completed:**
 - 27 cookie recipes (cookies-import.json)
 - 36 bar recipes (bars-import.json)
 - 21 muffin recipes (muffins-import.json)
-- 21 brownie recipes scraped (batch files ready)
+- 21 brownie recipes (brownies-import.json)
+- **Total: 105 recipes ready for import**
 
 **Next:**
-1. Execute 20-02-PLAN.md (Generate brownies-import.json)
-2. Then Phase 21: Import & Verification
+1. Phase 21: Import & Verification
+2. Phase 22: Recipe Image Upload
 
 **Remaining:**
-- Phase 20: Brownies - 1 plan remaining (JSON generation)
 - Phase 21: Import & Verification (2 plans)
 - Phase 22: Recipe Image Upload (1 plan)
 
