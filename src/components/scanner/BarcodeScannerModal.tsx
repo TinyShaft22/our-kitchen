@@ -51,7 +51,7 @@ export function BarcodeScannerModal({
   } = useOpenFoodFacts(householdCode);
 
   // Use ref to store the scan handler so effect doesn't depend on it
-  const handleScanRef = useRef<(barcode: string) => Promise<void>>();
+  const handleScanRef = useRef<((barcode: string) => Promise<void>) | undefined>(undefined);
 
   // Handle barcode scan
   const handleScan = useCallback(
