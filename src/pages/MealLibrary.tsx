@@ -511,7 +511,7 @@ function MealLibrary() {
               <span className="text-xl">🍽️</span>
               <div className="h-6 w-24 bg-charcoal/10 rounded animate-pulse" />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
               {Array.from({ length: 12 }).map((_, i) => (
                 <div key={i} style={{ animationDelay: `${i * 50}ms` }}>
                   <MealGridSkeleton />
@@ -525,7 +525,7 @@ function MealLibrary() {
               <span className="text-xl">🧁</span>
               <div className="h-6 w-32 bg-charcoal/10 rounded animate-pulse" />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} style={{ animationDelay: `${(i + 12) * 50}ms` }}>
                   <MealGridSkeleton />
@@ -622,7 +622,7 @@ function MealLibrary() {
                             <span className={`text-terracotta transition-transform ${isExpanded ? 'rotate-0' : '-rotate-90'}`}>▼</span>
                           </button>
                           {isExpanded && (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+                            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
                               {subcatMeals
                                 .sort((a, b) => a.name.localeCompare(b.name))
                                 .map((meal) => (
@@ -636,7 +636,7 @@ function MealLibrary() {
                   </div>
                 ) : (
                   // No subcategories, show flat grid
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
                     {mainDishes
                       .sort((a, b) => a.name.localeCompare(b.name))
                       .map((meal) => (
@@ -682,7 +682,7 @@ function MealLibrary() {
                               <div className="space-y-3">
                                 {/* Meals directly in this folder */}
                                 {node.meals.length > 0 && (
-                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+                                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
                                     {node.meals
                                       .sort((a, b) => a.name.localeCompare(b.name))
                                       .map((meal) => (
@@ -710,7 +710,7 @@ function MealLibrary() {
                                           <span className={`text-sage text-sm transition-transform ${subIsExpanded ? 'rotate-0' : '-rotate-90'}`}>▼</span>
                                         </button>
                                         {subIsExpanded && (
-                                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+                                          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
                                             {subNode.meals
                                               .sort((a, b) => a.name.localeCompare(b.name))
                                               .map((meal) => (
@@ -734,7 +734,7 @@ function MealLibrary() {
                           Uncategorized
                           <span className="text-xs text-charcoal/50">({bakingFolderTree.meals.length})</span>
                         </span>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+                        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
                           {bakingFolderTree.meals
                             .sort((a, b) => a.name.localeCompare(b.name))
                             .map((meal) => (
@@ -746,7 +746,7 @@ function MealLibrary() {
                   </div>
                 ) : (
                   // No folders, show flat grid
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
                     {bakingRecipes
                       .sort((a, b) => a.name.localeCompare(b.name))
                       .map((meal) => (
@@ -776,7 +776,7 @@ function MealLibrary() {
               {snacks.length === 0 ? (
                 <EmptySnacks onAdd={handleAddSnackClick} />
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-1.5">
+                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
                   {snacks
                     .sort((a, b) => a.name.localeCompare(b.name))
                     .map((snack) => (
