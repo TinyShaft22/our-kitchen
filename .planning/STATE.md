@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-11)
 
 **Core value:** Quick capture -> meal library -> auto-populated grocery list -> store-organized shopping
-**Current focus:** v1.0 MVP and v1.1 milestones complete — Production ready! 🎉
+**Current focus:** v1.3 milestone COMPLETE! Ready for v2.0 Alexa Integration
 
 ## Current Position
 
 Phase: 22.1 of 22.1 (Paste Image URL)
-Plan: 0 of 1 in current phase
-Status: Gap closure phase created
-Last activity: 2026-01-19 — Created Phase 22.1 for gap closure
+Plan: 1 of 1 in current phase
+Status: Phase complete
+Last activity: 2026-01-19 — Completed Phase 22.1-01-PLAN.md
 
-Progress: ████████████████████████░ 95%
+Progress: █████████████████████████ 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 22
+- Total plans completed: 23
 - Average duration: 10 min
-- Total execution time: ~4 hours
+- Total execution time: ~4.1 hours
 
 **By Phase:**
 
@@ -35,10 +35,11 @@ Progress: ███████████████████████�
 | 6 | 2 | 5 min | 2.5 min |
 | 7 | 2 | 25 min | 12.5 min |
 | 8 | 3 | 190 min | 63 min |
+| 22.1 | 1 | 8 min | 8 min |
 
 **Recent Trend:**
-- Phase 8 extended due to Firebase Cloud Functions setup and OpenRouter integration
-- AI-powered voice parsing adds significant value
+- Phase 22.1 completed quickly - straightforward UI enhancement
+- v1.3 milestone now complete
 
 ## Accumulated Context
 
@@ -55,6 +56,9 @@ Recent decisions affecting current work:
 | 08-03 | Direct HTTP to function (not callable SDK) | Simpler CORS handling |
 | 08-03 | Delete button on grocery items | Quick item removal |
 | 08-03 | Clickable store tag with dropdown | Easy store switching |
+| 22.1-01 | Mode toggle for image input | Clear visual indication, easy switching |
+| 22.1-01 | URL validation + load test | Catches malformed URLs and invalid images |
+| 22.1-01 | Direct URL storage | No need to re-upload external images |
 
 ### Deferred Issues
 
@@ -62,18 +66,18 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-- ~~**Add "Paste Image URL" option to Edit Meal modal**~~ → Moved to Phase 22.1
+None - all gap closure items complete.
 
 ### Blockers/Concerns
 
-None yet.
+None.
 
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Created Phase 22.1 (gap closure)
+Stopped at: Completed Phase 22.1-01-PLAN.md
 Resume file: None
-Resume with: Plan and execute Phase 22.1
+Resume with: Plan v2.0 Alexa Integration
 
 ## Next Steps
 
@@ -87,6 +91,7 @@ Resume with: Plan and execute Phase 22.1
 ✅ v1.3 Phase 20: Brownies Batch - Complete
 ✅ v1.3 Phase 21: Import & Verification - Complete
 ✅ v1.3 Phase 22: Recipe Image Upload - Complete
+✅ v1.3 Phase 22.1: Paste Image URL - Complete
 
 **Imported:**
 - 27 cookie recipes (Broma/Cookies)
@@ -95,14 +100,12 @@ Resume with: Plan and execute Phase 22.1
 - 21 brownie recipes (Broma/Brownies)
 - **Total: 105 Broma recipes in app**
 
-**Next:**
-1. Plan and execute Phase 22.1 (Paste Image URL)
-2. Complete v1.3 milestone
-3. Plan v2.0 Alexa Integration (Phases 23-30)
-
-**v1.3 Broma Bakery Import - GAP CLOSURE**
+**v1.3 Broma Bakery Import - COMPLETE**
 - 105 recipes imported
-- Phase 22.1 adds paste URL option for images
+- Paste URL option added for images
+
+**Next:**
+1. Plan v2.0 Alexa Integration (Phases 23-30)
 
 ## Roadmap Evolution
 
@@ -112,3 +115,4 @@ Resume with: Plan and execute Phase 22.1
 - 2026-01-15: Milestone v1.2 created — Baking Organization, 1 phase (15)
 - 2026-01-16: Milestone v2.0 created — Alexa Integration, 8 phases (23-30)
 - 2026-01-19: v1.3 gap closure — Phase 22.1 added for paste image URL feature
+- 2026-01-19: v1.3 COMPLETE — Phase 22.1 executed, milestone fully complete
