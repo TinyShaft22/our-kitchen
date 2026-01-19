@@ -6,15 +6,17 @@
  * Run with: node scripts/update-recipe-images.mjs
  *
  * Prerequisites:
- * - Firebase CLI installed and logged in (firebase login)
- * - firebase-admin package installed
+ * 1. Run: gcloud auth application-default login
+ *    (This creates credentials at ~/.config/gcloud/application_default_credentials.json)
+ * 2. Or set GOOGLE_APPLICATION_CREDENTIALS env var to a service account key file
  */
 
-import { initializeApp, cert, applicationDefault } from 'firebase-admin/app';
+import { initializeApp, applicationDefault } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { homedir } from 'os';
 
 // Get script directory
 const __filename = fileURLToPath(import.meta.url);
@@ -24,6 +26,22 @@ const projectRoot = join(__dirname, '..');
 // Configuration
 const PROJECT_ID = 'grocery-store-app-c3aa5';
 const HOUSEHOLD_CODE = '0428';
+
+// Check for ADC before initializing
+const adcPath = join(homedir(), '.config/gcloud/application_default_credentials.json');
+const hasADC = existsSync(adcPath) || process.env.GOOGLE_APPLICATION_CREDENTIALS;
+
+if (!hasADC) {
+  console.error('============================================================');
+  console.error('ERROR: Google Cloud credentials not found');
+  console.error('============================================================');
+  console.error('\nTo fix this, run the following command:');
+  console.error('\n  gcloud auth application-default login');
+  console.error('\nThis will open a browser to authenticate with your Google account.');
+  console.error('After authenticating, run this script again.');
+  console.error('============================================================');
+  process.exit(1);
+}
 
 // Initialize Firebase Admin with ADC
 initializeApp({
