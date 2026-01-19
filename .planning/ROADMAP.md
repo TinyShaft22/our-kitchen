@@ -9,7 +9,7 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 - ✅ **v1.0 MVP** - Phases 1-10 (complete)
 - ✅ **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
 - ✅ **v1.2 Baking Organization** - Phase 15 (complete)
-- ✅ **v1.3 Broma Bakery Import** - Phases 16-22 (complete)
+- 🔄 **v1.3 Broma Bakery Import** - Phases 16-22.1 (gap closure)
 - 📋 **v2.0 Alexa Integration** - Phases 23-30 (planned)
 
 ## Domain Expertise
@@ -212,6 +212,19 @@ None
 - Uses extracted image URLs from {category}-images.json files
 - Batch process per category (Cookies, Bars, Muffins, Brownies)
 
+### Phase 22.1: Paste Image URL Option (INSERTED)
+**Goal**: Add ability to paste external image URLs as recipe photos (alternative to file upload)
+**Depends on**: Phase 22
+**Research**: Unlikely (UI enhancement to existing image feature)
+**Plans**: 1 (22.1-01: URL Input in Modals)
+**Gap Closure**: Addresses v1.3 audit pending todo
+
+**Features:**
+- Toggle between "Upload File" and "Paste URL" in Add/Edit Meal modals
+- URL validation and image preview
+- Store URL directly in imageUrl field (no Firebase Storage needed)
+- Works for all meal types (Main Dishes and Baking)
+
 ---
 
 ### 📋 v2.0 Alexa Integration (Planned)
@@ -340,6 +353,7 @@ Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 | 20. Brownies Batch | v1.3 | 2/2 | Complete | 2026-01-18 |
 | 21. Import & Verification | v1.3 | 2/2 | Complete | 2026-01-19 |
 | 22. Recipe Image Upload | v1.3 | 1/1 | Complete | 2026-01-19 |
+| 22.1 Paste Image URL | v1.3 | 0/1 | Not started | - |
 | 23. Alexa Setup | v2.0 | 0/? | Not started | - |
 | 24. Interaction Model | v2.0 | 0/? | Not started | - |
 | 25. Lambda Backend | v2.0 | 0/? | Not started | - |

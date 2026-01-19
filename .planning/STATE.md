@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-11)
 
 ## Current Position
 
-Phase: 22 of 22 (Recipe Image Upload)
-Plan: 1 of 1 in current phase
-Status: Phase complete - v1.3 COMPLETE
-Last activity: 2026-01-19 — Completed 22-01-PLAN.md
+Phase: 22.1 of 22.1 (Paste Image URL)
+Plan: 0 of 1 in current phase
+Status: Gap closure phase created
+Last activity: 2026-01-19 — Created Phase 22.1 for gap closure
 
-Progress: █████████████████████████ 100%
+Progress: ████████████████████████░ 95%
 
 ## Performance Metrics
 
@@ -62,7 +62,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-- **Add "Paste Image URL" option to Edit Meal modal** (Phase 22): Allow users to paste an external image URL instead of only uploading a file. Enables manual image entry for recipes.
+- ~~**Add "Paste Image URL" option to Edit Meal modal**~~ → Moved to Phase 22.1
 
 ### Blockers/Concerns
 
@@ -71,9 +71,9 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Completed 22-01-PLAN.md (recipe image upload)
+Stopped at: Created Phase 22.1 (gap closure)
 Resume file: None
-Resume with: v1.3 complete - plan v2.0 Alexa Integration
+Resume with: Plan and execute Phase 22.1
 
 ## Next Steps
 
@@ -96,10 +96,13 @@ Resume with: v1.3 complete - plan v2.0 Alexa Integration
 - **Total: 105 Broma recipes in app**
 
 **Next:**
-1. Plan v2.0 Alexa Integration (Phases 23-30)
+1. Plan and execute Phase 22.1 (Paste Image URL)
+2. Complete v1.3 milestone
+3. Plan v2.0 Alexa Integration (Phases 23-30)
 
-**v1.3 Broma Bakery Import - COMPLETE**
-- All 105 recipes imported with images
+**v1.3 Broma Bakery Import - GAP CLOSURE**
+- 105 recipes imported
+- Phase 22.1 adds paste URL option for images
 
 ## Roadmap Evolution
 
@@ -108,4 +111,4 @@ Resume with: v1.3 complete - plan v2.0 Alexa Integration
 - 2026-01-15: v1.1 complete — All 4 enhancement phases finished
 - 2026-01-15: Milestone v1.2 created — Baking Organization, 1 phase (15)
 - 2026-01-16: Milestone v2.0 created — Alexa Integration, 8 phases (23-30)
-- 2026-01-19: v1.3 complete — 105 Broma recipes imported with images, 7 phases (16-22)
+- 2026-01-19: v1.3 gap closure — Phase 22.1 added for paste image URL feature
