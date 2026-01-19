@@ -12,26 +12,43 @@ Quick capture → meal library → auto-populated grocery list → store-organiz
 
 ### Validated
 
-(None yet — ship to validate)
+**v1.0 MVP:**
+- [x] Household sync with 4-digit code (Firestore real-time) — v1.0
+- [x] Meal library with ingredients (name, category, store) — v1.0
+- [x] Weekly meal planning (simple list, no day assignments) — v1.0
+- [x] Grocery list organized by store first, then category — v1.0
+- [x] Quick add with floating "+" button — v1.0
+- [x] Voice input (Web Speech API + AI enhancement) — v1.0
+- [x] Shopping mode (filter by store, in-cart tracking, complete trip) — v1.0
+- [x] Staples section (always-grab items like Costco rotisserie chicken) — v1.0
+- [x] Baking corner for Bella (inventory tracking, restock to grocery) — v1.0
+- [x] PWA (installable, offline-capable) — v1.0
+- [x] Warm & cozy UI theme (cream background, terracotta primary) — v1.0
+
+**v1.1 Meal & Grocery Refactor:**
+- [x] Simplified ingredients (name/category/store only, no qty/unit) — v1.1
+- [x] Auto-populate grocery from weekly meals with "already have" toggle — v1.1
+- [x] Recipe instructions (markdown notes for cooking) — v1.1
+- [x] Meal images (Firebase Storage) — v1.1
+
+**v1.2 Baking Organization:**
+- [x] Nested baking folders (unlimited depth, Broma/Cookies/Holiday) — v1.2
+
+**v1.3 Broma Bakery Import:**
+- [x] Recipe scraping infrastructure (WebFetch + JSON import) — v1.3
+- [x] 105 Broma Bakery recipes imported (Cookies, Bars, Muffins, Brownies) — v1.3
+- [x] Recipe images (Firebase Storage + external URLs) — v1.3
+- [x] Paste URL option for adding images — v1.3
 
 ### Active
 
-- [ ] Household sync with 4-digit code (Firestore real-time)
-- [ ] Meal library with ingredients (name, qty, unit, category, store)
-- [ ] Weekly meal planning (simple list, no day assignments)
-- [ ] Grocery list organized by store first, then category
-- [ ] Quantity combining (eggs from 2 meals = single line with total)
-- [ ] Quick add with floating "+" button
-- [ ] Voice input (Web Speech API)
-- [ ] Shopping mode (filter by store, in-cart tracking, complete trip)
-- [ ] Staples section (always-grab items like Costco rotisserie chicken)
-- [ ] Baking corner for Bella (inventory tracking, restock to grocery)
-- [ ] PWA (installable, offline-capable)
-- [ ] Warm & cozy UI theme (cream background, terracotta primary)
+- [ ] Alexa voice integration (Echo Show)
+- [ ] Hands-free meal browsing and recipe viewing
+- [ ] Cooking mode with step-by-step navigation
+- [ ] Voice grocery list management
 
 ### Out of Scope
 
-- Recipe instructions — just ingredients, no cooking steps
 - Nutrition/calorie tracking — not a diet app
 - Price tracking/budgeting — not a finance app
 - Day-specific meal assignments — simple weekly list is enough
@@ -76,12 +93,29 @@ Produce, Meat, Dairy, Pantry, Frozen, Bakery, Snacks, Beverages, Baking
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| 4-digit code auth | No passwords to remember, low friction for household | — Pending |
-| Store-first grouping | Matches how they shop (one store at a time) | — Pending |
-| No day assignments | Flexibility > rigid planning, reduces friction | — Pending |
-| Web Speech API | Browser built-in, no external service needed | — Pending |
-| Separate baking tab | Bella's domain, keeps it visible and accessible | — Pending |
-| PWA over native | One codebase, instant updates, no app store friction | — Pending |
+| 4-digit code auth | No passwords to remember, low friction for household | ✓ Good — simple and works |
+| Store-first grouping | Matches how they shop (one store at a time) | ✓ Good — natural workflow |
+| No day assignments | Flexibility > rigid planning, reduces friction | ✓ Good — less cognitive load |
+| Web Speech API + AI | Browser built-in + Claude for intelligence | ✓ Good — accurate item parsing |
+| Separate baking tab | Bella's domain, keeps it visible and accessible | ✓ Good — clear separation |
+| PWA over native | One codebase, instant updates, no app store friction | ✓ Good — installs on iOS/Android |
+| Simplified ingredients | Name/category/store only, no qty/unit | ✓ Good — reduced friction |
+| External image URLs | For Broma recipes, no Firebase re-upload needed | ✓ Good — simpler implementation |
+| Nested folders for Baking | Unlimited depth for recipe organization | ✓ Good — scales with imports |
+
+## Current State
+
+**Shipped:** v1.3 Broma Bakery Import (2026-01-19)
+**Codebase:** 15,221 lines TypeScript
+**Tech stack:** React, TypeScript, Vite, Tailwind CSS, Firebase Firestore, Firebase Storage
+
+**Recipe Library:**
+- Main Dishes: User-added meals
+- Baking: 105 Broma Bakery recipes (Cookies, Bars, Muffins, Brownies)
+
+**Known Issues:**
+- NestedFolderPicker step-by-step UI not working in modals (JSON imports work fine)
+- Mixed image storage: some Firebase Storage, some external URLs
 
 ---
-*Last updated: 2026-01-11 after initialization*
+*Last updated: 2026-01-19 after v1.3 milestone*

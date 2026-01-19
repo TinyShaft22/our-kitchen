@@ -153,77 +153,23 @@ None
 
 ---
 
-### 📋 v1.3 Broma Bakery Import
+<details>
+<summary>✅ v1.3 Broma Bakery Import (Phases 16-22.1) — SHIPPED 2026-01-19</summary>
 
-**Milestone Goal:** Scrape 91 recipes from Broma Bakery (Cookies, Bars, Muffins, Brownies) and import via JSON into the food app with proper markdown formatting.
+**Delivered:** 105 Broma Bakery recipes imported with images and paste URL feature.
 
-### Phase 16: Scraping Infrastructure
-**Goal**: Test scrape one recipe, validate JSON format works with import system
-**Depends on**: Phase 15
-**Research**: Likely (recipe page structure, ingredient parsing patterns)
-**Plans**: 2 (16-01: Test Scrape & Format, 16-02: Ingredient Category Mapping)
+- [x] Phase 16: Scraping Infrastructure (2/2 plans) — completed 2026-01-15
+- [x] Phase 17: Cookies Batch (2/2 plans) — completed 2026-01-16
+- [x] Phase 18: Bars Batch (2/2 plans) — completed 2026-01-16
+- [x] Phase 19: Muffins Batch (2/2 plans) — completed 2026-01-17
+- [x] Phase 20: Brownies Batch (2/2 plans) — completed 2026-01-18
+- [x] Phase 21: Import & Verification (2/2 plans) — completed 2026-01-19
+- [x] Phase 22: Recipe Image Upload (1/1 plan) — completed 2026-01-19
+- [x] Phase 22.1: Paste Image URL (1/1 plan) — completed 2026-01-19 (INSERTED)
 
-### Phase 17: Cookies Batch
-**Goal**: Scrape all 27 cookie recipes, generate import-ready JSON
-**Depends on**: Phase 16
-**Research**: Unlikely (pattern established)
-**Plans**: 2 (17-01: Scrape Cookies, 17-02: Generate JSON)
+*Full details: .planning/milestones/v1.3-ROADMAP.md*
 
-### Phase 18: Bars Batch
-**Goal**: Scrape bar recipes (36 of 71 found), extract image URLs, generate import-ready JSON
-**Depends on**: Phase 16
-**Research**: Unlikely (pattern established)
-**Plans**: 2 (18-01: Scrape Bars, 18-02: Generate JSON + Images)
-**Note**: Original estimate was 25 recipes; actual category has 71. Scoped to 36 (first half).
-
-### Phase 19: Muffins Batch
-**Goal**: Scrape all 18 muffin recipes, extract image URLs, generate import-ready JSON
-**Depends on**: Phase 16
-**Research**: Unlikely (pattern established)
-**Plans**: 2 (19-01: Scrape Muffins, 19-02: Generate JSON + Images)
-
-### Phase 20: Brownies Batch
-**Goal**: Scrape all 21 brownie recipes, extract image URLs, generate import-ready JSON
-**Depends on**: Phase 16
-**Research**: Unlikely (pattern established)
-**Plans**: 2 (20-01: Scrape Brownies, 20-02: Generate JSON + Images)
-
-### Phase 21: Import & Verification
-**Goal**: Import all JSON files via Settings, verify recipes display correctly
-**Depends on**: Phases 17-20
-**Research**: Unlikely (using existing import feature)
-**Plans**: 2 (21-01: Import All Batches, 21-02: Verify & Fix Issues)
-
-**Recipe Format:**
-- Markdown instructions with ## headers, bullet lists, numbered steps
-- Original recipe link at bottom
-- Ingredients mapped to app categories (baking, dairy, pantry, produce)
-- Subcategory set to type (Cookies, Bars, Muffins, Brownies)
-
-### Phase 22: Recipe Image Upload
-**Goal**: Upload images from Broma Bakery to imported recipes using Claude-in-Chrome browser automation
-**Depends on**: Phase 21
-**Research**: Unlikely (using existing image upload feature + Claude-in-Chrome MCP)
-**Plans**: 1 (22-01: Image Upload Workflow)
-
-**Workflow:**
-- PowerShell handoff with Claude-in-Chrome MCP
-- For each recipe: download og:image URL, upload to meal's photo field
-- Uses extracted image URLs from {category}-images.json files
-- Batch process per category (Cookies, Bars, Muffins, Brownies)
-
-### Phase 22.1: Paste Image URL Option (INSERTED)
-**Goal**: Add ability to paste external image URLs as recipe photos (alternative to file upload)
-**Depends on**: Phase 22
-**Research**: Unlikely (UI enhancement to existing image feature)
-**Plans**: 1 (22.1-01: URL Input in Modals)
-**Gap Closure**: Addresses v1.3 audit pending todo
-
-**Features:**
-- Toggle between "Upload File" and "Paste URL" in Add/Edit Meal modals
-- URL validation and image preview
-- Store URL directly in imageUrl field (no Firebase Storage needed)
-- Works for all meal types (Main Dishes and Baking)
+</details>
 
 ---
 
