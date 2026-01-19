@@ -43,6 +43,10 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
   const [error, setError] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageInputMode, setImageInputMode] = useState<'file' | 'url'>('file');
+  const [imageUrlInput, setImageUrlInput] = useState('');
+  const [urlPreviewLoading, setUrlPreviewLoading] = useState(false);
+  const [urlPreviewError, setUrlPreviewError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Compress image before upload (max 800px width, JPEG quality 0.8)
@@ -89,13 +93,84 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
   };
 
   const handleRemoveImage = () => {
-    if (imagePreview) {
+    if (imagePreview && imagePreview.startsWith('blob:')) {
       URL.revokeObjectURL(imagePreview);
     }
     setImageFile(null);
     setImagePreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+  };
+
+  // URL validation - checks if URL has valid format
+  const validateImageUrl = (url: string): boolean => {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  };
+
+  const handleUrlInputChange = (url: string) => {
+    setImageUrlInput(url);
+    setUrlPreviewError(null);
+  };
+
+  const handleUrlInputBlur = () => {
+    if (!imageUrlInput.trim()) {
+      setUrlPreviewError(null);
+      setImagePreview(null);
+      return;
+    }
+
+    if (!validateImageUrl(imageUrlInput)) {
+      setUrlPreviewError('Please enter a valid URL (starting with http:// or https://)');
+      setImagePreview(null);
+      return;
+    }
+
+    // Try to load the image
+    setUrlPreviewLoading(true);
+    setUrlPreviewError(null);
+    const img = new Image();
+    img.onload = () => {
+      setImagePreview(imageUrlInput);
+      setUrlPreviewLoading(false);
+    };
+    img.onerror = () => {
+      setUrlPreviewError('Unable to load image from URL');
+      setImagePreview(null);
+      setUrlPreviewLoading(false);
+    };
+    img.src = imageUrlInput;
+  };
+
+  const handleClearUrl = () => {
+    setImageUrlInput('');
+    setImagePreview(null);
+    setUrlPreviewError(null);
+    setUrlPreviewLoading(false);
+  };
+
+  const handleImageModeChange = (mode: 'file' | 'url') => {
+    setImageInputMode(mode);
+    // Clear the other mode's state when switching
+    if (mode === 'url') {
+      if (imagePreview && imagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(imagePreview);
+      }
+      setImageFile(null);
+      setImagePreview(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } else {
+      setImageUrlInput('');
+      setImagePreview(null);
+      setUrlPreviewError(null);
+      setUrlPreviewLoading(false);
     }
   };
 
@@ -108,11 +183,15 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
     setIngredients([]);
     setError(null);
     // Clear image state and revoke object URL
-    if (imagePreview) {
+    if (imagePreview && imagePreview.startsWith('blob:')) {
       URL.revokeObjectURL(imagePreview);
     }
     setImageFile(null);
     setImagePreview(null);
+    setImageInputMode('file');
+    setImageUrlInput('');
+    setUrlPreviewLoading(false);
+    setUrlPreviewError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -157,8 +236,12 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
     try {
       let imageUrl: string | undefined;
 
-      // Upload image if selected
-      if (imageFile) {
+      // Handle image based on input mode
+      if (imageInputMode === 'url' && imageUrlInput && imagePreview) {
+        // Use pasted URL directly (no compression, no Firebase upload)
+        imageUrl = imageUrlInput;
+      } else if (imageInputMode === 'file' && imageFile) {
+        // Upload image file (compress and upload to Firebase)
         const mealId = `meal_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
         const filename = `${Date.now()}.jpg`;
         const storagePath = `meals/${householdCode}/${mealId}/${filename}`;
@@ -207,24 +290,22 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
         <DialogHeader className="sticky top-0 bg-cream border-b border-charcoal/10 px-4 py-3 flex flex-row items-center justify-between z-10 space-y-0">
           <Button
             variant="ghost"
+            size="icon-lg"
             onClick={handleClose}
-            className="w-11 h-11 rounded-full hover:bg-charcoal/5 text-charcoal p-0"
+            className="rounded-full"
             aria-label="Cancel"
           >
             <span className="text-2xl">&times;</span>
           </Button>
           <DialogTitle className="text-lg font-semibold text-charcoal">Add Meal</DialogTitle>
           <Button
+            size="icon-lg"
             onClick={handleSave}
-            disabled={saving}
-            className="w-11 h-11 rounded-full bg-terracotta text-white hover:bg-terracotta/90 disabled:opacity-50 p-0"
+            loading={saving}
+            className="rounded-full"
             aria-label="Save meal"
           >
-            {saving ? (
-              <span className="text-sm">...</span>
-            ) : (
-              <span className="text-lg font-bold">&#10003;</span>
-            )}
+            {!saving && <span className="text-lg font-bold">&#10003;</span>}
           </Button>
         </DialogHeader>
 
@@ -295,8 +376,30 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
           </div>
 
           {/* Photo */}
-          <div className="space-y-1">
+          <div className="space-y-2">
             <Label>Photo (optional)</Label>
+
+            {/* Mode Toggle */}
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant={imageInputMode === 'file' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => handleImageModeChange('file')}
+              >
+                Upload File
+              </Button>
+              <Button
+                type="button"
+                variant={imageInputMode === 'url' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => handleImageModeChange('url')}
+              >
+                Paste URL
+              </Button>
+            </div>
+
+            {/* File Input (hidden) */}
             <input
               ref={fileInputRef}
               type="file"
@@ -305,41 +408,93 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
               className="hidden"
               id="meal-photo"
             />
-            {imagePreview ? (
-              <div className="space-y-2">
-                <img
-                  src={imagePreview}
-                  alt="Meal preview"
-                  className="max-h-48 rounded-soft object-cover"
-                />
-                <div className="flex gap-2">
+
+            {/* File Mode UI */}
+            {imageInputMode === 'file' && (
+              <>
+                {imagePreview ? (
+                  <div className="space-y-2">
+                    <img
+                      src={imagePreview}
+                      alt="Meal preview"
+                      className="max-h-48 rounded-soft object-cover"
+                    />
+                    <div className="flex gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        Change Photo
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={handleRemoveImage}
+                        className="border-red-300 text-red-600 hover:bg-red-50"
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
                   <Button
                     type="button"
                     variant="outline"
+                    size="lg"
                     onClick={() => fileInputRef.current?.click()}
-                    className="h-9 px-3 rounded-soft border-charcoal/20 text-charcoal text-sm hover:bg-charcoal/5"
+                    className="border-dashed border-charcoal/30 text-charcoal/60 hover:border-terracotta hover:text-terracotta"
                   >
-                    Change Photo
+                    + Add Photo
                   </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleRemoveImage}
-                    className="h-9 px-3 rounded-soft border-red-300 text-red-600 text-sm hover:bg-red-50"
-                  >
-                    Remove
-                  </Button>
-                </div>
+                )}
+              </>
+            )}
+
+            {/* URL Mode UI */}
+            {imageInputMode === 'url' && (
+              <div className="space-y-2">
+                <Input
+                  type="url"
+                  value={imageUrlInput}
+                  onChange={(e) => handleUrlInputChange(e.target.value)}
+                  onBlur={handleUrlInputBlur}
+                  placeholder="https://example.com/image.jpg"
+                  className={urlPreviewError ? 'border-red-300' : ''}
+                />
+
+                {urlPreviewLoading && (
+                  <div className="flex items-center gap-2 text-sm text-charcoal/60">
+                    <div className="w-4 h-4 border-2 border-terracotta border-t-transparent rounded-full animate-spin" />
+                    Loading preview...
+                  </div>
+                )}
+
+                {urlPreviewError && (
+                  <p className="text-sm text-red-600">{urlPreviewError}</p>
+                )}
+
+                {imagePreview && !urlPreviewLoading && (
+                  <div className="space-y-2">
+                    <img
+                      src={imagePreview}
+                      alt="URL preview"
+                      className="max-h-48 rounded-soft object-cover"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={handleClearUrl}
+                      className="border-red-300 text-red-600 hover:bg-red-50"
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                )}
               </div>
-            ) : (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => fileInputRef.current?.click()}
-                className="h-11 px-4 rounded-soft border-dashed border-charcoal/30 text-charcoal/60 text-sm hover:border-terracotta hover:text-terracotta"
-              >
-                + Add Photo
-              </Button>
             )}
           </div>
 
@@ -362,8 +517,8 @@ export function AddMealModal({ isOpen, onClose, onSave, householdCode, existingS
               </h3>
               <Button
                 type="button"
+                size="lg"
                 onClick={handleAddIngredient}
-                className="h-11 px-4 rounded-soft bg-terracotta text-white text-sm font-medium hover:bg-terracotta/90 active:bg-terracotta/80"
               >
                 + Add Ingredient
               </Button>
