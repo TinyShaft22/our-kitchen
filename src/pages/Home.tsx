@@ -5,14 +5,17 @@ import { useMeals } from '../hooks/useMeals';
 import { useSnacks } from '../hooks/useSnacks';
 import { WeeklyMealCard } from '../components/planning/WeeklyMealCard';
 import { WeeklySnackCard } from '../components/planning/WeeklySnackCard';
-import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import { AddToWeekModal } from '../components/planning/AddToWeekModal';
 import { AddSnackToWeekModal } from '../components/planning/AddSnackToWeekModal';
+import { LoadMealsModal } from '../components/planning/LoadMealsModal';
 import { EditServingsModal } from '../components/planning/EditServingsModal';
 import { EditSnackQtyModal } from '../components/planning/EditSnackQtyModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { WeeklyPlanSkeleton, Skeleton } from '../components/ui/skeleton';
 import { EmptyWeeklyPlan } from '../components/ui/EmptyState';
+import { WeekViewToggle, type ViewMode } from '../components/ui/WeekViewToggle';
+import { Button } from '../components/ui/button';
+import { Plus } from 'lucide-react';
 import type { WeeklyMealEntry, WeeklySnackEntry } from '../types';
 
 /**
@@ -43,6 +46,8 @@ function Home() {
   const { snacks, loading: snacksLoading } = useSnacks(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isAddSnackModalOpen, setIsAddSnackModalOpen] = useState(false);
+  const [isLoadMealsModalOpen, setIsLoadMealsModalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
 
   // Edit servings modal state
   const [editingEntry, setEditingEntry] = useState<WeeklyMealEntry | null>(null);
@@ -187,10 +192,18 @@ function Home() {
     return (
       <div className="pb-32">
         <div className="hero-gradient px-4 pt-6 pb-4 mb-4">
-          <h1 className="text-2xl font-display font-semibold text-charcoal">
-            {formatWeekId(weekId)}
-          </h1>
-          <p className="text-charcoal/60 text-sm mt-1">Loading your week...</p>
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-2xl font-display font-semibold text-charcoal">
+                {formatWeekId(weekId)}
+              </h1>
+              <p className="text-charcoal/60 text-sm mt-1">Loading your week...</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-8 w-16 rounded-soft" />
+              <Skeleton className="h-8 w-24 rounded-soft" />
+            </div>
+          </div>
         </div>
         <div className="px-4 space-y-6">
           {/* Meals section skeleton */}
@@ -234,12 +247,28 @@ function Home() {
     <div className="pb-32">
       {/* Hero section with gradient */}
       <div className="hero-gradient px-4 pt-6 pb-4 mb-4">
-        <h1 className="text-2xl font-display font-semibold text-charcoal">
-          {formatWeekId(weekId)}
-        </h1>
-        <p className="text-charcoal/60 text-sm mt-1">
-          {weeklyMeals.length} meal{weeklyMeals.length !== 1 ? 's' : ''} • {weeklySnacks.length} snack{weeklySnacks.length !== 1 ? 's' : ''}
-        </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-display font-semibold text-charcoal">
+              {formatWeekId(weekId)}
+            </h1>
+            <p className="text-charcoal/60 text-sm mt-1">
+              {weeklyMeals.length} meal{weeklyMeals.length !== 1 ? 's' : ''} •{' '}
+              {weeklySnacks.length} snack{weeklySnacks.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <WeekViewToggle viewMode={viewMode} onToggle={setViewMode} />
+            <Button
+              onClick={() => setIsLoadMealsModalOpen(true)}
+              size="sm"
+              className="bg-terracotta text-white hover:bg-terracotta/90"
+            >
+              <Plus className="h-4 w-4 mr-1" />
+              Load Meals
+            </Button>
+          </div>
+        </div>
       </div>
 
       <div className="px-4">
@@ -299,24 +328,50 @@ function Home() {
               </div>
             )}
 
-            {/* Quick Add Snack Button */}
+            {/* Quick Add Buttons */}
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setIsLoadMealsModalOpen(true)}
+                className="flex-1 py-3 border-2 border-dashed border-terracotta/40 rounded-soft text-terracotta hover:border-terracotta hover:bg-terracotta/5 transition-colors flex items-center justify-center gap-2"
+              >
+                <span>🍽️</span>
+                <span>Meals</span>
+              </button>
+              {snacks.length > 0 && (
+                <button
+                  onClick={handleAddSnackClick}
+                  className="flex-1 py-3 border-2 border-dashed border-sage/40 rounded-soft text-sage hover:border-sage hover:bg-sage/5 transition-colors flex items-center justify-center gap-2"
+                >
+                  <span>🍿</span>
+                  <span>Snacks</span>
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Quick Add Buttons (when empty) */}
+        {!hasContent && (
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => setIsLoadMealsModalOpen(true)}
+              className="flex-1 py-3 border-2 border-dashed border-terracotta/40 rounded-soft text-terracotta hover:border-terracotta hover:bg-terracotta/5 transition-colors flex items-center justify-center gap-2"
+            >
+              <span>🍽️</span>
+              <span>Meals</span>
+            </button>
             {snacks.length > 0 && (
               <button
                 onClick={handleAddSnackClick}
-                className="w-full py-3 border-2 border-dashed border-sage/40 rounded-soft text-sage hover:border-sage hover:bg-sage/5 transition-colors flex items-center justify-center gap-2"
+                className="flex-1 py-3 border-2 border-dashed border-sage/40 rounded-soft text-sage hover:border-sage hover:bg-sage/5 transition-colors flex items-center justify-center gap-2"
               >
                 <span>🍿</span>
-                <span>Add Snack to Week</span>
+                <span>Snacks</span>
               </button>
             )}
           </div>
         )}
       </div>
-
-      <FloatingActionButton
-        onClick={handleAddClick}
-        ariaLabel="Add meal to week"
-      />
 
       <AddToWeekModal
         isOpen={isAddModalOpen}
@@ -330,6 +385,13 @@ function Home() {
         onClose={handleCloseSnackModal}
         snacks={snacks}
         onAdd={handleAddSnackToWeek}
+      />
+
+      <LoadMealsModal
+        isOpen={isLoadMealsModalOpen}
+        onClose={() => setIsLoadMealsModalOpen(false)}
+        meals={meals}
+        onAdd={handleAddMealToWeek}
       />
 
       {/* Edit Servings Modal */}
