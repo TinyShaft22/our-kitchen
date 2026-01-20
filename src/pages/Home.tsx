@@ -14,6 +14,7 @@ import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { WeeklyPlanSkeleton, Skeleton } from '../components/ui/skeleton';
 import { EmptyWeeklyPlan } from '../components/ui/EmptyState';
 import { WeekViewToggle, type ViewMode } from '../components/ui/WeekViewToggle';
+import { WeekView } from '../components/planning/WeekView';
 import { Button } from '../components/ui/button';
 import { Plus } from 'lucide-react';
 import type { WeeklyMealEntry, WeeklySnackEntry } from '../types';
@@ -273,14 +274,15 @@ function Home() {
 
       <div className="px-4">
         {!hasContent ? (
-          <EmptyWeeklyPlan onAdd={handleAddClick} />
-        ) : (
+          <EmptyWeeklyPlan onAdd={() => setIsLoadMealsModalOpen(true)} />
+        ) : viewMode === 'list' ? (
+          /* List View (existing) */
           <div className="space-y-6">
             {/* Meals Section */}
             {weeklyMeals.length > 0 && (
               <div>
                 <h2 className="text-sm font-medium text-charcoal/60 mb-3 flex items-center gap-2">
-                  <span>🍽️</span> Meals ({weeklyMeals.length})
+                  <span>&#127869;</span> Meals ({weeklyMeals.length})
                 </h2>
                 <div className="grid grid-cols-1 gap-4">
                   {weeklyMeals.map((entry, index) => (
@@ -307,7 +309,7 @@ function Home() {
             {weeklySnacks.length > 0 && (
               <div>
                 <h2 className="text-sm font-medium text-charcoal/60 mb-3 flex items-center gap-2">
-                  <span>🍿</span> Snacks ({weeklySnacks.length})
+                  <span>&#127871;</span> Snacks ({weeklySnacks.length})
                 </h2>
                 <div className="grid grid-cols-1 gap-3">
                   {weeklySnacks.map((entry, index) => (
@@ -327,37 +329,25 @@ function Home() {
                 </div>
               </div>
             )}
-
-            {/* Quick Add Buttons */}
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setIsLoadMealsModalOpen(true)}
-                className="flex-1 py-3 border-2 border-dashed border-terracotta/40 rounded-soft text-terracotta hover:border-terracotta hover:bg-terracotta/5 transition-colors flex items-center justify-center gap-2"
-              >
-                <span>🍽️</span>
-                <span>Meals</span>
-              </button>
-              {snacks.length > 0 && (
-                <button
-                  onClick={handleAddSnackClick}
-                  className="flex-1 py-3 border-2 border-dashed border-sage/40 rounded-soft text-sage hover:border-sage hover:bg-sage/5 transition-colors flex items-center justify-center gap-2"
-                >
-                  <span>🍿</span>
-                  <span>Snacks</span>
-                </button>
-              )}
-            </div>
           </div>
+        ) : (
+          /* Week View */
+          <WeekView
+            meals={weeklyMeals}
+            snacks={weeklySnacks}
+            getMealById={getMealById}
+            getSnackById={getSnackById}
+          />
         )}
 
-        {/* Quick Add Buttons (when empty) */}
-        {!hasContent && (
+        {/* Quick Add Buttons - always visible when there's content or meals in library */}
+        {(hasContent || meals.length > 0) && (
           <div className="flex gap-3 mt-6">
             <button
               onClick={() => setIsLoadMealsModalOpen(true)}
               className="flex-1 py-3 border-2 border-dashed border-terracotta/40 rounded-soft text-terracotta hover:border-terracotta hover:bg-terracotta/5 transition-colors flex items-center justify-center gap-2"
             >
-              <span>🍽️</span>
+              <span>&#127869;</span>
               <span>Meals</span>
             </button>
             {snacks.length > 0 && (
@@ -365,7 +355,7 @@ function Home() {
                 onClick={handleAddSnackClick}
                 className="flex-1 py-3 border-2 border-dashed border-sage/40 rounded-soft text-sage hover:border-sage hover:bg-sage/5 transition-colors flex items-center justify-center gap-2"
               >
-                <span>🍿</span>
+                <span>&#127871;</span>
                 <span>Snacks</span>
               </button>
             )}
