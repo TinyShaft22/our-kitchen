@@ -245,7 +245,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 27-01-PLAN.md - APL recipe detail document, datasource builder, handler updates
+- [x] 27-01-PLAN.md - APL recipe detail document, datasource builder, handler updates
 
 #### Phase 28: Cooking Mode
 **Goal**: Step-by-step pager with voice navigation, auto-parsed markdown (## headers, numbered lists)
@@ -330,7 +330,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 24. Interaction Model | v2.0 | 2/2 | Complete | 2026-01-20 |
 | 25. Lambda Backend | v2.0 | 5/5 | Complete | 2026-01-20 |
 | 26. APL Meal List | v2.0 | 1/1 | Complete | 2026-01-20 |
-| 27. APL Recipe Detail | v2.0 | 0/1 | Not started | - |
+| 27. APL Recipe Detail | v2.0 | 1/1 | Complete | 2026-01-20 |
 | 28. Cooking Mode | v2.0 | 0/? | Not started | - |
 | 29. Grocery Integration | v2.0 | 0/? | Not started | - |
 | 30. Testing & Polish | v2.0 | 0/? | Not started | - |
