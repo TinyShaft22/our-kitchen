@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 25 of 31 (Lambda Backend)
-Plan: 4 of 5 complete (01+02+03+04)
-Status: In progress
-Last activity: 2026-01-20 — Completed 25-04-PLAN.md (Meal Handlers)
+Plan: 5 of 5 complete (01+02+03+04+05)
+Status: **Phase 25 COMPLETE**
+Last activity: 2026-01-20 — Completed 25-05-PLAN.md (Grocery Handlers)
 
-Progress: ████████████████████░░░░░ 81% (25/31 phases started)
+Progress: █████████████████████░░░░ 84% (26/31 phases started)
 
 ## Performance Metrics
 
@@ -51,6 +51,12 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Session caching of meal list for follow-up recipe requests
 - Partial match on meal names (case-insensitive)
 
+**Phase 25-05 decisions:**
+- 5-item cap for voice grocery list reading
+- 60-second undo window for session-scoped undo
+- CheckOff uses removeGroceryItem (TODO: proper inCart endpoint)
+- Short confirmations with undo hint for Add operation
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -66,9 +72,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 25-04-PLAN.md (Meal Handlers)
+Stopped at: Completed 25-05-PLAN.md (Grocery Handlers) - **Phase 25 COMPLETE**
 Resume file: None
-Resume with: Execute Phase 25-05 (Grocery handlers) or Phase 31-04 (Drag-and-drop)
+Resume with: Execute Phase 26 (Visual Templates) or Phase 31-04 (Drag-and-drop)
 
 ## Milestones
 
@@ -83,7 +89,7 @@ Resume with: Execute Phase 25-05 (Grocery handlers) or Phase 31-04 (Drag-and-dro
 
 ## Next Steps
 
-1. Execute Phase 25-05: Grocery Handlers
+1. Execute Phase 26: Visual Templates (APL for Echo Show)
 2. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
 
 ## Roadmap Evolution
@@ -111,3 +117,5 @@ Resume with: Execute Phase 25-05 (Grocery handlers) or Phase 31-04 (Drag-and-dro
 - 2026-01-20: Phase 25-01 complete (6 Alexa REST API endpoints in Cloud Functions)
 - 2026-01-20: Phase 25-03 complete (PIN verification handler, context-aware launch/help)
 - 2026-01-20: Phase 25-04 complete (Meal handlers: BrowseMeals, GetRecipe, BrowseCategory)
+- 2026-01-20: Phase 25-05 complete (Grocery handlers: Read, Add, Undo, Remove, CheckOff)
+- 2026-01-20: **Phase 25 COMPLETE** — Lambda Backend with 15 handlers
