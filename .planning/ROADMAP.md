@@ -10,7 +10,7 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 - ✅ **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
 - ✅ **v1.2 Baking Organization** - Phase 15 (complete)
 - ✅ **v1.3 Broma Bakery Import** - Phases 16-22.1 (complete)
-- 📋 **v2.0 Alexa Integration** - Phases 23-30 (planned)
+- 📋 **v2.0 Alexa Integration** - Phases 23-31 (planned)
 
 ## Domain Expertise
 
@@ -209,8 +209,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 24-01-PLAN.md - Meal & recipe intents with custom slot types
-- [ ] 24-02-PLAN.md - Grocery intents and household linking
+- [x] 24-01-PLAN.md - Meal & recipe intents with custom slot types
+- [x] 24-02-PLAN.md - Grocery intents and household linking
 
 #### Phase 25: Lambda Backend
 **Goal**: Skill handler with Firebase connection via REST API, voice PIN linking
@@ -268,6 +268,26 @@ Plans:
 Plans:
 - [ ] 30-01: TBD
 
+#### Phase 31: Home Page Enhancement
+**Goal**: Quick-add buttons, folder-organized meal picker modal, and week view with drag-and-drop meal planning
+**Depends on**: Phase 30
+**Research**: Unlikely (internal UI patterns, @dnd-kit docs)
+**Plans**: 4 plans
+
+Plans:
+- [ ] 31-01-PLAN.md - Data model & hook updates (DayOfWeek type, updateMealDay/updateSnackDay)
+- [ ] 31-02-PLAN.md - UI buttons & LoadMealsModal (toggle, modal, header buttons, FAB removal)
+- [ ] 31-03-PLAN.md - Static week view (WeekView, DayColumn, UnassignedSection)
+- [ ] 31-04-PLAN.md - Drag-and-drop integration (@dnd-kit, draggable cards, Firebase persistence)
+
+**Details:**
+- Rename "Add Snack to Week" → "Snacks", add matching "Meals" button
+- Replace FAB with "Load Meals" button in header top-right
+- LoadMealsModal with folder structure and search (reuses buildFolderTree)
+- Week view toggle: switch between list and 7-day grid view
+- Drag-and-drop meals/snacks to specific days using @dnd-kit
+- Data model: add optional `day?: DayOfWeek` to WeeklyMealEntry/WeeklySnackEntry
+
 ---
 
 ## Progress
@@ -301,10 +321,11 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 22. Recipe Image Upload | v1.3 | 1/1 | Complete | 2026-01-19 |
 | 22.1 Paste Image URL | v1.3 | 1/1 | Complete | 2026-01-19 |
 | 23. Alexa Setup | v2.0 | 2/2 | Complete | 2026-01-19 |
-| 24. Interaction Model | v2.0 | 2/2 | Complete | 2026-01-19 |
+| 24. Interaction Model | v2.0 | 2/2 | Complete | 2026-01-20 |
 | 25. Lambda Backend | v2.0 | 0/? | Not started | - |
 | 26. APL Meal List | v2.0 | 0/? | Not started | - |
 | 27. APL Recipe Detail | v2.0 | 0/? | Not started | - |
 | 28. Cooking Mode | v2.0 | 0/? | Not started | - |
 | 29. Grocery Integration | v2.0 | 0/? | Not started | - |
 | 30. Testing & Polish | v2.0 | 0/? | Not started | - |
+| 31. Home Page Enhancement | v2.0 | 0/4 | Planned | - |
