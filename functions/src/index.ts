@@ -244,3 +244,13 @@ export const importRecipe = onRequest({ cors: true, invoker: "public" }, async (
     });
   }
 });
+
+// Alexa API endpoints
+export {
+  verifyPin,
+  meals,
+  recipe,
+  groceryList,
+  addGroceryItem,
+  removeGroceryItem,
+} from "./alexa";
