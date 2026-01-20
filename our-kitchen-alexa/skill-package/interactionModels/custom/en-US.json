@@ -100,6 +100,88 @@
             "guide me through {MealName}",
             "time to make {MealName}"
           ]
+        },
+        {
+          "name": "ReadGroceryListIntent",
+          "slots": [],
+          "samples": [
+            "what's on the grocery list",
+            "what do we need to buy",
+            "read the grocery list",
+            "what's on the list",
+            "what do we need",
+            "show me the grocery list",
+            "read my shopping list"
+          ]
+        },
+        {
+          "name": "AddGroceryIntent",
+          "slots": [
+            {
+              "name": "GroceryItem",
+              "type": "AMAZON.Food"
+            },
+            {
+              "name": "Quantity",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "add {GroceryItem} to the list",
+            "add {GroceryItem}",
+            "put {GroceryItem} on the list",
+            "we need {GroceryItem}",
+            "add {Quantity} {GroceryItem}",
+            "we need {Quantity} {GroceryItem}",
+            "I need {GroceryItem}",
+            "get {GroceryItem}",
+            "buy {GroceryItem}"
+          ]
+        },
+        {
+          "name": "UndoGroceryIntent",
+          "slots": [],
+          "samples": [
+            "undo",
+            "undo that",
+            "take that back",
+            "remove that",
+            "never mind",
+            "cancel that"
+          ]
+        },
+        {
+          "name": "RemoveGroceryIntent",
+          "slots": [
+            {
+              "name": "GroceryItem",
+              "type": "AMAZON.Food"
+            }
+          ],
+          "samples": [
+            "remove {GroceryItem} from the list",
+            "remove {GroceryItem}",
+            "take {GroceryItem} off the list",
+            "delete {GroceryItem}",
+            "we don't need {GroceryItem}"
+          ]
+        },
+        {
+          "name": "CheckOffGroceryIntent",
+          "slots": [
+            {
+              "name": "GroceryItem",
+              "type": "AMAZON.Food"
+            }
+          ],
+          "samples": [
+            "check off {GroceryItem}",
+            "mark {GroceryItem} as done",
+            "got {GroceryItem}",
+            "I got {GroceryItem}",
+            "picked up {GroceryItem}",
+            "{GroceryItem} is in the cart"
+          ]
         }
       ],
       "types": [
