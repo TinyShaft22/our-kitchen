@@ -264,13 +264,18 @@ Plans:
 - Wave 2 (parallel): 28-02 (voice handlers), 28-03 (touch handlers), 28-04 (resume persistence)
 
 #### Phase 29: Grocery Integration
-**Goal**: "What's on my grocery list?" / "Add {item}" - list viewing and item addition via voice
+**Goal**: APL visual display for grocery list, store-filtered queries, duplicate detection for add flow
 **Depends on**: Phase 28
-**Research**: Unlikely (extends voice command pattern)
-**Plans**: TBD
+**Research**: Unlikely (extends APL and handler patterns)
+**Plans**: 2 plans
 
 Plans:
-- [ ] 29-01: TBD
+- [ ] 29-01-PLAN.md - Backend enhancements (groceryList store filter, checkDuplicateGrocery endpoint)
+- [ ] 29-02-PLAN.md - APL grocery list, enhanced handlers (store info, duplicate detection)
+
+**Wave structure:**
+- Wave 1: 29-01 (Cloud Functions + firebaseClient)
+- Wave 2: 29-02 (APL + handler updates)
 
 #### Phase 30: Testing & Polish
 **Goal**: End-to-end testing on Echo Show 5, refinements
@@ -339,6 +344,6 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 26. APL Meal List | v2.0 | 1/1 | Complete | 2026-01-20 |
 | 27. APL Recipe Detail | v2.0 | 1/1 | Complete | 2026-01-20 |
 | 28. Cooking Mode | v2.0 | 4/4 | Complete | 2026-01-20 |
-| 29. Grocery Integration | v2.0 | 0/? | Not started | - |
+| 29. Grocery Integration | v2.0 | 0/2 | Not started | - |
 | 30. Testing & Polish | v2.0 | 0/? | Not started | - |
 | 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
