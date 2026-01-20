@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 25 of 31 (Lambda Backend)
-Plan: 2 of 4 complete
+Plan: 2 of 5 complete (01+02)
 Status: In progress
-Last activity: 2026-01-20 — Completed 25-02-PLAN.md (Lambda Core Infrastructure)
+Last activity: 2026-01-20 — Completed 25-01-PLAN.md (Alexa REST API Endpoints)
 
 Progress: ████████████████████░░░░░ 81% (25/31 phases started)
 
@@ -28,6 +28,12 @@ Progress: ████████████████████░░░�
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
+
+**Phase 25-01 decisions:**
+- Store alexaPin as string field on household documents
+- Return 200 for valid=false PIN responses (cleaner for Lambda error handling)
+- Case-insensitive item matching via fallback scan for removeGroceryItem
+- Cap grocery list at 20 items for reasonable Alexa reading
 
 **Phase 25-02 decisions:**
 - Device ID partition key for persistence (survives Amazon account changes)
@@ -49,7 +55,7 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 25-02-PLAN.md (Lambda Core Infrastructure)
+Stopped at: Completed 25-01-PLAN.md (Alexa REST API Endpoints)
 Resume file: None
 Resume with: Execute Phase 25-03 (Handlers) or Phase 31-04 (Drag-and-drop)
 
@@ -91,3 +97,4 @@ Resume with: Execute Phase 25-03 (Handlers) or Phase 31-04 (Drag-and-drop)
 - 2026-01-20: Phase 31-02 complete (WeekViewToggle, LoadMealsModal, updated Home.tsx)
 - 2026-01-20: Phase 31-03 complete (WeekView, DayColumn, UnassignedSection, conditional view rendering)
 - 2026-01-20: Phase 25-02 complete (DynamoDB persistence, interceptors, HTTP client)
+- 2026-01-20: Phase 25-01 complete (6 Alexa REST API endpoints in Cloud Functions)
