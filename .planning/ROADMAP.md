@@ -219,11 +219,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 25-01-PLAN.md - Cloud Functions REST API (6 Alexa endpoints)
-- [ ] 25-02-PLAN.md - Lambda Core Infrastructure (persistence, interceptors, HTTP client)
-- [ ] 25-03-PLAN.md - Household Linking (PIN verification handler)
-- [ ] 25-04-PLAN.md - Meal Handlers (BrowseMeals, GetRecipe, BrowseCategory)
-- [ ] 25-05-PLAN.md - Grocery Handlers (Read, Add, Undo, Remove, CheckOff)
+- [x] 25-01-PLAN.md - Cloud Functions REST API (6 Alexa endpoints)
+- [x] 25-02-PLAN.md - Lambda Core Infrastructure (persistence, interceptors, HTTP client)
+- [x] 25-03-PLAN.md - Household Linking (PIN verification handler)
+- [x] 25-04-PLAN.md - Meal Handlers (BrowseMeals, GetRecipe, BrowseCategory)
+- [x] 25-05-PLAN.md - Grocery Handlers (Read, Add, Undo, Remove, CheckOff)
 
 **Wave structure:**
 - Wave 1 (parallel): 25-01 (Cloud Functions), 25-02 (Lambda infrastructure)
@@ -282,9 +282,9 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 31-01-PLAN.md - Data model & hook updates (DayOfWeek type, updateMealDay/updateSnackDay)
-- [ ] 31-02-PLAN.md - UI buttons & LoadMealsModal (toggle, modal, header buttons, FAB removal)
-- [ ] 31-03-PLAN.md - Static week view (WeekView, DayColumn, UnassignedSection)
+- [x] 31-01-PLAN.md - Data model & hook updates (DayOfWeek type, updateMealDay/updateSnackDay)
+- [x] 31-02-PLAN.md - UI buttons & LoadMealsModal (toggle, modal, header buttons, FAB removal)
+- [x] 31-03-PLAN.md - Static week view (WeekView, DayColumn, UnassignedSection)
 - [ ] 31-04-PLAN.md - Drag-and-drop integration (@dnd-kit, draggable cards, Firebase persistence)
 
 **Details:**
@@ -329,10 +329,10 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 22.1 Paste Image URL | v1.3 | 1/1 | Complete | 2026-01-19 |
 | 23. Alexa Setup | v2.0 | 2/2 | Complete | 2026-01-19 |
 | 24. Interaction Model | v2.0 | 2/2 | Complete | 2026-01-20 |
-| 25. Lambda Backend | v2.0 | 0/5 | Not started | - |
+| 25. Lambda Backend | v2.0 | 5/5 | Complete | 2026-01-20 |
 | 26. APL Meal List | v2.0 | 0/? | Not started | - |
 | 27. APL Recipe Detail | v2.0 | 0/? | Not started | - |
 | 28. Cooking Mode | v2.0 | 0/? | Not started | - |
 | 29. Grocery Integration | v2.0 | 0/? | Not started | - |
 | 30. Testing & Polish | v2.0 | 0/? | Not started | - |
-| 31. Home Page Enhancement | v2.0 | 0/4 | Planned | - |
+| 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
