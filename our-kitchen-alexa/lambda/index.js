@@ -5,6 +5,39 @@
  * Built with ASK SDK v2 for Node.js.
  */
 const Alexa = require('ask-sdk-core');
+const AWS = require('aws-sdk');
+const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-adapter');
+
+// Import interceptors
+const { LogRequestInterceptor, LoadHouseholdInterceptor } = require('./interceptors/RequestInterceptors');
+const { SavePersistentAttributesInterceptor } = require('./interceptors/ResponseInterceptors');
+
+/**
+ * Device ID partition key generator
+ * Uses device ID instead of user ID for persistence
+ * Device ID is stable across Amazon account changes
+ */
+function deviceIdPartitionKeyGenerator(requestEnvelope) {
+  const deviceId = requestEnvelope.context?.System?.device?.deviceId;
+  if (!deviceId) {
+    throw new Error('Cannot get device ID from request envelope');
+  }
+  return deviceId;
+}
+
+/**
+ * DynamoDB Persistence Adapter
+ * Alexa-Hosted Skills provide table name and region via environment variables
+ */
+const persistenceAdapter = new DynamoDbPersistenceAdapter({
+  tableName: process.env.DYNAMODB_PERSISTENCE_TABLE_NAME,
+  createTable: false,
+  partitionKeyGenerator: deviceIdPartitionKeyGenerator,
+  dynamoDBClient: new AWS.DynamoDB({
+    apiVersion: 'latest',
+    region: process.env.DYNAMODB_PERSISTENCE_REGION
+  })
+});
 
 /**
  * LaunchRequestHandler
@@ -118,19 +151,28 @@ const SessionEndedRequestHandler = {
 /**
  * ErrorHandler
  * Generic error handling for syntax or routing errors
+ * Uses casual friendly tone per design guidelines
  */
 const ErrorHandler = {
     canHandle() {
         return true;
     },
     handle(handlerInput, error) {
-        console.log(`Error handled: ${error.message}`);
-        console.log(`Error stack: ${error.stack}`);
-        const speakOutput = 'Sorry, I had trouble doing what you asked. Please try again.';
+        console.log(`Error: ${error.message}`);
+        console.log(`Stack: ${error.stack}`);
+
+        let speakOutput = "Hmm, something went wrong. ";
+
+        // Customize based on error type
+        if (error.message.includes('timeout') || error.message.includes('ECONNREFUSED') || error.message.includes('ETIMEDOUT')) {
+            speakOutput = "I'm having trouble connecting to your kitchen right now. Try again in a moment.";
+        } else {
+            speakOutput += "Please try again.";
+        }
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            .reprompt(speakOutput)
+            .reprompt("What would you like to do?")
             .getResponse();
     }
 };
@@ -151,5 +193,13 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addErrorHandlers(
         ErrorHandler
     )
-    .withCustomUserAgent('our-kitchen/v1.0')
+    .addRequestInterceptors(
+        LogRequestInterceptor,
+        LoadHouseholdInterceptor
+    )
+    .addResponseInterceptors(
+        SavePersistentAttributesInterceptor
+    )
+    .withPersistenceAdapter(persistenceAdapter)
+    .withCustomUserAgent('our-kitchen/v2.0')
     .lambda();
