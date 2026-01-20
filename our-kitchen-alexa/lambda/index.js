@@ -49,6 +49,27 @@ function deviceIdPartitionKeyGenerator(requestEnvelope) {
 }
 
 /**
+ * Clear cooking progress from persistent attributes
+ * Called when user completes a recipe or explicitly exits cooking mode
+ */
+async function clearCookingProgress(handlerInput) {
+  try {
+    const persistentAttributes = await handlerInput.attributesManager.getPersistentAttributes() || {};
+    if (persistentAttributes.cookingProgress) {
+      delete persistentAttributes.cookingProgress;
+      handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);
+      await handlerInput.attributesManager.savePersistentAttributes();
+      console.log('Cleared cooking progress');
+    }
+  } catch (error) {
+    console.error('Failed to clear cooking progress:', error.message);
+  }
+}
+
+// Export for use in CookingHandlers
+module.exports.clearCookingProgress = clearCookingProgress;
+
+/**
  * DynamoDB Persistence Adapter
  * Alexa-Hosted Skills provide table name and region via environment variables
  */
@@ -66,17 +87,52 @@ const persistenceAdapter = new DynamoDbPersistenceAdapter({
  * LaunchRequestHandler
  * Triggered when user says "Alexa, open our kitchen"
  * Guides new users through PIN linking, welcomes back linked users
+ * Offers to resume cooking if progress exists (within 24 hours)
  */
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
-    handle(handlerInput) {
+    async handle(handlerInput) {
         const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const isLinked = sessionAttributes.isLinked;
 
         if (isLinked) {
-            // Linked user - welcome back
+            // Check for in-progress cooking to resume
+            try {
+                const persistentAttributes = await handlerInput.attributesManager.getPersistentAttributes() || {};
+                const cookingProgress = persistentAttributes.cookingProgress;
+
+                // Check if we have valid cooking progress (not expired - 24 hour limit)
+                const twentyFourHours = 24 * 60 * 60 * 1000;
+                if (cookingProgress &&
+                    cookingProgress.recipeId &&
+                    cookingProgress.timestamp &&
+                    (Date.now() - cookingProgress.timestamp) < twentyFourHours) {
+
+                    // Store resume info in session for ResumeCookingIntentHandler
+                    sessionAttributes.pendingCookingResume = cookingProgress;
+                    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+                    const stepDisplay = cookingProgress.currentStep === 0
+                        ? "the ingredients"
+                        : `step ${cookingProgress.currentStep}`;
+
+                    const speakOutput = `Welcome back! You were making ${cookingProgress.recipeName}, ` +
+                        `on ${stepDisplay} of ${cookingProgress.totalSteps}. ` +
+                        `Say 'continue cooking' to pick up where you left off, or 'start over' to restart.`;
+                    const repromptOutput = "Say 'continue cooking' or 'start over'.";
+
+                    return handlerInput.responseBuilder
+                        .speak(speakOutput)
+                        .reprompt(repromptOutput)
+                        .getResponse();
+                }
+            } catch (error) {
+                console.error('Error checking cooking progress:', error.message);
+            }
+
+            // No cooking progress - normal linked user welcome
             const speakOutput = "Welcome back to your kitchen! What would you like to do?";
             const repromptOutput = "Try asking what's for dinner, or what's on the grocery list.";
 
