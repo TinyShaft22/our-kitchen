@@ -16,6 +16,7 @@ function buildRecipeDetailDataSource(recipe) {
     recipeDetailData: {
       type: 'object',
       objectId: 'recipeDetailDS',
+      mealId: recipe.id || '',
       mealName: recipe.name || 'Recipe',
       imageUrl: recipe.imageUrl || '',
       ingredients: ingredientNames,

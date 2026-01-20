@@ -128,6 +128,43 @@
                 ]
               }
             ]
+          },
+          {
+            "type": "Container",
+            "width": "100%",
+            "alignItems": "center",
+            "paddingTop": "@spacingMedium",
+            "paddingBottom": "@spacingMedium",
+            "items": [
+              {
+                "type": "TouchWrapper",
+                "id": "startCookingButton",
+                "onPress": {
+                  "type": "SendEvent",
+                  "arguments": ["StartCooking", "${recipeDetailData.mealId}"]
+                },
+                "items": [
+                  {
+                    "type": "Frame",
+                    "backgroundColor": "@colorAccent",
+                    "borderRadius": "8dp",
+                    "paddingLeft": "@spacingLarge",
+                    "paddingRight": "@spacingLarge",
+                    "paddingTop": "@spacingSmall",
+                    "paddingBottom": "@spacingSmall",
+                    "items": [
+                      {
+                        "type": "Text",
+                        "text": "Start Cooking",
+                        "style": "textStyleBody",
+                        "fontWeight": "bold",
+                        "color": "#FFFFFF"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
