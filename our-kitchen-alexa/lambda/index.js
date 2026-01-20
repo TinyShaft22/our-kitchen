@@ -16,6 +16,12 @@ const { SavePersistentAttributesInterceptor } = require('./interceptors/Response
 const { LinkHouseholdIntentHandler } = require('./handlers/HouseholdHandlers');
 const { BrowseMealsIntentHandler, GetRecipeIntentHandler, BrowseCategoryIntentHandler } = require('./handlers/MealHandlers');
 const {
+  StartCookingIntentHandler,
+  NextStepIntentHandler,
+  PreviousStepIntentHandler,
+  RepeatStepIntentHandler
+} = require('./handlers/CookingHandlers');
+const {
   ReadGroceryListIntentHandler,
   AddGroceryIntentHandler,
   UndoGroceryIntentHandler,
@@ -225,6 +231,10 @@ exports.handler = Alexa.SkillBuilders.custom()
         BrowseMealsIntentHandler,
         GetRecipeIntentHandler,
         BrowseCategoryIntentHandler,
+        StartCookingIntentHandler,
+        NextStepIntentHandler,
+        PreviousStepIntentHandler,
+        RepeatStepIntentHandler,
         ReadGroceryListIntentHandler,
         AddGroceryIntentHandler,
         UndoGroceryIntentHandler,
