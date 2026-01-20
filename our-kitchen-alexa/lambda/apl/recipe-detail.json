@@ -1,0 +1,136 @@
+{
+  "type": "APL",
+  "version": "2024.3",
+  "description": "Our Kitchen recipe detail view",
+  "import": [
+    { "name": "alexa-layouts", "version": "1.7.0" },
+    { "name": "alexa-viewport-profiles", "version": "1.6.0" }
+  ],
+  "resources": [
+    {
+      "description": "Custom colors - default (dark theme)",
+      "colors": {
+        "colorBackground": "#1A1A1A",
+        "colorAccent": "#C4704B",
+        "colorText": "#FFFFFF",
+        "colorTextSecondary": "#CCCCCC"
+      }
+    },
+    {
+      "description": "Custom colors - light theme",
+      "when": "${viewport.theme == 'light'}",
+      "colors": {
+        "colorBackground": "#FFF8F0",
+        "colorAccent": "#C4704B",
+        "colorText": "#1A1A1A",
+        "colorTextSecondary": "#666666"
+      }
+    }
+  ],
+  "mainTemplate": {
+    "parameters": ["recipeDetailData"],
+    "items": [
+      {
+        "type": "Container",
+        "width": "100%",
+        "height": "100%",
+        "id": "recipeDetailView",
+        "bind": [
+          {
+            "name": "isLargeScreen",
+            "value": "${viewport.width >= 960}"
+          }
+        ],
+        "items": [
+          {
+            "type": "AlexaHeader",
+            "headerTitle": "${recipeDetailData.mealName}",
+            "headerBackButton": true,
+            "headerBackButtonAccessibilityLabel": "Go back",
+            "headerBackButtonCommand": {
+              "type": "SendEvent",
+              "arguments": ["GoBack"]
+            }
+          },
+          {
+            "type": "Container",
+            "width": "100%",
+            "height": "100%",
+            "grow": 1,
+            "direction": "${isLargeScreen ? 'row' : 'column'}",
+            "paddingLeft": "@spacingMedium",
+            "paddingRight": "@spacingMedium",
+            "paddingBottom": "@spacingMedium",
+            "items": [
+              {
+                "type": "Container",
+                "width": "${isLargeScreen ? '40%' : '100%'}",
+                "height": "${isLargeScreen ? '100%' : 'auto'}",
+                "paddingRight": "${isLargeScreen ? '@spacingMedium' : '0'}",
+                "items": [
+                  {
+                    "type": "Text",
+                    "text": "Ingredients",
+                    "style": "textStyleBody",
+                    "fontWeight": "bold",
+                    "color": "@colorAccent",
+                    "paddingBottom": "@spacingSmall"
+                  },
+                  {
+                    "type": "ScrollView",
+                    "height": "${isLargeScreen ? '100%' : '200dp'}",
+                    "items": [
+                      {
+                        "type": "Container",
+                        "data": "${recipeDetailData.ingredients}",
+                        "items": [
+                          {
+                            "type": "Text",
+                            "text": "\u2022 ${data}",
+                            "style": "textStyleBody",
+                            "color": "@colorText",
+                            "paddingBottom": "@spacingXSmall"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "width": "${isLargeScreen ? '60%' : '100%'}",
+                "height": "${isLargeScreen ? '100%' : 'auto'}",
+                "grow": 1,
+                "paddingTop": "${isLargeScreen ? '0' : '@spacingMedium'}",
+                "items": [
+                  {
+                    "type": "Text",
+                    "text": "Instructions",
+                    "style": "textStyleBody",
+                    "fontWeight": "bold",
+                    "color": "@colorAccent",
+                    "paddingBottom": "@spacingSmall"
+                  },
+                  {
+                    "type": "ScrollView",
+                    "height": "100%",
+                    "grow": 1,
+                    "items": [
+                      {
+                        "type": "Text",
+                        "text": "${recipeDetailData.instructions}",
+                        "style": "textStyleBody",
+                        "color": "@colorText"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
