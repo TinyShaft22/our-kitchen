@@ -1,0 +1,50 @@
+{
+  "type": "APL",
+  "version": "2024.3",
+  "description": "Our Kitchen meal browsing list",
+  "import": [
+    { "name": "alexa-layouts", "version": "1.7.0" },
+    { "name": "alexa-viewport-profiles", "version": "1.6.0" }
+  ],
+  "resources": [
+    {
+      "description": "Custom colors - default (dark theme)",
+      "colors": {
+        "colorBackground": "#1A1A1A",
+        "colorAccent": "#C4704B"
+      }
+    },
+    {
+      "description": "Custom colors - light theme",
+      "when": "${viewport.theme == 'light'}",
+      "colors": {
+        "colorBackground": "#FFF8F0",
+        "colorAccent": "#C4704B"
+      }
+    }
+  ],
+  "mainTemplate": {
+    "parameters": ["mealListData"],
+    "items": [
+      {
+        "type": "AlexaImageList",
+        "id": "mealListView",
+        "headerTitle": "${mealListData.headerTitle}",
+        "headerDivider": true,
+        "backgroundColor": "@colorBackground",
+        "listItems": "${mealListData.listItems}",
+        "listId": "mealList",
+        "imageAspectRatio": "square",
+        "imageRoundedCorner": true,
+        "imageScale": "best-fill",
+        "defaultImageSource": "",
+        "hideOrdinal": true,
+        "theme": "dark",
+        "primaryAction": {
+          "type": "SendEvent",
+          "arguments": ["MealSelected", "${ordinal}", "${data.mealId}"]
+        }
+      }
+    ]
+  }
+}
