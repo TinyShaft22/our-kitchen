@@ -215,12 +215,19 @@ Plans:
 #### Phase 25: Lambda Backend
 **Goal**: Skill handler with Firebase connection via REST API, voice PIN linking
 **Depends on**: Phase 24
-**Research**: Likely (Lambda + Firebase REST integration)
-**Research topics**: Cloud Functions REST endpoints, session attributes, account linking alternatives
-**Plans**: TBD
+**Research**: Complete (see 25-RESEARCH.md)
+**Plans**: 5 plans
 
 Plans:
-- [ ] 25-01: TBD
+- [ ] 25-01-PLAN.md - Cloud Functions REST API (6 Alexa endpoints)
+- [ ] 25-02-PLAN.md - Lambda Core Infrastructure (persistence, interceptors, HTTP client)
+- [ ] 25-03-PLAN.md - Household Linking (PIN verification handler)
+- [ ] 25-04-PLAN.md - Meal Handlers (BrowseMeals, GetRecipe, BrowseCategory)
+- [ ] 25-05-PLAN.md - Grocery Handlers (Read, Add, Undo, Remove, CheckOff)
+
+**Wave structure:**
+- Wave 1 (parallel): 25-01 (Cloud Functions), 25-02 (Lambda infrastructure)
+- Wave 2 (parallel): 25-03 (Household), 25-04 (Meals), 25-05 (Groceries)
 
 #### Phase 26: APL Meal List
 **Goal**: Visual template for browsing meals (voice-first, visual optional)
@@ -281,7 +288,7 @@ Plans:
 - [ ] 31-04-PLAN.md - Drag-and-drop integration (@dnd-kit, draggable cards, Firebase persistence)
 
 **Details:**
-- Rename "Add Snack to Week" → "Snacks", add matching "Meals" button
+- Rename "Add Snack to Week" -> "Snacks", add matching "Meals" button
 - Replace FAB with "Load Meals" button in header top-right
 - LoadMealsModal with folder structure and search (reuses buildFolderTree)
 - Week view toggle: switch between list and 7-day grid view
@@ -322,7 +329,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 22.1 Paste Image URL | v1.3 | 1/1 | Complete | 2026-01-19 |
 | 23. Alexa Setup | v2.0 | 2/2 | Complete | 2026-01-19 |
 | 24. Interaction Model | v2.0 | 2/2 | Complete | 2026-01-20 |
-| 25. Lambda Backend | v2.0 | 0/? | Not started | - |
+| 25. Lambda Backend | v2.0 | 0/5 | Not started | - |
 | 26. APL Meal List | v2.0 | 0/? | Not started | - |
 | 27. APL Recipe Detail | v2.0 | 0/? | Not started | - |
 | 28. Cooking Mode | v2.0 | 0/? | Not started | - |
