@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { EmptyState } from '../ui/EmptyState';
 import type { Meal } from '../../types';
 
 interface AddToWeekModalProps {
@@ -144,10 +145,12 @@ export function AddToWeekModal({ isOpen, onClose, meals, onAdd }: AddToWeekModal
           ) : (
             /* Meal Selection List */
             meals.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <p className="text-warm-gray text-lg">No meals in library.</p>
-                <p className="text-warm-gray mt-1">Add some first!</p>
-              </div>
+              <EmptyState
+                icon="🍽️"
+                title="No meals in library"
+                description="Add some meals to your library first, then you can plan your week."
+                variant="terracotta"
+              />
             ) : (
               <div className="space-y-2">
                 {meals.map((meal) => (

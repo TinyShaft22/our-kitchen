@@ -32,3 +32,5 @@ CLAUDE.local.md
 # - .claude/commands/ (GSD workflow commands)
 # - .claude/skills/ (project-specific skills)
 # - .claude/get-shit-done/ (GSD templates and references)
+.firebase/
+our-kitchen-alexa/

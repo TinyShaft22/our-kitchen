@@ -11,6 +11,8 @@ import { AddSnackToWeekModal } from '../components/planning/AddSnackToWeekModal'
 import { EditServingsModal } from '../components/planning/EditServingsModal';
 import { EditSnackQtyModal } from '../components/planning/EditSnackQtyModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
+import { WeeklyPlanSkeleton, Skeleton } from '../components/ui/skeleton';
+import { EmptyWeeklyPlan } from '../components/ui/EmptyState';
 import type { WeeklyMealEntry, WeeklySnackEntry } from '../types';
 
 /**
@@ -183,14 +185,42 @@ function Home() {
 
   if (isLoading) {
     return (
-      <div className="p-4">
-        <div className="hero-gradient -mx-4 -mt-4 px-4 pt-6 pb-4 mb-4">
+      <div className="pb-32">
+        <div className="hero-gradient px-4 pt-6 pb-4 mb-4">
           <h1 className="text-2xl font-display font-semibold text-charcoal">
             {formatWeekId(weekId)}
           </h1>
+          <p className="text-charcoal/60 text-sm mt-1">Loading your week...</p>
         </div>
-        <div className="flex items-center justify-center py-8">
-          <div className="text-warm-gray">Loading weekly plan...</div>
+        <div className="px-4 space-y-6">
+          {/* Meals section skeleton */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span>🍽️</span>
+              <Skeleton className="h-4 w-20" />
+            </div>
+            <div className="space-y-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} style={{ animationDelay: `${i * 100}ms` }}>
+                  <WeeklyPlanSkeleton />
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Snacks section skeleton */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span>🍿</span>
+              <Skeleton className="h-4 w-24" />
+            </div>
+            <div className="space-y-3">
+              {Array.from({ length: 2 }).map((_, i) => (
+                <div key={i} style={{ animationDelay: `${(i + 3) * 100}ms` }}>
+                  <Skeleton className="h-16 w-full rounded-soft" />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -214,10 +244,7 @@ function Home() {
 
       <div className="px-4">
         {!hasContent ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <p className="text-warm-gray text-lg font-display">Nothing planned this week.</p>
-            <p className="text-warm-gray mt-1">Tap + to add meals or snacks!</p>
-          </div>
+          <EmptyWeeklyPlan onAdd={handleAddClick} />
         ) : (
           <div className="space-y-6">
             {/* Meals Section */}

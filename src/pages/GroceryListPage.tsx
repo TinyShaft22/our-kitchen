@@ -12,6 +12,9 @@ import { AddStapleModal } from '../components/grocery/AddStapleModal';
 import { EditStapleModal } from '../components/grocery/EditStapleModal';
 import { VoiceInputModal } from '../components/grocery/VoiceInputModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
+import { Button } from '../components/ui/button';
+import { GroceryItemSkeleton, Skeleton } from '../components/ui/skeleton';
+import { EmptyGroceryList, EmptyStaples } from '../components/ui/EmptyState';
 import { CATEGORIES, STORES } from '../types';
 import type { GroceryItem, Category, Store, Staple } from '../types';
 
@@ -145,11 +148,50 @@ function GroceryListPage() {
 
   if (loading) {
     return (
-      <div className="p-4">
-        <div className="hero-gradient-sage -mx-4 -mt-4 px-4 pt-6 pb-4 mb-4">
+      <div className="pb-32">
+        <div className="hero-gradient-sage px-4 pt-6 pb-4">
           <h1 className="text-2xl font-display font-semibold text-charcoal">Grocery List</h1>
+          <p className="text-sm text-charcoal/60 mt-1">Loading items...</p>
         </div>
-        <p className="text-warm-gray mt-4">Loading...</p>
+        <div className="px-4 space-y-6 mt-4">
+          {/* Store filter skeleton */}
+          <div className="flex gap-2 overflow-hidden">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-11 w-24 rounded-full shrink-0" />
+            ))}
+          </div>
+          {/* Staples section skeleton */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-6 w-20" />
+                <Skeleton className="h-5 w-10 rounded-full" />
+              </div>
+              <Skeleton className="h-8 w-8 rounded-full" />
+            </div>
+          </div>
+          {/* Grocery items skeleton */}
+          <div className="space-y-4">
+            <Skeleton className="h-6 w-24" />
+            <div className="space-y-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} style={{ animationDelay: `${i * 80}ms` }}>
+                  <GroceryItemSkeleton />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="space-y-4">
+            <Skeleton className="h-6 w-20" />
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} style={{ animationDelay: `${(i + 4) * 80}ms` }}>
+                  <GroceryItemSkeleton />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -170,28 +212,22 @@ function GroceryListPage() {
       {/* Store filter pills */}
       {items.length > 0 && (
         <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 mt-4">
-          <button
+          <Button
+            variant={selectedStore === 'all' ? 'default' : 'outline'}
             onClick={() => setSelectedStore('all')}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap min-h-[44px] transition-colors ${
-              selectedStore === 'all'
-                ? 'bg-terracotta text-white'
-                : 'bg-white text-charcoal border border-charcoal/20'
-            }`}
+            className="rounded-full whitespace-nowrap min-h-[44px]"
           >
             All
-          </button>
+          </Button>
           {STORES.map((store) => (
-            <button
+            <Button
               key={store.id}
+              variant={selectedStore === store.id ? 'default' : 'outline'}
               onClick={() => setSelectedStore(store.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap min-h-[44px] transition-colors ${
-                selectedStore === store.id
-                  ? 'bg-terracotta text-white'
-                  : 'bg-white text-charcoal border border-charcoal/20'
-              }`}
+              className="rounded-full whitespace-nowrap min-h-[44px]"
             >
               {store.name}
-            </button>
+            </Button>
           ))}
         </div>
       )}
@@ -224,18 +260,19 @@ function GroceryListPage() {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <button
+            <Button
+              size="icon-sm"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowAddStaple(true);
               }}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-terracotta text-white text-lg hover:bg-terracotta/90"
+              className="rounded-full"
               aria-label="Add staple"
             >
               +
-            </button>
+            </Button>
             <span
-              className={`text-charcoal/50 transition-transform ${
+              className={`text-charcoal/50 transition-transform duration-200 transition-spring ${
                 staplesExpanded ? 'rotate-180' : ''
               }`}
             >
@@ -255,9 +292,7 @@ function GroceryListPage() {
         {staplesExpanded && (
           <div className="space-y-2 mt-2">
             {staples.length === 0 ? (
-              <p className="text-sm text-charcoal/60 text-center py-4">
-                No staples yet. Add items you always need!
-              </p>
+              <EmptyStaples onAdd={() => setShowAddStaple(true)} />
             ) : (
               staples.map((staple) => (
                 <StapleCard
@@ -311,16 +346,18 @@ function GroceryListPage() {
                   className="flex items-center justify-between bg-white rounded-soft shadow-soft p-3"
                 >
                   <span className="text-charcoal capitalize">{ingredientName}</span>
-                  <button
+                  <Button
+                    variant="link"
+                    size="sm"
                     onClick={() => toggleAlreadyHave(ingredientName)}
-                    className="flex items-center gap-1 text-sm text-terracotta hover:text-terracotta/80 transition-colors"
+                    className="gap-1"
                     aria-label={`Re-add ${ingredientName} to grocery list`}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                       <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                     </svg>
                     Re-add
-                  </button>
+                  </Button>
                 </div>
               ))}
             </div>
@@ -330,9 +367,8 @@ function GroceryListPage() {
 
       {/* Empty state */}
       {items.length === 0 && (
-        <div className="mt-8 text-center">
-          <p className="text-warm-gray">No items yet.</p>
-          <p className="text-warm-gray mt-1">Add meals to your weekly plan to auto-generate!</p>
+        <div className="mt-8">
+          <EmptyGroceryList hasWeeklyPlan={!!(currentWeek && currentWeek.meals && currentWeek.meals.length > 0)} />
         </div>
       )}
 
@@ -368,24 +404,27 @@ function GroceryListPage() {
 
       {/* Complete Trip button - only in shopping mode with items in cart */}
       {isShoppingMode && inCartCount > 0 && (
-        <button
+        <Button
+          variant="secondary"
+          size="lg"
           onClick={handleCompleteTrip}
-          disabled={completing}
-          className="fixed bottom-24 left-4 right-4 bg-sage text-white py-3 rounded-soft font-semibold shadow-lg transition-colors hover:bg-sage/90 active:bg-sage/80 disabled:opacity-50 disabled:cursor-not-allowed"
+          loading={completing}
+          className="fixed bottom-24 left-4 right-4 shadow-lg"
         >
           {completing ? 'Completing...' : `Complete Trip (${inCartCount} items)`}
-        </button>
+        </Button>
       )}
 
       {/* Voice Input FAB - hidden during shopping mode */}
       {!isShoppingMode && (
-        <button
+        <Button
+          size="icon-lg"
           onClick={() => setShowVoiceModal(true)}
-          className="fixed bottom-24 right-4 w-14 h-14 bg-terracotta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors"
+          className="fixed bottom-24 right-4 w-14 h-14 rounded-full shadow-lg"
           aria-label="Add item by voice"
         >
           <span className="text-xl">🎙️</span>
-        </button>
+        </Button>
       )}
 
       {/* Add Staple Modal */}

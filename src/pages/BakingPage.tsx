@@ -7,6 +7,8 @@ import { AddBakingModal } from '../components/baking/AddBakingModal';
 import { EditBakingModal } from '../components/baking/EditBakingModal';
 import { FloatingActionButton } from '../components/ui/FloatingActionButton';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
+import { BakingEssentialSkeleton, Skeleton } from '../components/ui/skeleton';
+import { EmptyBakingEssentials, EmptyFilteredList } from '../components/ui/EmptyState';
 import type { BakingStatus, BakingEssential } from '../types';
 
 type StatusFilter = BakingStatus | 'all';
@@ -159,11 +161,27 @@ function BakingPage() {
 
   if (loading) {
     return (
-      <div>
+      <div className="pb-32">
         <div className="hero-gradient-honey px-4 pt-6 pb-4">
           <h1 className="text-2xl font-display font-semibold text-charcoal">🧁 Baking Corner</h1>
+          <p className="text-sm text-charcoal/60 mt-1">Loading essentials...</p>
         </div>
-        <p className="text-warm-gray mt-4 px-4">Loading...</p>
+        <div className="px-4 space-y-4 mt-4">
+          {/* Filter pills skeleton */}
+          <div className="flex gap-2 overflow-hidden -mx-4 px-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-11 w-20 rounded-full shrink-0" />
+            ))}
+          </div>
+          {/* Essential items skeleton */}
+          <div className="space-y-3">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} style={{ animationDelay: `${i * 80}ms` }}>
+                <BakingEssentialSkeleton />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -238,13 +256,11 @@ function BakingPage() {
       {/* Essentials list */}
       <div className="mt-4 space-y-3">
         {filteredEssentials.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-warm-gray">
-              {essentials.length === 0
-                ? 'No baking essentials yet. Add some to get started!'
-                : `No ${selectedFilter} items.`}
-            </p>
-          </div>
+          essentials.length === 0 ? (
+            <EmptyBakingEssentials onAdd={() => setShowAddModal(true)} />
+          ) : (
+            <EmptyFilteredList filterName={selectedFilter} />
+          )
         ) : (
           filteredEssentials.map((essential) => (
             <BakingEssentialCard

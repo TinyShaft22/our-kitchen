@@ -11,6 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 
 interface MealCardProps {
   meal: Meal;
@@ -60,7 +61,7 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
             <h3 className="text-lg font-semibold text-charcoal truncate">
               {meal.name}
             </h3>
-            <p className="text-xs text-warm-gray">
+            <p className="text-xs text-charcoal/60">
               {meal.isBaking ? `Qty: ${meal.servings}` : `${meal.servings} servings`} • {meal.ingredients.length} ingredient{meal.ingredients.length !== 1 ? 's' : ''}
             </p>
           </div>
@@ -76,13 +77,15 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
             ▼
           </span>
           {/* Delete button */}
-          <button
+          <Button
+            variant="ghost"
+            size="icon-lg"
             onClick={handleDeleteClick}
-            className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-red-50 active:bg-red-100 transition-colors"
+            className="rounded-full hover:bg-red-50 active:bg-red-100"
             aria-label={`Delete ${meal.name}`}
           >
             <span className="text-lg">🗑️</span>
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -183,31 +186,36 @@ export function MealCard({ meal, onEdit, onDelete }: MealCardProps) {
             )}
 
             {/* Edit Button */}
-            <button
+            <Button
+              size="lg"
               onClick={handleEditClick}
-              className="w-full h-11 flex items-center justify-center gap-2 rounded-soft bg-terracotta text-white font-medium hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors"
+              className="w-full"
             >
               <span>✏️</span>
               <span>Edit Meal</span>
-            </button>
+            </Button>
           </div>
         )}
       </div>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-cream rounded-soft max-w-sm">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Meal?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete "{meal.name}"? This cannot be undone.
+            <AlertDialogTitle className="text-lg font-semibold text-charcoal">
+              Delete Meal?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-charcoal/70">
+              Are you sure you want to delete &quot;{meal.name}&quot;? This cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogFooter className="flex-row gap-3">
+            <AlertDialogCancel className="flex-1 h-11 rounded-soft border border-charcoal/20 text-charcoal text-sm font-medium hover:bg-charcoal/5 active:bg-charcoal/10">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
-              className="bg-destructive text-white hover:bg-destructive/90"
+              className="flex-1 h-11 rounded-soft bg-destructive text-white text-sm font-medium hover:bg-destructive/90 active:bg-destructive/80"
             >
               Delete
             </AlertDialogAction>

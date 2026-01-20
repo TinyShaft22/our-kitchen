@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebase';
 import type { Snack, Store, Category } from '../../types';
@@ -56,7 +56,7 @@ export function AddSnackModal({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Update form when prefillData changes
-  useState(() => {
+  useEffect(() => {
     if (prefillData) {
       setName(prefillData.name || '');
       setBrand(prefillData.brand || '');
@@ -66,7 +66,7 @@ export function AddSnackModal({
         setUseExternalImage(true);
       }
     }
-  });
+  }, [prefillData]);
 
   // Compress image before upload
   const compressImage = async (file: File): Promise<Blob> => {
@@ -208,24 +208,22 @@ export function AddSnackModal({
         <DialogHeader className="sticky top-0 bg-cream border-b border-charcoal/10 px-4 py-3 flex flex-row items-center justify-between z-10 space-y-0">
           <Button
             variant="ghost"
+            size="icon-lg"
             onClick={handleClose}
-            className="w-11 h-11 rounded-full hover:bg-charcoal/5 text-charcoal p-0"
+            className="rounded-full"
             aria-label="Cancel"
           >
             <span className="text-2xl">&times;</span>
           </Button>
           <DialogTitle className="text-lg font-semibold text-charcoal">Add Snack</DialogTitle>
           <Button
+            size="icon-lg"
             onClick={handleSave}
-            disabled={saving}
-            className="w-11 h-11 rounded-full bg-terracotta text-white hover:bg-terracotta/90 disabled:opacity-50 p-0"
+            loading={saving}
+            className="rounded-full"
             aria-label="Save snack"
           >
-            {saving ? (
-              <span className="text-sm">...</span>
-            ) : (
-              <span className="text-lg font-bold">&#10003;</span>
-            )}
+            {!saving && <span className="text-lg font-bold">&#10003;</span>}
           </Button>
         </DialogHeader>
 
@@ -241,8 +239,10 @@ export function AddSnackModal({
           {onScanBarcode && (
             <Button
               type="button"
+              variant="secondary"
+              size="lg"
               onClick={onScanBarcode}
-              className="w-full h-12 rounded-soft bg-sage text-white font-medium hover:bg-sage/90 flex items-center justify-center gap-2"
+              className="w-full"
             >
               <span className="text-xl">📷</span>
               <span>Scan Barcode</span>
@@ -329,6 +329,7 @@ export function AddSnackModal({
           {/* Photo */}
           <div className="space-y-1">
             <Label>Photo (optional)</Label>
+            {/* Hidden file input for gallery */}
             <input
               ref={fileInputRef}
               type="file"
@@ -337,6 +338,15 @@ export function AddSnackModal({
               className="hidden"
               id="snack-photo"
             />
+            {/* Hidden file input for camera */}
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleImageSelect}
+              className="hidden"
+              id="snack-photo-camera"
+            />
             {imagePreview ? (
               <div className="space-y-2">
                 <img
@@ -344,34 +354,58 @@ export function AddSnackModal({
                   alt="Snack preview"
                   className="max-h-32 rounded-soft object-cover"
                 />
+                {useExternalImage && (
+                  <p className="text-xs text-charcoal/50">Image from product database</p>
+                )}
                 <div className="flex gap-2">
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="h-9 px-3 rounded-soft border-charcoal/20 text-charcoal text-sm hover:bg-charcoal/5"
+                    size="sm"
+                    onClick={() => document.getElementById('snack-photo-camera')?.click()}
                   >
-                    Change Photo
+                    📷 Take Photo
                   </Button>
                   <Button
                     type="button"
                     variant="outline"
+                    size="sm"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    Choose File
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
                     onClick={handleRemoveImage}
-                    className="h-9 px-3 rounded-soft border-red-300 text-red-600 text-sm hover:bg-red-50"
+                    className="border-red-300 text-red-600 hover:bg-red-50"
                   >
                     Remove
                   </Button>
                 </div>
               </div>
             ) : (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => fileInputRef.current?.click()}
-                className="h-11 px-4 rounded-soft border-dashed border-charcoal/30 text-charcoal/60 text-sm hover:border-terracotta hover:text-terracotta"
-              >
-                + Add Photo
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  onClick={() => document.getElementById('snack-photo-camera')?.click()}
+                  className="flex-1 border-dashed border-charcoal/30 text-charcoal/60 hover:border-terracotta hover:text-terracotta"
+                >
+                  📷 Take Photo
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex-1 border-dashed border-charcoal/30 text-charcoal/60 hover:border-terracotta hover:text-terracotta"
+                >
+                  + Choose File
+                </Button>
+              </div>
             )}
           </div>
         </div>

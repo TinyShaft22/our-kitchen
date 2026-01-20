@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { EmptyState, EmptySearch } from '@/components/ui/EmptyState';
 
 interface AddSnackToWeekModalProps {
   isOpen: boolean;
@@ -195,15 +196,14 @@ export function AddSnackToWeekModal({
 
               {/* Snack List */}
               {snacks.length === 0 ? (
-                <div className="text-center py-8 text-charcoal/60">
-                  <span className="text-4xl block mb-2">🍿</span>
-                  <p>No snacks in your library yet.</p>
-                  <p className="text-sm">Add some snacks first!</p>
-                </div>
+                <EmptyState
+                  icon="🍿"
+                  title="No snacks yet"
+                  description="Add some snacks to your library first!"
+                  variant="sage"
+                />
               ) : filteredSnacks.length === 0 ? (
-                <div className="text-center py-8 text-charcoal/60">
-                  <p>No snacks match "{search}"</p>
-                </div>
+                <EmptySearch />
               ) : (
                 <div className="space-y-2">
                   {filteredSnacks.map((snack) => (

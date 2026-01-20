@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { BakingEssential, BakingStatus } from '../../types';
 import { STORES } from '../../types';
+import { Button } from '@/components/ui/button';
 
 interface BakingEssentialCardProps {
   essential: BakingEssential;
@@ -90,39 +91,44 @@ export function BakingEssentialCard({
       {/* Action buttons (shown on tap) */}
       {showActions && (
         <div className="flex items-center gap-1">
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={(e) => {
               e.stopPropagation();
               onEdit();
             }}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-charcoal/10 transition-colors"
+            className="rounded-full"
             aria-label="Edit essential"
           >
             <span className="text-lg">✏️</span>
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={(e) => {
               e.stopPropagation();
               onDelete();
             }}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-charcoal/10 transition-colors"
+            className="rounded-full hover:bg-red-50 active:bg-red-100"
             aria-label="Delete essential"
           >
             <span className="text-lg">🗑️</span>
-          </button>
+          </Button>
         </div>
       )}
 
       {/* Restock button (only for low/out items) */}
       {needsRestock && onRestock && (
-        <button
+        <Button
+          size="sm"
           onClick={handleRestock}
-          disabled={isRestocking}
-          className="px-3 py-1.5 rounded-full text-sm font-medium bg-terracotta text-white hover:bg-terracotta/90 disabled:opacity-50 flex-shrink-0 transition-colors"
+          loading={isRestocking}
+          className="rounded-full flex-shrink-0"
           aria-label="Add to grocery list"
         >
-          {isRestocking ? '...' : '🛒 Restock'}
-        </button>
+          {isRestocking ? 'Adding...' : '🛒 Restock'}
+        </Button>
       )}
 
       {/* Right side: Status badge (tappable to cycle) with glow effects */}

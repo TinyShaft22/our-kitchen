@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import type { Snack } from '../../types';
 import { STORES, CATEGORIES } from '../../types';
+import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface SnackCardProps {
   snack: Snack;
@@ -20,10 +31,6 @@ export function SnackCard({ snack, onEdit, onDelete }: SnackCardProps) {
   const handleConfirmDelete = () => {
     setShowDeleteConfirm(false);
     onDelete(snack);
-  };
-
-  const handleCancelDelete = () => {
-    setShowDeleteConfirm(false);
   };
 
   const handleEditClick = (e: React.MouseEvent) => {
@@ -61,7 +68,7 @@ export function SnackCard({ snack, onEdit, onDelete }: SnackCardProps) {
             <h3 className="text-lg font-semibold text-charcoal truncate">
               {snack.name}
             </h3>
-            <p className="text-xs text-warm-gray">
+            <p className="text-xs text-charcoal/60">
               {snack.brand && `${snack.brand} • `}{storeName}
             </p>
           </div>
@@ -79,13 +86,15 @@ export function SnackCard({ snack, onEdit, onDelete }: SnackCardProps) {
             ▼
           </span>
           {/* Delete button */}
-          <button
+          <Button
+            variant="ghost"
+            size="icon-lg"
             onClick={handleDeleteClick}
-            className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-red-50 active:bg-red-100 transition-colors"
+            className="rounded-full hover:bg-red-50 active:bg-red-100"
             aria-label={`Delete ${snack.name}`}
           >
             <span className="text-lg">🗑️</span>
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -137,49 +146,42 @@ export function SnackCard({ snack, onEdit, onDelete }: SnackCardProps) {
             </div>
 
             {/* Edit Button */}
-            <button
+            <Button
+              size="lg"
               onClick={handleEditClick}
-              className="w-full h-11 flex items-center justify-center gap-2 rounded-soft bg-terracotta text-white font-medium hover:bg-terracotta/90 active:bg-terracotta/80 transition-colors"
+              className="w-full"
             >
               <span>✏️</span>
               <span>Edit Snack</span>
-            </button>
+            </Button>
           </div>
         )}
       </div>
 
       {/* Delete Confirmation Dialog */}
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-charcoal/50"
-            onClick={handleCancelDelete}
-            aria-hidden="true"
-          />
-          <div className="relative bg-cream rounded-softer p-6 w-full max-w-sm shadow-lg">
-            <h3 className="text-lg font-semibold text-charcoal mb-2">
+      <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <AlertDialogContent className="bg-cream rounded-soft max-w-sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-lg font-semibold text-charcoal">
               Delete Snack?
-            </h3>
-            <p className="text-sm text-charcoal/70 mb-4">
-              Are you sure you want to delete "{snack.name}"? This cannot be undone.
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={handleCancelDelete}
-                className="flex-1 h-11 rounded-soft border border-charcoal/20 text-charcoal font-medium hover:bg-charcoal/5 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleConfirmDelete}
-                className="flex-1 h-11 rounded-soft bg-red-500 text-white font-medium hover:bg-red-600 transition-colors"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-charcoal/70">
+              Are you sure you want to delete &quot;{snack.name}&quot;? This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-row gap-3">
+            <AlertDialogCancel className="flex-1 h-11 rounded-soft border border-charcoal/20 text-charcoal text-sm font-medium hover:bg-charcoal/5 active:bg-charcoal/10">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              className="flex-1 h-11 rounded-soft bg-destructive text-white text-sm font-medium hover:bg-destructive/90 active:bg-destructive/80"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -68,7 +68,7 @@ export function WeeklyMealCard({
             <h3 className="text-lg font-semibold text-charcoal truncate">
               {mealName}
             </h3>
-            <p className="text-xs text-warm-gray">
+            <p className="text-xs text-charcoal/60">
               {entry.servings} servings • {ingredients.length} ingredient{ingredients.length !== 1 ? 's' : ''}
               {alreadyHaveCount > 0 && (
                 <span className="text-sage ml-1">

@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useState, useRef } from 'react';
+import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 import { useBarcodeScanner } from '../../hooks/useBarcodeScanner';
 import { useOpenFoodFacts } from '../../hooks/useOpenFoodFacts';
 import { ProductLookupResult } from './ProductLookupResult';
@@ -10,6 +11,20 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+
+// Detect iOS
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+// Supported barcode formats
+const SUPPORTED_FORMATS = [
+  Html5QrcodeSupportedFormats.EAN_13,
+  Html5QrcodeSupportedFormats.EAN_8,
+  Html5QrcodeSupportedFormats.UPC_A,
+  Html5QrcodeSupportedFormats.UPC_E,
+  Html5QrcodeSupportedFormats.CODE_128,
+  Html5QrcodeSupportedFormats.CODE_39,
+];
 
 type ModalView = 'scanning' | 'result' | 'manual';
 
@@ -39,7 +54,76 @@ export function BarcodeScannerModal({
     error: scannerError,
     startScanning,
     stopScanning,
+    captureAndScan,
   } = useBarcodeScanner();
+
+  const [isCapturing, setIsCapturing] = useState(false);
+  const [photoScanError, setPhotoScanError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle photo taken with native camera (iOS fallback)
+  const handlePhotoCapture = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsCapturing(true);
+    setPhotoScanError(null);
+
+    try {
+      // Create an image from the file
+      const imageBitmap = await createImageBitmap(file);
+
+      // Try native BarcodeDetector first (better support on iOS Safari)
+      if ('BarcodeDetector' in window) {
+        try {
+          // @ts-expect-error - BarcodeDetector is not in TypeScript types yet
+          const barcodeDetector = new window.BarcodeDetector({
+            formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'code_39']
+          });
+          const barcodes = await barcodeDetector.detect(imageBitmap);
+
+          if (barcodes.length > 0) {
+            // Found barcode with native API
+            await handleScan(barcodes[0].rawValue);
+            return;
+          }
+        } catch (err) {
+          console.log('Native BarcodeDetector failed, trying html5-qrcode:', err);
+        }
+      }
+
+      // Fallback to html5-qrcode library
+      const tempDiv = document.createElement('div');
+      tempDiv.id = 'photo-scanner-temp';
+      tempDiv.style.display = 'none';
+      document.body.appendChild(tempDiv);
+
+      const scanner = new Html5Qrcode('photo-scanner-temp', {
+        formatsToSupport: SUPPORTED_FORMATS,
+        verbose: false,
+      });
+
+      try {
+        const result = await scanner.scanFile(file, true);
+        // Found barcode - process it
+        await handleScan(result);
+      } catch {
+        // No barcode found in photo
+        setPhotoScanError('No barcode found in photo. Make sure the barcode is clearly visible and in focus.');
+      } finally {
+        document.body.removeChild(tempDiv);
+      }
+    } catch (err) {
+      console.error('Error scanning photo:', err);
+      setPhotoScanError('Failed to scan photo. Please try again.');
+    } finally {
+      setIsCapturing(false);
+      // Reset the file input so the same file can be selected again
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
 
   const {
     state: lookupState,
@@ -93,6 +177,7 @@ export function BarcodeScannerModal({
       stopScanning();
       setView('scanning');
       setScannedBarcode(null);
+      setPhotoScanError(null);
       clearResult();
     }
   }, [isOpen, stopScanning, clearResult]);
@@ -146,6 +231,7 @@ export function BarcodeScannerModal({
   const handleTryAgain = () => {
     setView('scanning');
     setScannedBarcode(null);
+    setPhotoScanError(null);
     clearResult();
     // Restart scanning - use ref wrapper for stable callback
     setTimeout(() => {
@@ -157,6 +243,24 @@ export function BarcodeScannerModal({
 
   const handleManualEntry = () => {
     setView('manual');
+  };
+
+  // Manual capture button handler
+  const handleCapture = async () => {
+    if (isCapturing) return;
+    setIsCapturing(true);
+
+    try {
+      const result = await captureAndScan();
+      if (!result) {
+        // No barcode found - show brief feedback
+        // The UI will show "No barcode found" temporarily
+        setTimeout(() => setIsCapturing(false), 1500);
+      }
+      // If barcode found, handleScan will be called via the callback
+    } catch {
+      setIsCapturing(false);
+    }
   };
 
   return (
@@ -214,8 +318,62 @@ export function BarcodeScannerModal({
               {/* Instructions */}
               <div className="text-center text-charcoal/60 text-sm">
                 <p>Point your camera at a barcode</p>
-                <p className="text-xs mt-1">The scanner will automatically detect it</p>
+                <p className="text-xs mt-1">
+                  {isIOS ? 'Tap "Take Photo" to capture and scan' : 'Tap the capture button if auto-detect doesn\'t work'}
+                </p>
               </div>
+
+              {/* Hidden file input for native camera capture */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handlePhotoCapture}
+                className="hidden"
+              />
+
+              {/* Take Photo Button - Primary method for iOS */}
+              <Button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isCapturing}
+                className="w-full h-14 rounded-soft bg-terracotta text-white text-lg font-semibold"
+              >
+                {isCapturing ? (
+                  'Scanning photo...'
+                ) : (
+                  <>
+                    <span className="text-2xl mr-2">📷</span>
+                    Take Photo & Scan
+                  </>
+                )}
+              </Button>
+
+              {/* Capture from video button - Secondary for non-iOS */}
+              {!isIOS && scannerState === 'scanning' && (
+                <Button
+                  variant="outline"
+                  onClick={handleCapture}
+                  disabled={isCapturing}
+                  className="w-full h-11 rounded-soft border-charcoal/20 text-charcoal"
+                >
+                  Capture from Video
+                </Button>
+              )}
+
+              {/* Photo scan error */}
+              {photoScanError && (
+                <div className="text-center text-red-600 text-sm bg-red-50 p-3 rounded-soft">
+                  {photoScanError}
+                </div>
+              )}
+
+              {/* Feedback when capturing */}
+              {isCapturing && (
+                <div className="text-center text-amber-600 text-sm animate-pulse">
+                  Scanning for barcode...
+                </div>
+              )}
 
               {/* Lookup Status */}
               {lookupState === 'checking-cache' && (

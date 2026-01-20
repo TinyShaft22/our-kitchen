@@ -88,7 +88,7 @@ export default function JoinHousehold() {
               placeholder="1234"
               className="w-32 h-14 text-center text-2xl tracking-widest border-2 border-gray-200 rounded-soft focus:border-terracotta focus:outline-none mx-auto block mb-4"
             />
-            <p className="text-sm text-warm-gray mb-4">
+            <p className="text-sm text-charcoal/60 mb-4">
               {customCode.length === 4
                 ? `Your code: ${customCode}`
                 : 'Leave empty for random code'}
