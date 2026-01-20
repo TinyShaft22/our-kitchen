@@ -123,6 +123,12 @@ function getPendingActionPrompt(action) {
       return "Now, let me check your grocery list.";
     case 'AddGrocery':
       return "Now, what did you want to add to the list?";
+    case 'UndoGrocery':
+      return "Now, what would you like to do?";
+    case 'RemoveGrocery':
+      return "Now, what did you want to remove?";
+    case 'CheckOffGrocery':
+      return "Now, what did you pick up?";
     default:
       return "What would you like to do?";
   }
