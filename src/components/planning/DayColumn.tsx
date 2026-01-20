@@ -1,5 +1,8 @@
+import { useDroppable } from '@dnd-kit/core';
 import type { DayOfWeek, WeeklyMealEntry, WeeklySnackEntry, Meal, Snack } from '../../types';
 import { DAY_NAMES, DAY_ABBREVIATIONS } from '../../types';
+import { DraggableMealCard } from './DraggableMealCard';
+import { DraggableSnackCard } from './DraggableSnackCard';
 
 interface DayColumnProps {
   day: DayOfWeek;
@@ -18,18 +21,25 @@ export function DayColumn({
   getSnackById,
   isToday = false,
 }: DayColumnProps) {
+  const { isOver, setNodeRef } = useDroppable({
+    id: `day-${day}`,
+    data: { day },
+  });
+
   const dayName = DAY_NAMES[day];
   const dayAbbr = DAY_ABBREVIATIONS[day];
   const totalItems = meals.length + snacks.length;
 
   return (
     <div
+      ref={setNodeRef}
       className={`
-        flex flex-col rounded-soft border min-h-[200px]
+        flex flex-col rounded-soft border min-h-[200px] transition-colors
         ${isToday
           ? 'border-terracotta/40 bg-terracotta/5'
           : 'border-charcoal/10 bg-white/50'
         }
+        ${isOver ? 'border-terracotta border-2 bg-terracotta/10' : ''}
       `}
     >
       {/* Day Header */}
@@ -49,78 +59,41 @@ export function DayColumn({
           {dayAbbr}
         </div>
         {totalItems > 0 && (
-          <div className="text-xs text-charcoal/50">{totalItems} item{totalItems !== 1 ? 's' : ''}</div>
+          <div className="text-xs text-charcoal/50">
+            {totalItems} item{totalItems !== 1 ? 's' : ''}
+          </div>
         )}
       </div>
 
-      {/* Content Area */}
+      {/* Content Area (drop zone) */}
       <div className="flex-1 p-2 space-y-2">
         {/* Meals */}
-        {meals.map((entry) => {
-          const meal = getMealById(entry.mealId);
-          if (!meal) return null;
-
-          return (
-            <div
-              key={entry.mealId}
-              className="p-2 bg-white rounded-soft shadow-soft text-sm"
-            >
-              <div className="flex items-center gap-2">
-                {meal.imageUrl ? (
-                  <img
-                    src={meal.imageUrl}
-                    alt=""
-                    className="w-8 h-8 rounded-soft object-cover flex-shrink-0"
-                  />
-                ) : (
-                  <div className="w-8 h-8 rounded-soft bg-terracotta/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm">&#127869;</span>
-                  </div>
-                )}
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium text-charcoal truncate">{meal.name}</div>
-                  <div className="text-xs text-charcoal/50">{entry.servings} serving{entry.servings !== 1 ? 's' : ''}</div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {meals.map((entry) => (
+          <DraggableMealCard
+            key={entry.mealId}
+            entry={entry}
+            meal={getMealById(entry.mealId)}
+          />
+        ))}
 
         {/* Snacks */}
-        {snacks.map((entry) => {
-          const snack = getSnackById(entry.snackId);
-          if (!snack) return null;
+        {snacks.map((entry) => (
+          <DraggableSnackCard
+            key={entry.snackId}
+            entry={entry}
+            snack={getSnackById(entry.snackId)}
+          />
+        ))}
 
-          return (
-            <div
-              key={entry.snackId}
-              className="p-2 bg-sage/10 rounded-soft text-sm"
-            >
-              <div className="flex items-center gap-2">
-                {snack.imageUrl ? (
-                  <img
-                    src={snack.imageUrl}
-                    alt=""
-                    className="w-8 h-8 rounded-soft object-cover flex-shrink-0"
-                  />
-                ) : (
-                  <div className="w-8 h-8 rounded-soft bg-sage/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm">&#127871;</span>
-                  </div>
-                )}
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium text-charcoal truncate">{snack.name}</div>
-                  <div className="text-xs text-charcoal/50">&times;{entry.qty}</div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-
-        {/* Empty State */}
+        {/* Empty State / Drop hint */}
         {totalItems === 0 && (
-          <div className="flex-1 flex items-center justify-center py-4">
-            <span className="text-xs text-charcoal/30">No items</span>
+          <div className={`
+            flex-1 flex items-center justify-center py-4 rounded-soft border-2 border-dashed
+            ${isOver ? 'border-terracotta bg-terracotta/5' : 'border-transparent'}
+          `}>
+            <span className="text-xs text-charcoal/30">
+              {isOver ? 'Drop here' : 'No items'}
+            </span>
           </div>
         )}
       </div>

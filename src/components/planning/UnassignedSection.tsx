@@ -1,4 +1,7 @@
+import { useDroppable } from '@dnd-kit/core';
 import type { WeeklyMealEntry, WeeklySnackEntry, Meal, Snack } from '../../types';
+import { DraggableMealCard } from './DraggableMealCard';
+import { DraggableSnackCard } from './DraggableSnackCard';
 
 interface UnassignedSectionProps {
   meals: WeeklyMealEntry[];
@@ -13,80 +16,58 @@ export function UnassignedSection({
   getMealById,
   getSnackById,
 }: UnassignedSectionProps) {
+  const { isOver, setNodeRef } = useDroppable({
+    id: 'unassigned',
+    data: { day: undefined },
+  });
+
   const totalItems = meals.length + snacks.length;
 
-  if (totalItems === 0) return null;
-
   return (
-    <div className="mb-4">
+    <div
+      ref={setNodeRef}
+      className={`
+        mb-4 p-3 rounded-soft border-2 border-dashed transition-colors
+        ${isOver
+          ? 'border-charcoal/40 bg-charcoal/5'
+          : totalItems > 0
+            ? 'border-charcoal/20 bg-charcoal/5'
+            : 'border-charcoal/10'
+        }
+      `}
+    >
       <div className="flex items-center gap-2 mb-2">
         <span className="text-sm font-medium text-charcoal/60">Unassigned</span>
-        <span className="text-xs text-charcoal/40">({totalItems})</span>
+        {totalItems > 0 && (
+          <span className="text-xs text-charcoal/40">({totalItems})</span>
+        )}
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {/* Meals */}
-        {meals.map((entry) => {
-          const meal = getMealById(entry.mealId);
-          if (!meal) return null;
-
-          return (
-            <div
+      {totalItems > 0 ? (
+        <div className="flex flex-wrap gap-2">
+          {/* Meals */}
+          {meals.map((entry) => (
+            <DraggableMealCard
               key={entry.mealId}
-              className="flex items-center gap-2 px-3 py-2 bg-white rounded-soft shadow-soft"
-            >
-              {meal.imageUrl ? (
-                <img
-                  src={meal.imageUrl}
-                  alt=""
-                  className="w-8 h-8 rounded-soft object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-soft bg-terracotta/10 flex items-center justify-center">
-                  <span className="text-sm">&#127869;</span>
-                </div>
-              )}
-              <div>
-                <div className="font-medium text-charcoal text-sm">{meal.name}</div>
-                <div className="text-xs text-charcoal/50">{entry.servings} serving{entry.servings !== 1 ? 's' : ''}</div>
-              </div>
-            </div>
-          );
-        })}
+              entry={entry}
+              meal={getMealById(entry.mealId)}
+            />
+          ))}
 
-        {/* Snacks */}
-        {snacks.map((entry) => {
-          const snack = getSnackById(entry.snackId);
-          if (!snack) return null;
-
-          return (
-            <div
+          {/* Snacks */}
+          {snacks.map((entry) => (
+            <DraggableSnackCard
               key={entry.snackId}
-              className="flex items-center gap-2 px-3 py-2 bg-sage/10 rounded-soft"
-            >
-              {snack.imageUrl ? (
-                <img
-                  src={snack.imageUrl}
-                  alt=""
-                  className="w-8 h-8 rounded-soft object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-soft bg-sage/20 flex items-center justify-center">
-                  <span className="text-sm">&#127871;</span>
-                </div>
-              )}
-              <div>
-                <div className="font-medium text-charcoal text-sm">{snack.name}</div>
-                <div className="text-xs text-charcoal/50">&times;{entry.qty}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <p className="text-xs text-charcoal/40 mt-2">
-        Drag items to a day to schedule them
-      </p>
+              entry={entry}
+              snack={getSnackById(entry.snackId)}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-xs text-charcoal/40">
+          {isOver ? 'Drop here to unassign' : 'Drag items here to unassign from a day'}
+        </p>
+      )}
     </div>
   );
 }
