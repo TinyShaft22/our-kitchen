@@ -182,6 +182,36 @@
             "picked up {GroceryItem}",
             "{GroceryItem} is in the cart"
           ]
+        },
+        {
+          "name": "LinkHouseholdIntent",
+          "slots": [
+            {
+              "name": "PinCode",
+              "type": "AMAZON.FOUR_DIGIT_NUMBER"
+            }
+          ],
+          "samples": [
+            "link my household",
+            "connect to household {PinCode}",
+            "my code is {PinCode}",
+            "household code {PinCode}",
+            "link to {PinCode}",
+            "{PinCode}",
+            "use code {PinCode}"
+          ]
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PreviousIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.RepeatIntent",
+          "samples": []
         }
       ],
       "types": [
