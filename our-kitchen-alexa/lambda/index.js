@@ -15,6 +15,13 @@ const { SavePersistentAttributesInterceptor } = require('./interceptors/Response
 // Import handlers
 const { LinkHouseholdIntentHandler } = require('./handlers/HouseholdHandlers');
 const { BrowseMealsIntentHandler, GetRecipeIntentHandler, BrowseCategoryIntentHandler } = require('./handlers/MealHandlers');
+const {
+  ReadGroceryListIntentHandler,
+  AddGroceryIntentHandler,
+  UndoGroceryIntentHandler,
+  RemoveGroceryIntentHandler,
+  CheckOffGroceryIntentHandler
+} = require('./handlers/GroceryHandlers');
 
 /**
  * Device ID partition key generator
@@ -217,6 +224,11 @@ exports.handler = Alexa.SkillBuilders.custom()
         BrowseMealsIntentHandler,
         GetRecipeIntentHandler,
         BrowseCategoryIntentHandler,
+        ReadGroceryListIntentHandler,
+        AddGroceryIntentHandler,
+        UndoGroceryIntentHandler,
+        RemoveGroceryIntentHandler,
+        CheckOffGroceryIntentHandler,
         HelloWorldIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
