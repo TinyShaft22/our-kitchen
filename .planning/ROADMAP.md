@@ -104,7 +104,7 @@ None
 
 ---
 
-### 📋 v1.1 Meal & Grocery Refactor (Planned)
+### v1.1 Meal & Grocery Refactor (Planned)
 
 **Milestone Goal:** Simplify ingredient tracking, add real-time grocery sync with "already have" toggle, and enhance meals with recipes and images.
 
@@ -134,7 +134,7 @@ None
 
 ---
 
-### 📋 v1.2 Baking Organization
+### v1.2 Baking Organization
 
 **Milestone Goal:** Add nested folder support to the Baking section for organizing imported recipes (e.g., Broma > Cookies, Broma > Brownies).
 
@@ -154,18 +154,18 @@ None
 ---
 
 <details>
-<summary>✅ v1.3 Broma Bakery Import (Phases 16-22.1) — SHIPPED 2026-01-19</summary>
+<summary>v1.3 Broma Bakery Import (Phases 16-22.1) - SHIPPED 2026-01-19</summary>
 
 **Delivered:** 105 Broma Bakery recipes imported with images and paste URL feature.
 
-- [x] Phase 16: Scraping Infrastructure (2/2 plans) — completed 2026-01-15
-- [x] Phase 17: Cookies Batch (2/2 plans) — completed 2026-01-16
-- [x] Phase 18: Bars Batch (2/2 plans) — completed 2026-01-16
-- [x] Phase 19: Muffins Batch (2/2 plans) — completed 2026-01-17
-- [x] Phase 20: Brownies Batch (2/2 plans) — completed 2026-01-18
-- [x] Phase 21: Import & Verification (2/2 plans) — completed 2026-01-19
-- [x] Phase 22: Recipe Image Upload (1/1 plan) — completed 2026-01-19
-- [x] Phase 22.1: Paste Image URL (1/1 plan) — completed 2026-01-19 (INSERTED)
+- [x] Phase 16: Scraping Infrastructure (2/2 plans) - completed 2026-01-15
+- [x] Phase 17: Cookies Batch (2/2 plans) - completed 2026-01-16
+- [x] Phase 18: Bars Batch (2/2 plans) - completed 2026-01-16
+- [x] Phase 19: Muffins Batch (2/2 plans) - completed 2026-01-17
+- [x] Phase 20: Brownies Batch (2/2 plans) - completed 2026-01-18
+- [x] Phase 21: Import & Verification (2/2 plans) - completed 2026-01-19
+- [x] Phase 22: Recipe Image Upload (1/1 plan) - completed 2026-01-19
+- [x] Phase 22.1: Paste Image URL (1/1 plan) - completed 2026-01-19 (INSERTED)
 
 *Full details: .planning/milestones/v1.3-ROADMAP.md*
 
@@ -173,7 +173,7 @@ None
 
 ---
 
-### 📋 v2.0 Alexa Integration (Planned)
+### v2.0 Alexa Integration (Planned)
 
 **Milestone Goal:** Add Echo Show voice + visual integration to Our Kitchen, enabling hands-free meal browsing, recipe viewing, cooking mode, and grocery management.
 
@@ -189,18 +189,18 @@ None
 
 **Constraints:**
 - Free hosting: Alexa-Hosted Skills only
-- WSL development: Code in WSL, PowerShell handoff for `ask deploy`
+- WSL development: Code in WSL, git push for deployment
 - Voice-only fallback: Must work on any Alexa device
 
 #### Phase 23: Alexa Setup
 **Goal**: Developer account, Alexa-Hosted Skill creation, basic "hello world" response
 **Depends on**: Phase 22
-**Research**: Likely (Alexa SDK, developer account setup)
-**Research topics**: ASK CLI setup, Alexa-Hosted Skills structure, deployment workflow
-**Plans**: TBD
+**Research**: Complete (see 23-RESEARCH.md)
+**Plans**: 2 plans
 
 Plans:
-- [ ] 23-01: TBD (run /gsd:plan-phase 23 to break down)
+- [ ] 23-01-PLAN.md - Account Setup & ASK CLI (has checkpoints for account/skill creation)
+- [ ] 23-02-PLAN.md - Hello World Handler (Lambda code + interaction model + deploy)
 
 #### Phase 24: Interaction Model
 **Goal**: Define intents, slots, utterances for all voice commands (meals, recipes, cooking, groceries)
@@ -251,7 +251,7 @@ Plans:
 - [ ] 28-01: TBD
 
 #### Phase 29: Grocery Integration
-**Goal**: "What's on my grocery list?" / "Add {item}" — list viewing and item addition via voice
+**Goal**: "What's on my grocery list?" / "Add {item}" - list viewing and item addition via voice
 **Depends on**: Phase 28
 **Research**: Unlikely (extends voice command pattern)
 **Plans**: TBD
@@ -273,7 +273,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → ... → 14 → 15
+Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -300,7 +300,7 @@ Phases execute in numeric order: 1 → 2 → ... → 14 → 15
 | 21. Import & Verification | v1.3 | 2/2 | Complete | 2026-01-19 |
 | 22. Recipe Image Upload | v1.3 | 1/1 | Complete | 2026-01-19 |
 | 22.1 Paste Image URL | v1.3 | 1/1 | Complete | 2026-01-19 |
-| 23. Alexa Setup | v2.0 | 0/? | Not started | - |
+| 23. Alexa Setup | v2.0 | 0/2 | Planned | - |
 | 24. Interaction Model | v2.0 | 0/? | Not started | - |
 | 25. Lambda Backend | v2.0 | 0/? | Not started | - |
 | 26. APL Meal List | v2.0 | 0/? | Not started | - |
