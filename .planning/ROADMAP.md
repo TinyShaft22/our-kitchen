@@ -251,10 +251,16 @@ Plans:
 **Goal**: Step-by-step pager with voice navigation, auto-parsed markdown (## headers, numbered lists)
 **Depends on**: Phase 27
 **Research**: Unlikely (extends APL pager pattern)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 28-01: TBD
+- [ ] 28-01-PLAN.md - Step parser utility, APL pager document, datasource builder
+- [ ] 28-02-PLAN.md - Cooking handlers (StartCooking, Next, Previous, Repeat)
+- [ ] 28-03-PLAN.md - Touch controls (Start Cooking button, APL event handlers)
+
+**Wave structure:**
+- Wave 1: 28-01 (foundation - step parser, APL document, datasource)
+- Wave 2 (parallel): 28-02 (voice handlers), 28-03 (touch handlers)
 
 #### Phase 29: Grocery Integration
 **Goal**: "What's on my grocery list?" / "Add {item}" - list viewing and item addition via voice
@@ -331,7 +337,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 25. Lambda Backend | v2.0 | 5/5 | Complete | 2026-01-20 |
 | 26. APL Meal List | v2.0 | 1/1 | Complete | 2026-01-20 |
 | 27. APL Recipe Detail | v2.0 | 1/1 | Complete | 2026-01-20 |
-| 28. Cooking Mode | v2.0 | 0/? | Not started | - |
+| 28. Cooking Mode | v2.0 | 0/3 | Not started | - |
 | 29. Grocery Integration | v2.0 | 0/? | Not started | - |
 | 30. Testing & Polish | v2.0 | 0/? | Not started | - |
 | 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
