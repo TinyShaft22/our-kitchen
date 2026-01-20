@@ -28,7 +28,12 @@ const {
   RemoveGroceryIntentHandler,
   CheckOffGroceryIntentHandler
 } = require('./handlers/GroceryHandlers');
-const { MealSelectedEventHandler } = require('./handlers/AplEventHandlers');
+const {
+  MealSelectedEventHandler,
+  StartCookingEventHandler,
+  StepChangedEventHandler,
+  ExitCookingModeEventHandler
+} = require('./handlers/AplEventHandlers');
 
 /**
  * Device ID partition key generator
@@ -241,6 +246,9 @@ exports.handler = Alexa.SkillBuilders.custom()
         RemoveGroceryIntentHandler,
         CheckOffGroceryIntentHandler,
         MealSelectedEventHandler,
+        StartCookingEventHandler,
+        StepChangedEventHandler,
+        ExitCookingModeEventHandler,
         HelloWorldIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
