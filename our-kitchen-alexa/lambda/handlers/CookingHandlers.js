@@ -106,7 +106,7 @@ const NextStepIntentHandler = {
       && sessionAttributes.cookingMode === true;
   },
 
-  handle(handlerInput) {
+  async handle(handlerInput) {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     const steps = sessionAttributes.cookingSteps || [];
     let currentStep = sessionAttributes.cookingStep || 0;
@@ -121,7 +121,26 @@ const NextStepIntentHandler = {
 
     let speakOutput;
     if (isLastStep && !step.isIngredients) {
-      speakOutput = `${step.content} <break time="500ms"/> You're done! Enjoy your meal. Say 'go back' to see the recipe, or 'stop' to exit.`;
+      // Clear cooking mode and progress on completion
+      sessionAttributes.cookingMode = false;
+      sessionAttributes.cookingSteps = null;
+      sessionAttributes.cookingRecipe = null;
+      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+      // Clear persistent cooking progress
+      try {
+        const persistentAttributes = await handlerInput.attributesManager.getPersistentAttributes() || {};
+        if (persistentAttributes.cookingProgress) {
+          delete persistentAttributes.cookingProgress;
+          handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);
+          await handlerInput.attributesManager.savePersistentAttributes();
+          console.log('Cleared cooking progress on completion');
+        }
+      } catch (error) {
+        console.error('Failed to clear cooking progress:', error.message);
+      }
+
+      speakOutput = `${step.content} <break time="500ms"/> You're done! Enjoy your meal.`;
     } else {
       speakOutput = `${step.title}. ${step.content} <break time="300ms"/> Say 'next step' to continue.`;
     }
@@ -233,9 +252,137 @@ const RepeatStepIntentHandler = {
   }
 };
 
+/**
+ * ResumeCookingIntentHandler
+ * Handles "Continue cooking", "Resume", "Pick up where I left off"
+ *
+ * Resumes cooking at the saved step from persistent storage
+ */
+const ResumeCookingIntentHandler = {
+  canHandle(handlerInput) {
+    return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+      && Alexa.getIntentName(handlerInput.requestEnvelope) === 'ResumeCookingIntent';
+  },
+  async handle(handlerInput) {
+    if (!isLinked(handlerInput)) {
+      return createPinPromptResponse(handlerInput, 'ResumeCooking');
+    }
+
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    const pendingResume = sessionAttributes.pendingCookingResume;
+
+    // Check if we have pending resume from LaunchRequest
+    if (!pendingResume || !pendingResume.recipeId) {
+      return handlerInput.responseBuilder
+        .speak("I don't have a recipe to resume. What would you like to cook?")
+        .reprompt("Try asking what's for dinner.")
+        .getResponse();
+    }
+
+    // Fetch the recipe from Firebase
+    const householdCode = getHouseholdCode(handlerInput) || pendingResume.householdCode;
+    let recipe;
+    try {
+      recipe = await getRecipe(householdCode, pendingResume.recipeId);
+    } catch (error) {
+      console.error('Failed to fetch recipe for resume:', error.message);
+      return handlerInput.responseBuilder
+        .speak("I couldn't find that recipe anymore. What would you like to do?")
+        .reprompt("Try asking what's for dinner.")
+        .getResponse();
+    }
+
+    if (!recipe || !recipe.name) {
+      return handlerInput.responseBuilder
+        .speak("That recipe seems to have been removed. What would you like to do?")
+        .reprompt("Try asking what's for dinner.")
+        .getResponse();
+    }
+
+    // Parse steps and restore cooking state
+    const steps = parseInstructionsToSteps(recipe.instructions || '', recipe.ingredients || []);
+    const resumeStep = Math.min(pendingResume.currentStep || 0, steps.length - 1);
+
+    // Store cooking mode state
+    sessionAttributes.cookingMode = true;
+    sessionAttributes.cookingSteps = steps;
+    sessionAttributes.cookingStep = resumeStep;
+    sessionAttributes.cookingRecipe = recipe;
+    delete sessionAttributes.pendingCookingResume; // Clear pending resume
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+    // Build voice output for resumed step
+    const step = steps[resumeStep];
+    const speakOutput = `Resuming ${recipe.name}. ${step.title}. ${step.content} <break time="300ms"/> Say 'next step' to continue.`;
+
+    const responseBuilder = handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt("Say 'next step', 'previous step', or 'repeat'.");
+
+    // Add APL if supported
+    if (Alexa.getSupportedInterfaces(handlerInput.requestEnvelope)['Alexa.Presentation.APL']) {
+      responseBuilder.addDirective({
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'cookingStepToken',
+        document: cookingStepDocument,
+        datasources: buildCookingStepDataSource(recipe, resumeStep)
+      });
+    }
+
+    return responseBuilder.getResponse();
+  }
+};
+
+/**
+ * ExitCookingIntentHandler
+ * Handles "Exit cooking", "Stop cooking", "I'm done cooking"
+ *
+ * Clears cooking state and persistent progress
+ */
+const ExitCookingIntentHandler = {
+  canHandle(handlerInput) {
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+      && Alexa.getIntentName(handlerInput.requestEnvelope) === 'ExitCookingIntent'
+      && sessionAttributes.cookingMode === true;
+  },
+  async handle(handlerInput) {
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    const recipe = sessionAttributes.cookingRecipe;
+
+    // Clear cooking mode state
+    sessionAttributes.cookingMode = false;
+    sessionAttributes.cookingSteps = null;
+    sessionAttributes.cookingStep = 0;
+    sessionAttributes.cookingRecipe = null;
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+    // Clear persistent cooking progress
+    try {
+      const persistentAttributes = await handlerInput.attributesManager.getPersistentAttributes() || {};
+      if (persistentAttributes.cookingProgress) {
+        delete persistentAttributes.cookingProgress;
+        handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);
+        await handlerInput.attributesManager.savePersistentAttributes();
+        console.log('Cleared cooking progress on exit');
+      }
+    } catch (error) {
+      console.error('Failed to clear cooking progress:', error.message);
+    }
+
+    const recipeName = recipe?.name || 'your recipe';
+    return handlerInput.responseBuilder
+      .speak(`Exited cooking mode for ${recipeName}. What would you like to do?`)
+      .reprompt("Try asking what's for dinner, or what's on the grocery list.")
+      .getResponse();
+  }
+};
+
 module.exports = {
   StartCookingIntentHandler,
   NextStepIntentHandler,
   PreviousStepIntentHandler,
-  RepeatStepIntentHandler
+  RepeatStepIntentHandler,
+  ResumeCookingIntentHandler,
+  ExitCookingIntentHandler
 };
