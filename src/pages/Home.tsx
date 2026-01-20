@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { DndContext, DragEndEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { useHousehold } from '../hooks/useHousehold';
 import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
 import { useMeals } from '../hooks/useMeals';
@@ -17,7 +18,7 @@ import { WeekViewToggle, type ViewMode } from '../components/ui/WeekViewToggle';
 import { WeekView } from '../components/planning/WeekView';
 import { Button } from '../components/ui/button';
 import { Plus } from 'lucide-react';
-import type { WeeklyMealEntry, WeeklySnackEntry } from '../types';
+import type { DayOfWeek, WeeklyMealEntry, WeeklySnackEntry } from '../types';
 
 /**
  * Parse weekId (e.g., "2026-W02") into display format (e.g., "Week 02, 2026")
@@ -42,6 +43,8 @@ function Home() {
     addSnackToWeek,
     removeSnackFromWeek,
     updateSnackQty,
+    updateMealDay,
+    updateSnackDay,
   } = useWeeklyPlan(householdCode);
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const { snacks, loading: snacksLoading } = useSnacks(householdCode);
@@ -65,6 +68,15 @@ function Home() {
   // Remove snack confirmation dialog state
   const [removingSnackEntry, setRemovingSnackEntry] = useState<WeeklySnackEntry | null>(null);
   const [isRemoveSnackDialogOpen, setIsRemoveSnackDialogOpen] = useState(false);
+
+  // Configure drag sensors - require 10px movement before starting drag
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    })
+  );
 
   // Helper to get meal by ID
   const getMealById = (mealId: string) => {
@@ -184,6 +196,39 @@ function Home() {
     if (removingSnackEntry) {
       await removeSnackFromWeek(removingSnackEntry.snackId);
       handleCloseRemoveSnackDialog();
+    }
+  };
+
+  // Handle drag end - update meal/snack day assignment
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over) return;
+
+    const activeData = active.data.current;
+    const overData = over.data.current;
+
+    if (!activeData || !overData) return;
+
+    // Determine target day (undefined for unassigned)
+    const targetDay = overData.day as DayOfWeek | undefined;
+
+    // Handle meal drop
+    if (activeData.type === 'meal') {
+      const entry = activeData.entry as WeeklyMealEntry;
+      // Only update if day changed
+      if (entry.day !== targetDay) {
+        await updateMealDay(entry.mealId, targetDay);
+      }
+    }
+
+    // Handle snack drop
+    if (activeData.type === 'snack') {
+      const entry = activeData.entry as WeeklySnackEntry;
+      // Only update if day changed
+      if (entry.day !== targetDay) {
+        await updateSnackDay(entry.snackId, targetDay);
+      }
     }
   };
 
@@ -331,13 +376,15 @@ function Home() {
             )}
           </div>
         ) : (
-          /* Week View */
-          <WeekView
-            meals={weeklyMeals}
-            snacks={weeklySnacks}
-            getMealById={getMealById}
-            getSnackById={getSnackById}
-          />
+          /* Week View with Drag and Drop */
+          <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+            <WeekView
+              meals={weeklyMeals}
+              snacks={weeklySnacks}
+              getMealById={getMealById}
+              getSnackById={getSnackById}
+            />
+          </DndContext>
         )}
 
         {/* Quick Add Buttons - always visible when there's content or meals in library */}
