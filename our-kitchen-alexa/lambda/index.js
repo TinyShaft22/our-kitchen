@@ -12,6 +12,9 @@ const { DynamoDbPersistenceAdapter } = require('ask-sdk-dynamodb-persistence-ada
 const { LogRequestInterceptor, LoadHouseholdInterceptor } = require('./interceptors/RequestInterceptors');
 const { SavePersistentAttributesInterceptor } = require('./interceptors/ResponseInterceptors');
 
+// Import handlers
+const { LinkHouseholdIntentHandler } = require('./handlers/HouseholdHandlers');
+
 /**
  * Device ID partition key generator
  * Uses device ID instead of user ID for persistence
@@ -42,19 +45,35 @@ const persistenceAdapter = new DynamoDbPersistenceAdapter({
 /**
  * LaunchRequestHandler
  * Triggered when user says "Alexa, open our kitchen"
+ * Guides new users through PIN linking, welcomes back linked users
  */
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome to Our Kitchen! You can ask me about meals, recipes, or your grocery list. What would you like to do?';
-        const repromptOutput = 'Try saying "hello" or "help" to get started.';
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const isLinked = sessionAttributes.isLinked;
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(repromptOutput)
-            .getResponse();
+        if (isLinked) {
+            // Linked user - welcome back
+            const speakOutput = "Welcome back to your kitchen! What would you like to do?";
+            const repromptOutput = "Try asking what's for dinner, or what's on the grocery list.";
+
+            return handlerInput.responseBuilder
+                .speak(speakOutput)
+                .reprompt(repromptOutput)
+                .getResponse();
+        } else {
+            // New user - explain and prompt for PIN
+            const speakOutput = "Welcome to Kitchen Helper! To get started, I need to connect to your household. What's your four-digit PIN from the app?";
+            const repromptOutput = "Say your four-digit household PIN to link this device.";
+
+            return handlerInput.responseBuilder
+                .speak(speakOutput)
+                .reprompt(repromptOutput)
+                .getResponse();
+        }
     }
 };
 
@@ -79,6 +98,7 @@ const HelloWorldIntentHandler = {
 /**
  * HelpIntentHandler
  * Triggered when user says "help"
+ * Provides context-aware help based on linking status
  */
 const HelpIntentHandler = {
     canHandle(handlerInput) {
@@ -86,7 +106,15 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'You can ask me to show meals, read a recipe, or check your grocery list. How can I help?';
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const isLinked = sessionAttributes.isLinked;
+
+        let speakOutput;
+        if (isLinked) {
+            speakOutput = "You can ask me what's for dinner, show a recipe, or check your grocery list. What would you like to do?";
+        } else {
+            speakOutput = "To use Kitchen Helper, you need to link your device with your household PIN. Say your four-digit PIN to get started.";
+        }
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -184,6 +212,7 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
+        LinkHouseholdIntentHandler,
         HelloWorldIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
