@@ -180,7 +180,7 @@ None
 **Key Decisions:**
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
-| Invocation name | "Our Kitchen" | Matches app name |
+| Invocation name | "kitchen helper" | Avoids smart home conflicts |
 | Authentication | Voice PIN | User says 4-digit code to link |
 | Data freshness | Query fresh each time | Voice commands infrequent |
 | Cooking steps | Auto-parse markdown | Split on ## headers and numbered lists |
@@ -199,18 +199,18 @@ None
 **Plans**: 2 plans
 
 Plans:
-- [ ] 23-01-PLAN.md - Account Setup & ASK CLI (has checkpoints for account/skill creation)
-- [ ] 23-02-PLAN.md - Hello World Handler (Lambda code + interaction model + deploy)
+- [x] 23-01-PLAN.md - Account Setup & ASK CLI (has checkpoints for account/skill creation)
+- [x] 23-02-PLAN.md - Hello World Handler (Lambda code + interaction model + deploy)
 
 #### Phase 24: Interaction Model
 **Goal**: Define intents, slots, utterances for all voice commands (meals, recipes, cooking, groceries)
 **Depends on**: Phase 23
-**Research**: Likely (ASK interaction model schema)
-**Research topics**: Intent/slot syntax, utterance patterns, built-in slot types
-**Plans**: TBD
+**Research**: Complete (see 24-RESEARCH.md)
+**Plans**: 2 plans
 
 Plans:
-- [ ] 24-01: TBD
+- [ ] 24-01-PLAN.md - Meal & recipe intents with custom slot types
+- [ ] 24-02-PLAN.md - Grocery intents and household linking
 
 #### Phase 25: Lambda Backend
 **Goal**: Skill handler with Firebase connection via REST API, voice PIN linking
@@ -301,7 +301,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 22. Recipe Image Upload | v1.3 | 1/1 | Complete | 2026-01-19 |
 | 22.1 Paste Image URL | v1.3 | 1/1 | Complete | 2026-01-19 |
 | 23. Alexa Setup | v2.0 | 2/2 | Complete | 2026-01-19 |
-| 24. Interaction Model | v2.0 | 0/? | Not started | - |
+| 24. Interaction Model | v2.0 | 0/2 | Planned | - |
 | 25. Lambda Backend | v2.0 | 0/? | Not started | - |
 | 26. APL Meal List | v2.0 | 0/? | Not started | - |
 | 27. APL Recipe Detail | v2.0 | 0/? | Not started | - |
