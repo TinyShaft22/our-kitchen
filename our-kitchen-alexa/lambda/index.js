@@ -19,7 +19,9 @@ const {
   StartCookingIntentHandler,
   NextStepIntentHandler,
   PreviousStepIntentHandler,
-  RepeatStepIntentHandler
+  RepeatStepIntentHandler,
+  ResumeCookingIntentHandler,
+  ExitCookingIntentHandler
 } = require('./handlers/CookingHandlers');
 const {
   ReadGroceryListIntentHandler,
@@ -288,6 +290,7 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
+        ResumeCookingIntentHandler,       // Handle "continue cooking" after launch
         LinkHouseholdIntentHandler,
         BrowseMealsIntentHandler,
         GetRecipeIntentHandler,
@@ -296,6 +299,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         NextStepIntentHandler,
         PreviousStepIntentHandler,
         RepeatStepIntentHandler,
+        ExitCookingIntentHandler,         // Handle "exit cooking" / "stop cooking"
         ReadGroceryListIntentHandler,
         AddGroceryIntentHandler,
         UndoGroceryIntentHandler,
