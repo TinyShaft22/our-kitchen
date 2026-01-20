@@ -10,6 +10,8 @@ const { createPinPromptResponse } = require('./HouseholdHandlers');
 // APL imports for visual display on Echo Show
 const mealListDocument = require('../apl/meal-list.json');
 const { buildMealListDataSource } = require('../apl/meal-list-data');
+const recipeDetailDocument = require('../apl/recipe-detail.json');
+const { buildRecipeDetailDataSource } = require('../apl/recipe-detail-data');
 
 /**
  * BrowseMealsIntentHandler
@@ -91,7 +93,9 @@ const BrowseMealsIntentHandler = {
  * "Show me the recipe for {MealName}" / "What's in {MealName}?"
  *
  * Per CONTEXT.md:
- * - Ingredients first, then ask "Ready for the steps?"
+ * - Brief confirmation: "Here's the recipe for {meal}"
+ * - Display APL visual (if screen available)
+ * - Offer follow-up actions: read ingredients, read instructions, or cooking mode
  */
 const GetRecipeIntentHandler = {
   canHandle(handlerInput) {
@@ -147,26 +151,31 @@ const GetRecipeIntentHandler = {
           .getResponse();
       }
 
-      // Build ingredients list (cap at 7 for voice)
-      const ingredients = result.ingredients || [];
-      const ingredientNames = ingredients.slice(0, 7).map(i => i.name);
-      const remainingIngredients = ingredients.length - 7;
+      // Voice flow per CONTEXT.md: brief confirmation, offer follow-up actions
+      const speakOutput = `Here's the recipe for ${result.name}. Would you like me to read the ingredients, read the instructions, or start cooking mode?`;
+      const reprompt = "Would you like to hear the ingredients, the instructions, or start cooking mode?";
 
-      let speakOutput = `For ${result.name}, you'll need: ${formatList(ingredientNames)}`;
-      if (remainingIngredients > 0) {
-        speakOutput += `, and ${remainingIngredients} more items`;
-      }
-      speakOutput += ". Ready for the cooking steps?";
-
-      // Store recipe in session for cooking mode
+      // Store recipe in session for cooking mode and follow-up
       sessionAttributes.currentRecipe = result;
       sessionAttributes.currentRecipeStep = 0;
       handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
-      return handlerInput.responseBuilder
+      // Build response with voice output
+      const responseBuilder = handlerInput.responseBuilder
         .speak(speakOutput)
-        .reprompt("Say yes to hear the cooking steps, or ask about another meal.")
-        .getResponse();
+        .reprompt(reprompt);
+
+      // Add APL visual display if device supports it (Echo Show)
+      if (Alexa.getSupportedInterfaces(handlerInput.requestEnvelope)['Alexa.Presentation.APL']) {
+        responseBuilder.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          token: 'recipeDetailToken',
+          document: recipeDetailDocument,
+          datasources: buildRecipeDetailDataSource(result)
+        });
+      }
+
+      return responseBuilder.getResponse();
 
     } catch (error) {
       console.log('Get recipe error:', error.message);
