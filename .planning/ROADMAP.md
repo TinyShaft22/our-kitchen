@@ -6,11 +6,11 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 
 ## Milestones
 
-- ✅ **v1.0 MVP** - Phases 1-10 (complete)
-- ✅ **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
-- ✅ **v1.2 Baking Organization** - Phase 15 (complete)
-- ✅ **v1.3 Broma Bakery Import** - Phases 16-22.1 (complete)
-- 📋 **v2.0 Alexa Integration** - Phases 23-31 (planned)
+- **v1.0 MVP** - Phases 1-10 (complete)
+- **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
+- **v1.2 Baking Organization** - Phase 15 (complete)
+- **v1.3 Broma Bakery Import** - Phases 16-22.1 (complete)
+- **v2.0 Alexa Integration** - Phases 23-31 (planned)
 
 ## Domain Expertise
 
@@ -230,14 +230,13 @@ Plans:
 - Wave 2 (parallel): 25-03 (Household), 25-04 (Meals), 25-05 (Groceries)
 
 #### Phase 26: APL Meal List
-**Goal**: Visual template for browsing meals (voice-first, visual optional)
+**Goal**: Visual template for browsing meals on Echo Show (voice-first, visual optional)
 **Depends on**: Phase 25
-**Research**: Likely (APL templating language)
-**Research topics**: APL document structure, ImageList template, viewport profiles for Echo Show 5
-**Plans**: TBD
+**Research**: Complete (see 26-RESEARCH.md)
+**Plans**: 1 plan
 
 Plans:
-- [ ] 26-01: TBD
+- [ ] 26-01-PLAN.md - APL document, datasource builder, event handler, MealHandlers update
 
 #### Phase 27: APL Recipe Detail
 **Goal**: Ingredients + instructions display for "Show me the recipe for {meal}"
@@ -330,7 +329,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 23. Alexa Setup | v2.0 | 2/2 | Complete | 2026-01-19 |
 | 24. Interaction Model | v2.0 | 2/2 | Complete | 2026-01-20 |
 | 25. Lambda Backend | v2.0 | 5/5 | Complete | 2026-01-20 |
-| 26. APL Meal List | v2.0 | 0/? | Not started | - |
+| 26. APL Meal List | v2.0 | 0/1 | Not started | - |
 | 27. APL Recipe Detail | v2.0 | 0/? | Not started | - |
 | 28. Cooking Mode | v2.0 | 0/? | Not started | - |
 | 29. Grocery Integration | v2.0 | 0/? | Not started | - |
