@@ -24,18 +24,12 @@
           "samples": []
         },
         {
-          "name": "HelloWorldIntent",
-          "slots": [],
-          "samples": [
-            "hello",
-            "hi",
-            "say hello",
-            "say hi",
-            "greetings",
-            "good morning",
-            "good afternoon",
-            "good evening"
-          ]
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
         },
         {
           "name": "BrowseMealsIntent",
