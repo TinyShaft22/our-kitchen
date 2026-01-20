@@ -1,0 +1,122 @@
+{
+  "type": "APL",
+  "version": "2024.3",
+  "description": "Our Kitchen cooking mode step-by-step display",
+  "import": [
+    { "name": "alexa-layouts", "version": "1.7.0" },
+    { "name": "alexa-viewport-profiles", "version": "1.6.0" }
+  ],
+  "resources": [
+    {
+      "description": "Custom colors - default (dark theme)",
+      "colors": {
+        "colorBackground": "#1A1A1A",
+        "colorAccent": "#C4704B",
+        "colorText": "#FFFFFF",
+        "colorTextSecondary": "#CCCCCC"
+      }
+    },
+    {
+      "description": "Custom colors - light theme",
+      "when": "${viewport.theme == 'light'}",
+      "colors": {
+        "colorBackground": "#FFF8F0",
+        "colorAccent": "#C4704B",
+        "colorText": "#1A1A1A",
+        "colorTextSecondary": "#666666"
+      }
+    }
+  ],
+  "mainTemplate": {
+    "parameters": ["cookingData"],
+    "items": [
+      {
+        "type": "Container",
+        "width": "100%",
+        "height": "100%",
+        "id": "cookingStepView",
+        "items": [
+          {
+            "type": "AlexaHeader",
+            "headerTitle": "${cookingData.mealName}",
+            "headerSubtitle": "${cookingData.steps[cookingData.currentStep].isIngredients ? 'Ingredients' : 'Step ' + cookingData.steps[cookingData.currentStep].number + ' of ' + (cookingData.totalSteps - 1)}",
+            "headerBackButton": true,
+            "headerBackButtonAccessibilityLabel": "Exit cooking mode",
+            "headerBackButtonCommand": {
+              "type": "SendEvent",
+              "arguments": ["ExitCookingMode"]
+            }
+          },
+          {
+            "type": "Pager",
+            "id": "stepPager",
+            "width": "100%",
+            "height": "100%",
+            "grow": 1,
+            "initialPage": "${cookingData.currentStep}",
+            "navigation": "normal",
+            "data": "${cookingData.steps}",
+            "onPageChanged": [
+              {
+                "type": "SendEvent",
+                "arguments": ["StepChanged", "${event.source.page}"]
+              }
+            ],
+            "items": [
+              {
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "paddingLeft": "@spacingLarge",
+                "paddingRight": "@spacingLarge",
+                "paddingTop": "@spacingMedium",
+                "paddingBottom": "@spacingLarge",
+                "items": [
+                  {
+                    "type": "Text",
+                    "text": "${data.title}",
+                    "style": "textStyleDisplay4",
+                    "fontWeight": "bold",
+                    "color": "@colorAccent",
+                    "paddingBottom": "@spacingMedium"
+                  },
+                  {
+                    "type": "ScrollView",
+                    "width": "100%",
+                    "height": "100%",
+                    "grow": 1,
+                    "items": [
+                      {
+                        "type": "Text",
+                        "text": "${data.content}",
+                        "style": "textStyleBody",
+                        "fontSize": "${data.isIngredients ? '28dp' : '32dp'}",
+                        "color": "@colorText",
+                        "lineHeight": 1.4
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "width": "100%",
+                    "paddingTop": "@spacingMedium",
+                    "alignItems": "center",
+                    "items": [
+                      {
+                        "type": "Text",
+                        "text": "Swipe or say \"next step\"",
+                        "style": "textStyleBody",
+                        "fontSize": "18dp",
+                        "color": "@colorTextSecondary"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
