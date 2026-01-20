@@ -9,25 +9,30 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 31 of 31 (Home Page Enhancement)
-Plan: 3 of 4 complete
+Phase: 25 of 31 (Lambda Backend)
+Plan: 2 of 4 complete
 Status: In progress
-Last activity: 2026-01-20 — Completed 31-03-PLAN.md (Week View)
+Last activity: 2026-01-20 — Completed 25-02-PLAN.md (Lambda Core Infrastructure)
 
 Progress: ████████████████████░░░░░ 81% (25/31 phases started)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 55 (across v1.0-v2.0)
+- Total plans completed: 56 (across v1.0-v2.0)
 - Average duration: ~10 min
-- Total execution time: ~9.1 hours
+- Total execution time: ~9.2 hours
 
 ## Accumulated Context
 
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
+
+**Phase 25-02 decisions:**
+- Device ID partition key for persistence (survives Amazon account changes)
+- Dirty flag pattern for persistence saves (only save when modified)
+- 5s API timeout (leaves buffer for Alexa's 8s limit)
 
 ### Deferred Issues
 
@@ -44,25 +49,25 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 31-03-PLAN.md (Week View)
+Stopped at: Completed 25-02-PLAN.md (Lambda Core Infrastructure)
 Resume file: None
-Resume with: Execute Phase 31-04 (Drag-and-drop) or Phase 25 (Dynamic Entities)
+Resume with: Execute Phase 25-03 (Handlers) or Phase 31-04 (Drag-and-drop)
 
 ## Milestones
 
-- ✅ v1.0 MVP (Phases 1-10) — shipped 2026-01-15
-- ✅ v1.1 Meal & Grocery Refactor (Phases 11-14) — shipped 2026-01-14
-- ✅ v1.2 Baking Organization (Phase 15) — shipped 2026-01-15
-- ✅ v1.3 Broma Bakery Import (Phases 16-22.1) — shipped 2026-01-19
-- 🔄 v2.0 Alexa Integration (Phases 23-30) — in progress
+- v1.0 MVP (Phases 1-10) — shipped 2026-01-15
+- v1.1 Meal & Grocery Refactor (Phases 11-14) — shipped 2026-01-14
+- v1.2 Baking Organization (Phase 15) — shipped 2026-01-15
+- v1.3 Broma Bakery Import (Phases 16-22.1) — shipped 2026-01-19
+- v2.0 Alexa Integration (Phases 23-30) — in progress
 
 **Imported:**
 - 105 Broma Bakery recipes in app
 
 ## Next Steps
 
-1. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
-2. Execute Phase 25: Dynamic Entities (load meal names from Firebase at runtime)
+1. Execute Phase 25-03: Handler Implementation
+2. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
 
 ## Roadmap Evolution
 
@@ -85,3 +90,4 @@ Resume with: Execute Phase 31-04 (Drag-and-drop) or Phase 25 (Dynamic Entities)
 - 2026-01-20: Phase 31-01 complete (DayOfWeek type, day assignment functions)
 - 2026-01-20: Phase 31-02 complete (WeekViewToggle, LoadMealsModal, updated Home.tsx)
 - 2026-01-20: Phase 31-03 complete (WeekView, DayColumn, UnassignedSection, conditional view rendering)
+- 2026-01-20: Phase 25-02 complete (DynamoDB persistence, interceptors, HTTP client)
