@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 28 of 31 (Cooking Mode)
-Plan: 3 of 4 complete (01, 02, 03)
-Status: **In progress**
-Last activity: 2026-01-20 — Completed 28-03-PLAN.md (cooking mode touch controls)
+Plan: 4 of 4 complete (01, 02, 03, 04)
+Status: **Phase complete**
+Last activity: 2026-01-20 — Completed 28-04-PLAN.md (resume cooking functionality)
 
 Progress: ██████████████████████░░░ 90% (28/31 phases complete)
 
@@ -86,6 +86,12 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - StepChanged event syncs pager swipe with session state for voice continuity
 - Exit cooking mode returns to recipe detail with follow-up options
 
+**Phase 28-04 decisions:**
+- 24-hour expiry on cooking progress (prevents stale resumes)
+- Save progress on every response during cooking mode (guarantees no lost steps)
+- pendingCookingResume pattern in session for handler handoff
+- Clear progress on completion, explicit exit, or expired
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -101,9 +107,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 28-03-PLAN.md (cooking mode touch controls)
+Stopped at: Completed 28-04-PLAN.md (resume cooking functionality)
 Resume file: None
-Resume with: Execute 28-04-PLAN.md (resume cooking) or Execute Phase 31-04 (Drag-and-drop)
+Resume with: Execute Phase 29 (Testing/Deployment) or Execute Phase 31-04 (Drag-and-drop)
 
 ## Milestones
 
@@ -118,7 +124,7 @@ Resume with: Execute 28-04-PLAN.md (resume cooking) or Execute Phase 31-04 (Drag
 
 ## Next Steps
 
-1. Execute 28-04-PLAN.md: Resume cooking functionality
+1. Execute Phase 29: Testing and deployment
 2. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
 
 ## Roadmap Evolution
@@ -155,3 +161,5 @@ Resume with: Execute 28-04-PLAN.md (resume cooking) or Execute Phase 31-04 (Drag
 - 2026-01-20: Phase 28-01 complete (step parser, APL pager document, datasource builder)
 - 2026-01-20: Phase 28-02 complete (cooking mode handlers with voice navigation)
 - 2026-01-20: Phase 28-03 complete (touch controls: Start Cooking button, swipe handlers, exit handler)
+- 2026-01-20: Phase 28-04 complete (resume cooking with DynamoDB persistence)
+- 2026-01-20: **Phase 28 COMPLETE** — Cooking Mode with voice navigation, touch controls, and resume
