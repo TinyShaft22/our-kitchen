@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 25 of 31 (Lambda Backend)
-Plan: 2 of 5 complete (01+02)
+Plan: 3 of 5 complete (01+02+03)
 Status: In progress
-Last activity: 2026-01-20 — Completed 25-01-PLAN.md (Alexa REST API Endpoints)
+Last activity: 2026-01-20 — Completed 25-03-PLAN.md (Handler Implementation)
 
 Progress: ████████████████████░░░░░ 81% (25/31 phases started)
 
@@ -40,6 +40,11 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Dirty flag pattern for persistence saves (only save when modified)
 - 5s API timeout (leaves buffer for Alexa's 8s limit)
 
+**Phase 25-03 decisions:**
+- Max 3 PIN attempts before lockout (prevents brute force, friendly UX)
+- Pending action resume after successful linking
+- Context-aware Launch/Help handlers (different greetings for linked vs new users)
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -55,9 +60,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 25-01-PLAN.md (Alexa REST API Endpoints)
+Stopped at: Completed 25-03-PLAN.md (Handler Implementation)
 Resume file: None
-Resume with: Execute Phase 25-03 (Handlers) or Phase 31-04 (Drag-and-drop)
+Resume with: Execute Phase 25-04 (Grocery handlers) or Phase 31-04 (Drag-and-drop)
 
 ## Milestones
 
@@ -72,7 +77,7 @@ Resume with: Execute Phase 25-03 (Handlers) or Phase 31-04 (Drag-and-drop)
 
 ## Next Steps
 
-1. Execute Phase 25-03: Handler Implementation
+1. Execute Phase 25-04: Grocery Handlers
 2. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
 
 ## Roadmap Evolution
@@ -98,3 +103,4 @@ Resume with: Execute Phase 25-03 (Handlers) or Phase 31-04 (Drag-and-drop)
 - 2026-01-20: Phase 31-03 complete (WeekView, DayColumn, UnassignedSection, conditional view rendering)
 - 2026-01-20: Phase 25-02 complete (DynamoDB persistence, interceptors, HTTP client)
 - 2026-01-20: Phase 25-01 complete (6 Alexa REST API endpoints in Cloud Functions)
+- 2026-01-20: Phase 25-03 complete (PIN verification handler, context-aware launch/help)
