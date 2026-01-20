@@ -254,10 +254,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 28-01-PLAN.md - Step parser utility, APL pager document, datasource builder
-- [ ] 28-02-PLAN.md - Cooking handlers (StartCooking, Next, Previous, Repeat)
-- [ ] 28-03-PLAN.md - Touch controls (Start Cooking button, APL event handlers)
-- [ ] 28-04-PLAN.md - Resume cooking (DynamoDB persistence, resume detection)
+- [x] 28-01-PLAN.md - Step parser utility, APL pager document, datasource builder
+- [x] 28-02-PLAN.md - Cooking handlers (StartCooking, Next, Previous, Repeat)
+- [x] 28-03-PLAN.md - Touch controls (Start Cooking button, APL event handlers)
+- [x] 28-04-PLAN.md - Resume cooking (DynamoDB persistence, resume detection)
 
 **Wave structure:**
 - Wave 1: 28-01 (foundation - step parser, APL document, datasource)
@@ -338,7 +338,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 25. Lambda Backend | v2.0 | 5/5 | Complete | 2026-01-20 |
 | 26. APL Meal List | v2.0 | 1/1 | Complete | 2026-01-20 |
 | 27. APL Recipe Detail | v2.0 | 1/1 | Complete | 2026-01-20 |
-| 28. Cooking Mode | v2.0 | 0/4 | Not started | - |
+| 28. Cooking Mode | v2.0 | 4/4 | Complete | 2026-01-20 |
 | 29. Grocery Integration | v2.0 | 0/? | Not started | - |
 | 30. Testing & Polish | v2.0 | 0/? | Not started | - |
 | 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
