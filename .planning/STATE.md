@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 31 of 31 (Home Page Enhancement)
-Plan: 1 of ? in progress
+Plan: 2 of ? complete
 Status: In progress
-Last activity: 2026-01-20 — Completed 31-01-PLAN.md (data model for day assignment)
+Last activity: 2026-01-20 — Completed 31-02-PLAN.md (UI components)
 
 Progress: ████████████████████░░░░░ 81% (25/31 phases started)
 
@@ -44,9 +44,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 31-01-PLAN.md (data model for day assignment)
+Stopped at: Completed 31-02-PLAN.md (UI components)
 Resume file: None
-Resume with: Execute Phase 31-02 (UI components)
+Resume with: Execute Phase 31-03 (Week View) or Phase 25 (Dynamic Entities)
 
 ## Milestones
 
@@ -61,8 +61,9 @@ Resume with: Execute Phase 31-02 (UI components)
 
 ## Next Steps
 
-1. Execute Phase 31-02: UI Components (quick-add buttons, LoadMealsModal)
-2. Execute Phase 25: Dynamic Entities (load meal names from Firebase at runtime)
+1. Execute Phase 31-03: Week View (static layout with day columns)
+2. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
+3. Execute Phase 25: Dynamic Entities (load meal names from Firebase at runtime)
 
 ## Roadmap Evolution
 
@@ -83,3 +84,4 @@ Resume with: Execute Phase 31-02 (UI components)
 - 2026-01-20: **Phase 24 COMPLETE** — Interaction model with 20 intents
 - 2026-01-20: Phase 31 added: Home Page Enhancement (quick-add buttons, meal picker modal, week view with drag-drop)
 - 2026-01-20: Phase 31-01 complete (DayOfWeek type, day assignment functions)
+- 2026-01-20: Phase 31-02 complete (WeekViewToggle, LoadMealsModal, updated Home.tsx)
