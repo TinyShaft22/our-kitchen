@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 26 of 31 (APL Meal List)
+Phase: 27 of 31 (APL Recipe Detail)
 Plan: 1 of 1 complete (01)
-Status: **Phase 26 COMPLETE**
-Last activity: 2026-01-20 — Completed Phase 26 (APL Meal List)
+Status: **Phase 27 COMPLETE**
+Last activity: 2026-01-20 — Completed Phase 27 (APL Recipe Detail)
 
-Progress: █████████████████████░░░░ 87% (27/31 phases complete)
+Progress: ██████████████████████░░░ 90% (28/31 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 57 (across v1.0-v2.0)
+- Total plans completed: 58 (across v1.0-v2.0)
 - Average duration: ~10 min
-- Total execution time: ~9.3 hours
+- Total execution time: ~9.4 hours
 
 ## Accumulated Context
 
@@ -63,6 +63,12 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Empty imageSource for text-only display (no placeholder images)
 - Touch selection stores mealId in session for Phase 27 recipe detail
 
+**Phase 27-01 decisions:**
+- Responsive layout: side-by-side columns on large screens (960px+), stacked on smaller screens
+- Back button in header via AlexaHeader with SendEvent for navigation
+- Bullet list format for ingredients with scrollable container
+- Voice flow: "Here's the recipe for X. Would you like me to read the ingredients, read the instructions, or start cooking mode?"
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -78,9 +84,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed Phase 26 (APL Meal List)
+Stopped at: Completed Phase 27 (APL Recipe Detail)
 Resume file: None
-Resume with: Plan Phase 27 (APL Recipe Detail) or Execute Phase 31-04 (Drag-and-drop)
+Resume with: Plan Phase 28 (APL Cooking Mode) or Execute Phase 31-04 (Drag-and-drop)
 
 ## Milestones
 
@@ -95,7 +101,7 @@ Resume with: Plan Phase 27 (APL Recipe Detail) or Execute Phase 31-04 (Drag-and-
 
 ## Next Steps
 
-1. Plan Phase 27: APL Recipe Detail
+1. Plan Phase 28: APL Cooking Mode
 2. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
 
 ## Roadmap Evolution
@@ -127,3 +133,5 @@ Resume with: Plan Phase 27 (APL Recipe Detail) or Execute Phase 31-04 (Drag-and-
 - 2026-01-20: **Phase 25 COMPLETE** — Lambda Backend with 15 handlers
 - 2026-01-20: Phase 26-01 complete (APL meal list with AlexaImageList, touch selection)
 - 2026-01-20: **Phase 26 COMPLETE** — APL Meal List with visual browsing on Echo Show
+- 2026-01-20: Phase 27-01 complete (APL recipe detail with responsive layout, touch-to-recipe flow)
+- 2026-01-20: **Phase 27 COMPLETE** — APL Recipe Detail with ingredients and instructions display
