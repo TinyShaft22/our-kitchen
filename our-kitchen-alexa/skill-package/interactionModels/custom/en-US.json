@@ -36,6 +36,76 @@
             "good afternoon",
             "good evening"
           ]
+        },
+        {
+          "name": "BrowseMealsIntent",
+          "slots": [],
+          "samples": [
+            "what's for dinner",
+            "what's for dinner this week",
+            "show me this week's meals",
+            "what meals are planned",
+            "what are we eating this week",
+            "what's on the menu",
+            "show me the meal plan",
+            "what's planned for this week"
+          ]
+        },
+        {
+          "name": "BrowseCategoryIntent",
+          "slots": [
+            {
+              "name": "Category",
+              "type": "CategoryType"
+            }
+          ],
+          "samples": [
+            "show me {Category}",
+            "what {Category} do we have",
+            "list {Category} recipes",
+            "find {Category}",
+            "I want to see {Category}",
+            "browse {Category}",
+            "let me see {Category}"
+          ]
+        },
+        {
+          "name": "GetRecipeIntent",
+          "slots": [
+            {
+              "name": "MealName",
+              "type": "MealNameType"
+            }
+          ],
+          "samples": [
+            "show me the recipe for {MealName}",
+            "what's in {MealName}",
+            "how do I make {MealName}",
+            "ingredients for {MealName}",
+            "recipe for {MealName}",
+            "what do I need for {MealName}",
+            "tell me about {MealName}"
+          ]
+        },
+        {
+          "name": "StartCookingIntent",
+          "slots": [
+            {
+              "name": "MealName",
+              "type": "MealNameType"
+            }
+          ],
+          "samples": [
+            "let's cook {MealName}",
+            "let's make {MealName}",
+            "start cooking {MealName}",
+            "cook {MealName}",
+            "make {MealName}",
+            "I want to make {MealName}",
+            "walk me through {MealName}",
+            "guide me through {MealName}",
+            "time to make {MealName}"
+          ]
         }
       ],
       "types": [
