@@ -38,6 +38,29 @@ export const CATEGORIES: { id: Category; name: string }[] = [
   { id: 'baking', name: 'Baking' },
 ];
 
+// Day of week (1=Monday, 7=Sunday) - ISO 8601 standard
+export type DayOfWeek = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
+export const DAY_NAMES: Record<DayOfWeek, string> = {
+  1: 'Monday',
+  2: 'Tuesday',
+  3: 'Wednesday',
+  4: 'Thursday',
+  5: 'Friday',
+  6: 'Saturday',
+  7: 'Sunday',
+};
+
+export const DAY_ABBREVIATIONS: Record<DayOfWeek, string> = {
+  1: 'Mon',
+  2: 'Tue',
+  3: 'Wed',
+  4: 'Thu',
+  5: 'Fri',
+  6: 'Sat',
+  7: 'Sun',
+};
+
 // Baking unit options for ingredient quantities
 export const BAKING_UNITS = [
   'tsp',
@@ -83,12 +106,14 @@ export interface Meal {
 export interface WeeklyMealEntry {
   mealId: string;
   servings: number;
+  day?: DayOfWeek;  // Optional day assignment for week view
 }
 
 // WeeklySnackEntry - a snack reference within a weekly plan
 export interface WeeklySnackEntry {
   snackId: string;
   qty: number;
+  day?: DayOfWeek;  // Optional day assignment for week view
 }
 
 // WeeklyMeal - the weekly meal plan
