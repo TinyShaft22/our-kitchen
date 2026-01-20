@@ -8,7 +8,7 @@ import {
   arrayRemove,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { WeeklyMeal, WeeklyMealEntry, WeeklySnackEntry } from '../types';
+import type { WeeklyMeal, WeeklyMealEntry, WeeklySnackEntry, DayOfWeek } from '../types';
 
 interface UseWeeklyPlanReturn {
   currentWeek: WeeklyMeal | null;
@@ -22,6 +22,8 @@ interface UseWeeklyPlanReturn {
   addSnackToWeek: (snackId: string, qty: number) => Promise<void>;
   removeSnackFromWeek: (snackId: string) => Promise<void>;
   updateSnackQty: (snackId: string, qty: number) => Promise<void>;
+  updateMealDay: (mealId: string, day: DayOfWeek | undefined) => Promise<void>;
+  updateSnackDay: (snackId: string, day: DayOfWeek | undefined) => Promise<void>;
 }
 
 /**
@@ -204,6 +206,33 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
     [householdCode, weekId, currentWeek]
   );
 
+  const updateMealDay = useCallback(
+    async (mealId: string, day: DayOfWeek | undefined): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      if (!currentWeek) {
+        throw new Error('No weekly plan exists');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const updatedMeals = currentWeek.meals.map((m) =>
+          m.mealId === mealId ? { ...m, day } : m
+        );
+        await updateDoc(weekRef, { meals: updatedMeals });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to update meal day';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
   const toggleAlreadyHave = useCallback(
     async (ingredientName: string): Promise<void> => {
       if (!householdCode) {
@@ -348,6 +377,34 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
     [householdCode, weekId, currentWeek]
   );
 
+  const updateSnackDay = useCallback(
+    async (snackId: string, day: DayOfWeek | undefined): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      if (!currentWeek) {
+        throw new Error('No weekly plan exists');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const currentSnacks = currentWeek.snacks ?? [];
+        const updatedSnacks = currentSnacks.map((s) =>
+          s.snackId === snackId ? { ...s, day } : s
+        );
+        await updateDoc(weekRef, { snacks: updatedSnacks });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to update snack day';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
   return {
     currentWeek,
     loading,
@@ -360,5 +417,7 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
     addSnackToWeek,
     removeSnackFromWeek,
     updateSnackQty,
+    updateMealDay,
+    updateSnackDay,
   };
 }
