@@ -1,0 +1,115 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "kitchen helper",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "HelloWorldIntent",
+          "slots": [],
+          "samples": [
+            "hello",
+            "hi",
+            "say hello",
+            "say hi",
+            "greetings",
+            "good morning",
+            "good afternoon",
+            "good evening"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "MealNameType",
+          "values": [
+            {
+              "name": {
+                "value": "Crispy Chicken Tacos",
+                "synonyms": ["chicken tacos", "tacos"]
+              }
+            },
+            {
+              "name": {
+                "value": "Chocolate Chip Cookies",
+                "synonyms": ["chip cookies", "cookies"]
+              }
+            },
+            {
+              "name": {
+                "value": "Spaghetti Bolognese",
+                "synonyms": ["spaghetti", "bolognese"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CategoryType",
+          "values": [
+            {
+              "name": {
+                "value": "Main Dishes",
+                "synonyms": ["main", "dinner", "dinners", "meals"]
+              }
+            },
+            {
+              "name": {
+                "value": "Baking",
+                "synonyms": ["baked goods", "desserts", "sweets"]
+              }
+            },
+            {
+              "name": {
+                "value": "Cookies",
+                "synonyms": ["cookie"]
+              }
+            },
+            {
+              "name": {
+                "value": "Brownies",
+                "synonyms": ["brownie"]
+              }
+            },
+            {
+              "name": {
+                "value": "Bars",
+                "synonyms": ["bar"]
+              }
+            },
+            {
+              "name": {
+                "value": "Muffins",
+                "synonyms": ["muffin"]
+              }
+            },
+            {
+              "name": {
+                "value": "Snacks",
+                "synonyms": ["snack"]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

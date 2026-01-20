@@ -33,4 +33,9 @@ CLAUDE.local.md
 # - .claude/skills/ (project-specific skills)
 # - .claude/get-shit-done/ (GSD templates and references)
 .firebase/
-our-kitchen-alexa/
+
+# Alexa skill - ignore credentials and build artifacts, track skill-package
+our-kitchen-alexa/.ask/
+our-kitchen-alexa/.git/
+our-kitchen-alexa/.git.bak/
+our-kitchen-alexa/lambda/node_modules/
