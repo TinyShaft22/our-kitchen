@@ -7,6 +7,10 @@ const { getMeals, getRecipe } = require('../api/firebaseClient');
 const { isLinked, getHouseholdCode } = require('../util/sessionHelper');
 const { createPinPromptResponse } = require('./HouseholdHandlers');
 
+// APL imports for visual display on Echo Show
+const mealListDocument = require('../apl/meal-list.json');
+const { buildMealListDataSource } = require('../apl/meal-list-data');
+
 /**
  * BrowseMealsIntentHandler
  * "What's for dinner?" / "What meals are planned?"
@@ -55,10 +59,22 @@ const BrowseMealsIntentHandler = {
       sessionAttributes.lastMealList = meals;
       handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
-      return handlerInput.responseBuilder
+      // Build response with voice output
+      const responseBuilder = handlerInput.responseBuilder
         .speak(speakOutput)
-        .reprompt("Which meal would you like to see?")
-        .getResponse();
+        .reprompt("Which meal would you like to see?");
+
+      // Add APL visual display if device supports it (Echo Show)
+      if (Alexa.getSupportedInterfaces(handlerInput.requestEnvelope)['Alexa.Presentation.APL']) {
+        responseBuilder.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          token: 'mealListToken',
+          document: mealListDocument,
+          datasources: buildMealListDataSource(meals)
+        });
+      }
+
+      return responseBuilder.getResponse();
 
     } catch (error) {
       console.log('Browse meals error:', error.message);
