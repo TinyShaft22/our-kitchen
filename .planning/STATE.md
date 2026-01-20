@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 25 of 31 (Lambda Backend)
-Plan: 5 of 5 complete (01+02+03+04+05)
-Status: **Phase 25 COMPLETE**
-Last activity: 2026-01-20 — Completed 25-05-PLAN.md (Grocery Handlers)
+Phase: 26 of 31 (APL Meal List)
+Plan: 1 of 2 complete (01)
+Status: In progress
+Last activity: 2026-01-20 — Completed 26-01-PLAN.md (APL Meal List Visual)
 
-Progress: █████████████████████░░░░ 84% (26/31 phases started)
+Progress: █████████████████████░░░░ 85% (27/31 phases started)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 56 (across v1.0-v2.0)
+- Total plans completed: 57 (across v1.0-v2.0)
 - Average duration: ~10 min
-- Total execution time: ~9.2 hours
+- Total execution time: ~9.3 hours
 
 ## Accumulated Context
 
@@ -57,6 +57,12 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - CheckOff uses removeGroceryItem (TODO: proper inCart endpoint)
 - Short confirmations with undo hint for Add operation
 
+**Phase 26-01 decisions:**
+- AlexaImageList responsive template for auto-adaptation across Echo Show sizes
+- Dark theme default with terracotta accent (#C4704B) matching PWA
+- Empty imageSource for text-only display (no placeholder images)
+- Touch selection stores mealId in session for Phase 27 recipe detail
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -72,9 +78,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-20
-Stopped at: Completed 25-05-PLAN.md (Grocery Handlers) - **Phase 25 COMPLETE**
+Stopped at: Completed 26-01-PLAN.md (APL Meal List Visual)
 Resume file: None
-Resume with: Execute Phase 26 (Visual Templates) or Phase 31-04 (Drag-and-drop)
+Resume with: Execute Phase 26-02 (Recipe Detail APL) or Phase 31-04 (Drag-and-drop)
 
 ## Milestones
 
@@ -89,7 +95,7 @@ Resume with: Execute Phase 26 (Visual Templates) or Phase 31-04 (Drag-and-drop)
 
 ## Next Steps
 
-1. Execute Phase 26: Visual Templates (APL for Echo Show)
+1. Execute Phase 26-02: Recipe Detail APL
 2. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
 
 ## Roadmap Evolution
@@ -119,3 +125,4 @@ Resume with: Execute Phase 26 (Visual Templates) or Phase 31-04 (Drag-and-drop)
 - 2026-01-20: Phase 25-04 complete (Meal handlers: BrowseMeals, GetRecipe, BrowseCategory)
 - 2026-01-20: Phase 25-05 complete (Grocery handlers: Read, Add, Undo, Remove, CheckOff)
 - 2026-01-20: **Phase 25 COMPLETE** — Lambda Backend with 15 handlers
+- 2026-01-20: Phase 26-01 complete (APL meal list with AlexaImageList, touch selection)
