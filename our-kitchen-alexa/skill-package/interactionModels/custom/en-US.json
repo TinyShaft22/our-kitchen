@@ -103,7 +103,12 @@
         },
         {
           "name": "ReadGroceryListIntent",
-          "slots": [],
+          "slots": [
+            {
+              "name": "StoreName",
+              "type": "StoreType"
+            }
+          ],
           "samples": [
             "what's on the grocery list",
             "what do we need to buy",
@@ -111,7 +116,12 @@
             "what's on the list",
             "what do we need",
             "show me the grocery list",
-            "read my shopping list"
+            "read my shopping list",
+            "what do I need at {StoreName}",
+            "what's on the {StoreName} list",
+            "read my {StoreName} list",
+            "what do we need from {StoreName}",
+            "show me the {StoreName} list"
           ]
         },
         {
@@ -215,6 +225,53 @@
         }
       ],
       "types": [
+        {
+          "name": "StoreType",
+          "values": [
+            {
+              "name": {
+                "value": "Costco",
+                "synonyms": ["costco"]
+              }
+            },
+            {
+              "name": {
+                "value": "Trader Joes",
+                "synonyms": ["trader joe's", "trader joes", "TJs"]
+              }
+            },
+            {
+              "name": {
+                "value": "Safeway",
+                "synonyms": ["safeway"]
+              }
+            },
+            {
+              "name": {
+                "value": "Bel Air",
+                "synonyms": ["bel-air", "belair"]
+              }
+            },
+            {
+              "name": {
+                "value": "Walmart",
+                "synonyms": ["walmart"]
+              }
+            },
+            {
+              "name": {
+                "value": "WinCo",
+                "synonyms": ["winco"]
+              }
+            },
+            {
+              "name": {
+                "value": "Staples",
+                "synonyms": ["staples"]
+              }
+            }
+          ]
+        },
         {
           "name": "MealNameType",
           "values": [

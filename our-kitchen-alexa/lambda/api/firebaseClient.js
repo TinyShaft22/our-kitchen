@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // Cloud Functions base URL - our-kitchen-prod is the Firebase project
-const CLOUD_FUNCTIONS_BASE = 'https://us-central1-our-kitchen-prod.cloudfunctions.net';
+const CLOUD_FUNCTIONS_BASE = 'https://us-central1-grocery-store-app-c3aa5.cloudfunctions.net';
 const API_KEY = 'ourkitchen2024';
 const DEFAULT_TIMEOUT = 5000; // 5 seconds - leaves buffer for Alexa's 8s timeout
 
