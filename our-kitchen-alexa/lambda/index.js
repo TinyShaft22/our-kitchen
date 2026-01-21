@@ -26,6 +26,7 @@ const {
 const {
   ReadGroceryListIntentHandler,
   AddGroceryIntentHandler,
+  ConfirmDuplicateIntentHandler,
   UndoGroceryIntentHandler,
   RemoveGroceryIntentHandler,
   CheckOffGroceryIntentHandler
@@ -302,6 +303,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         ExitCookingIntentHandler,         // Handle "exit cooking" / "stop cooking"
         ReadGroceryListIntentHandler,
         AddGroceryIntentHandler,
+        ConfirmDuplicateIntentHandler,  // Must be before other Yes/No handlers
         UndoGroceryIntentHandler,
         RemoveGroceryIntentHandler,
         CheckOffGroceryIntentHandler,

@@ -33,10 +33,12 @@ async function getRecipe(householdCode, mealId) {
   return response.data;
 }
 
-async function getGroceryList(householdCode) {
-  const response = await client.get('/groceryList', {
-    params: { householdCode }
-  });
+async function getGroceryList(householdCode, store = null) {
+  const params = { householdCode };
+  if (store) {
+    params.store = store;
+  }
+  const response = await client.get('/groceryList', { params });
   return response.data;
 }
 
@@ -57,11 +59,19 @@ async function removeGroceryItem(householdCode, item) {
   return response.data;
 }
 
+async function checkDuplicateGrocery(householdCode, item) {
+  const response = await client.get('/checkDuplicateGrocery', {
+    params: { householdCode, item }
+  });
+  return response.data;
+}
+
 module.exports = {
   verifyPin,
   getMeals,
   getRecipe,
   getGroceryList,
   addGroceryItem,
-  removeGroceryItem
+  removeGroceryItem,
+  checkDuplicateGrocery
 };

@@ -16,6 +16,7 @@ interface GroceryItemResponse {
   id: string;
   name: string;
   category: string;
+  store: string;
   quantity?: number;
   unit?: string;
 }
@@ -23,10 +24,11 @@ interface GroceryItemResponse {
 /**
  * GET /groceryList - Get unchecked grocery items for a household
  *
- * Params: householdCode (required)
- * Response: { items: [{ id, name, category, quantity?, unit? }] }
+ * Params: householdCode (required), store (optional - filter by store)
+ * Response: { items: [{ id, name, category, store, quantity?, unit? }] }
  *
  * Returns items where status is 'need' or 'out' (not in cart, not bought).
+ * When store param provided, filters to only that store (case-insensitive).
  * Sorted by category for organized reading.
  * Capped at 20 items (Alexa can't reasonably read more).
  */
@@ -81,13 +83,17 @@ export const groceryList = onRequest({ cors: true, invoker: "public" }, async (r
       return;
     }
 
+    // Get optional store filter param
+    const storeFilter = req.query.store as string | undefined;
+
     // Build response items
-    const items: GroceryItemResponse[] = snapshot.docs.map((doc) => {
+    let items: GroceryItemResponse[] = snapshot.docs.map((doc) => {
       const data = doc.data();
       const item: GroceryItemResponse = {
         id: doc.id,
         name: data.name,
         category: data.category || "pantry",
+        store: data.storeName || "",
       };
 
       if (data.qty) item.quantity = data.qty;
@@ -95,6 +101,13 @@ export const groceryList = onRequest({ cors: true, invoker: "public" }, async (r
 
       return item;
     });
+
+    // Apply store filter if provided (case-insensitive)
+    if (storeFilter) {
+      items = items.filter(
+        (item) => item.store.toLowerCase() === storeFilter.toLowerCase()
+      );
+    }
 
     // Sort by category for organized reading
     const categoryOrder = [

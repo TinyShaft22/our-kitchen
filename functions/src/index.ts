@@ -253,4 +253,5 @@ export {
   groceryList,
   addGroceryItem,
   removeGroceryItem,
+  checkDuplicateGrocery,
 } from "./alexa";

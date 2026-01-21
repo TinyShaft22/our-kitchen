@@ -38,3 +38,4 @@ export { recipe } from "./recipe";
 export { groceryList } from "./groceryList";
 export { addGroceryItem } from "./addGroceryItem";
 export { removeGroceryItem } from "./removeGroceryItem";
+export { checkDuplicateGrocery } from "./checkDuplicateGrocery";

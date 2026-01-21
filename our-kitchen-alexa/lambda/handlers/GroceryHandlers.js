@@ -1,19 +1,26 @@
 /**
  * Grocery Handlers
  * Read, Add, Undo, Remove, CheckOff grocery items
+ * Enhanced with APL display and duplicate detection
  */
 const Alexa = require('ask-sdk-core');
-const { getGroceryList, addGroceryItem, removeGroceryItem } = require('../api/firebaseClient');
+const { getGroceryList, addGroceryItem, removeGroceryItem, checkDuplicateGrocery } = require('../api/firebaseClient');
 const { isLinked, getHouseholdCode } = require('../util/sessionHelper');
 const { createPinPromptResponse } = require('./HouseholdHandlers');
+const groceryListDocument = require('../apl/grocery-list.json');
+const { buildGroceryListDataSource } = require('../apl/grocery-list-data.js');
 
 /**
  * ReadGroceryListIntentHandler
  * "What's on the grocery list?" / "What do we need to buy?"
+ * "What do I need at Costco?" (store-filtered)
  *
  * Per CONTEXT.md:
- * - Names only, cap at 5 items
+ * - Cap at 5 items when reading aloud
  * - "and X more" if more than 5
+ * - Include store names ("eggs from Costco")
+ * - Support store filter ("What do I need at Costco?")
+ * - APL visual display on Echo Show (grouped by store)
  */
 const ReadGroceryListIntentHandler = {
   canHandle(handlerInput) {
@@ -29,31 +36,64 @@ const ReadGroceryListIntentHandler = {
 
     const householdCode = getHouseholdCode(handlerInput);
 
+    // Check for store filter slot
+    const slots = handlerInput.requestEnvelope.request.intent.slots || {};
+    const storeSlot = slots.StoreName?.value;
+
     try {
-      const result = await getGroceryList(householdCode);
+      // Pass store filter to API if provided
+      const result = await getGroceryList(householdCode, storeSlot);
       const items = result.items || [];
 
       if (items.length === 0) {
+        const emptyMessage = storeSlot
+          ? `You don't have anything on the list for ${storeSlot}. Say 'add' followed by an item to add something.`
+          : "Your grocery list is empty. Say 'add' followed by an item to add something.";
+
         return handlerInput.responseBuilder
-          .speak("Your grocery list is empty. Say 'add' followed by an item to add something.")
+          .speak(emptyMessage)
           .reprompt("What would you like to add to the list?")
           .getResponse();
       }
 
-      // Cap at 5 items per CONTEXT.md
-      const itemNames = items.slice(0, 5).map(i => i.name);
+      // Build voice output with store names
+      const displayItems = items.slice(0, 5);
       const remaining = items.length - 5;
 
-      let speakOutput = `On your list: ${formatList(itemNames)}`;
+      // Format items with store names for voice
+      const itemsWithStore = formatItemsWithStore(displayItems);
+      let speakOutput;
+
+      if (storeSlot) {
+        // Store-filtered: "At Costco: eggs, milk, and 3 more"
+        speakOutput = `At ${storeSlot}: ${formatList(itemsWithStore.map(i => i.name))}`;
+      } else {
+        // All items: "On your list: eggs from Costco, milk from Trader Joes..."
+        speakOutput = `On your list: ${formatList(itemsWithStore.map(i => i.display))}`;
+      }
+
       if (remaining > 0) {
         speakOutput += `, and ${remaining} more`;
       }
       speakOutput += ". Would you like to add anything?";
 
-      return handlerInput.responseBuilder
+      // Build response
+      const responseBuilder = handlerInput.responseBuilder
         .speak(speakOutput)
-        .reprompt("What would you like to add, or say check off to mark something done.")
-        .getResponse();
+        .reprompt("What would you like to add, or say check off to mark something done.");
+
+      // Add APL directive if device supports it
+      if (Alexa.getSupportedInterfaces(handlerInput.requestEnvelope)['Alexa.Presentation.APL']) {
+        const headerTitle = storeSlot ? `${storeSlot} List` : 'Grocery List';
+        responseBuilder.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          token: 'groceryListToken',
+          document: groceryListDocument,
+          datasources: buildGroceryListDataSource(items, headerTitle, items.length)
+        });
+      }
+
+      return responseBuilder.getResponse();
 
     } catch (error) {
       console.log('Read grocery list error:', error.message);
@@ -72,6 +112,8 @@ const ReadGroceryListIntentHandler = {
  * Per CONTEXT.md:
  * - Short confirmations: "Added" or "Got it"
  * - Mention undo option
+ * - Check for duplicates before adding
+ * - Duplicate detected: "You already have X on the list. Add duplicate?"
  */
 const AddGroceryIntentHandler = {
   canHandle(handlerInput) {
@@ -99,6 +141,27 @@ const AddGroceryIntentHandler = {
     }
 
     try {
+      // Check for duplicate before adding
+      const dupCheck = await checkDuplicateGrocery(householdCode, item);
+
+      if (dupCheck.exists) {
+        // Store pending add in session for confirmation
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        sessionAttributes.pendingGroceryAdd = {
+          item: item,
+          quantity: quantity,
+          existingItem: dupCheck.existingItem
+        };
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+        const existingName = dupCheck.existingItem.name;
+        return handlerInput.responseBuilder
+          .speak(`You already have ${existingName} on the list. Would you like to add a duplicate?`)
+          .reprompt("Say yes to add another, or no to cancel.")
+          .getResponse();
+      }
+
+      // No duplicate - proceed with add
       const result = await addGroceryItem(householdCode, item, quantity);
 
       if (result.success) {
@@ -133,6 +196,66 @@ const AddGroceryIntentHandler = {
         .reprompt("What would you like to add?")
         .getResponse();
     }
+  }
+};
+
+/**
+ * ConfirmDuplicateIntentHandler
+ * Handles AMAZON.YesIntent / AMAZON.NoIntent after duplicate detection
+ * Only triggers when pendingGroceryAdd is in session
+ */
+const ConfirmDuplicateIntentHandler = {
+  canHandle(handlerInput) {
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+      && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.YesIntent'
+          || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.NoIntent')
+      && sessionAttributes.pendingGroceryAdd;
+  },
+
+  async handle(handlerInput) {
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    const pending = sessionAttributes.pendingGroceryAdd;
+    const isYes = Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.YesIntent';
+
+    // Clear pending state
+    sessionAttributes.pendingGroceryAdd = null;
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+    if (!isYes) {
+      return handlerInput.responseBuilder
+        .speak("Okay, I didn't add it. Anything else?")
+        .reprompt("What would you like to do?")
+        .getResponse();
+    }
+
+    // User confirmed - add the duplicate
+    const householdCode = getHouseholdCode(handlerInput);
+    try {
+      const result = await addGroceryItem(householdCode, pending.item, pending.quantity);
+
+      if (result.success) {
+        // Store for undo
+        sessionAttributes.lastAddedItem = {
+          name: pending.item,
+          id: result.itemId,
+          timestamp: Date.now()
+        };
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+
+        return handlerInput.responseBuilder
+          .speak(`Added another ${pending.item}. Say undo to remove.`)
+          .reprompt("What else would you like to add?")
+          .getResponse();
+      }
+    } catch (error) {
+      console.log('Confirm duplicate add error:', error.message);
+    }
+
+    return handlerInput.responseBuilder
+      .speak("I couldn't add that right now. Try again.")
+      .reprompt("What would you like to do?")
+      .getResponse();
   }
 };
 
@@ -311,9 +434,30 @@ function formatList(items) {
   return `${rest.join(', ')}, and ${last}`;
 }
 
+/**
+ * Format items with store names for voice output
+ * @param {Array} items - Array of grocery items with name and store
+ * @returns {Array} Array of {name, display} where display includes store
+ */
+function formatItemsWithStore(items) {
+  return items.map(item => {
+    if (item.store) {
+      return {
+        name: item.name,
+        display: `${item.name} from ${item.store}`
+      };
+    }
+    return {
+      name: item.name,
+      display: item.name
+    };
+  });
+}
+
 module.exports = {
   ReadGroceryListIntentHandler,
   AddGroceryIntentHandler,
+  ConfirmDuplicateIntentHandler,
   UndoGroceryIntentHandler,
   RemoveGroceryIntentHandler,
   CheckOffGroceryIntentHandler
