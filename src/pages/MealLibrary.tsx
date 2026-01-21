@@ -247,7 +247,9 @@ function MealLibrary() {
   const [mainDishesExpanded, setMainDishesExpanded] = useState(true);
   const [bakingExpanded, setBakingExpanded] = useState(true);
   const [snacksExpanded, setSnacksExpanded] = useState(true);
-  const [expandedSubcategories, setExpandedSubcategories] = useState<Set<string>>(new Set());
+  const [expandedSubcategories, setExpandedSubcategories] = useState<Set<string>>(
+    new Set(['grid-main-section', 'grid-baking-section', 'grid-snacks-section'])
+  );
   const [expandedBakingPaths, setExpandedBakingPaths] = useState<Set<string>>(new Set());
   const [isFolderManagerOpen, setIsFolderManagerOpen] = useState(false);
   const [folderManagerType, setFolderManagerType] = useState<'main' | 'baking'>('baking');
@@ -595,12 +597,16 @@ function MealLibrary() {
             {/* Main Dishes Grid - organized by subcategory */}
             {mainDishes.length > 0 && (
               <div>
-                <h2 className="font-display font-semibold text-charcoal mb-3 flex items-center gap-2">
-                  <span className="text-xl">🍽️</span>
+                <button
+                  onClick={() => toggleSubcategory('grid-main-section')}
+                  className="w-full font-display font-semibold text-charcoal mb-3 flex items-center gap-2 text-left hover:text-terracotta transition-colors"
+                >
+                  <span className={`text-terracotta/60 transition-transform ${expandedSubcategories.has('grid-main-section') ? 'rotate-0' : '-rotate-90'}`}>▼</span>
+                  <span className="text-xl">{expandedSubcategories.has('grid-main-section') ? '📂' : '📁'}</span>
                   Main Dishes
                   <span className="text-sm font-normal text-charcoal/50">({mainDishes.length})</span>
-                </h2>
-                {hasMainSubcategories ? (
+                </button>
+                {expandedSubcategories.has('grid-main-section') && (hasMainSubcategories ? (
                   // Show organized by subcategory folders
                   <div className="space-y-4">
                     {getSortedSubcategoryKeys(mainBySubcategory).map((subcatKey) => {
@@ -643,19 +649,23 @@ function MealLibrary() {
                         <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
                       ))}
                   </div>
-                )}
+                ))}
               </div>
             )}
 
             {/* Baking Recipes Grid - organized by folder tree */}
             {bakingRecipes.length > 0 && (
               <div>
-                <h2 className="font-display font-semibold text-charcoal mb-3 flex items-center gap-2">
-                  <span className="text-xl">🧁</span>
+                <button
+                  onClick={() => toggleSubcategory('grid-baking-section')}
+                  className="w-full font-display font-semibold text-charcoal mb-3 flex items-center gap-2 text-left hover:text-honey transition-colors"
+                >
+                  <span className={`text-honey/60 transition-transform ${expandedSubcategories.has('grid-baking-section') ? 'rotate-0' : '-rotate-90'}`}>▼</span>
+                  <span className="text-xl">{expandedSubcategories.has('grid-baking-section') ? '📂' : '📁'}</span>
                   Baking & Desserts
                   <span className="text-sm font-normal text-charcoal/50">({bakingRecipes.length})</span>
-                </h2>
-                {bakingFolderTree.children.size > 0 ? (
+                </button>
+                {expandedSubcategories.has('grid-baking-section') && (bakingFolderTree.children.size > 0 ? (
                   // Show organized by folder tree
                   <div className="space-y-4">
                     {Array.from(bakingFolderTree.children.entries())
@@ -753,18 +763,22 @@ function MealLibrary() {
                         <MealGridCard key={meal.id} meal={meal} onSelect={handleMealSelect} />
                       ))}
                   </div>
-                )}
+                ))}
               </div>
             )}
 
             {/* Snacks Section - Grid View */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h2 className="font-display font-semibold text-charcoal flex items-center gap-2">
-                  <span className="text-xl">🍿</span>
+                <button
+                  onClick={() => toggleSubcategory('grid-snacks-section')}
+                  className="font-display font-semibold text-charcoal flex items-center gap-2 text-left hover:text-sage transition-colors"
+                >
+                  <span className={`text-sage/60 transition-transform ${expandedSubcategories.has('grid-snacks-section') ? 'rotate-0' : '-rotate-90'}`}>▼</span>
+                  <span className="text-xl">{expandedSubcategories.has('grid-snacks-section') ? '📂' : '📁'}</span>
                   Snacks
                   <span className="text-sm font-normal text-charcoal/50">({snacks.length})</span>
-                </h2>
+                </button>
                 <button
                   onClick={handleOpenScanner}
                   className="flex items-center gap-1 px-3 py-1.5 text-sm bg-sage text-white hover:bg-sage/90 rounded-soft transition-colors"
@@ -773,7 +787,7 @@ function MealLibrary() {
                   <span>Scan</span>
                 </button>
               </div>
-              {snacks.length === 0 ? (
+              {expandedSubcategories.has('grid-snacks-section') && (snacks.length === 0 ? (
                 <EmptySnacks onAdd={handleAddSnackClick} />
               ) : (
                 <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5">
@@ -783,7 +797,7 @@ function MealLibrary() {
                       <SnackGridCard key={snack.id} snack={snack} onSelect={handleSnackSelect} />
                     ))}
                 </div>
-              )}
+              ))}
             </div>
           </div>
         ) : (

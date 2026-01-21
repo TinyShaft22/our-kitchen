@@ -8,7 +8,7 @@ import {
   arrayRemove,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { WeeklyMeal, WeeklyMealEntry, WeeklySnackEntry, DayOfWeek } from '../types';
+import type { WeeklyMeal, WeeklyMealEntry, WeeklySnackEntry, WeeklyDessertEntry, DayOfWeek } from '../types';
 
 interface UseWeeklyPlanReturn {
   currentWeek: WeeklyMeal | null;
@@ -24,6 +24,10 @@ interface UseWeeklyPlanReturn {
   updateSnackQty: (snackId: string, qty: number) => Promise<void>;
   updateMealDay: (mealId: string, day: DayOfWeek | undefined) => Promise<void>;
   updateSnackDay: (snackId: string, day: DayOfWeek | undefined) => Promise<void>;
+  addDessertToWeek: (mealId: string, servings: number) => Promise<void>;
+  removeDessertFromWeek: (mealId: string) => Promise<void>;
+  updateDessertServings: (mealId: string, servings: number) => Promise<void>;
+  updateDessertDay: (mealId: string, day: DayOfWeek | undefined) => Promise<void>;
 }
 
 /**
@@ -220,9 +224,17 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
         const docId = `${householdCode}_${weekId}`;
         const weekRef = doc(db, 'weeklyMeals', docId);
 
-        const updatedMeals = currentWeek.meals.map((m) =>
-          m.mealId === mealId ? { ...m, day } : m
-        );
+        const updatedMeals = currentWeek.meals.map((m) => {
+          if (m.mealId === mealId) {
+            if (day === undefined) {
+              // Remove day field entirely when unassigning (Firestore doesn't accept undefined)
+              const { day: _, ...rest } = m;
+              return rest;
+            }
+            return { ...m, day };
+          }
+          return m;
+        });
         await updateDoc(weekRef, { meals: updatedMeals });
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to update meal day';
@@ -392,12 +404,158 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
         const weekRef = doc(db, 'weeklyMeals', docId);
 
         const currentSnacks = currentWeek.snacks ?? [];
-        const updatedSnacks = currentSnacks.map((s) =>
-          s.snackId === snackId ? { ...s, day } : s
-        );
+        const updatedSnacks = currentSnacks.map((s) => {
+          if (s.snackId === snackId) {
+            if (day === undefined) {
+              // Remove day field entirely when unassigning (Firestore doesn't accept undefined)
+              const { day: _, ...rest } = s;
+              return rest;
+            }
+            return { ...s, day };
+          }
+          return s;
+        });
         await updateDoc(weekRef, { snacks: updatedSnacks });
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to update snack day';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
+  // Dessert functions
+  const addDessertToWeek = useCallback(
+    async (mealId: string, servings: number): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const newEntry: WeeklyDessertEntry = { mealId, servings };
+
+        if (!currentWeek) {
+          // Create the document with first dessert
+          await setDoc(weekRef, {
+            weekId,
+            householdCode,
+            meals: [],
+            desserts: [newEntry],
+          });
+        } else {
+          const currentDesserts = currentWeek.desserts ?? [];
+          const existingIndex = currentDesserts.findIndex((d) => d.mealId === mealId);
+
+          if (existingIndex >= 0) {
+            // Dessert exists - update servings (add to existing)
+            const updatedDesserts = [...currentDesserts];
+            updatedDesserts[existingIndex] = {
+              ...updatedDesserts[existingIndex],
+              servings: updatedDesserts[existingIndex].servings + servings,
+            };
+            await updateDoc(weekRef, { desserts: updatedDesserts });
+          } else {
+            // Add new dessert
+            const updatedDesserts = [...currentDesserts, newEntry];
+            await updateDoc(weekRef, { desserts: updatedDesserts });
+          }
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to add dessert to week';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
+  const removeDessertFromWeek = useCallback(
+    async (mealId: string): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      if (!currentWeek) {
+        throw new Error('No weekly plan exists');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const currentDesserts = currentWeek.desserts ?? [];
+        const updatedDesserts = currentDesserts.filter((d) => d.mealId !== mealId);
+        await updateDoc(weekRef, { desserts: updatedDesserts });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to remove dessert from week';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
+  const updateDessertServings = useCallback(
+    async (mealId: string, servings: number): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      if (!currentWeek) {
+        throw new Error('No weekly plan exists');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const currentDesserts = currentWeek.desserts ?? [];
+        const updatedDesserts = currentDesserts.map((d) =>
+          d.mealId === mealId ? { ...d, servings } : d
+        );
+        await updateDoc(weekRef, { desserts: updatedDesserts });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to update dessert servings';
+        setError(message);
+        throw err;
+      }
+    },
+    [householdCode, weekId, currentWeek]
+  );
+
+  const updateDessertDay = useCallback(
+    async (mealId: string, day: DayOfWeek | undefined): Promise<void> => {
+      if (!householdCode) {
+        throw new Error('No household code available');
+      }
+
+      if (!currentWeek) {
+        throw new Error('No weekly plan exists');
+      }
+
+      try {
+        const docId = `${householdCode}_${weekId}`;
+        const weekRef = doc(db, 'weeklyMeals', docId);
+
+        const currentDesserts = currentWeek.desserts ?? [];
+        const updatedDesserts = currentDesserts.map((d) => {
+          if (d.mealId === mealId) {
+            if (day === undefined) {
+              // Remove day field entirely when unassigning (Firestore doesn't accept undefined)
+              const { day: _, ...rest } = d;
+              return rest;
+            }
+            return { ...d, day };
+          }
+          return d;
+        });
+        await updateDoc(weekRef, { desserts: updatedDesserts });
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to update dessert day';
         setError(message);
         throw err;
       }
@@ -419,5 +577,9 @@ export function useWeeklyPlan(householdCode: string | null): UseWeeklyPlanReturn
     updateSnackQty,
     updateMealDay,
     updateSnackDay,
+    addDessertToWeek,
+    removeDessertFromWeek,
+    updateDessertServings,
+    updateDessertDay,
   };
 }

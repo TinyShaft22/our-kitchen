@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { storage } from '../../config/firebase';
 import type { BakingEssential, BakingStatus, Store } from '../../types';
-import { STORES } from '../../types';
+import { STORES, BAKING_SUBCATEGORIES } from '../../types';
 
 const STATUS_OPTIONS: { id: BakingStatus; label: string }[] = [
   { id: 'stocked', label: 'Stocked' },
@@ -16,13 +16,18 @@ interface EditBakingModalProps {
   onClose: () => void;
   onSave: (id: string, updates: Partial<Omit<BakingEssential, 'id' | 'householdCode'>>) => Promise<void>;
   householdCode: string;
+  customSubcategories?: { id: string; name: string; emoji: string }[];
 }
 
-export function EditBakingModal({ isOpen, essential, onClose, onSave, householdCode }: EditBakingModalProps) {
+export function EditBakingModal({ isOpen, essential, onClose, onSave, householdCode, customSubcategories = [] }: EditBakingModalProps) {
   const [name, setName] = useState('');
   const [store, setStore] = useState<Store>('costco');
   const [status, setStatus] = useState<BakingStatus>('stocked');
+  const [subcategory, setSubcategory] = useState<string>('');
   const [saving, setSaving] = useState(false);
+
+  // All subcategories: built-in + custom
+  const allSubcategories = [...BAKING_SUBCATEGORIES, ...customSubcategories];
   const [error, setError] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -90,6 +95,7 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave, householdC
       setName(essential.name);
       setStore(essential.store || 'costco');
       setStatus(essential.status);
+      setSubcategory(essential.subcategory || '');
       setError(null);
       setImagePreview(essential.imageUrl || null);
       setRemoveImage(false);
@@ -160,6 +166,7 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave, householdC
         name: name.trim(),
         store,
         status,
+        subcategory: subcategory || undefined,
         imageUrl,
       });
       handleClose();
@@ -263,6 +270,26 @@ export function EditBakingModal({ isOpen, essential, onClose, onSave, householdC
               {STATUS_OPTIONS.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Category/Folder */}
+          <div>
+            <label htmlFor="edit-baking-subcategory" className="block text-sm font-medium text-charcoal mb-1">
+              Category
+            </label>
+            <select
+              id="edit-baking-subcategory"
+              value={subcategory}
+              onChange={(e) => setSubcategory(e.target.value)}
+              className="w-full h-11 px-3 rounded-soft border border-charcoal/20 bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta"
+            >
+              <option value="">Uncategorized</option>
+              {allSubcategories.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.emoji} {s.name}
                 </option>
               ))}
             </select>

@@ -28,6 +28,7 @@ export function AddSnackToWeekModal({
   const [qty, setQty] = useState(1);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   // Filter snacks by search term
   const filteredSnacks = useMemo(() => {
@@ -206,36 +207,55 @@ export function AddSnackToWeekModal({
                 <EmptySearch />
               ) : (
                 <div className="space-y-2">
-                  {filteredSnacks.map((snack) => (
-                    <button
-                      key={snack.id}
-                      onClick={() => handleSelectSnack(snack)}
-                      className="w-full flex items-center gap-3 p-3 bg-white rounded-soft hover:shadow-soft transition-shadow text-left"
-                    >
-                      {snack.imageUrl ? (
-                        <img
-                          src={snack.imageUrl}
-                          alt=""
-                          className="w-12 h-12 rounded-soft object-cover"
-                        />
-                      ) : (
-                        <div className="w-12 h-12 rounded-soft bg-sage/20 flex items-center justify-center">
-                          <span className="text-xl">🍿</span>
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-charcoal truncate">
-                          {snack.name}
-                        </h3>
-                        {snack.brand && (
-                          <p className="text-xs text-charcoal/60 truncate">
-                            {snack.brand}
-                          </p>
-                        )}
-                      </div>
-                      <span className="text-terracotta text-sm">→</span>
-                    </button>
-                  ))}
+                  {/* Collapsible header - entire area is clickable */}
+                  <button
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="w-full flex items-center gap-3 p-3 bg-sage/10 rounded-soft hover:bg-sage/20 active:bg-sage/30 transition-colors"
+                  >
+                    <span className={`text-charcoal/60 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
+                      ▶
+                    </span>
+                    <span className="text-lg">🍿</span>
+                    <span className="font-medium text-charcoal flex-1 text-left">
+                      All Snacks ({filteredSnacks.length})
+                    </span>
+                  </button>
+
+                  {/* Expandable content */}
+                  {isExpanded && (
+                    <div className="space-y-2 pl-2">
+                      {filteredSnacks.map((snack) => (
+                        <button
+                          key={snack.id}
+                          onClick={() => handleSelectSnack(snack)}
+                          className="w-full flex items-center gap-3 p-3 bg-white rounded-soft hover:shadow-soft transition-shadow text-left"
+                        >
+                          {snack.imageUrl ? (
+                            <img
+                              src={snack.imageUrl}
+                              alt=""
+                              className="w-12 h-12 rounded-soft object-cover"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-soft bg-sage/20 flex items-center justify-center">
+                              <span className="text-xl">🍿</span>
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-medium text-charcoal truncate">
+                              {snack.name}
+                            </h3>
+                            {snack.brand && (
+                              <p className="text-xs text-charcoal/60 truncate">
+                                {snack.brand}
+                              </p>
+                            )}
+                          </div>
+                          <span className="text-terracotta text-sm">→</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

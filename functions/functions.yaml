@@ -9,3 +9,66 @@ endpoints:
     region:
       - us-central1
     entryPoint: importRecipe
+  verifyPin:
+    httpsTrigger:
+      invoker:
+        - public
+    availableMemoryMb: 256
+    platform: gcfv2
+    region:
+      - us-central1
+    entryPoint: verifyPin
+  meals:
+    httpsTrigger:
+      invoker:
+        - public
+    availableMemoryMb: 256
+    platform: gcfv2
+    region:
+      - us-central1
+    entryPoint: meals
+  recipe:
+    httpsTrigger:
+      invoker:
+        - public
+    availableMemoryMb: 256
+    platform: gcfv2
+    region:
+      - us-central1
+    entryPoint: recipe
+  groceryList:
+    httpsTrigger:
+      invoker:
+        - public
+    availableMemoryMb: 256
+    platform: gcfv2
+    region:
+      - us-central1
+    entryPoint: groceryList
+  addGroceryItem:
+    httpsTrigger:
+      invoker:
+        - public
+    availableMemoryMb: 256
+    platform: gcfv2
+    region:
+      - us-central1
+    entryPoint: addGroceryItem
+  removeGroceryItem:
+    httpsTrigger:
+      invoker:
+        - public
+    availableMemoryMb: 256
+    platform: gcfv2
+    region:
+      - us-central1
+    entryPoint: removeGroceryItem
+  checkDuplicateGrocery:
+    httpsTrigger:
+      invoker:
+        - public
+    availableMemoryMb: 256
+    platform: gcfv2
+    region:
+      - us-central1
+    entryPoint: checkDuplicateGrocery

@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { DndContext, DragEndEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
+import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor, TouchSensor, KeyboardSensor } from '@dnd-kit/core';
+import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 import { useHousehold } from '../hooks/useHousehold';
 import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
 import { useMeals } from '../hooks/useMeals';
 import { useSnacks } from '../hooks/useSnacks';
 import { WeeklyMealCard } from '../components/planning/WeeklyMealCard';
 import { WeeklySnackCard } from '../components/planning/WeeklySnackCard';
+import { WeeklyDessertCard } from '../components/planning/WeeklyDessertCard';
 import { AddToWeekModal } from '../components/planning/AddToWeekModal';
 import { AddSnackToWeekModal } from '../components/planning/AddSnackToWeekModal';
+import { AddDessertToWeekModal } from '../components/planning/AddDessertToWeekModal';
 import { LoadMealsModal } from '../components/planning/LoadMealsModal';
 import { EditServingsModal } from '../components/planning/EditServingsModal';
 import { EditSnackQtyModal } from '../components/planning/EditSnackQtyModal';
@@ -16,9 +19,8 @@ import { WeeklyPlanSkeleton, Skeleton } from '../components/ui/skeleton';
 import { EmptyWeeklyPlan } from '../components/ui/EmptyState';
 import { WeekViewToggle, type ViewMode } from '../components/ui/WeekViewToggle';
 import { WeekView } from '../components/planning/WeekView';
-import { Button } from '../components/ui/button';
-import { Plus } from 'lucide-react';
-import type { DayOfWeek, WeeklyMealEntry, WeeklySnackEntry } from '../types';
+import { MealQuickViewModal } from '../components/planning/MealQuickViewModal';
+import type { DayOfWeek, WeeklyMealEntry, WeeklySnackEntry, WeeklyDessertEntry, Meal, Snack } from '../types';
 
 /**
  * Parse weekId (e.g., "2026-W02") into display format (e.g., "Week 02, 2026")
@@ -45,13 +47,35 @@ function Home() {
     updateSnackQty,
     updateMealDay,
     updateSnackDay,
+    addDessertToWeek,
+    removeDessertFromWeek,
+    updateDessertServings,
+    updateDessertDay,
   } = useWeeklyPlan(householdCode);
   const { meals, loading: mealsLoading } = useMeals(householdCode);
   const { snacks, loading: snacksLoading } = useSnacks(householdCode);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isAddSnackModalOpen, setIsAddSnackModalOpen] = useState(false);
+  const [isAddDessertModalOpen, setIsAddDessertModalOpen] = useState(false);
   const [isLoadMealsModalOpen, setIsLoadMealsModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('list');
+
+  // Collapsible section state for list view
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(['meals', 'snacks', 'desserts'])
+  );
+
+  const toggleSection = (section: string) => {
+    setExpandedSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(section)) {
+        next.delete(section);
+      } else {
+        next.add(section);
+      }
+      return next;
+    });
+  };
 
   // Edit servings modal state
   const [editingEntry, setEditingEntry] = useState<WeeklyMealEntry | null>(null);
@@ -69,13 +93,44 @@ function Home() {
   const [removingSnackEntry, setRemovingSnackEntry] = useState<WeeklySnackEntry | null>(null);
   const [isRemoveSnackDialogOpen, setIsRemoveSnackDialogOpen] = useState(false);
 
-  // Configure drag sensors - require 10px movement before starting drag
+  // Edit dessert servings modal state
+  const [editingDessertEntry, setEditingDessertEntry] = useState<WeeklyDessertEntry | null>(null);
+  const [isEditDessertModalOpen, setIsEditDessertModalOpen] = useState(false);
+
+  // Remove dessert confirmation dialog state
+  const [removingDessertEntry, setRemovingDessertEntry] = useState<WeeklyDessertEntry | null>(null);
+  const [isRemoveDessertDialogOpen, setIsRemoveDessertDialogOpen] = useState(false);
+
+  // Active drag item for DragOverlay
+  const [activeDragItem, setActiveDragItem] = useState<{
+    type: 'meal' | 'snack' | 'dessert';
+    entry: WeeklyMealEntry | WeeklySnackEntry | WeeklyDessertEntry;
+  } | null>(null);
+
+  // Quick view modal state for viewing item details
+  const [quickViewItem, setQuickViewItem] = useState<{
+    item: Meal | Snack;
+    type: 'meal' | 'snack' | 'dessert';
+    servings: number;
+  } | null>(null);
+
+  // Configure drag sensors for both desktop and mobile
   const sensors = useSensors(
+    // Desktop: mouse/trackpad - start drag after 8px movement
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 10,
+        distance: 8,
       },
-    })
+    }),
+    // Mobile: touch - hold for 200ms before drag starts (allows scrolling)
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 200,
+        tolerance: 5,
+      },
+    }),
+    // Keyboard accessibility
+    useSensor(KeyboardSensor)
   );
 
   // Helper to get meal by ID
@@ -104,10 +159,6 @@ function Home() {
   const alreadyHave = currentWeek?.alreadyHave ?? [];
 
   // Modal handlers
-  const handleAddClick = () => {
-    setIsAddModalOpen(true);
-  };
-
   const handleCloseModal = () => {
     setIsAddModalOpen(false);
   };
@@ -199,8 +250,87 @@ function Home() {
     }
   };
 
-  // Handle drag end - update meal/snack day assignment
+  // Dessert modal handlers
+  const handleAddDessertClick = () => {
+    setIsAddDessertModalOpen(true);
+  };
+
+  const handleCloseDessertModal = () => {
+    setIsAddDessertModalOpen(false);
+  };
+
+  const handleAddDessertToWeek = async (mealId: string, servings: number) => {
+    await addDessertToWeek(mealId, servings);
+  };
+
+  const handleEditDessertServings = (entry: WeeklyDessertEntry) => {
+    setEditingDessertEntry(entry);
+    setIsEditDessertModalOpen(true);
+  };
+
+  const handleCloseEditDessertModal = () => {
+    setIsEditDessertModalOpen(false);
+    setEditingDessertEntry(null);
+  };
+
+  const handleSaveDessertServings = async (servings: number) => {
+    if (!editingDessertEntry) {
+      throw new Error('No dessert selected for editing');
+    }
+    await updateDessertServings(editingDessertEntry.mealId, servings);
+  };
+
+  const handleRemoveDessert = (entry: WeeklyDessertEntry) => {
+    setRemovingDessertEntry(entry);
+    setIsRemoveDessertDialogOpen(true);
+  };
+
+  const handleCloseRemoveDessertDialog = () => {
+    setIsRemoveDessertDialogOpen(false);
+    setRemovingDessertEntry(null);
+  };
+
+  const handleConfirmRemoveDessert = async () => {
+    if (removingDessertEntry) {
+      await removeDessertFromWeek(removingDessertEntry.mealId);
+      handleCloseRemoveDessertDialog();
+    }
+  };
+
+  // Quick view handlers for week view cards
+  const handleViewMeal = (meal: Meal, entry: WeeklyMealEntry) => {
+    setQuickViewItem({ item: meal, type: 'meal', servings: entry.servings });
+  };
+
+  const handleViewSnack = (snack: Snack, entry: WeeklySnackEntry) => {
+    setQuickViewItem({ item: snack, type: 'snack', servings: entry.qty });
+  };
+
+  const handleViewDessert = (meal: Meal, entry: WeeklyDessertEntry) => {
+    setQuickViewItem({ item: meal, type: 'dessert', servings: entry.servings });
+  };
+
+  const handleCloseQuickView = () => {
+    setQuickViewItem(null);
+  };
+
+  // Handle drag start - capture the item being dragged for DragOverlay
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    const activeData = active.data.current;
+    if (activeData?.type && activeData?.entry) {
+      setActiveDragItem({
+        type: activeData.type as 'meal' | 'snack' | 'dessert',
+        entry: activeData.entry,
+      });
+    }
+  };
+
+  // Handle drag end - update meal/snack/dessert day assignment
   const handleDragEnd = async (event: DragEndEvent) => {
+    // Clear the drag overlay
+    setActiveDragItem(null);
+
     const { active, over } = event;
 
     if (!over) return;
@@ -228,6 +358,15 @@ function Home() {
       // Only update if day changed
       if (entry.day !== targetDay) {
         await updateSnackDay(entry.snackId, targetDay);
+      }
+    }
+
+    // Handle dessert drop
+    if (activeData.type === 'dessert') {
+      const entry = activeData.entry as WeeklyDessertEntry;
+      // Only update if day changed
+      if (entry.day !== targetDay) {
+        await updateDessertDay(entry.mealId, targetDay);
       }
     }
   };
@@ -287,7 +426,11 @@ function Home() {
 
   const weeklyMeals = currentWeek?.meals ?? [];
   const weeklySnacks = currentWeek?.snacks ?? [];
-  const hasContent = weeklyMeals.length > 0 || weeklySnacks.length > 0;
+  const weeklyDesserts = currentWeek?.desserts ?? [];
+  const hasContent = weeklyMeals.length > 0 || weeklySnacks.length > 0 || weeklyDesserts.length > 0;
+
+  // Filter baking items for desserts modal
+  const bakingItems = meals.filter((m) => m.isBaking);
 
   return (
     <div className="pb-32">
@@ -300,19 +443,12 @@ function Home() {
             </h1>
             <p className="text-charcoal/60 text-sm mt-1">
               {weeklyMeals.length} meal{weeklyMeals.length !== 1 ? 's' : ''} •{' '}
-              {weeklySnacks.length} snack{weeklySnacks.length !== 1 ? 's' : ''}
+              {weeklySnacks.length} snack{weeklySnacks.length !== 1 ? 's' : ''} •{' '}
+              {weeklyDesserts.length} dessert{weeklyDesserts.length !== 1 ? 's' : ''}
             </p>
           </div>
           <div className="flex items-center gap-2">
             <WeekViewToggle viewMode={viewMode} onToggle={setViewMode} />
-            <Button
-              onClick={() => setIsLoadMealsModalOpen(true)}
-              size="sm"
-              className="bg-terracotta text-white hover:bg-terracotta/90"
-            >
-              <Plus className="h-4 w-4 mr-1" />
-              Load Meals
-            </Button>
           </div>
         </div>
       </div>
@@ -321,92 +457,241 @@ function Home() {
         {!hasContent ? (
           <EmptyWeeklyPlan onAdd={() => setIsLoadMealsModalOpen(true)} />
         ) : viewMode === 'list' ? (
-          /* List View (existing) */
+          /* List View - each section has its own add button at the bottom */
           <div className="space-y-6">
             {/* Meals Section */}
-            {weeklyMeals.length > 0 && (
-              <div>
-                <h2 className="text-sm font-medium text-charcoal/60 mb-3 flex items-center gap-2">
-                  <span>&#127869;</span> Meals ({weeklyMeals.length})
-                </h2>
-                <div className="grid grid-cols-1 gap-4">
-                  {weeklyMeals.map((entry, index) => (
-                    <div
-                      key={entry.mealId}
-                      className="animate-fade-in-up"
-                      style={{ animationDelay: `${index * 50}ms` }}
-                    >
-                      <WeeklyMealCard
-                        entry={entry}
-                        meal={getMealById(entry.mealId)}
-                        alreadyHave={alreadyHave}
-                        onEditServings={handleEditServings}
-                        onRemove={handleRemove}
-                        onToggleAlreadyHave={toggleAlreadyHave}
-                      />
+            <div>
+              <button
+                onClick={() => toggleSection('meals')}
+                className="w-full flex items-center gap-3 mb-3 text-left"
+              >
+                <span
+                  className={`text-charcoal/40 transition-transform duration-200 ${
+                    expandedSections.has('meals') ? 'rotate-90' : ''
+                  }`}
+                >
+                  ▶
+                </span>
+                <span className="text-xl">🍽️</span>
+                <span className="text-lg font-semibold text-charcoal">
+                  Meals ({weeklyMeals.length})
+                </span>
+              </button>
+              {expandedSections.has('meals') && (
+                <>
+                  {weeklyMeals.length > 0 && (
+                    <div className="grid grid-cols-1 gap-4 mb-3">
+                      {weeklyMeals.map((entry, index) => (
+                        <div
+                          key={entry.mealId}
+                          className="animate-fade-in-up"
+                          style={{ animationDelay: `${index * 50}ms` }}
+                        >
+                          <WeeklyMealCard
+                            entry={entry}
+                            meal={getMealById(entry.mealId)}
+                            alreadyHave={alreadyHave}
+                            onEditServings={handleEditServings}
+                            onRemove={handleRemove}
+                            onToggleAlreadyHave={toggleAlreadyHave}
+                          />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
+                  )}
+                  <button
+                    onClick={() => setIsLoadMealsModalOpen(true)}
+                    className="w-full py-3 border-2 border-dashed border-terracotta/40 rounded-soft text-terracotta hover:border-terracotta hover:bg-terracotta/5 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <span>🍽️</span>
+                    <span>Add Meals</span>
+                  </button>
+                </>
+              )}
+            </div>
 
             {/* Snacks Section */}
-            {weeklySnacks.length > 0 && (
-              <div>
-                <h2 className="text-sm font-medium text-charcoal/60 mb-3 flex items-center gap-2">
-                  <span>&#127871;</span> Snacks ({weeklySnacks.length})
-                </h2>
-                <div className="grid grid-cols-1 gap-3">
-                  {weeklySnacks.map((entry, index) => (
-                    <div
-                      key={entry.snackId}
-                      className="animate-fade-in-up"
-                      style={{ animationDelay: `${(weeklyMeals.length + index) * 50}ms` }}
-                    >
-                      <WeeklySnackCard
-                        entry={entry}
-                        snack={getSnackById(entry.snackId)}
-                        onEditQty={handleEditSnackQty}
-                        onRemove={handleRemoveSnack}
-                      />
+            <div>
+              <button
+                onClick={() => toggleSection('snacks')}
+                className="w-full flex items-center gap-3 mb-3 text-left"
+              >
+                <span
+                  className={`text-charcoal/40 transition-transform duration-200 ${
+                    expandedSections.has('snacks') ? 'rotate-90' : ''
+                  }`}
+                >
+                  ▶
+                </span>
+                <span className="text-xl">🍿</span>
+                <span className="text-lg font-semibold text-charcoal">
+                  Snacks ({weeklySnacks.length})
+                </span>
+              </button>
+              {expandedSections.has('snacks') && (
+                <>
+                  {weeklySnacks.length > 0 && (
+                    <div className="grid grid-cols-1 gap-3 mb-3">
+                      {weeklySnacks.map((entry, index) => (
+                        <div
+                          key={entry.snackId}
+                          className="animate-fade-in-up"
+                          style={{ animationDelay: `${(weeklyMeals.length + index) * 50}ms` }}
+                        >
+                          <WeeklySnackCard
+                            entry={entry}
+                            snack={getSnackById(entry.snackId)}
+                            onEditQty={handleEditSnackQty}
+                            onRemove={handleRemoveSnack}
+                          />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
+                  )}
+                  {snacks.length > 0 && (
+                    <button
+                      onClick={handleAddSnackClick}
+                      className="w-full py-3 border-2 border-dashed border-sage/40 rounded-soft text-sage hover:border-sage hover:bg-sage/5 transition-colors flex items-center justify-center gap-2"
+                    >
+                      <span>🍿</span>
+                      <span>Add Snacks</span>
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Desserts Section */}
+            <div>
+              <button
+                onClick={() => toggleSection('desserts')}
+                className="w-full flex items-center gap-3 mb-3 text-left"
+              >
+                <span
+                  className={`text-charcoal/40 transition-transform duration-200 ${
+                    expandedSections.has('desserts') ? 'rotate-90' : ''
+                  }`}
+                >
+                  ▶
+                </span>
+                <span className="text-xl">🧁</span>
+                <span className="text-lg font-semibold text-charcoal">
+                  Desserts ({weeklyDesserts.length})
+                </span>
+              </button>
+              {expandedSections.has('desserts') && (
+                <>
+                  {weeklyDesserts.length > 0 && (
+                    <div className="grid grid-cols-1 gap-3 mb-3">
+                      {weeklyDesserts.map((entry, index) => (
+                        <div
+                          key={entry.mealId}
+                          className="animate-fade-in-up"
+                          style={{ animationDelay: `${(weeklyMeals.length + weeklySnacks.length + index) * 50}ms` }}
+                        >
+                          <WeeklyDessertCard
+                            entry={entry}
+                            meal={getMealById(entry.mealId)}
+                            onEditServings={handleEditDessertServings}
+                            onRemove={handleRemoveDessert}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {bakingItems.length > 0 && (
+                    <button
+                      onClick={handleAddDessertClick}
+                      className="w-full py-3 border-2 border-dashed border-honey/40 rounded-soft text-honey hover:border-honey hover:bg-honey/5 transition-colors flex items-center justify-center gap-2"
+                    >
+                      <span>🧁</span>
+                      <span>Add Desserts</span>
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         ) : (
           /* Week View with Drag and Drop */
-          <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+          <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <WeekView
               meals={weeklyMeals}
               snacks={weeklySnacks}
+              desserts={weeklyDesserts}
               getMealById={getMealById}
               getSnackById={getSnackById}
+              onViewMeal={handleViewMeal}
+              onViewSnack={handleViewSnack}
+              onViewDessert={handleViewDessert}
             />
+            {/* DragOverlay renders the dragged item in a portal - always visible on top */}
+            <DragOverlay dropAnimation={null}>
+              {activeDragItem ? (
+                <div className="p-3 bg-white rounded-soft shadow-lg ring-2 ring-terracotta text-sm opacity-95">
+                  <div className="flex items-center gap-2">
+                    {activeDragItem.type === 'meal' && (
+                      <>
+                        {(() => {
+                          const meal = getMealById((activeDragItem.entry as WeeklyMealEntry).mealId);
+                          return meal ? (
+                            <>
+                              {meal.imageUrl ? (
+                                <img src={meal.imageUrl} alt="" className="w-8 h-8 rounded-soft object-cover" />
+                              ) : (
+                                <div className="w-8 h-8 rounded-soft bg-terracotta/10 flex items-center justify-center">
+                                  <span className="text-sm">🍽️</span>
+                                </div>
+                              )}
+                              <span className="font-medium text-charcoal truncate">{meal.name}</span>
+                            </>
+                          ) : null;
+                        })()}
+                      </>
+                    )}
+                    {activeDragItem.type === 'snack' && (
+                      <>
+                        {(() => {
+                          const snack = getSnackById((activeDragItem.entry as WeeklySnackEntry).snackId);
+                          return snack ? (
+                            <>
+                              {snack.imageUrl ? (
+                                <img src={snack.imageUrl} alt="" className="w-8 h-8 rounded-soft object-cover" />
+                              ) : (
+                                <div className="w-8 h-8 rounded-soft bg-sage/20 flex items-center justify-center">
+                                  <span className="text-sm">🍿</span>
+                                </div>
+                              )}
+                              <span className="font-medium text-charcoal truncate">{snack.name}</span>
+                            </>
+                          ) : null;
+                        })()}
+                      </>
+                    )}
+                    {activeDragItem.type === 'dessert' && (
+                      <>
+                        {(() => {
+                          const meal = getMealById((activeDragItem.entry as WeeklyDessertEntry).mealId);
+                          return meal ? (
+                            <>
+                              {meal.imageUrl ? (
+                                <img src={meal.imageUrl} alt="" className="w-8 h-8 rounded-soft object-cover" />
+                              ) : (
+                                <div className="w-8 h-8 rounded-soft bg-honey/10 flex items-center justify-center">
+                                  <span className="text-sm">🧁</span>
+                                </div>
+                              )}
+                              <span className="font-medium text-charcoal truncate">{meal.name}</span>
+                            </>
+                          ) : null;
+                        })()}
+                      </>
+                    )}
+                  </div>
+                </div>
+              ) : null}
+            </DragOverlay>
           </DndContext>
-        )}
-
-        {/* Quick Add Buttons - always visible when there's content or meals in library */}
-        {(hasContent || meals.length > 0) && (
-          <div className="flex gap-3 mt-6">
-            <button
-              onClick={() => setIsLoadMealsModalOpen(true)}
-              className="flex-1 py-3 border-2 border-dashed border-terracotta/40 rounded-soft text-terracotta hover:border-terracotta hover:bg-terracotta/5 transition-colors flex items-center justify-center gap-2"
-            >
-              <span>&#127869;</span>
-              <span>Meals</span>
-            </button>
-            {snacks.length > 0 && (
-              <button
-                onClick={handleAddSnackClick}
-                className="flex-1 py-3 border-2 border-dashed border-sage/40 rounded-soft text-sage hover:border-sage hover:bg-sage/5 transition-colors flex items-center justify-center gap-2"
-              >
-                <span>&#127871;</span>
-                <span>Snacks</span>
-              </button>
-            )}
-          </div>
         )}
       </div>
 
@@ -469,6 +754,43 @@ function Home() {
         message={`Remove ${removingSnackEntry ? getSnackName(removingSnackEntry.snackId) : ''} from this week's plan?`}
         confirmText="Remove"
         confirmVariant="danger"
+      />
+
+      {/* Add Dessert Modal */}
+      <AddDessertToWeekModal
+        isOpen={isAddDessertModalOpen}
+        onClose={handleCloseDessertModal}
+        meals={meals}
+        onAdd={handleAddDessertToWeek}
+      />
+
+      {/* Edit Dessert Servings Modal */}
+      <EditServingsModal
+        isOpen={isEditDessertModalOpen}
+        onClose={handleCloseEditDessertModal}
+        mealName={editingDessertEntry ? getMealName(editingDessertEntry.mealId) : ''}
+        currentServings={editingDessertEntry?.servings ?? 1}
+        onSave={handleSaveDessertServings}
+      />
+
+      {/* Remove Dessert Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={isRemoveDessertDialogOpen}
+        onClose={handleCloseRemoveDessertDialog}
+        onConfirm={handleConfirmRemoveDessert}
+        title="Remove Dessert"
+        message={`Remove ${removingDessertEntry ? getMealName(removingDessertEntry.mealId) : ''} from this week's plan?`}
+        confirmText="Remove"
+        confirmVariant="danger"
+      />
+
+      {/* Quick View Modal for Week View Cards */}
+      <MealQuickViewModal
+        item={quickViewItem?.item ?? null}
+        type={quickViewItem?.type ?? 'meal'}
+        servings={quickViewItem?.servings}
+        isOpen={!!quickViewItem}
+        onClose={handleCloseQuickView}
       />
     </div>
   );

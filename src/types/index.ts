@@ -116,12 +116,20 @@ export interface WeeklySnackEntry {
   day?: DayOfWeek;  // Optional day assignment for week view
 }
 
+// WeeklyDessertEntry - a dessert/baking item reference within a weekly plan
+export interface WeeklyDessertEntry {
+  mealId: string;  // References a meal with isBaking: true
+  servings: number;
+  day?: DayOfWeek;  // Optional day assignment for week view
+}
+
 // WeeklyMeal - the weekly meal plan
 export interface WeeklyMeal {
   id: string;
   weekId: string;
   meals: WeeklyMealEntry[];
   snacks?: WeeklySnackEntry[]; // Optional snacks for the week
+  desserts?: WeeklyDessertEntry[]; // Optional desserts/baking items for the week
   householdCode: string;
   alreadyHave?: string[]; // Ingredient names (lowercase) to exclude from grocery generation
 }
@@ -158,12 +166,39 @@ export interface Staple {
 // BakingEssential status type
 export type BakingStatus = 'stocked' | 'low' | 'out';
 
+// BakingSubcategory type - built-in categories for organizing baking supplies
+export type BakingSubcategory =
+  | 'flours'
+  | 'sugars'
+  | 'leavening'
+  | 'fats'
+  | 'dairy'
+  | 'chocolate'
+  | 'nuts'
+  | 'spices'
+  | 'misc';
+
+// Baking subcategory options for UI display (built-in defaults)
+export const BAKING_SUBCATEGORIES: { id: BakingSubcategory; name: string; emoji: string }[] = [
+  { id: 'flours', name: 'Flours & Grains', emoji: '🌾' },
+  { id: 'sugars', name: 'Sugars & Sweeteners', emoji: '🍯' },
+  { id: 'leavening', name: 'Leavening', emoji: '🎈' },
+  { id: 'fats', name: 'Fats & Oils', emoji: '🧈' },
+  { id: 'dairy', name: 'Dairy & Eggs', emoji: '🥚' },
+  { id: 'chocolate', name: 'Chocolate & Chips', emoji: '🍫' },
+  { id: 'nuts', name: 'Nuts & Dried Fruits', emoji: '🥜' },
+  { id: 'spices', name: 'Spices & Extracts', emoji: '🌿' },
+  { id: 'misc', name: 'Miscellaneous', emoji: '📦' },
+];
+
 // BakingEssential - Bella's baking inventory item
+// subcategory can be a built-in BakingSubcategory or a custom string
 export interface BakingEssential {
   id: string;
   name: string;
   store: Store;
   status: BakingStatus;
+  subcategory?: string; // Can be BakingSubcategory or custom folder name
   imageUrl?: string;
   householdCode: string;
 }

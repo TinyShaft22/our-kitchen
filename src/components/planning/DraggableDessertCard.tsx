@@ -1,19 +1,19 @@
 import { useState, useRef } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import type { WeeklyMealEntry, Meal } from '../../types';
+import type { WeeklyDessertEntry, Meal } from '../../types';
 
-interface DraggableMealCardProps {
-  entry: WeeklyMealEntry;
+interface DraggableDessertCardProps {
+  entry: WeeklyDessertEntry;
   meal: Meal | null;
-  onView?: (meal: Meal, entry: WeeklyMealEntry) => void;
+  onView?: (meal: Meal, entry: WeeklyDessertEntry) => void;
 }
 
-export function DraggableMealCard({ entry, meal, onView }: DraggableMealCardProps) {
+export function DraggableDessertCard({ entry, meal, onView }: DraggableDessertCardProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-    id: `meal-${entry.mealId}`,
+    id: `dessert-${entry.mealId}`,
     data: {
-      type: 'meal',
+      type: 'dessert',
       entry,
     },
   });
@@ -61,8 +61,8 @@ export function DraggableMealCard({ entry, meal, onView }: DraggableMealCardProp
       onPointerMove={handlePointerMove}
       onClick={handleClick}
       className={`
-        p-2 bg-white rounded-soft shadow-soft touch-none
-        ${isDragging ? 'ring-2 ring-terracotta z-50 shadow-lg' : 'active:bg-charcoal/5'}
+        p-2 bg-honey/10 rounded-soft shadow-soft touch-none
+        ${isDragging ? 'ring-2 ring-honey z-50 shadow-lg' : 'active:bg-honey/20'}
       `}
     >
       {/* Compact layout for narrow columns */}
@@ -74,8 +74,8 @@ export function DraggableMealCard({ entry, meal, onView }: DraggableMealCardProp
             className="w-6 h-6 rounded object-cover flex-shrink-0 mt-0.5"
           />
         ) : (
-          <div className="w-6 h-6 rounded bg-terracotta/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <span className="text-xs">🍽️</span>
+          <div className="w-6 h-6 rounded bg-honey/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <span className="text-xs">🧁</span>
           </div>
         )}
         <div className="flex-1 min-w-0">

@@ -1,27 +1,36 @@
 import { useDroppable } from '@dnd-kit/core';
-import type { WeeklyMealEntry, WeeklySnackEntry, Meal, Snack } from '../../types';
+import type { WeeklyMealEntry, WeeklySnackEntry, WeeklyDessertEntry, Meal, Snack } from '../../types';
 import { DraggableMealCard } from './DraggableMealCard';
 import { DraggableSnackCard } from './DraggableSnackCard';
+import { DraggableDessertCard } from './DraggableDessertCard';
 
 interface UnassignedSectionProps {
   meals: WeeklyMealEntry[];
   snacks: WeeklySnackEntry[];
+  desserts: WeeklyDessertEntry[];
   getMealById: (mealId: string) => Meal | null;
   getSnackById: (snackId: string) => Snack | null;
+  onViewMeal?: (meal: Meal, entry: WeeklyMealEntry) => void;
+  onViewSnack?: (snack: Snack, entry: WeeklySnackEntry) => void;
+  onViewDessert?: (meal: Meal, entry: WeeklyDessertEntry) => void;
 }
 
 export function UnassignedSection({
   meals,
   snacks,
+  desserts,
   getMealById,
   getSnackById,
+  onViewMeal,
+  onViewSnack,
+  onViewDessert,
 }: UnassignedSectionProps) {
   const { isOver, setNodeRef } = useDroppable({
     id: 'unassigned',
     data: { day: undefined },
   });
 
-  const totalItems = meals.length + snacks.length;
+  const totalItems = meals.length + snacks.length + desserts.length;
 
   return (
     <div
@@ -51,6 +60,7 @@ export function UnassignedSection({
               key={entry.mealId}
               entry={entry}
               meal={getMealById(entry.mealId)}
+              onView={onViewMeal}
             />
           ))}
 
@@ -60,6 +70,17 @@ export function UnassignedSection({
               key={entry.snackId}
               entry={entry}
               snack={getSnackById(entry.snackId)}
+              onView={onViewSnack}
+            />
+          ))}
+
+          {/* Desserts */}
+          {desserts.map((entry) => (
+            <DraggableDessertCard
+              key={entry.mealId}
+              entry={entry}
+              meal={getMealById(entry.mealId)}
+              onView={onViewDessert}
             />
           ))}
         </div>

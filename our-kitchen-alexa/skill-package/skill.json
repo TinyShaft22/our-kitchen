@@ -5,7 +5,37 @@
         "endpoint": {
           "uri": "arn:aws:lambda:us-east-1:273216125475:function:839253af-0423-40bc-acd9-a40f1788cf7f:Release_0"
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL",
+            "supportedViewports": [
+              {
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "minWidth": 1024,
+                "maxWidth": 1280,
+                "minHeight": 600,
+                "maxHeight": 800
+              },
+              {
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "minWidth": 300,
+                "maxWidth": 1279,
+                "minHeight": 300,
+                "maxHeight": 800
+              },
+              {
+                "mode": "TV",
+                "shape": "RECTANGLE",
+                "minWidth": 960,
+                "maxWidth": 1920,
+                "minHeight": 540,
+                "maxHeight": 1080
+              }
+            ]
+          }
+        ],
         "locales": {},
         "regions": {
           "NA": {
@@ -30,13 +60,14 @@
     "publishingInformation": {
       "distributionCountries": [],
       "isAvailableWorldwide": true,
+      "category": "FOOD_AND_DRINK",
       "locales": {
         "en-US": {
           "description": "Our Kitchen helps you manage meals, recipes, and grocery lists using voice commands. Ask about what's for dinner, read a recipe, or check your grocery list.",
           "examplePhrases": [
             "Alexa open our kitchen",
-            "hello",
-            "help"
+            "what's for dinner this week",
+            "show me my grocery list"
           ],
           "keywords": [
             "meal planning",
@@ -45,10 +76,19 @@
             "kitchen"
           ],
           "name": "Our Kitchen",
-          "summary": "Manage meals, recipes, and grocery lists with voice commands"
+          "summary": "Manage meals, recipes, and grocery lists with voice commands",
+          "smallIconUri": "file://assets/small-icon.png",
+          "largeIconUri": "file://assets/large-icon.png"
         }
       },
-      "testingInstructions": "Say 'Alexa, open our kitchen' to launch the skill. Then try 'hello', 'help', or 'stop'."
+      "testingInstructions": "Say 'Alexa, open our kitchen' to launch the skill. Then try 'what's for dinner this week' or 'show me my grocery list'."
+    },
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "containsAds": false,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "usesPersonalInfo": false
     }
   }
 }
