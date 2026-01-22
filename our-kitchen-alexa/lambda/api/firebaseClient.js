@@ -2,16 +2,42 @@ const axios = require('axios');
 
 // Cloud Functions base URL - our-kitchen-prod is the Firebase project
 const CLOUD_FUNCTIONS_BASE = 'https://us-central1-grocery-store-app-c3aa5.cloudfunctions.net';
-const API_KEY = 'ourkitchen2024';
 const DEFAULT_TIMEOUT = 5000; // 5 seconds - leaves buffer for Alexa's 8s timeout
 
+/**
+ * Get API key from environment variable
+ *
+ * For Alexa-Hosted Skills, set ALEXA_API_KEY in:
+ * - Alexa Developer Console > Build > Code > Environment Variables
+ * - Or via ASK CLI when deploying
+ *
+ * @throws Error if ALEXA_API_KEY is not set
+ */
+function getApiKey() {
+  const apiKey = process.env.ALEXA_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      'ALEXA_API_KEY environment variable is not set. ' +
+      'Set it in the Alexa Developer Console under Build > Code > Environment Variables.'
+    );
+  }
+  return apiKey;
+}
+
+// Create axios client with lazy API key evaluation
+// Note: Headers are set per-request to ensure env var is loaded
 const client = axios.create({
   baseURL: CLOUD_FUNCTIONS_BASE,
   timeout: DEFAULT_TIMEOUT,
   headers: {
-    'Content-Type': 'application/json',
-    'X-API-Key': API_KEY
+    'Content-Type': 'application/json'
   }
+});
+
+// Add API key to every request via interceptor (ensures env var is loaded at request time)
+client.interceptors.request.use((config) => {
+  config.headers['X-API-Key'] = getApiKey();
+  return config;
 });
 
 async function verifyPin(pin) {
