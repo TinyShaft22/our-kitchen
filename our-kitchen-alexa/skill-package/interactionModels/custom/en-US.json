@@ -142,7 +142,12 @@
             "what's on the {StoreName} list",
             "read my {StoreName} list",
             "what do we need from {StoreName}",
-            "show me the {StoreName} list"
+            "show me the {StoreName} list",
+            "what's left on the grocery list",
+            "read back the list",
+            "what haven't we bought yet",
+            "grocery list please",
+            "what else do we need"
           ]
         },
         {
@@ -166,7 +171,17 @@
             "we need {Quantity} {GroceryItem}",
             "I need {GroceryItem}",
             "get {GroceryItem}",
-            "buy {GroceryItem}"
+            "buy {GroceryItem}",
+            "put {GroceryItem} on my list",
+            "I need to get {GroceryItem}",
+            "we're out of {GroceryItem}",
+            "add {GroceryItem} to my shopping list",
+            "we need to buy {GroceryItem}",
+            "don't forget {GroceryItem}",
+            "remember to get {GroceryItem}",
+            "put down {GroceryItem}",
+            "I need {Quantity} {GroceryItem}",
+            "get me {Quantity} {GroceryItem}"
           ]
         },
         {
@@ -178,7 +193,14 @@
             "take that back",
             "remove that",
             "never mind",
-            "cancel that"
+            "cancel that",
+            "scratch that",
+            "wait no",
+            "I didn't mean that",
+            "take it back",
+            "oops undo",
+            "that was wrong",
+            "go back"
           ]
         },
         {
@@ -194,7 +216,14 @@
             "remove {GroceryItem}",
             "take {GroceryItem} off the list",
             "delete {GroceryItem}",
-            "we don't need {GroceryItem}"
+            "we don't need {GroceryItem}",
+            "scratch {GroceryItem} off the list",
+            "we don't need {GroceryItem} anymore",
+            "take {GroceryItem} off",
+            "forget {GroceryItem}",
+            "cross off {GroceryItem}",
+            "never mind {GroceryItem}",
+            "I don't need {GroceryItem}"
           ]
         },
         {
@@ -211,7 +240,14 @@
             "got {GroceryItem}",
             "I got {GroceryItem}",
             "picked up {GroceryItem}",
-            "{GroceryItem} is in the cart"
+            "{GroceryItem} is in the cart",
+            "got the {GroceryItem}",
+            "grabbed {GroceryItem}",
+            "I have the {GroceryItem}",
+            "we got {GroceryItem}",
+            "{GroceryItem} done",
+            "found {GroceryItem}",
+            "crossed off {GroceryItem}"
           ]
         },
         {
@@ -229,7 +265,13 @@
             "household code {PinCode}",
             "link to {PinCode}",
             "{PinCode}",
-            "use code {PinCode}"
+            "use code {PinCode}",
+            "the code is {PinCode}",
+            "enter {PinCode}",
+            "pin is {PinCode}",
+            "link with {PinCode}",
+            "set up household {PinCode}",
+            "my household code is {PinCode}"
           ]
         },
         {
