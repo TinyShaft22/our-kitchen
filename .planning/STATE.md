@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 34 of 40 (v2.1 in progress)
-Plan: Phase 34 complete, Phase 35 next
+Phase: 35 of 40 (v2.1 in progress)
+Plan: 35-01 complete, 35-02 next
 Status: **v2.1 Natural Language & NFI in progress**
-Last activity: 2026-01-22 — Phase 34-01 complete (expanded utterances)
+Last activity: 2026-01-22 — Phase 35-01 complete (markAsLow Cloud Function)
 
 Progress: █████████████████████████░░░░ 87% (35/40 phases complete)
 
@@ -123,9 +123,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Phase 34-01 complete (expanded utterances to 139 total)
+Stopped at: Phase 35-01 complete (markAsLow Cloud Function)
 Resume file: None
-Resume with: Phase 35 - Mark As Low Feature ("we're low on flour" command)
+Resume with: Phase 35-02 - Mark As Low Alexa Handler
 
 **Alexa debugging:** Separate terminal session debugging Alexa issues
 
