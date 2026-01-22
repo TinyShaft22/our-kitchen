@@ -251,6 +251,32 @@
           ]
         },
         {
+          "name": "MarkAsLowIntent",
+          "slots": [
+            {
+              "name": "Item",
+              "type": "AMAZON.Food"
+            }
+          ],
+          "samples": [
+            "we're low on {Item}",
+            "we are low on {Item}",
+            "mark {Item} as low",
+            "{Item} is running low",
+            "{Item} is low",
+            "we're almost out of {Item}",
+            "we are almost out of {Item}",
+            "we're out of {Item}",
+            "we are out of {Item}",
+            "we need more {Item}",
+            "running low on {Item}",
+            "getting low on {Item}",
+            "almost out of {Item}",
+            "low on {Item}",
+            "{Item} needs restocking"
+          ]
+        },
+        {
           "name": "LinkHouseholdIntent",
           "slots": [
             {
