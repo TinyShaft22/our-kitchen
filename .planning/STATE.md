@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 35 of 40 (v2.1 in progress)
-Plan: 35-01 complete, 35-02 next
+Plan: 35-02 complete, **Phase 35 COMPLETE**
 Status: **v2.1 Natural Language & NFI in progress**
-Last activity: 2026-01-22 — Phase 35-01 complete (markAsLow Cloud Function)
+Last activity: 2026-01-22 — Phase 35-02 complete (MarkAsLow Alexa Handler)
 
 Progress: █████████████████████████░░░░ 87% (35/40 phases complete)
 
@@ -108,6 +108,12 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Structured tables with voice command, expected response, and pass/fail columns
 - Severity levels: Critical (crashes/security), High (feature broken), Medium (inconsistent), Low (cosmetic)
 
+**Phase 35-02 decisions:**
+- AMAZON.Food slot type for Item (handles common food/ingredient names, backend does contains matching)
+- Session state for disambiguation flow (pendingMarkAsLow stores matches for follow-up)
+- Session state for grocery add flow (pendingGroceryFromLow, pendingUnknownItem for Yes/No)
+- Handler ordering: disambiguation and confirm handlers before generic Yes/No handlers
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -123,9 +129,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Phase 35-01 complete (markAsLow Cloud Function)
+Stopped at: Phase 35-02 complete (MarkAsLow Alexa Handler)
 Resume file: None
-Resume with: Phase 35-02 - Mark As Low Alexa Handler
+Resume with: Phase 36 - CanFulfillIntentRequest for NFI
 
 **Alexa debugging:** Separate terminal session debugging Alexa issues
 
@@ -146,13 +152,13 @@ Resume with: Phase 35-02 - Mark As Low Alexa Handler
 **v2.1 Natural Language & NFI (current milestone):**
 1. ~~Phase 33: Secure API Keys~~ - **COMPLETE** (env vars for Cloud Functions + Lambda)
 2. ~~Phase 34: Expand Utterances~~ - **COMPLETE** (139 utterances across 10 intents)
-3. Phase 35: Mark As Low Feature - "We're low on flour" command
+3. ~~Phase 35: Mark As Low Feature~~ - **COMPLETE** (Cloud Function + Alexa Handler)
 4. Phase 36: Implement CanFulfillIntentRequest for NFI
 5. Phase 37: Configure NFI toolkit
 6. Phase 38-39: Certification and publish to live
 7. Phase 40: Monitor NFI (8 weeks post-publish)
 
-**Next:** Phase 35 - Mark As Low Feature
+**Next:** Phase 36 - CanFulfillIntentRequest for NFI
 
 ## Roadmap Evolution
 
@@ -201,3 +207,6 @@ Resume with: Phase 35-02 - Mark As Low Alexa Handler
 - 2026-01-22: **Phase 30 COMPLETE** — Testing & Polish (manual testing deferred)
 - 2026-01-22: Phase 34-01 complete (expanded utterances from 61 to 139)
 - 2026-01-22: **Phase 34 COMPLETE** — Expand Utterances for NFI training
+- 2026-01-22: Phase 35-01 complete (markAsLow Cloud Function)
+- 2026-01-22: Phase 35-02 complete (MarkAsLow Alexa Handler with disambiguation)
+- 2026-01-22: **Phase 35 COMPLETE** — Mark As Low Feature end-to-end
