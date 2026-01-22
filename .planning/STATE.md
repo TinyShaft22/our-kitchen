@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 32 of 32 (Household Items)
-Plan: 3 of 3 complete (01, 02, 03)
-Status: **Phase complete**
-Last activity: 2026-01-22 — Completed 32-03-PLAN.md (Alexa Integration)
+Phase: 33 of 40 (Secure API Keys)
+Plan: 01 of 01 complete
+Status: **v2.1 in progress**
+Last activity: 2026-01-22 — Completed 33-01-PLAN.md (Environment Variables)
 
-Progress: ████████████████████████████ 100% (32/32 phases complete)
+Progress: █████████████████████████░░░░ 82.5% (33/40 phases complete)
 
 ## Performance Metrics
 
@@ -98,6 +98,11 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Fall back to pantry/safeway defaults when not found
 - Case-insensitive matching via nameLower field
 
+**Phase 33-01 decisions:**
+- Lazy evaluation inside handlers for Firebase Functions v2 env var compatibility
+- Axios request interceptor for Lambda API key injection
+- Committed .env.example with placeholder, gitignored .env
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -113,9 +118,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Completed 32-03-PLAN.md (Alexa Integration)
+Stopped at: Completed 33-01-PLAN.md (Environment Variables)
 Resume file: None
-Resume with: Phase 32 complete - deploy and test
+Resume with: Phase 33 complete - deploy Cloud Functions and set Lambda env var
 
 ## Milestones
 
@@ -123,16 +128,24 @@ Resume with: Phase 32 complete - deploy and test
 - v1.1 Meal & Grocery Refactor (Phases 11-14) — shipped 2026-01-14
 - v1.2 Baking Organization (Phase 15) — shipped 2026-01-15
 - v1.3 Broma Bakery Import (Phases 16-22.1) — shipped 2026-01-19
-- v2.0 Alexa Integration (Phases 23-30) — in progress
+- v2.0 Alexa Integration (Phases 23-32) — substantially complete
+- v2.1 Natural Language & NFI (Phases 33-40) — **next milestone**
 
 **Imported:**
 - 105 Broma Bakery recipes in app
 
 ## Next Steps
 
-1. Deploy Cloud Functions: `cd functions && firebase deploy --only functions`
-2. Deploy Alexa Lambda: Upload to Alexa Developer Console
-3. Test end-to-end: Save household item in PWA, add via Alexa voice
+**v2.1 Natural Language & NFI (current milestone):**
+1. ~~Phase 33: Secure API Keys~~ - **COMPLETE** (env vars for Cloud Functions + Lambda)
+2. Phase 34: Expand Utterances - Add 10+ samples per intent
+3. Phase 35: Mark As Low Feature - "We're low on flour" command
+4. Phase 36: Implement CanFulfillIntentRequest for NFI
+5. Phase 37: Configure NFI toolkit
+6. Phase 38-39: Certification and publish to live
+7. Phase 40: Monitor NFI (8 weeks post-publish)
+
+**Next:** Phase 34 - Expand Utterances
 
 ## Roadmap Evolution
 
@@ -174,3 +187,5 @@ Resume with: Phase 32 complete - deploy and test
 - 2026-01-21: Phase 32-01 complete (HouseholdItem type, useHouseholdItems CRUD hook)
 - 2026-01-22: Phase 32-03 complete (lookupHouseholdItem Cloud Function, Alexa integration)
 - 2026-01-22: **Phase 32 COMPLETE** — Household Items with Alexa voice lookup
+- 2026-01-22: Phase 33-01 complete (env vars for Cloud Functions and Lambda)
+- 2026-01-22: **Phase 33 COMPLETE** — Secure API Keys with centralized config
