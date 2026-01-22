@@ -100,6 +100,15 @@ function GroceryListPage() {
   }, [filteredItems]);
   const totalCount = filteredItems.length;
 
+  // Get stores that have items in the current list
+  const storesWithItems = useMemo(() => {
+    const storeSet = new Set<Store>();
+    for (const item of items) {
+      storeSet.add(item.store);
+    }
+    return STORES.filter((store) => storeSet.has(store.id));
+  }, [items]);
+
   // Group filtered items by category
   const groupedItems = useMemo(() => {
     const groups = new Map<Category, GroceryItem[]>();
@@ -233,7 +242,7 @@ function GroceryListPage() {
 
       <div className="px-4">
 
-      {/* Store filter pills */}
+      {/* Store filter pills - only show stores that have items */}
       {items.length > 0 && (
         <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 mt-4">
           <Button
@@ -243,7 +252,7 @@ function GroceryListPage() {
           >
             All
           </Button>
-          {STORES.map((store) => (
+          {storesWithItems.map((store) => (
             <Button
               key={store.id}
               variant={selectedStore === store.id ? 'default' : 'outline'}

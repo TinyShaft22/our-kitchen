@@ -15,25 +15,75 @@ interface VoiceInputModalProps {
   onAddItem: (item: Omit<GroceryItem, 'id' | 'householdCode'>) => Promise<string>;
 }
 
-// Cloud function URL
-const FUNCTION_URL = 'https://us-central1-grocery-store-app-c3aa5.cloudfunctions.net/parseGroceryTranscript';
+// Category keywords for auto-categorization
+const CATEGORY_KEYWORDS: Record<Category, string[]> = {
+  produce: ['apple', 'banana', 'lettuce', 'tomato', 'onion', 'garlic', 'potato', 'carrot', 'celery', 'pepper', 'cucumber', 'avocado', 'lemon', 'lime', 'orange', 'berry', 'berries', 'fruit', 'vegetable', 'salad', 'spinach', 'kale', 'broccoli'],
+  meat: ['chicken', 'beef', 'pork', 'steak', 'bacon', 'sausage', 'turkey', 'ham', 'ground', 'meat', 'fish', 'salmon', 'shrimp', 'seafood'],
+  dairy: ['milk', 'cheese', 'yogurt', 'butter', 'cream', 'egg', 'eggs', 'sour cream', 'cottage cheese', 'half and half'],
+  frozen: ['frozen', 'ice cream', 'pizza', 'fries', 'popsicle'],
+  bakery: ['bread', 'bagel', 'muffin', 'croissant', 'roll', 'bun', 'tortilla'],
+  pantry: ['rice', 'pasta', 'cereal', 'soup', 'sauce', 'oil', 'vinegar', 'spice', 'flour', 'sugar', 'salt', 'pepper', 'can', 'canned'],
+  snacks: ['chip', 'chips', 'cracker', 'cookie', 'candy', 'popcorn', 'pretzel', 'granola', 'bar', 'nut', 'nuts'],
+  beverages: ['water', 'juice', 'soda', 'coffee', 'tea', 'drink', 'beverage', 'wine', 'beer', 'sparkling'],
+  baking: ['baking', 'vanilla', 'chocolate chips', 'yeast', 'baking soda', 'baking powder', 'cocoa'],
+};
 
-// Call the cloud function directly via HTTP
-async function parseGroceryTranscript(transcript: string): Promise<ParsedItem[]> {
-  const response = await fetch(FUNCTION_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ data: { transcript } }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to process transcript');
+// Detect category from item name
+function detectCategory(name: string): Category {
+  const lowerName = name.toLowerCase();
+  for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    if (keywords.some(kw => lowerName.includes(kw))) {
+      return category as Category;
+    }
   }
+  return 'pantry'; // default
+}
 
-  const data = await response.json();
-  return data.result?.items || [];
+// Parse transcript into individual items
+function parseGroceryTranscript(transcript: string): ParsedItem[] {
+  // Common phrases to remove
+  const cleanedTranscript = transcript
+    .replace(/^(i want to add|i need|add|get|we need|i'd like|please add|can you add)\s*/gi, '')
+    .replace(/\s*(please|thanks|thank you)\.?$/gi, '')
+    .trim();
+
+  if (!cleanedTranscript) return [];
+
+  // Split by common separators: commas, "and", periods, semicolons
+  // But be careful with "and" in product names like "mac and cheese"
+  const items = cleanedTranscript
+    .split(/[,;.]|\s+and\s+(?!cheese)/gi)
+    .map(item => item.trim())
+    .filter(item => item.length > 1);
+
+  return items.map(rawItem => {
+    // Extract brand info: "paper towels from Bounty" or "Bounty paper towels"
+    let name = rawItem;
+    let brand = '';
+
+    // Check for "from [brand]" pattern
+    const fromMatch = rawItem.match(/^(.+?)\s+from\s+(\w+)$/i);
+    if (fromMatch) {
+      name = fromMatch[1].trim();
+      brand = fromMatch[2].trim();
+    }
+
+    // Check for "by [brand]" pattern
+    const byMatch = rawItem.match(/^(.+?)\s+by\s+(\w+)$/i);
+    if (byMatch) {
+      name = byMatch[1].trim();
+      brand = byMatch[2].trim();
+    }
+
+    // Include brand in name if found
+    const displayName = brand ? `${name} (${brand})` : name;
+
+    return {
+      name: displayName.charAt(0).toUpperCase() + displayName.slice(1),
+      category: detectCategory(name),
+      store: 'safeway' as Store, // default store
+    };
+  });
 }
 
 export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalProps) {
@@ -78,16 +128,20 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
     onClose();
   };
 
-  // Process transcript with LLM
-  const processTranscript = async (text: string) => {
+  // Process transcript with client-side parser
+  const processTranscript = (text: string) => {
     if (!text.trim()) return;
 
     setProcessing(true);
     setProcessError(null);
 
     try {
-      const items = await parseGroceryTranscript(text);
-      setItems(items);
+      const parsedItems = parseGroceryTranscript(text);
+      if (parsedItems.length === 0) {
+        setProcessError('No items detected. Try saying items separated by commas.');
+      } else {
+        setItems(parsedItems);
+      }
     } catch (err) {
       console.error('Failed to process transcript:', err);
       setProcessError('Failed to process. Please try again.');
@@ -96,12 +150,12 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
     }
   };
 
-  const handleMicClick = async () => {
+  const handleMicClick = () => {
     if (isListening) {
       stopListening();
       // Process the transcript when stopping
       if (transcript.trim()) {
-        await processTranscript(transcript);
+        processTranscript(transcript);
       }
     } else {
       // Clear previous results when starting new recording
@@ -112,9 +166,9 @@ export function VoiceInputModal({ isOpen, onClose, onAddItem }: VoiceInputModalP
   };
 
   // Handle text input submission
-  const handleTextSubmit = async () => {
+  const handleTextSubmit = () => {
     if (textInput.trim()) {
-      await processTranscript(textInput);
+      processTranscript(textInput);
     }
   };
 
