@@ -32,6 +32,11 @@ const {
   CheckOffGroceryIntentHandler
 } = require('./handlers/GroceryHandlers');
 const {
+  MarkAsLowIntentHandler,
+  MarkAsLowDisambiguationHandler,
+  ConfirmAddFromLowHandler
+} = require('./handlers/MarkAsLowHandlers');
+const {
   MealSelectedEventHandler,
   StartCookingEventHandler,
   StepChangedEventHandler,
@@ -307,6 +312,9 @@ exports.handler = Alexa.SkillBuilders.custom()
         UndoGroceryIntentHandler,
         RemoveGroceryIntentHandler,
         CheckOffGroceryIntentHandler,
+        MarkAsLowIntentHandler,
+        MarkAsLowDisambiguationHandler,   // Must be before generic handlers
+        ConfirmAddFromLowHandler,          // Must be before other Yes/No handlers
         MealSelectedEventHandler,
         StartCookingEventHandler,
         StepChangedEventHandler,
