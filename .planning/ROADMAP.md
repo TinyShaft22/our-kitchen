@@ -364,13 +364,21 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 34-01-PLAN.md - Expand all custom intent utterances to 10+ samples
+- [x] 34-01-PLAN.md - Expand all custom intent utterances to 10+ samples
 
 #### Phase 35: Mark As Low Feature
 **Goal**: Voice command to mark items as low stock and add to grocery ("we're low on flour")
 **Depends on**: Phase 34
 **Research**: Unlikely
 **Plans**: 2 plans
+
+Plans:
+- [ ] 35-01-PLAN.md - Backend & data model (markAsLow Cloud Function, firebaseClient)
+- [ ] 35-02-PLAN.md - Lambda handler & interaction model (MarkAsLowIntent, disambiguation flow)
+
+**Wave structure:**
+- Wave 1: 35-01 (Cloud Function + firebaseClient)
+- Wave 2: 35-02 (Lambda handler + interaction model)
 
 #### Phase 36: CanFulfillIntentRequest
 **Goal**: Implement NFI foundation handler for Alexa's "can you handle this?" queries
