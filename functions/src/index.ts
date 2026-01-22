@@ -2,6 +2,7 @@ import { onRequest } from "firebase-functions/v2/https";
 import { initializeApp, getApps } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { getStorage } from "firebase-admin/storage";
+import { getApiKey } from "./config";
 
 // Helper to ensure Firebase is initialized
 function ensureInitialized() {
@@ -105,18 +106,18 @@ function normalizeUnit(unit: string): string {
 
 /**
  * Import Recipe from iOS Shortcut
- * 
+ *
  * POST /importRecipe
  * Body: ImportRecipeRequest
- * 
+ *
  * Returns: { success: boolean, mealId?: string, error?: string }
  */
-// Simple API key for iOS Shortcut access (not a secret - just prevents random access)
-const API_KEY = "ourkitchen2024";
-
 export const importRecipe = onRequest({ cors: true, invoker: "public" }, async (req, res) => {
   // Initialize Firebase Admin on first call
   ensureInitialized();
+
+  // Get API key from environment (lazy evaluation ensures env is loaded)
+  const API_KEY = getApiKey();
 
   // Enable CORS for iOS Shortcuts
   res.set("Access-Control-Allow-Origin", "*");

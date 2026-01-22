@@ -1,6 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getApiKey } from "../config";
 
 // Helper to ensure Firebase is initialized
 function ensureInitialized() {
@@ -8,9 +9,6 @@ function ensureInitialized() {
     initializeApp();
   }
 }
-
-// Simple API key for Alexa access (matches importRecipe pattern)
-const API_KEY = "ourkitchen2024";
 
 /**
  * POST /verifyPin - Verify household PIN for Alexa linking
@@ -23,6 +21,9 @@ const API_KEY = "ourkitchen2024";
  */
 export const verifyPin = onRequest({ cors: true, invoker: "public" }, async (req, res) => {
   ensureInitialized();
+
+  // Get API key from environment (lazy evaluation ensures env is loaded)
+  const API_KEY = getApiKey();
 
   // CORS headers
   res.set("Access-Control-Allow-Origin", "*");
@@ -57,21 +58,20 @@ export const verifyPin = onRequest({ cors: true, invoker: "public" }, async (req
       return;
     }
 
-    // Query households for matching alexaPin
+    // Look up household by document ID (the PIN IS the household code)
     const db = getFirestore();
-    const householdsRef = db.collection("households");
-    const snapshot = await householdsRef.where("alexaPin", "==", pin).limit(1).get();
+    const householdRef = db.collection("households").doc(pin);
+    const householdDoc = await householdRef.get();
 
-    if (snapshot.empty) {
+    if (!householdDoc.exists) {
       res.status(200).json({ valid: false });
       return;
     }
 
-    // Found matching household
-    const householdDoc = snapshot.docs[0];
+    // Found matching household - the PIN is the household code
     res.status(200).json({
       valid: true,
-      householdCode: householdDoc.id,
+      householdCode: pin,
     });
   } catch (error) {
     console.error("verifyPin error:", error);

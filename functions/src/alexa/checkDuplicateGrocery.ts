@@ -1,6 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getApiKey } from "../config";
 
 // Helper to ensure Firebase is initialized
 function ensureInitialized() {
@@ -8,8 +9,6 @@ function ensureInitialized() {
     initializeApp();
   }
 }
-
-const API_KEY = "ourkitchen2024";
 
 /**
  * GET /checkDuplicateGrocery - Check if item exists on grocery list
@@ -23,6 +22,9 @@ export const checkDuplicateGrocery = onRequest(
   { cors: true, invoker: "public" },
   async (req, res) => {
     ensureInitialized();
+
+    // Get API key from environment (lazy evaluation ensures env is loaded)
+    const API_KEY = getApiKey();
 
     // CORS headers (same as other endpoints)
     res.set("Access-Control-Allow-Origin", "*");

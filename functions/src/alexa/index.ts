@@ -1,7 +1,7 @@
 /**
  * Alexa REST API Endpoints
  *
- * All endpoints require X-API-Key header with value "ourkitchen2024"
+ * All endpoints require X-API-Key header with valid API key (from ALEXA_API_KEY env var)
  *
  * POST /verifyPin - Verify household PIN
  *   Body: { pin: string }

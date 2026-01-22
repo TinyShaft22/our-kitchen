@@ -1,6 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getApiKey } from "../config";
 
 // Helper to ensure Firebase is initialized
 function ensureInitialized() {
@@ -8,9 +9,6 @@ function ensureInitialized() {
     initializeApp();
   }
 }
-
-// Simple API key for Alexa access
-const API_KEY = "ourkitchen2024";
 
 /**
  * POST /removeGroceryItem - Remove an item from the grocery list
@@ -23,6 +21,9 @@ const API_KEY = "ourkitchen2024";
  */
 export const removeGroceryItem = onRequest({ cors: true, invoker: "public" }, async (req, res) => {
   ensureInitialized();
+
+  // Get API key from environment (lazy evaluation ensures env is loaded)
+  const API_KEY = getApiKey();
 
   // CORS headers
   res.set("Access-Control-Allow-Origin", "*");
