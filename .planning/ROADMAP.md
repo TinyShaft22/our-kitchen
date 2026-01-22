@@ -10,7 +10,7 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 - **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
 - **v1.2 Baking Organization** - Phase 15 (complete)
 - **v1.3 Broma Bakery Import** - Phases 16-22.1 (complete)
-- **v2.0 Alexa Integration** - Phases 23-31 (planned)
+- **v2.0 Alexa Integration** - Phases 23-32 (planned)
 
 ## Domain Expertise
 
@@ -306,6 +306,27 @@ Plans:
 - Drag-and-drop meals/snacks to specific days using @dnd-kit
 - Data model: add optional `day?: DayOfWeek` to WeeklyMealEntry/WeeklySnackEntry
 
+#### Phase 32: Household Items
+**Goal**: Library of recurring household products (paper towels, toothpaste, etc.) that can be quickly added to grocery list by name via voice or UI
+**Depends on**: Phase 31
+**Research**: Complete (see 32-RESEARCH.md)
+**Plans**: 3 plans
+
+Plans:
+- [ ] 32-01-PLAN.md - Data model & CRUD hook (HouseholdItem type, useHouseholdItems)
+- [ ] 32-02-PLAN.md - UI components (HouseholdItemCard, Add/Edit modals, GroceryListPage section)
+- [ ] 32-03-PLAN.md - Alexa integration (lookupHouseholdItem endpoint, smart add with saved defaults)
+
+**Wave structure:**
+- Wave 1: 32-01 (data foundation)
+- Wave 2 (parallel): 32-02 (UI), 32-03 (Alexa)
+
+**Details:**
+- CRUD for household items (name, category, store, brand/notes)
+- Alexa integration: "add paper towels" -> looks up saved item -> adds to grocery
+- UI section to manage saved household items
+- Distinct from Staples (which auto-add every time) - these are on-demand
+
 ---
 
 ## Progress
@@ -347,3 +368,4 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 29. Grocery Integration | v2.0 | 0/2 | Not started | - |
 | 30. Testing & Polish | v2.0 | 0/? | Not started | - |
 | 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
+| 32. Household Items | v2.0 | 0/3 | Not started | - |
