@@ -363,6 +363,9 @@ Plans:
 **Research**: Unlikely
 **Plans**: 1 plan
 
+Plans:
+- [ ] 34-01-PLAN.md - Expand all custom intent utterances to 10+ samples
+
 #### Phase 35: Mark As Low Feature
 **Goal**: Voice command to mark items as low stock and add to grocery ("we're low on flour")
 **Depends on**: Phase 34
