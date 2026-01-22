@@ -163,6 +163,18 @@ export interface Staple {
   householdCode: string;
 }
 
+// HouseholdItem - saved product for quick grocery adds (on-demand, not auto-add like Staples)
+export interface HouseholdItem {
+  id: string;
+  name: string;                    // Display name: "Paper Towels"
+  nameLower: string;               // Lowercase for Alexa lookup: "paper towels"
+  store: Store;                    // Where to buy
+  category: Category;              // Grocery category
+  brand?: string;                  // Optional: "Bounty"
+  notes?: string;                  // Optional: "Get the big rolls"
+  householdCode: string;
+}
+
 // BakingEssential status type
 export type BakingStatus = 'stocked' | 'low' | 'out';
 
