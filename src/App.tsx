@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import MealLibrary from './pages/MealLibrary'
 import GroceryListPage from './pages/GroceryListPage'
 import BakingPage from './pages/BakingPage'
+import HouseholdItemsPage from './pages/HouseholdItemsPage'
 import SettingsPage from './pages/SettingsPage'
 import JoinHousehold from './pages/JoinHousehold'
 import { useHousehold } from './hooks/useHousehold'
@@ -39,6 +40,7 @@ function App() {
             <Route path="/meals" element={<MealLibrary />} />
             <Route path="/grocery" element={<GroceryListPage />} />
             <Route path="/baking" element={<BakingPage />} />
+            <Route path="/household" element={<HouseholdItemsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>

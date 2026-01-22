@@ -5,22 +5,18 @@ import { useWeeklyPlan } from '../hooks/useWeeklyPlan';
 import { useGroceryList } from '../hooks/useGroceryList';
 import { useStaples } from '../hooks/useStaples';
 import { useBaking } from '../hooks/useBaking';
-import { useHouseholdItems } from '../hooks/useHouseholdItems';
 import { generateGroceryItems, generateBakingGroceryItems } from '../utils/generateGroceryItems';
 import { GroceryItemCard } from '../components/grocery/GroceryItemCard';
 import { StapleCard } from '../components/grocery/StapleCard';
 import { AddStapleModal } from '../components/grocery/AddStapleModal';
 import { EditStapleModal } from '../components/grocery/EditStapleModal';
 import { VoiceInputModal } from '../components/grocery/VoiceInputModal';
-import { HouseholdItemCard } from '../components/household/HouseholdItemCard';
-import { AddHouseholdItemModal } from '../components/household/AddHouseholdItemModal';
-import { EditHouseholdItemModal } from '../components/household/EditHouseholdItemModal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { Button } from '../components/ui/button';
 import { GroceryItemSkeleton, Skeleton } from '../components/ui/skeleton';
 import { EmptyGroceryList, EmptyStaples } from '../components/ui/EmptyState';
 import { CATEGORIES, STORES } from '../types';
-import type { GroceryItem, Category, Store, Staple, HouseholdItem } from '../types';
+import type { GroceryItem, Category, Store, Staple } from '../types';
 
 function GroceryListPage() {
   const { householdCode } = useHousehold();
@@ -29,7 +25,6 @@ function GroceryListPage() {
   const { items, loading: groceryLoading, addItem, generateFromWeeklyPlan, updateStatus, updateItem, deleteItem, completeTrip } = useGroceryList(householdCode);
   const { staples, enabledStaples, loading: staplesLoading, addStaple, updateStaple, toggleEnabled, deleteStaple } = useStaples(householdCode);
   const { essentials, loading: bakingLoading } = useBaking(householdCode);
-  const { items: householdItems, loading: householdLoading, addItem: addHouseholdItem, updateItem: updateHouseholdItem, deleteItem: deleteHouseholdItem } = useHouseholdItems(householdCode);
   const [completing, setCompleting] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
 
@@ -43,14 +38,8 @@ function GroceryListPage() {
   const [deleteConfirmStaple, setDeleteConfirmStaple] = useState<Staple | null>(null);
   const [showVoiceModal, setShowVoiceModal] = useState(false);
 
-  // Household Items state
-  const [householdExpanded, setHouseholdExpanded] = useState(false);
-  const [showAddHousehold, setShowAddHousehold] = useState(false);
-  const [editingHousehold, setEditingHousehold] = useState<HouseholdItem | null>(null);
-  const [deleteConfirmHousehold, setDeleteConfirmHousehold] = useState<HouseholdItem | null>(null);
-
   // Combined loading state
-  const loading = mealsLoading || weekLoading || groceryLoading || staplesLoading || bakingLoading || householdLoading;
+  const loading = mealsLoading || weekLoading || groceryLoading || staplesLoading || bakingLoading;
 
   // Auto-sync effect: regenerate grocery list when dependencies change
   useEffect(() => {
@@ -152,19 +141,6 @@ function GroceryListPage() {
     } finally {
       setCompleting(false);
     }
-  };
-
-  // Add household item to grocery list
-  const addHouseholdItemToGrocery = async (item: HouseholdItem) => {
-    await addItem({
-      name: item.name,
-      qty: 1,
-      unit: 'each',
-      category: item.category,
-      store: item.store,
-      status: 'need',
-      source: 'manual',
-    });
   };
 
   // Generate confetti particles
@@ -344,74 +320,6 @@ function GroceryListPage() {
         )}
       </div>
 
-      {/* Household Items section - collapsible */}
-      <div className="mt-4">
-        <button
-          onClick={() => setHouseholdExpanded(!householdExpanded)}
-          className="w-full flex items-center justify-between py-2"
-        >
-          <div className="flex items-center gap-2">
-            <h2 className="text-lg font-display font-semibold text-charcoal">Household Items</h2>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-charcoal/10 text-charcoal/70">
-              {householdItems.length}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              size="icon-sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowAddHousehold(true);
-              }}
-              className="rounded-full"
-              aria-label="Add household item"
-            >
-              +
-            </Button>
-            <span
-              className={`text-charcoal/50 transition-transform duration-200 transition-spring ${
-                householdExpanded ? 'rotate-180' : ''
-              }`}
-            >
-              &#9660;
-            </span>
-          </div>
-        </button>
-
-        {/* Collapsed summary */}
-        {!householdExpanded && householdItems.length > 0 && (
-          <p className="text-sm text-charcoal/60 -mt-1">
-            {householdItems.length} saved item{householdItems.length !== 1 ? 's' : ''}
-          </p>
-        )}
-
-        {/* Expanded household items list */}
-        {householdExpanded && (
-          <div className="space-y-2 mt-2">
-            {householdItems.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-charcoal/60 mb-4">
-                  No household items saved. Add recurring products like paper towels or cleaning supplies.
-                </p>
-                <Button onClick={() => setShowAddHousehold(true)}>
-                  Add Household Item
-                </Button>
-              </div>
-            ) : (
-              householdItems.map((item) => (
-                <HouseholdItemCard
-                  key={item.id}
-                  item={item}
-                  onAddToList={() => addHouseholdItemToGrocery(item)}
-                  onEdit={() => setEditingHousehold(item)}
-                  onDelete={() => setDeleteConfirmHousehold(item)}
-                />
-              ))
-            )}
-          </div>
-        )}
-      </div>
-
       {/* Already Have section - collapsible */}
       {(currentWeek?.alreadyHave?.length ?? 0) > 0 && (
         <div className="mt-4">
@@ -565,44 +473,6 @@ function GroceryListPage() {
         }}
         title="Delete Staple"
         message={`Are you sure you want to delete "${deleteConfirmStaple?.name}"? This action cannot be undone.`}
-        confirmText="Delete"
-        confirmVariant="danger"
-      />
-
-      {/* Add Household Item Modal */}
-      <AddHouseholdItemModal
-        isOpen={showAddHousehold}
-        onClose={() => setShowAddHousehold(false)}
-        onSave={async (item) => {
-          await addHouseholdItem(item);
-        }}
-      />
-
-      {/* Edit Household Item Modal */}
-      {editingHousehold && (
-        <EditHouseholdItemModal
-          isOpen={!!editingHousehold}
-          onClose={() => setEditingHousehold(null)}
-          item={editingHousehold}
-          onSave={async (updates) => {
-            await updateHouseholdItem(editingHousehold.id, updates);
-            setEditingHousehold(null);
-          }}
-        />
-      )}
-
-      {/* Delete Household Item Confirmation */}
-      <ConfirmDialog
-        isOpen={!!deleteConfirmHousehold}
-        onClose={() => setDeleteConfirmHousehold(null)}
-        onConfirm={async () => {
-          if (deleteConfirmHousehold) {
-            await deleteHouseholdItem(deleteConfirmHousehold.id);
-            setDeleteConfirmHousehold(null);
-          }
-        }}
-        title="Delete Household Item"
-        message={`Are you sure you want to delete "${deleteConfirmHousehold?.name}"? This action cannot be undone.`}
         confirmText="Delete"
         confirmVariant="danger"
       />

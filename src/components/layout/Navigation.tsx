@@ -7,6 +7,7 @@ const tabs = [
   { path: '/meals', label: 'Meals', icon: '🍽️' },
   { path: '/grocery', label: 'Grocery', icon: '🛒' },
   { path: '/baking', label: 'Baking', icon: '🧁' },
+  { path: '/household', label: 'Household', icon: '📦' },
   { path: '/settings', label: 'Settings', icon: '⚙️' },
 ]
 
