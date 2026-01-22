@@ -445,7 +445,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
 | 32. Household Items | v2.0 | 3/3 | Complete | 2026-01-21 |
 | 33. Secure API Keys | v2.1 | 1/1 | Complete | 2026-01-22 |
-| 34. Expand Utterances | v2.1 | 0/1 | Not started | - |
+| 34. Expand Utterances | v2.1 | 1/1 | Complete | 2026-01-22 |
 | 35. Mark As Low Feature | v2.1 | 0/2 | Not started | - |
 | 36. CanFulfillIntentRequest | v2.1 | 0/1 | Not started | - |
 | 37. NFI Configuration | v2.1 | 0/1 | Not started | - |
