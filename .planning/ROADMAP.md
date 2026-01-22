@@ -10,7 +10,8 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 - **v1.1 Meal & Grocery Refactor** - Phases 11-14 (complete)
 - **v1.2 Baking Organization** - Phase 15 (complete)
 - **v1.3 Broma Bakery Import** - Phases 16-22.1 (complete)
-- **v2.0 Alexa Integration** - Phases 23-32 (planned)
+- **v2.0 Alexa Integration** - Phases 23-32 (in progress)
+- **v2.1 Natural Language & NFI** - Phases 33-40 (planned)
 
 ## Domain Expertise
 
@@ -270,8 +271,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 29-01-PLAN.md - Backend enhancements (groceryList store filter, checkDuplicateGrocery endpoint)
-- [ ] 29-02-PLAN.md - APL grocery list, enhanced handlers (store info, duplicate detection)
+- [x] 29-01-PLAN.md - Backend enhancements (groceryList store filter, checkDuplicateGrocery endpoint)
+- [x] 29-02-PLAN.md - APL grocery list, enhanced handlers (store info, duplicate detection)
 
 **Wave structure:**
 - Wave 1: 29-01 (Cloud Functions + firebaseClient)
@@ -281,10 +282,15 @@ Plans:
 **Goal**: End-to-end testing on Echo Show 5, refinements
 **Depends on**: Phase 29
 **Research**: Unlikely (testing/polish)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 30-01: TBD
+- [ ] 30-01-PLAN.md - Deploy and create test checklist (deployment, test data verification)
+- [ ] 30-02-PLAN.md - Manual testing on Echo Show 5 (has checkpoint for hands-on testing)
+
+**Wave structure:**
+- Wave 1: 30-01 (deployment and test prep)
+- Wave 2: 30-02 (manual testing with checkpoint)
 
 #### Phase 31: Home Page Enhancement
 **Goal**: Quick-add buttons, folder-organized meal picker modal, and week view with drag-and-drop meal planning
@@ -329,6 +335,69 @@ Plans:
 
 ---
 
+### v2.1 Natural Language & NFI (Planned)
+
+**Milestone Goal:** Enable natural language voice commands without explicit skill invocation. Implement Name-Free Interaction (NFI), secure API keys, add "mark as low" feature, and publish skill to live store.
+
+**Key Decisions:**
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| API key storage | Firebase config + Lambda env vars | Secure, no hardcoding |
+| NFI approach | CanFulfillIntentRequest + suggested phrases | Required for name-free routing |
+| Publication timing | After NFI implementation | NFI only works on published skills |
+
+*Full details: .planning/milestones/v2.1-ROADMAP.md*
+
+#### Phase 33: Secure API Keys
+**Goal**: Move hardcoded API key (`ourkitchen2024`) to environment variables
+**Depends on**: Phase 32
+**Research**: Unlikely
+**Plans**: 1 plan
+
+#### Phase 34: Expand Utterances
+**Goal**: Add 10+ sample utterances per intent for better NFI training
+**Depends on**: Phase 33
+**Research**: Unlikely
+**Plans**: 1 plan
+
+#### Phase 35: Mark As Low Feature
+**Goal**: Voice command to mark items as low stock and add to grocery ("we're low on flour")
+**Depends on**: Phase 34
+**Research**: Unlikely
+**Plans**: 2 plans
+
+#### Phase 36: CanFulfillIntentRequest
+**Goal**: Implement NFI foundation handler for Alexa's "can you handle this?" queries
+**Depends on**: Phase 35
+**Research**: Likely (NFI implementation)
+**Plans**: 1 plan
+
+#### Phase 37: NFI Configuration
+**Goal**: Configure Name-Free Interaction toolkit with skill/intent launch phrases
+**Depends on**: Phase 36
+**Research**: Likely (NFI toolkit)
+**Plans**: 1 plan
+
+#### Phase 38: Certification Prep
+**Goal**: Prepare skill for Amazon certification and live publication
+**Depends on**: Phase 37
+**Research**: Likely (certification requirements)
+**Plans**: 1 plan
+
+#### Phase 39: Publish to Live
+**Goal**: Submit skill for certification and publish to live Alexa skill store
+**Depends on**: Phase 38
+**Research**: Unlikely
+**Plans**: 1 plan
+
+#### Phase 40: NFI Monitoring & Optimization
+**Goal**: Monitor NFI performance and optimize based on analytics (post 8-week training)
+**Depends on**: Phase 39 + 8 weeks
+**Research**: Unlikely
+**Plans**: 1 plan
+
+---
+
 ## Progress
 
 **Execution Order:**
@@ -365,7 +434,15 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 26. APL Meal List | v2.0 | 1/1 | Complete | 2026-01-20 |
 | 27. APL Recipe Detail | v2.0 | 1/1 | Complete | 2026-01-20 |
 | 28. Cooking Mode | v2.0 | 4/4 | Complete | 2026-01-20 |
-| 29. Grocery Integration | v2.0 | 0/2 | Not started | - |
-| 30. Testing & Polish | v2.0 | 0/? | Not started | - |
+| 29. Grocery Integration | v2.0 | 2/2 | Complete | 2026-01-20 |
+| 30. Testing & Polish | v2.0 | 0/2 | Not started | - |
 | 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
 | 32. Household Items | v2.0 | 3/3 | Complete | 2026-01-21 |
+| 33. Secure API Keys | v2.1 | 0/1 | Not started | - |
+| 34. Expand Utterances | v2.1 | 0/1 | Not started | - |
+| 35. Mark As Low Feature | v2.1 | 0/2 | Not started | - |
+| 36. CanFulfillIntentRequest | v2.1 | 0/1 | Not started | - |
+| 37. NFI Configuration | v2.1 | 0/1 | Not started | - |
+| 38. Certification Prep | v2.1 | 0/1 | Not started | - |
+| 39. Publish to Live | v2.1 | 0/1 | Not started | - |
+| 40. NFI Monitoring | v2.1 | 0/1 | Not started | - |
