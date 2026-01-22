@@ -373,8 +373,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 35-01-PLAN.md - Backend & data model (markAsLow Cloud Function, firebaseClient)
-- [ ] 35-02-PLAN.md - Lambda handler & interaction model (MarkAsLowIntent, disambiguation flow)
+- [x] 35-01-PLAN.md - Backend & data model (markAsLow Cloud Function, firebaseClient)
+- [x] 35-02-PLAN.md - Lambda handler & interaction model (MarkAsLowIntent, disambiguation flow)
 
 **Wave structure:**
 - Wave 1: 35-01 (Cloud Function + firebaseClient)
@@ -454,7 +454,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 32. Household Items | v2.0 | 3/3 | Complete | 2026-01-21 |
 | 33. Secure API Keys | v2.1 | 1/1 | Complete | 2026-01-22 |
 | 34. Expand Utterances | v2.1 | 1/1 | Complete | 2026-01-22 |
-| 35. Mark As Low Feature | v2.1 | 0/2 | Not started | - |
+| 35. Mark As Low Feature | v2.1 | 2/2 | Complete | 2026-01-22 |
 | 36. CanFulfillIntentRequest | v2.1 | 0/1 | Not started | - |
 | 37. NFI Configuration | v2.1 | 0/1 | Not started | - |
 | 38. Certification Prep | v2.1 | 0/1 | Not started | - |
