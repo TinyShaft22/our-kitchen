@@ -110,6 +110,22 @@ async function addGroceryItemWithDefaults(householdCode, item, quantity, store, 
   return response.data;
 }
 
+/**
+ * Mark an item as low stock
+ * @param {string} householdCode - Household identifier
+ * @param {string} item - Item name to search for
+ * @param {string} [itemId] - Optional specific item ID (for disambiguation)
+ * @returns {Promise<Object>} Result with success/needsDisambiguation/found status
+ */
+async function markAsLow(householdCode, item, itemId = null) {
+  const body = { householdCode, item };
+  if (itemId) {
+    body.itemId = itemId;
+  }
+  const response = await client.post('/markAsLow', body);
+  return response.data;
+}
+
 module.exports = {
   verifyPin,
   getMeals,
@@ -119,5 +135,6 @@ module.exports = {
   removeGroceryItem,
   checkDuplicateGrocery,
   lookupHouseholdItem,
-  addGroceryItemWithDefaults
+  addGroceryItemWithDefaults,
+  markAsLow
 };
