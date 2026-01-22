@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 33 of 40 (v2.1 in progress)
-Plan: Phase 33 complete, Phase 34 next
+Phase: 34 of 40 (v2.1 in progress)
+Plan: Phase 34 complete, Phase 35 next
 Status: **v2.1 Natural Language & NFI in progress**
-Last activity: 2026-01-22 — Phase 30 testing deferred, Phase 33 complete
+Last activity: 2026-01-22 — Phase 34-01 complete (expanded utterances)
 
-Progress: █████████████████████████░░░░ 85% (34/40 phases complete)
+Progress: █████████████████████████░░░░ 87% (35/40 phases complete)
 
 ## Performance Metrics
 
@@ -123,9 +123,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Phase 30-02 deferred (testing in separate session), Phase 33 complete
+Stopped at: Phase 34-01 complete (expanded utterances to 139 total)
 Resume file: None
-Resume with: Phase 34 - Expand Utterances (10+ samples per intent)
+Resume with: Phase 35 - Mark As Low Feature ("we're low on flour" command)
 
 **Alexa debugging:** Separate terminal session debugging Alexa issues
 
@@ -145,14 +145,14 @@ Resume with: Phase 34 - Expand Utterances (10+ samples per intent)
 
 **v2.1 Natural Language & NFI (current milestone):**
 1. ~~Phase 33: Secure API Keys~~ - **COMPLETE** (env vars for Cloud Functions + Lambda)
-2. Phase 34: Expand Utterances - Add 10+ samples per intent
+2. ~~Phase 34: Expand Utterances~~ - **COMPLETE** (139 utterances across 10 intents)
 3. Phase 35: Mark As Low Feature - "We're low on flour" command
 4. Phase 36: Implement CanFulfillIntentRequest for NFI
 5. Phase 37: Configure NFI toolkit
 6. Phase 38-39: Certification and publish to live
 7. Phase 40: Monitor NFI (8 weeks post-publish)
 
-**Next:** Phase 34 - Expand Utterances
+**Next:** Phase 35 - Mark As Low Feature
 
 ## Roadmap Evolution
 
@@ -199,3 +199,5 @@ Resume with: Phase 34 - Expand Utterances (10+ samples per intent)
 - 2026-01-22: Phase 30-01 complete (test checklist with 77 scenarios, deployments confirmed)
 - 2026-01-22: Phase 30-02 deferred (manual testing in separate debugging session)
 - 2026-01-22: **Phase 30 COMPLETE** — Testing & Polish (manual testing deferred)
+- 2026-01-22: Phase 34-01 complete (expanded utterances from 61 to 139)
+- 2026-01-22: **Phase 34 COMPLETE** — Expand Utterances for NFI training
