@@ -66,6 +66,24 @@ async function checkDuplicateGrocery(householdCode, item) {
   return response.data;
 }
 
+async function lookupHouseholdItem(householdCode, item) {
+  const response = await client.get('/lookupHouseholdItem', {
+    params: { householdCode, item }
+  });
+  return response.data;
+}
+
+async function addGroceryItemWithDefaults(householdCode, item, quantity, store, category) {
+  const response = await client.post('/addGroceryItem', {
+    householdCode,
+    item,
+    quantity,
+    store,
+    category
+  });
+  return response.data;
+}
+
 module.exports = {
   verifyPin,
   getMeals,
@@ -73,5 +91,7 @@ module.exports = {
   getGroceryList,
   addGroceryItem,
   removeGroceryItem,
-  checkDuplicateGrocery
+  checkDuplicateGrocery,
+  lookupHouseholdItem,
+  addGroceryItemWithDefaults
 };
