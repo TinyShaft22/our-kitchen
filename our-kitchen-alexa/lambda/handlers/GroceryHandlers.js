@@ -4,7 +4,7 @@
  * Enhanced with APL display and duplicate detection
  */
 const Alexa = require('ask-sdk-core');
-const { getGroceryList, addGroceryItem, removeGroceryItem, checkDuplicateGrocery } = require('../api/firebaseClient');
+const { getGroceryList, addGroceryItem, removeGroceryItem, checkDuplicateGrocery, lookupHouseholdItem, addGroceryItemWithDefaults } = require('../api/firebaseClient');
 const { isLinked, getHouseholdCode } = require('../util/sessionHelper');
 const { createPinPromptResponse } = require('./HouseholdHandlers');
 const groceryListDocument = require('../apl/grocery-list.json');
@@ -141,16 +141,32 @@ const AddGroceryIntentHandler = {
     }
 
     try {
+      // Lookup saved household item first for store/category defaults
+      let savedItem = null;
+      try {
+        const lookup = await lookupHouseholdItem(householdCode, item);
+        if (lookup.found) {
+          savedItem = lookup.item;
+        }
+      } catch (lookupError) {
+        // Lookup failed, proceed with defaults
+        console.log('Household item lookup failed, using defaults:', lookupError.message);
+      }
+
+      // Use saved item name if found (preserves proper capitalization)
+      const itemName = savedItem ? savedItem.name : item;
+
       // Check for duplicate before adding
-      const dupCheck = await checkDuplicateGrocery(householdCode, item);
+      const dupCheck = await checkDuplicateGrocery(householdCode, itemName);
 
       if (dupCheck.exists) {
         // Store pending add in session for confirmation
         const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         sessionAttributes.pendingGroceryAdd = {
-          item: item,
+          item: itemName,
           quantity: quantity,
-          existingItem: dupCheck.existingItem
+          existingItem: dupCheck.existingItem,
+          savedItem: savedItem // Store for use if user confirms
         };
         handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
@@ -162,13 +178,25 @@ const AddGroceryIntentHandler = {
       }
 
       // No duplicate - proceed with add
-      const result = await addGroceryItem(householdCode, item, quantity);
+      // Use saved store/category if found
+      let result;
+      if (savedItem) {
+        result = await addGroceryItemWithDefaults(
+          householdCode,
+          savedItem.name,
+          quantity,
+          savedItem.store,
+          savedItem.category
+        );
+      } else {
+        result = await addGroceryItem(householdCode, item, quantity);
+      }
 
       if (result.success) {
-        // Store for undo
+        // Store for undo - use itemName for proper capitalization
         const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         sessionAttributes.lastAddedItem = {
-          name: item,
+          name: itemName,
           id: result.itemId,
           timestamp: Date.now()
         };
@@ -176,7 +204,7 @@ const AddGroceryIntentHandler = {
 
         // Short confirmation per CONTEXT.md
         const quantityText = quantity ? `${quantity} ` : '';
-        const speakOutput = `Added ${quantityText}${item}. Say undo to remove, or add something else.`;
+        const speakOutput = `Added ${quantityText}${itemName}. Say undo to remove, or add something else.`;
 
         return handlerInput.responseBuilder
           .speak(speakOutput)
@@ -184,7 +212,7 @@ const AddGroceryIntentHandler = {
           .getResponse();
       } else {
         return handlerInput.responseBuilder
-          .speak(`I couldn't add ${item} right now. Try again.`)
+          .speak(`I couldn't add ${itemName} right now. Try again.`)
           .reprompt("What would you like to add?")
           .getResponse();
       }
@@ -230,9 +258,21 @@ const ConfirmDuplicateIntentHandler = {
     }
 
     // User confirmed - add the duplicate
+    // Use saved store/category if available from household item lookup
     const householdCode = getHouseholdCode(handlerInput);
     try {
-      const result = await addGroceryItem(householdCode, pending.item, pending.quantity);
+      let result;
+      if (pending.savedItem) {
+        result = await addGroceryItemWithDefaults(
+          householdCode,
+          pending.savedItem.name,
+          pending.quantity,
+          pending.savedItem.store,
+          pending.savedItem.category
+        );
+      } else {
+        result = await addGroceryItem(householdCode, pending.item, pending.quantity);
+      }
 
       if (result.success) {
         // Store for undo

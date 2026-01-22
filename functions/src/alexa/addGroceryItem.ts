@@ -49,7 +49,7 @@ export const addGroceryItem = onRequest({ cors: true, invoker: "public" }, async
   }
 
   try {
-    const { householdCode, item, quantity } = req.body;
+    const { householdCode, item, quantity, store, category } = req.body;
 
     // Validate required params
     if (!householdCode) {
@@ -64,11 +64,12 @@ export const addGroceryItem = onRequest({ cors: true, invoker: "public" }, async
     const db = getFirestore();
 
     // Create new grocery item document
+    // Use provided store/category if given (from household item lookup), otherwise defaults
     const groceryData = {
       name: item.trim(),
       householdCode,
-      category: "pantry", // Default category, can be refined in app
-      store: "safeway", // Default store, can be refined in app
+      category: category || "pantry", // Use provided or default to pantry
+      store: store || "safeway", // Use provided or default to safeway
       qty: quantity || 1,
       unit: "each",
       status: "need",
