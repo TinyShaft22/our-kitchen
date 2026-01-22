@@ -100,11 +100,14 @@ function GroceryListPage() {
   }, [filteredItems]);
   const totalCount = filteredItems.length;
 
-  // Get stores that have items in the current list
+  // Get stores that have items we still need (not in-cart)
   const storesWithItems = useMemo(() => {
     const storeSet = new Set<Store>();
     for (const item of items) {
-      storeSet.add(item.store);
+      // Only count items we still need, not ones already in cart
+      if (item.status === 'need') {
+        storeSet.add(item.store);
+      }
     }
     return STORES.filter((store) => storeSet.has(store.id));
   }, [items]);
