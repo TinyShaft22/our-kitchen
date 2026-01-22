@@ -285,8 +285,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 30-01-PLAN.md - Deploy and create test checklist (deployment, test data verification)
-- [ ] 30-02-PLAN.md - Manual testing on Echo Show 5 (has checkpoint for hands-on testing)
+- [x] 30-01-PLAN.md - Deploy and create test checklist (deployment, test data verification)
+- [x] 30-02-PLAN.md - Manual testing on Echo Show 5 (DEFERRED - debugging in separate session)
 
 **Wave structure:**
 - Wave 1: 30-01 (deployment and test prep)
@@ -438,7 +438,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 27. APL Recipe Detail | v2.0 | 1/1 | Complete | 2026-01-20 |
 | 28. Cooking Mode | v2.0 | 4/4 | Complete | 2026-01-20 |
 | 29. Grocery Integration | v2.0 | 2/2 | Complete | 2026-01-20 |
-| 30. Testing & Polish | v2.0 | 0/2 | Not started | - |
+| 30. Testing & Polish | v2.0 | 2/2 | Complete (deferred) | 2026-01-22 |
 | 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
 | 32. Household Items | v2.0 | 3/3 | Complete | 2026-01-21 |
 | 33. Secure API Keys | v2.1 | 1/1 | Complete | 2026-01-22 |

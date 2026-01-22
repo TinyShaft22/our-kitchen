@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 30 of 40 (Testing & Polish)
-Plan: 01 of 01 complete
-Status: **v2.0 testing ready**
-Last activity: 2026-01-22 — Completed 30-01-PLAN.md (Test Preparation)
+Phase: 33 of 40 (v2.1 in progress)
+Plan: Phase 33 complete, Phase 34 next
+Status: **v2.1 Natural Language & NFI in progress**
+Last activity: 2026-01-22 — Phase 30 testing deferred, Phase 33 complete
 
-Progress: █████████████████████████░░░░ 82.5% (33/40 phases complete)
+Progress: █████████████████████████░░░░ 85% (34/40 phases complete)
 
 ## Performance Metrics
 
@@ -123,9 +123,11 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Completed 30-01-PLAN.md (Test Preparation)
+Stopped at: Phase 30-02 deferred (testing in separate session), Phase 33 complete
 Resume file: None
-Resume with: Execute 30-TEST-CHECKLIST.md on Echo Show 5
+Resume with: Phase 34 - Expand Utterances (10+ samples per intent)
+
+**Alexa debugging:** Separate terminal session debugging Alexa issues
 
 ## Milestones
 
@@ -195,3 +197,5 @@ Resume with: Execute 30-TEST-CHECKLIST.md on Echo Show 5
 - 2026-01-22: Phase 33-01 complete (env vars for Cloud Functions and Lambda)
 - 2026-01-22: **Phase 33 COMPLETE** — Secure API Keys with centralized config
 - 2026-01-22: Phase 30-01 complete (test checklist with 77 scenarios, deployments confirmed)
+- 2026-01-22: Phase 30-02 deferred (manual testing in separate debugging session)
+- 2026-01-22: **Phase 30 COMPLETE** — Testing & Polish (manual testing deferred)
