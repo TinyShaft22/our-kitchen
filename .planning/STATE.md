@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 32 of 32 (Household Items)
-Plan: 1 of 3 complete (01)
-Status: **In progress**
-Last activity: 2026-01-21 — Completed 32-01-PLAN.md (Data Model & Hook)
+Plan: 3 of 3 complete (01, 02, 03)
+Status: **Phase complete**
+Last activity: 2026-01-22 — Completed 32-03-PLAN.md (Alexa Integration)
 
-Progress: █████████████████████████░░ 93% (30/32 phases in progress)
+Progress: ████████████████████████████ 100% (32/32 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 59 (across v1.0-v2.0)
+- Total plans completed: 62 (across v1.0-v2.0)
 - Average duration: ~10 min
-- Total execution time: ~9.4 hours
+- Total execution time: ~9.5 hours
 
 ## Accumulated Context
 
@@ -92,6 +92,12 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - pendingCookingResume pattern in session for handler handoff
 - Clear progress on completion, explicit exit, or expired
 
+**Phase 32-03 decisions:**
+- Lookup household items before adding to grocery list
+- Use saved store/category when item found in library
+- Fall back to pantry/safeway defaults when not found
+- Case-insensitive matching via nameLower field
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -106,10 +112,10 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-21
-Stopped at: Completed 32-01-PLAN.md (Data Model & Hook)
+Last session: 2026-01-22
+Stopped at: Completed 32-03-PLAN.md (Alexa Integration)
 Resume file: None
-Resume with: Execute 32-02 (Management Page)
+Resume with: Phase 32 complete - deploy and test
 
 ## Milestones
 
@@ -124,8 +130,9 @@ Resume with: Execute 32-02 (Management Page)
 
 ## Next Steps
 
-1. Execute 32-02: Management Page (HouseholdItems UI)
-2. Execute 32-03: Alexa Integration (add saved items via voice)
+1. Deploy Cloud Functions: `cd functions && firebase deploy --only functions`
+2. Deploy Alexa Lambda: Upload to Alexa Developer Console
+3. Test end-to-end: Save household item in PWA, add via Alexa voice
 
 ## Roadmap Evolution
 
@@ -165,3 +172,5 @@ Resume with: Execute 32-02 (Management Page)
 - 2026-01-20: **Phase 28 COMPLETE** — Cooking Mode with voice navigation, touch controls, and resume
 - 2026-01-21: Phase 32 added: Household Items (recurring products library for quick grocery adds)
 - 2026-01-21: Phase 32-01 complete (HouseholdItem type, useHouseholdItems CRUD hook)
+- 2026-01-22: Phase 32-03 complete (lookupHouseholdItem Cloud Function, Alexa integration)
+- 2026-01-22: **Phase 32 COMPLETE** — Household Items with Alexa voice lookup
