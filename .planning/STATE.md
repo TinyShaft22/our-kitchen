@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 28 of 31 (Cooking Mode)
-Plan: 4 of 4 complete (01, 02, 03, 04)
-Status: **Phase 28 COMPLETE**
-Last activity: 2026-01-20 — Completed Phase 28 (Cooking Mode)
+Phase: 32 of 32 (Household Items)
+Plan: 1 of 3 complete (01)
+Status: **In progress**
+Last activity: 2026-01-21 — Completed 32-01-PLAN.md (Data Model & Hook)
 
-Progress: █████████████████████████░░ 93% (29/31 phases complete)
+Progress: █████████████████████████░░ 93% (30/32 phases in progress)
 
 ## Performance Metrics
 
@@ -106,10 +106,10 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-20
-Stopped at: Completed Phase 28 (Cooking Mode)
+Last session: 2026-01-21
+Stopped at: Completed 32-01-PLAN.md (Data Model & Hook)
 Resume file: None
-Resume with: Plan Phase 29 (Grocery Integration) or Execute Phase 31-04 (Drag-and-drop)
+Resume with: Execute 32-02 (Management Page)
 
 ## Milestones
 
@@ -124,8 +124,8 @@ Resume with: Plan Phase 29 (Grocery Integration) or Execute Phase 31-04 (Drag-an
 
 ## Next Steps
 
-1. Plan Phase 29: Grocery Integration
-2. Execute Phase 31-04: Drag-and-drop (dnd-kit integration)
+1. Execute 32-02: Management Page (HouseholdItems UI)
+2. Execute 32-03: Alexa Integration (add saved items via voice)
 
 ## Roadmap Evolution
 
@@ -163,3 +163,5 @@ Resume with: Plan Phase 29 (Grocery Integration) or Execute Phase 31-04 (Drag-an
 - 2026-01-20: Phase 28-03 complete (touch controls: Start Cooking button, swipe handlers, exit handler)
 - 2026-01-20: Phase 28-04 complete (resume cooking with DynamoDB persistence)
 - 2026-01-20: **Phase 28 COMPLETE** — Cooking Mode with voice navigation, touch controls, and resume
+- 2026-01-21: Phase 32 added: Household Items (recurring products library for quick grocery adds)
+- 2026-01-21: Phase 32-01 complete (HouseholdItem type, useHouseholdItems CRUD hook)
