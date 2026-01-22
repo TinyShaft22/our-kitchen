@@ -313,9 +313,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 32-01-PLAN.md - Data model & CRUD hook (HouseholdItem type, useHouseholdItems)
-- [ ] 32-02-PLAN.md - UI components (HouseholdItemCard, Add/Edit modals, GroceryListPage section)
-- [ ] 32-03-PLAN.md - Alexa integration (lookupHouseholdItem endpoint, smart add with saved defaults)
+- [x] 32-01-PLAN.md - Data model & CRUD hook (HouseholdItem type, useHouseholdItems)
+- [x] 32-02-PLAN.md - UI components (HouseholdItemCard, Add/Edit modals, GroceryListPage section)
+- [x] 32-03-PLAN.md - Alexa integration (lookupHouseholdItem endpoint, smart add with saved defaults)
 
 **Wave structure:**
 - Wave 1: 32-01 (data foundation)
@@ -368,4 +368,4 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 29. Grocery Integration | v2.0 | 0/2 | Not started | - |
 | 30. Testing & Polish | v2.0 | 0/? | Not started | - |
 | 31. Home Page Enhancement | v2.0 | 3/4 | In progress | - |
-| 32. Household Items | v2.0 | 0/3 | Not started | - |
+| 32. Household Items | v2.0 | 3/3 | Complete | 2026-01-21 |
