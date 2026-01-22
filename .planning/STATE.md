@@ -9,17 +9,17 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 33 of 40 (Secure API Keys)
+Phase: 30 of 40 (Testing & Polish)
 Plan: 01 of 01 complete
-Status: **v2.1 in progress**
-Last activity: 2026-01-22 — Completed 33-01-PLAN.md (Environment Variables)
+Status: **v2.0 testing ready**
+Last activity: 2026-01-22 — Completed 30-01-PLAN.md (Test Preparation)
 
 Progress: █████████████████████████░░░░ 82.5% (33/40 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 62 (across v1.0-v2.0)
+- Total plans completed: 63 (across v1.0-v2.0)
 - Average duration: ~10 min
 - Total execution time: ~9.5 hours
 
@@ -103,6 +103,11 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Axios request interceptor for Lambda API key injection
 - Committed .env.example with placeholder, gitignored .env
 
+**Phase 30-01 decisions:**
+- 77 test scenarios organized into 13 categories covering all Alexa capabilities
+- Structured tables with voice command, expected response, and pass/fail columns
+- Severity levels: Critical (crashes/security), High (feature broken), Medium (inconsistent), Low (cosmetic)
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -118,9 +123,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Completed 33-01-PLAN.md (Environment Variables)
+Stopped at: Completed 30-01-PLAN.md (Test Preparation)
 Resume file: None
-Resume with: Phase 33 complete - deploy Cloud Functions and set Lambda env var
+Resume with: Execute 30-TEST-CHECKLIST.md on Echo Show 5
 
 ## Milestones
 
@@ -189,3 +194,4 @@ Resume with: Phase 33 complete - deploy Cloud Functions and set Lambda env var
 - 2026-01-22: **Phase 32 COMPLETE** — Household Items with Alexa voice lookup
 - 2026-01-22: Phase 33-01 complete (env vars for Cloud Functions and Lambda)
 - 2026-01-22: **Phase 33 COMPLETE** — Secure API Keys with centralized config
+- 2026-01-22: Phase 30-01 complete (test checklist with 77 scenarios, deployments confirmed)
