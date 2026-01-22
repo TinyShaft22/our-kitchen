@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "kitchen helper",
+      "invocationName": "our kitchen",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -42,7 +42,13 @@
             "what are we eating this week",
             "what's on the menu",
             "show me the meal plan",
-            "what's planned for this week"
+            "what's planned for this week",
+            "what are we having for dinner",
+            "show me the meal plan for this week",
+            "what meals do we have planned",
+            "what's for dinner tonight",
+            "dinner plans",
+            "show me what's planned"
           ]
         },
         {
@@ -60,7 +66,12 @@
             "find {Category}",
             "I want to see {Category}",
             "browse {Category}",
-            "let me see {Category}"
+            "let me see {Category}",
+            "show {Category}",
+            "what {Category} recipes are there",
+            "I'm looking for {Category}",
+            "give me {Category} options",
+            "let's see {Category}"
           ]
         },
         {
@@ -78,7 +89,12 @@
             "ingredients for {MealName}",
             "recipe for {MealName}",
             "what do I need for {MealName}",
-            "tell me about {MealName}"
+            "tell me about {MealName}",
+            "give me the {MealName} recipe",
+            "pull up {MealName}",
+            "I need the recipe for {MealName}",
+            "what goes into {MealName}",
+            "show {MealName} ingredients"
           ]
         },
         {
@@ -98,7 +114,12 @@
             "I want to make {MealName}",
             "walk me through {MealName}",
             "guide me through {MealName}",
-            "time to make {MealName}"
+            "time to make {MealName}",
+            "let's get cooking {MealName}",
+            "help me cook {MealName}",
+            "cooking mode for {MealName}",
+            "step by step {MealName}",
+            "walk me through making {MealName}"
           ]
         },
         {
