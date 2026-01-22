@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navigation from './components/layout/Navigation'
+import AppHeader from './components/layout/AppHeader'
 import Home from './pages/Home'
 import MealLibrary from './pages/MealLibrary'
 import GroceryListPage from './pages/GroceryListPage'
@@ -34,6 +35,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-cream flex flex-col">
+        <AppHeader />
         <main className="flex-1 overflow-auto" style={{ paddingBottom: 'calc(7rem + env(safe-area-inset-bottom, 0px))' }}>
           <Routes>
             <Route path="/" element={<Home />} />
