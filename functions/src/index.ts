@@ -254,4 +254,5 @@ export {
   addGroceryItem,
   removeGroceryItem,
   checkDuplicateGrocery,
+  lookupHouseholdItem,
 } from "./alexa";
