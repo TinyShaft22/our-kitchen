@@ -40,3 +40,4 @@ export { addGroceryItem } from "./addGroceryItem";
 export { removeGroceryItem } from "./removeGroceryItem";
 export { checkDuplicateGrocery } from "./checkDuplicateGrocery";
 export { lookupHouseholdItem } from "./lookupHouseholdItem";
+export { markAsLow } from "./markAsLow";

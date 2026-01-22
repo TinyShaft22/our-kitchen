@@ -256,4 +256,5 @@ export {
   removeGroceryItem,
   checkDuplicateGrocery,
   lookupHouseholdItem,
+  markAsLow,
 } from "./alexa";
