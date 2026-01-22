@@ -354,6 +354,9 @@ Plans:
 **Research**: Unlikely
 **Plans**: 1 plan
 
+Plans:
+- [ ] 33-01-PLAN.md - Secure API keys (config module, env vars, deployment docs)
+
 #### Phase 34: Expand Utterances
 **Goal**: Add 10+ sample utterances per intent for better NFI training
 **Depends on**: Phase 33
