@@ -9,17 +9,17 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 35 of 40 (v2.1 in progress)
-Plan: 35-02 complete, **Phase 35 COMPLETE**
+Phase: 36 of 40 (v2.1 in progress)
+Plan: 36-01 complete, **Phase 36 COMPLETE**
 Status: **v2.1 Natural Language & NFI in progress**
-Last activity: 2026-01-22 — Phase 35-02 complete (MarkAsLow Alexa Handler)
+Last activity: 2026-01-26 — Phase 36-01 complete (CanFulfillIntentRequest Handler)
 
-Progress: ██████████████████████████░░░ 90% (36/40 phases complete)
+Progress: ███████████████████████████░░░ 92% (37/40 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 63 (across v1.0-v2.0)
+- Total plans completed: 64 (across v1.0-v2.1)
 - Average duration: ~10 min
 - Total execution time: ~9.5 hours
 
@@ -114,6 +114,12 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Session state for grocery add flow (pendingGroceryFromLow, pendingUnknownItem for Yes/No)
 - Handler ordering: disambiguation and confirm handlers before generic Yes/No handlers
 
+**Phase 36-01 decisions:**
+- 10 supported intents for CFIR: BrowseMeals, GetRecipe, BrowseCategory, ReadGroceryList, AddGrocery, MarkAsLow, StartCooking, RemoveGrocery, CheckOffGrocery, UndoGrocery
+- Returns NO for all AMAZON.* built-in intents (Help, Stop, Cancel, Fallback)
+- Handler placed first in chain to ensure CFIR caught before other handlers
+- CFIR must be stateless: no Firebase calls, no state modifications
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -128,10 +134,10 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-22
-Stopped at: Phase 35-02 complete (MarkAsLow Alexa Handler)
+Last session: 2026-01-26
+Stopped at: Phase 36-01 complete (CanFulfillIntentRequest Handler)
 Resume file: None
-Resume with: Phase 36 - CanFulfillIntentRequest for NFI
+Resume with: Phase 37 - NFI Toolkit Configuration
 
 **Alexa debugging:** Separate terminal session debugging Alexa issues
 
@@ -153,12 +159,12 @@ Resume with: Phase 36 - CanFulfillIntentRequest for NFI
 1. ~~Phase 33: Secure API Keys~~ - **COMPLETE** (env vars for Cloud Functions + Lambda)
 2. ~~Phase 34: Expand Utterances~~ - **COMPLETE** (139 utterances across 10 intents)
 3. ~~Phase 35: Mark As Low Feature~~ - **COMPLETE** (Cloud Function + Alexa Handler)
-4. Phase 36: Implement CanFulfillIntentRequest for NFI
+4. ~~Phase 36: Implement CanFulfillIntentRequest for NFI~~ - **COMPLETE** (CFIR handler deployed)
 5. Phase 37: Configure NFI toolkit
 6. Phase 38-39: Certification and publish to live
 7. Phase 40: Monitor NFI (8 weeks post-publish)
 
-**Next:** Phase 36 - CanFulfillIntentRequest for NFI
+**Next:** Phase 37 - NFI Toolkit Configuration
 
 ## Roadmap Evolution
 
@@ -210,3 +216,5 @@ Resume with: Phase 36 - CanFulfillIntentRequest for NFI
 - 2026-01-22: Phase 35-01 complete (markAsLow Cloud Function)
 - 2026-01-22: Phase 35-02 complete (MarkAsLow Alexa Handler with disambiguation)
 - 2026-01-22: **Phase 35 COMPLETE** — Mark As Low Feature end-to-end
+- 2026-01-26: Phase 36-01 complete (CanFulfillIntentRequest handler for NFI)
+- 2026-01-26: **Phase 36 COMPLETE** — CanFulfillIntentRequest for Name-Free Interaction
