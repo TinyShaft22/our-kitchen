@@ -383,8 +383,11 @@ Plans:
 #### Phase 36: CanFulfillIntentRequest
 **Goal**: Implement NFI foundation handler for Alexa's "can you handle this?" queries
 **Depends on**: Phase 35
-**Research**: Likely (NFI implementation)
+**Research**: Complete (see 36-RESEARCH.md)
 **Plans**: 1 plan
+
+Plans:
+- [ ] 36-01-PLAN.md - CanFulfillIntentRequest handler (manifest update, Lambda handler, testing)
 
 #### Phase 37: NFI Configuration
 **Goal**: Configure Name-Free Interaction toolkit with skill/intent launch phrases
