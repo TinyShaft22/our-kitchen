@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "session": {},
+  "context": {
+    "System": {
+      "application": {
+        "applicationId": "amzn1.ask.skill.xxx"
+      }
+    }
+  },
+  "request": {
+    "type": "CanFulfillIntentRequest",
+    "requestId": "test-request-id",
+    "intent": {
+      "name": "AddGroceryIntent",
+      "slots": {
+        "GroceryItem": {
+          "name": "GroceryItem",
+          "value": "milk"
+        }
+      }
+    },
+    "locale": "en-US"
+  }
+}

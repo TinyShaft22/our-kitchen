@@ -42,6 +42,7 @@ const {
   StepChangedEventHandler,
   ExitCookingModeEventHandler
 } = require('./handlers/AplEventHandlers');
+const { CanFulfillIntentRequestHandler } = require('./handlers/CanFulfillHandler');
 
 /**
  * Device ID partition key generator
@@ -295,6 +296,7 @@ const ErrorHandler = {
  */
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
+        CanFulfillIntentRequestHandler,   // Must be first to catch CFIR before other handlers
         LaunchRequestHandler,
         ResumeCookingIntentHandler,       // Handle "continue cooking" after launch
         LinkHouseholdIntentHandler,
