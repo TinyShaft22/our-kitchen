@@ -395,6 +395,9 @@ Plans:
 **Research**: Likely (NFI toolkit)
 **Plans**: 1 plan
 
+Plans:
+- [ ] 37-01-PLAN.md — NFI container, skill manifest metadata, deploy
+
 #### Phase 38: Certification Prep
 **Goal**: Prepare skill for Amazon certification and live publication
 **Depends on**: Phase 37
