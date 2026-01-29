@@ -63,14 +63,14 @@
     "publishingInformation": {
       "distributionCountries": [],
       "isAvailableWorldwide": true,
-      "category": "FOOD_AND_DRINK",
+      "category": "LIFESTYLE",
       "locales": {
         "en-US": {
-          "description": "Our Kitchen helps you manage meals, recipes, and grocery lists using voice commands. Ask about what's for dinner, read a recipe, or check your grocery list.",
+          "description": "Our Kitchen is your hands-free kitchen companion. Browse meal plans for the week, view detailed recipes with ingredients and instructions, cook step-by-step with voice-guided navigation, manage your grocery list by store, track household items that are running low, and organize everything from main dishes to baking. Works on Echo speakers and Echo Show devices with visual cards and touch controls.",
           "examplePhrases": [
-            "Alexa open our kitchen",
-            "what's for dinner this week",
-            "show me my grocery list"
+            "Alexa, open our kitchen",
+            "Alexa, ask our kitchen what's for dinner",
+            "Alexa, ask our kitchen to read my grocery list"
           ],
           "keywords": [
             "meal planning",
@@ -79,7 +79,7 @@
             "kitchen"
           ],
           "name": "Our Kitchen",
-          "summary": "Manage meals, recipes, and grocery lists with voice commands",
+          "summary": "Plan meals, browse recipes, manage your grocery list, and cook step-by-step with voice guidance.",
           "smallIconUri": "file://assets/small-icon.png",
           "largeIconUri": "file://assets/large-icon.png"
         }

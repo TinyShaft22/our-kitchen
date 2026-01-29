@@ -432,6 +432,74 @@
           ]
         }
       ]
+    },
+    "_nameFreeInteraction": {
+      "ingressPoints": [
+        {
+          "ingressType": "LAUNCH",
+          "sampleUtterances": [
+            {"format": "RAW_TEXT", "value": "what should I cook tonight"},
+            {"format": "RAW_TEXT", "value": "help me plan dinner"},
+            {"format": "RAW_TEXT", "value": "I need a recipe"},
+            {"format": "RAW_TEXT", "value": "what's for dinner"},
+            {"format": "RAW_TEXT", "value": "plan my meals for the week"}
+          ]
+        },
+        {
+          "ingressType": "INTENT",
+          "intent": "BrowseMealsIntent",
+          "sampleUtterances": [
+            {"format": "RAW_TEXT", "value": "show me dinner ideas"},
+            {"format": "RAW_TEXT", "value": "what meals can I make"},
+            {"format": "RAW_TEXT", "value": "suggest something for dinner"}
+          ]
+        },
+        {
+          "ingressType": "INTENT",
+          "intent": "ReadGroceryListIntent",
+          "sampleUtterances": [
+            {"format": "RAW_TEXT", "value": "read my grocery list"},
+            {"format": "RAW_TEXT", "value": "what's on my shopping list"},
+            {"format": "RAW_TEXT", "value": "check my grocery list"}
+          ]
+        },
+        {
+          "ingressType": "INTENT",
+          "intent": "AddGroceryIntent",
+          "sampleUtterances": [
+            {"format": "RAW_TEXT", "value": "add something to my grocery list"},
+            {"format": "RAW_TEXT", "value": "I need to add to my shopping list"},
+            {"format": "RAW_TEXT", "value": "put something on my grocery list"}
+          ]
+        },
+        {
+          "ingressType": "INTENT",
+          "intent": "StartCookingIntent",
+          "sampleUtterances": [
+            {"format": "RAW_TEXT", "value": "start cooking"},
+            {"format": "RAW_TEXT", "value": "guide me through a recipe"},
+            {"format": "RAW_TEXT", "value": "walk me through cooking"}
+          ]
+        },
+        {
+          "ingressType": "INTENT",
+          "intent": "BrowseCategoryIntent",
+          "sampleUtterances": [
+            {"format": "RAW_TEXT", "value": "show me baking recipes"},
+            {"format": "RAW_TEXT", "value": "what chicken recipes do I have"},
+            {"format": "RAW_TEXT", "value": "browse my recipe categories"}
+          ]
+        },
+        {
+          "ingressType": "INTENT",
+          "intent": "GetRecipeIntent",
+          "sampleUtterances": [
+            {"format": "RAW_TEXT", "value": "how do I make that recipe"},
+            {"format": "RAW_TEXT", "value": "show me a recipe"},
+            {"format": "RAW_TEXT", "value": "I want to cook something"}
+          ]
+        }
+      ]
     }
   }
 }
