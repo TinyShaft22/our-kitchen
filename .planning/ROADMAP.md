@@ -396,7 +396,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 37-01-PLAN.md — NFI container, skill manifest metadata, deploy
+- [x] 37-01-PLAN.md — NFI container, skill manifest metadata, deploy
 
 #### Phase 38: Certification Prep
 **Goal**: Prepare skill for Amazon certification and live publication
@@ -462,7 +462,7 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 34. Expand Utterances | v2.1 | 1/1 | Complete | 2026-01-22 |
 | 35. Mark As Low Feature | v2.1 | 2/2 | Complete | 2026-01-22 |
 | 36. CanFulfillIntentRequest | v2.1 | 1/1 | Complete | 2026-01-26 |
-| 37. NFI Configuration | v2.1 | 0/1 | Not started | - |
+| 37. NFI Configuration | v2.1 | 1/1 | Complete | 2026-01-29 |
 | 38. Certification Prep | v2.1 | 0/1 | Not started | - |
 | 39. Publish to Live | v2.1 | 0/1 | Not started | - |
 | 40. NFI Monitoring | v2.1 | 0/1 | Not started | - |
