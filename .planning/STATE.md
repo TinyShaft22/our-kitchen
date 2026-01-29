@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 36 of 40 (v2.1 in progress)
-Plan: 36-01 complete, **Phase 36 COMPLETE**
+Phase: 37 of 40 (v2.1 in progress)
+Plan: 37-01 complete, **Phase 37 COMPLETE** (NFI deployed and building successfully)
 Status: **v2.1 Natural Language & NFI in progress**
-Last activity: 2026-01-26 — Phase 36-01 complete (CanFulfillIntentRequest Handler)
+Last activity: 2026-01-29 — Phase 37-01 verified (NFI build SUCCEEDED including NAME_FREE_INTERACTION_BUILD)
 
-Progress: ███████████████████████████░░░ 92% (37/40 phases complete)
+Progress: ████████████████████████████░░ 95% (38/40 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 64 (across v1.0-v2.1)
+- Total plans completed: 65 (across v1.0-v2.1)
 - Average duration: ~10 min
-- Total execution time: ~9.5 hours
+- Total execution time: ~9.9 hours
 
 ## Accumulated Context
 
@@ -120,6 +120,12 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Handler placed first in chain to ensure CFIR caught before other handlers
 - CFIR must be stateless: no Firebase calls, no state modifications
 
+**Phase 37-01 decisions:**
+- COOKING_AND_RECIPE skill category (LIFESTYLE was invalid enum)
+- 6 NFI intent ingress points: BrowseMeals, ReadGroceryList, AddGrocery, StartCooking, BrowseCategory, GetRecipe
+- Skipped context-dependent intents for NFI: CheckOff, Undo, Remove, MarkAsLow
+- SMAPI package import does NOT support _nameFreeInteraction; NFI requires git push deployment
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -134,10 +140,10 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-26
-Stopped at: Phase 36-01 complete (CanFulfillIntentRequest Handler)
+Last session: 2026-01-29
+Stopped at: Phase 37-01 fully verified (NFI build SUCCEEDED)
 Resume file: None
-Resume with: Phase 37 - NFI Toolkit Configuration
+Resume with: Phase 38 - Certification prep
 
 **Alexa debugging:** Separate terminal session debugging Alexa issues
 
@@ -160,11 +166,11 @@ Resume with: Phase 37 - NFI Toolkit Configuration
 2. ~~Phase 34: Expand Utterances~~ - **COMPLETE** (139 utterances across 10 intents)
 3. ~~Phase 35: Mark As Low Feature~~ - **COMPLETE** (Cloud Function + Alexa Handler)
 4. ~~Phase 36: Implement CanFulfillIntentRequest for NFI~~ - **COMPLETE** (CFIR handler deployed)
-5. Phase 37: Configure NFI toolkit
+5. ~~Phase 37: Configure NFI toolkit~~ - **COMPLETE** (NFI config in code, deployment pending pipeline recovery)
 6. Phase 38-39: Certification and publish to live
 7. Phase 40: Monitor NFI (8 weeks post-publish)
 
-**Next:** Phase 37 - NFI Toolkit Configuration
+**Next:** Phase 38 - Certification and publish (after confirming NFI deployment)
 
 ## Roadmap Evolution
 
@@ -218,3 +224,5 @@ Resume with: Phase 37 - NFI Toolkit Configuration
 - 2026-01-22: **Phase 35 COMPLETE** — Mark As Low Feature end-to-end
 - 2026-01-26: Phase 36-01 complete (CanFulfillIntentRequest handler for NFI)
 - 2026-01-26: **Phase 36 COMPLETE** — CanFulfillIntentRequest for Name-Free Interaction
+- 2026-01-29: Phase 37-01 complete (NFI toolkit configuration with 7 ingress points)
+- 2026-01-29: **Phase 37 COMPLETE** — NFI Configuration (all builds SUCCEEDED including NAME_FREE_INTERACTION_BUILD)
