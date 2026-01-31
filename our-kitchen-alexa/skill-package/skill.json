@@ -61,22 +61,29 @@
     },
     "manifestVersion": "1.0",
     "publishingInformation": {
-      "distributionCountries": [],
-      "isAvailableWorldwide": true,
+      "distributionCountries": ["US"],
+      "isAvailableWorldwide": false,
+      "distributionMode": "PUBLIC",
       "category": "COOKING_AND_RECIPE",
       "locales": {
         "en-US": {
           "description": "Our Kitchen is your hands-free kitchen companion. Browse meal plans for the week, view detailed recipes with ingredients and instructions, cook step-by-step with voice-guided navigation, manage your grocery list by store, track household items that are running low, and organize everything from main dishes to baking. Works on Echo speakers and Echo Show devices with visual cards and touch controls.",
           "examplePhrases": [
             "Alexa, open our kitchen",
-            "Alexa, ask our kitchen what's for dinner",
+            "Alexa, ask our kitchen what's for dinner this week",
             "Alexa, ask our kitchen to read my grocery list"
           ],
           "keywords": [
-            "meal planning",
-            "grocery list",
+            "cooking",
             "recipes",
-            "kitchen"
+            "grocery list",
+            "meal planning",
+            "kitchen",
+            "dinner",
+            "shopping list",
+            "food",
+            "meal prep",
+            "weekly meals"
           ],
           "name": "Our Kitchen",
           "summary": "Plan meals, browse recipes, manage your grocery list, and cook step-by-step with voice guidance.",
@@ -84,14 +91,19 @@
           "largeIconUri": "file://assets/large-icon.png"
         }
       },
-      "testingInstructions": "Test account PIN: 9999 (household: Test Kitchen). 1) Say 'Alexa, open our kitchen' to launch. 2) When prompted, say PIN '9999' to link. 3) Try 'what's for dinner this week' to see meal plan. 4) Try 'show me my grocery list' to see grocery items. 5) Try 'read the recipe for spaghetti bolognese' for recipe detail. 6) Try 'start cooking spaghetti bolognese' for step-by-step cooking mode. 7) Try 'add milk to my grocery list' to test adding items. 8) Try 'mark paper towels as low' to test household items."
+      "testingInstructions": "Test Account Setup:\n1. Say \"Alexa, open our kitchen\"\n2. When prompted for PIN, say the test PIN (provided separately)\n3. This links to a test household with pre-populated meals, recipes, and grocery items\n\nTest Flows:\n- Meal browsing: \"What's for dinner this week?\"\n- Recipe detail: \"Show me the recipe for [meal name]\"\n- Grocery list: \"Read my grocery list\"\n- Add grocery: \"Add milk to my grocery list\"\n- Mark as low: \"We're low on flour\"\n\nNotes:\n- Skill uses voice PIN authentication (not standard account linking)\n- Backend hosted on Firebase Cloud Functions\n- Visual templates display on Echo Show devices"
     },
     "privacyAndCompliance": {
       "allowsPurchases": false,
       "containsAds": false,
       "isChildDirected": false,
       "isExportCompliant": true,
-      "usesPersonalInfo": false
+      "usesPersonalInfo": true,
+      "locales": {
+        "en-US": {
+          "privacyPolicyUrl": "https://grocery-store-app-c3aa5.web.app/privacy"
+        }
+      }
     }
   }
 }
