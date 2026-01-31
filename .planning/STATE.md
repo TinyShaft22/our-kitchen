@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 37 of 40 (v2.1 in progress)
-Plan: 37-01 complete, **Phase 37 COMPLETE** (NFI deployed and building successfully)
+Phase: 38 of 40 (Certification Prep)
+Plan: 38-01 complete
 Status: **v2.1 Natural Language & NFI in progress**
-Last activity: 2026-01-29 — Phase 37-01 verified (NFI build SUCCEEDED including NAME_FREE_INTERACTION_BUILD)
+Last activity: 2026-01-31 — Completed 38-01-PLAN.md (privacy policy + skill manifest metadata)
 
 Progress: ████████████████████████████░░ 95% (38/40 phases complete)
 
@@ -140,10 +140,10 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-29
-Stopped at: Phase 37-01 fully verified (NFI build SUCCEEDED)
+Last session: 2026-01-31
+Stopped at: Completed 38-01-PLAN.md (privacy policy + store listing metadata)
 Resume file: None
-Resume with: Phase 38 - Certification prep
+Resume with: Phase 38-02 or remaining certification prep plans
 
 **Alexa debugging:** Separate terminal session debugging Alexa issues
 
@@ -226,3 +226,4 @@ Resume with: Phase 38 - Certification prep
 - 2026-01-26: **Phase 36 COMPLETE** — CanFulfillIntentRequest for Name-Free Interaction
 - 2026-01-29: Phase 37-01 complete (NFI toolkit configuration with 7 ingress points)
 - 2026-01-29: **Phase 37 COMPLETE** — NFI Configuration (all builds SUCCEEDED including NAME_FREE_INTERACTION_BUILD)
+- 2026-01-31: Phase 38-01 complete (privacy policy page + skill manifest certification metadata)
