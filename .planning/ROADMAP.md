@@ -401,8 +401,12 @@ Plans:
 #### Phase 38: Certification Prep
 **Goal**: Prepare skill for Amazon certification and live publication
 **Depends on**: Phase 37
-**Research**: Likely (certification requirements)
-**Plans**: 1 plan
+**Research**: Complete (see 38-RESEARCH.md)
+**Plans**: 2 plans
+
+Plans:
+- [ ] 38-01-PLAN.md — Privacy policy page + skill manifest metadata
+- [ ] 38-02-PLAN.md — Test household seeder + handler compliance audit
 
 #### Phase 39: Publish to Live
 **Goal**: Submit skill for certification and publish to live Alexa skill store
@@ -463,6 +467,6 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 35. Mark As Low Feature | v2.1 | 2/2 | Complete | 2026-01-22 |
 | 36. CanFulfillIntentRequest | v2.1 | 1/1 | Complete | 2026-01-26 |
 | 37. NFI Configuration | v2.1 | 1/1 | Complete | 2026-01-29 |
-| 38. Certification Prep | v2.1 | 0/1 | Not started | - |
+| 38. Certification Prep | v2.1 | 0/2 | Not started | - |
 | 39. Publish to Live | v2.1 | 0/1 | Not started | - |
 | 40. NFI Monitoring | v2.1 | 0/1 | Not started | - |
