@@ -84,7 +84,7 @@
           "largeIconUri": "file://assets/large-icon.png"
         }
       },
-      "testingInstructions": "Say 'Alexa, open our kitchen' to launch the skill. Then try 'what's for dinner this week' or 'show me my grocery list'."
+      "testingInstructions": "Test account PIN: 9999 (household: Test Kitchen). 1) Say 'Alexa, open our kitchen' to launch. 2) When prompted, say PIN '9999' to link. 3) Try 'what's for dinner this week' to see meal plan. 4) Try 'show me my grocery list' to see grocery items. 5) Try 'read the recipe for spaghetti bolognese' for recipe detail. 6) Try 'start cooking spaghetti bolognese' for step-by-step cooking mode. 7) Try 'add milk to my grocery list' to test adding items. 8) Try 'mark paper towels as low' to test household items."
     },
     "privacyAndCompliance": {
       "allowsPurchases": false,

@@ -258,3 +258,6 @@ export {
   lookupHouseholdItem,
   markAsLow,
 } from "./alexa";
+
+// Certification test data seeder
+export { seedTestHousehold } from "./alexa/testHousehold";
