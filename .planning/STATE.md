@@ -9,17 +9,17 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 38 of 40 (Certification Prep)
-Plan: 38-01 complete
-Status: **v2.1 Natural Language & NFI in progress**
-Last activity: 2026-01-31 — Completed 38-01-PLAN.md (privacy policy + skill manifest metadata)
+Phase: 41 of 41 (Global Product Database)
+Plan: 41-01 complete
+Status: **v2.2 Global Product Database in progress**
+Last activity: 2026-01-31 — Completed 41-01-PLAN.md (GlobalProduct type + lookup chain refactor)
 
-Progress: ████████████████████████████░░ 95% (38/40 phases complete)
+Progress: ████████████████████████████░░ 95% (39/41 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 65 (across v1.0-v2.1)
+- Total plans completed: 66 (across v1.0-v2.2)
 - Average duration: ~10 min
 - Total execution time: ~9.9 hours
 
@@ -126,6 +126,11 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - Skipped context-dependent intents for NFI: CheckOff, Undo, Remove, MarkAsLow
 - SMAPI package import does NOT support _nameFreeInteraction; NFI requires git push deployment
 
+**Phase 41-01 decisions:**
+- Barcode as document ID for O(1) Firestore lookups in globalProducts
+- Lookup chain order: globalProducts -> scannedProducts -> OFF API -> write-through to globalProducts
+- No real-time listener for globalProducts (on-demand getDoc sufficient for shared data)
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -141,9 +146,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-31
-Stopped at: Completed 38-01-PLAN.md (privacy policy + store listing metadata)
+Stopped at: Completed 41-01-PLAN.md (GlobalProduct type + lookup chain refactor)
 Resume file: None
-Resume with: Phase 38-02 or remaining certification prep plans
+Resume with: Phase 41-02 or remaining global product database plans
 
 **Alexa debugging:** Separate terminal session debugging Alexa issues
 
@@ -227,3 +232,5 @@ Resume with: Phase 38-02 or remaining certification prep plans
 - 2026-01-29: Phase 37-01 complete (NFI toolkit configuration with 7 ingress points)
 - 2026-01-29: **Phase 37 COMPLETE** — NFI Configuration (all builds SUCCEEDED including NAME_FREE_INTERACTION_BUILD)
 - 2026-01-31: Phase 38-01 complete (privacy policy page + skill manifest certification metadata)
+- 2026-01-31: Phase 41 added: Global Product Database (shared cache, bulk pre-load 5K US products, OFF contribute-back)
+- 2026-01-31: Phase 41-01 complete (GlobalProduct type, useGlobalProducts hook, refactored lookup chain)
