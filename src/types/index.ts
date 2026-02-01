@@ -251,6 +251,18 @@ export interface Snack {
   householdCode: string;
 }
 
+// GlobalProduct - shared cross-household barcode cache
+export interface GlobalProduct {
+  barcode: string;        // Also the document ID for O(1) lookup
+  name: string;
+  brand?: string;
+  imageUrl?: string;
+  categories?: string[];  // OFF categories_tags
+  source: 'off' | 'manual' | 'bulk'; // How it was added
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // ScannedProduct - cached barcode lookup result
 export interface ScannedProduct {
   id: string;
