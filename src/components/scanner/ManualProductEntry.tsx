@@ -10,6 +10,7 @@ interface ManualProductEntryProps {
     brand?: string;
     imageUrl?: string;
     barcode: string;
+    shareWithOFF: boolean;
   }) => void;
   onCancel: () => void;
   onBarcodeChange?: (barcode: string) => void;
@@ -24,6 +25,7 @@ export function ManualProductEntry({
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [editableBarcode, setEditableBarcode] = useState(barcode);
+  const [shareWithOFF, setShareWithOFF] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = () => {
@@ -49,6 +51,7 @@ export function ManualProductEntry({
       name: name.trim(),
       brand: brand.trim() || undefined,
       barcode: trimmedBarcode,
+      shareWithOFF,
     });
   };
 
@@ -109,14 +112,21 @@ export function ManualProductEntry({
         />
       </div>
 
-      {/* Info about contributing */}
-      <div className="bg-sage/10 rounded-soft p-3 text-sm text-charcoal/70">
-        <p className="font-medium text-sage mb-1">Help Others!</p>
-        <p className="text-xs">
-          Products you add are saved locally. In the future, you'll be able to contribute
-          to Open Food Facts to help others find this product.
-        </p>
-      </div>
+      {/* Share with Open Food Facts */}
+      <label className="flex items-start gap-3 bg-sage/10 rounded-soft p-3 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={shareWithOFF}
+          onChange={(e) => setShareWithOFF(e.target.checked)}
+          className="mt-0.5 h-4 w-4 accent-sage rounded"
+        />
+        <div className="text-sm text-charcoal/70">
+          <p className="font-medium text-sage">Share with Open Food Facts</p>
+          <p className="text-xs mt-0.5">
+            Help others find this product by contributing to the free food database
+          </p>
+        </div>
+      </label>
 
       {/* Actions */}
       <div className="flex flex-col gap-2 pt-2">

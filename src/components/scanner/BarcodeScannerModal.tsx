@@ -2,6 +2,7 @@ import { useEffect, useCallback, useState, useRef } from 'react';
 import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 import { useBarcodeScanner } from '../../hooks/useBarcodeScanner';
 import { useOpenFoodFacts } from '../../hooks/useOpenFoodFacts';
+import { contributeProduct } from '../../services/openFoodFacts';
 import { ProductLookupResult } from './ProductLookupResult';
 import { ManualProductEntry } from './ManualProductEntry';
 import {
@@ -204,6 +205,7 @@ export function BarcodeScannerModal({
     brand?: string;
     imageUrl?: string;
     barcode: string;
+    shareWithOFF: boolean;
   }) => {
     // Use barcode from data (provided synchronously by ManualProductEntry)
     const barcode = data.barcode;
@@ -217,6 +219,11 @@ export function BarcodeScannerModal({
       imageUrl: data.imageUrl,
       source: 'manual',
     });
+
+    // Fire-and-forget contribution to Open Food Facts
+    if (data.shareWithOFF) {
+      contributeProduct(barcode, data.name, data.brand).catch(() => {});
+    }
 
     onProductSelected({
       name: data.name,
