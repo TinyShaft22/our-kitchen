@@ -1,12 +1,13 @@
 import { useState, useCallback } from 'react';
 import { lookupBarcode, type ProductLookupResult } from '../services/openFoodFacts';
 import { useScannedProducts } from './useScannedProducts';
+import { useGlobalProducts } from './useGlobalProducts';
 import type { ScannedProduct } from '../types';
 
 export type LookupState = 'idle' | 'checking-cache' | 'fetching' | 'found' | 'not-found' | 'error';
 
 interface LookupResultWithSource extends ProductLookupResult {
-  source: 'cache' | 'off' | 'none';
+  source: 'cache' | 'off' | 'none' | 'global';
   cachedProduct?: ScannedProduct;
 }
 
@@ -25,6 +26,7 @@ export function useOpenFoodFacts(householdCode: string | null): UseOpenFoodFacts
   const [error, setError] = useState<string | null>(null);
 
   const { getByBarcode, addProduct } = useScannedProducts(householdCode);
+  const { getGlobalProduct, setGlobalProduct } = useGlobalProducts();
 
   const lookup = useCallback(
     async (barcode: string): Promise<LookupResultWithSource> => {
@@ -32,7 +34,23 @@ export function useOpenFoodFacts(householdCode: string | null): UseOpenFoodFacts
       setError(null);
 
       try {
-        // Step 1: Check local cache first
+        // Step 1: Check globalProducts (shared cross-household cache)
+        const globalProduct = await getGlobalProduct(barcode);
+        if (globalProduct) {
+          const globalResult: LookupResultWithSource = {
+            found: true,
+            barcode,
+            name: globalProduct.name,
+            brand: globalProduct.brand,
+            imageUrl: globalProduct.imageUrl,
+            source: 'global',
+          };
+          setResult(globalResult);
+          setState('found');
+          return globalResult;
+        }
+
+        // Step 2: Check scannedProducts (household-level cache)
         const cached = getByBarcode(barcode);
         if (cached) {
           const cacheResult: LookupResultWithSource = {
@@ -49,12 +67,21 @@ export function useOpenFoodFacts(householdCode: string | null): UseOpenFoodFacts
           return cacheResult;
         }
 
-        // Step 2: Query Open Food Facts
+        // Step 3: Query Open Food Facts API
         setState('fetching');
         const offResult = await lookupBarcode(barcode);
 
         if (offResult.found) {
-          // Cache the result for future lookups
+          // Write to globalProducts for cross-household caching
+          await setGlobalProduct({
+            barcode,
+            name: offResult.name || 'Unknown Product',
+            brand: offResult.brand,
+            imageUrl: offResult.imageUrl,
+            source: 'off',
+          });
+
+          // Also write to scannedProducts (household-level cache)
           if (householdCode) {
             await addProduct({
               barcode,
@@ -74,7 +101,7 @@ export function useOpenFoodFacts(householdCode: string | null): UseOpenFoodFacts
           return foundResult;
         }
 
-        // Step 3: Not found anywhere
+        // Step 4: Not found anywhere
         const notFoundResult: LookupResultWithSource = {
           found: false,
           barcode,
@@ -94,7 +121,7 @@ export function useOpenFoodFacts(householdCode: string | null): UseOpenFoodFacts
         };
       }
     },
-    [getByBarcode, addProduct, householdCode]
+    [getByBarcode, addProduct, householdCode, getGlobalProduct, setGlobalProduct]
   );
 
   const cacheProduct = useCallback(

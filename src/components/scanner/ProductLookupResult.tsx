@@ -7,7 +7,7 @@ interface ProductLookupResultProps {
     name?: string;
     brand?: string;
     imageUrl?: string;
-    source: 'cache' | 'off' | 'none';
+    source: 'cache' | 'off' | 'none' | 'global';
   };
   onUse: () => void;
   onTryAgain: () => void;
