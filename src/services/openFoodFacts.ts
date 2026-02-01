@@ -79,17 +79,47 @@ export async function lookupBarcode(barcode: string): Promise<ProductLookupResul
 }
 
 /**
- * Contribute a new product to Open Food Facts (optional feature for future)
- * This would require OAuth setup with OFF - leaving as placeholder
+ * Contribute a product to Open Food Facts via their simple write API.
+ * No OAuth required for basic product name/brand contributions.
+ * https://openfoodfacts.github.io/openfoodfacts-server/api/
  */
 export async function contributeProduct(
-  _barcode: string,
-  _name: string,
-  _brand?: string
+  barcode: string,
+  name: string,
+  brand?: string
 ): Promise<boolean> {
-  // OFF contribution requires OAuth authentication
-  // For now, just return false (not implemented)
-  // Future: implement OFF OAuth flow for contribution
-  console.warn('OFF contribution not yet implemented');
-  return false;
+  try {
+    const params = new URLSearchParams();
+    params.append('code', barcode);
+    params.append('product_name', name);
+    if (brand) {
+      params.append('brands', brand);
+    }
+    params.append('user_id', 'our-kitchen-app');
+    params.append('password', 'our-kitchen-app');
+    params.append('comment', 'Contributed via Our Kitchen app');
+
+    const response = await fetch(
+      'https://world.openfoodfacts.org/cgi/product_jqm2.pl',
+      {
+        method: 'POST',
+        headers: {
+          'User-Agent': USER_AGENT,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString(),
+      }
+    );
+
+    if (!response.ok) {
+      console.error('OFF contribution failed:', response.status);
+      return false;
+    }
+
+    const data = await response.json();
+    return data.status === 1;
+  } catch (err) {
+    console.error('Error contributing to OFF:', err);
+    return false;
+  }
 }
