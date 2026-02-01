@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 41 of 41 (Global Product Database)
-Plan: 41-02 complete
+Plan: 41-03 complete
 Status: **v2.2 Global Product Database in progress**
-Last activity: 2026-01-31 — Completed 41-02-PLAN.md (Bulk load ~5K US products script)
+Last activity: 2026-01-31 — Completed 41-03-PLAN.md (OFF contribute-back with share toggle)
 
 Progress: ████████████████████████████░░ 95% (39/41 phases complete)
 
@@ -135,6 +135,10 @@ Decisions are logged in PROJECT.md Key Decisions table.
 - OFF search API v2 sorted by unique_scans_n (most scanned = most likely user matches)
 - batch.set with merge:true (safe for re-runs, preserves manual edits)
 
+**Phase 41-03 decisions:**
+- Anonymous OFF contributions with matching user_id/password pair (no OAuth needed for basic data)
+- Share toggle defaults to ON (opt-out to maximize community contributions)
+
 ### Deferred Issues
 
 - **NestedFolderPicker step-by-step UI not working** (Phase 15-03): The manual folder creation UI in Add/Edit meal modals doesn't switch to step-by-step mode when Baking is toggled ON. JSON imports with subcategory paths work correctly.
@@ -150,9 +154,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-31
-Stopped at: Completed 41-02-PLAN.md (Bulk load ~5K US products script)
+Stopped at: Completed 41-03-PLAN.md (OFF contribute-back with share toggle)
 Resume file: None
-Resume with: Phase 41-03 or remaining global product database plans
+Resume with: Remaining global product database plans (if any)
 
 **Alexa debugging:** Separate terminal session debugging Alexa issues
 
@@ -239,3 +243,4 @@ Resume with: Phase 41-03 or remaining global product database plans
 - 2026-01-31: Phase 41 added: Global Product Database (shared cache, bulk pre-load 5K US products, OFF contribute-back)
 - 2026-01-31: Phase 41-01 complete (GlobalProduct type, useGlobalProducts hook, refactored lookup chain)
 - 2026-01-31: Phase 41-02 complete (Bulk load script for ~5K US products from Open Food Facts)
+- 2026-01-31: Phase 41-03 complete (OFF contribute-back with share toggle in manual entry)
