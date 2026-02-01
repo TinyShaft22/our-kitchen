@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 
 ## Current Position
 
-Phase: 41 of 41 (Global Product Database)
-Plan: 41-03 complete
-Status: **v2.2 Global Product Database in progress**
-Last activity: 2026-01-31 — Completed 41-03-PLAN.md (OFF contribute-back with share toggle)
+Phase: 41 of 41 (Global Product Database) — COMPLETE
+Plan: All 3/3 plans complete
+Status: **Phase 41 complete, v2.1 in progress**
+Last activity: 2026-01-31 — Phase 41 verified and complete
 
-Progress: ████████████████████████████░░ 95% (39/41 phases complete)
+Progress: █████████████████████████████░ 97% (40/41 phases complete)
 
 ## Performance Metrics
 
@@ -244,3 +244,4 @@ Resume with: Remaining global product database plans (if any)
 - 2026-01-31: Phase 41-01 complete (GlobalProduct type, useGlobalProducts hook, refactored lookup chain)
 - 2026-01-31: Phase 41-02 complete (Bulk load script for ~5K US products from Open Food Facts)
 - 2026-01-31: Phase 41-03 complete (OFF contribute-back with share toggle in manual entry)
+- 2026-01-31: **Phase 41 COMPLETE** — Global Product Database with cross-household cache, bulk loader, and OFF contribution

@@ -11,7 +11,7 @@ Build a PWA for Nick and Bella to manage weekly meals and grocery shopping. Star
 - **v1.2 Baking Organization** - Phase 15 (complete)
 - **v1.3 Broma Bakery Import** - Phases 16-22.1 (complete)
 - **v2.0 Alexa Integration** - Phases 23-32 (in progress)
-- **v2.1 Natural Language & NFI** - Phases 33-40 (planned)
+- **v2.1 Natural Language & NFI** - Phases 33-41 (planned)
 
 ## Domain Expertise
 
@@ -420,6 +420,30 @@ Plans:
 **Research**: Unlikely
 **Plans**: 1 plan
 
+#### Phase 41: Global Product Database
+**Goal**: Shared globalProducts Firestore collection with bulk pre-loaded US products, cross-household cache, and Open Food Facts contribute-back integration
+**Depends on**: Phase 38
+**Research**: Unlikely (design complete — see plan at .claude/plans/playful-sparking-flute.md)
+**Plans**: 3 plans
+
+Plans:
+- [x] 41-01-PLAN.md — Global product cache (GlobalProduct type, useGlobalProducts hook, refactor lookup flow)
+- [x] 41-02-PLAN.md — Bulk pre-load script (5K US products from Open Food Facts via Admin SDK)
+- [x] 41-03-PLAN.md — OFF contribute-back (real contributeProduct(), share toggle in ManualProductEntry)
+
+**Wave structure:**
+- Wave 1: 41-01 (global cache foundation)
+- Wave 2: 41-02 (bulk load — depends on globalProducts collection existing)
+- Wave 3: 41-03 (contribution — depends on global cache + manual entry flow)
+
+**Key design decisions:**
+- Barcode as document ID for O(1) lookups
+- No real-time listener on globalProducts (getDoc on demand)
+- Keep scannedProducts as household override layer
+- Lookup order: globalProducts → scannedProducts → OFF API → write to globalProducts
+- OFF contribution uses simple POST API (not OAuth)
+- Bulk load uses Firebase Admin SDK (bypasses Spark daily write limits)
+
 ---
 
 ## Progress
@@ -470,3 +494,4 @@ Phases execute in numeric order: 1 -> 2 -> ... -> 14 -> 15
 | 38. Certification Prep | v2.1 | 0/2 | Not started | - |
 | 39. Publish to Live | v2.1 | 0/1 | Not started | - |
 | 40. NFI Monitoring | v2.1 | 0/1 | Not started | - |
+| 41. Global Product Database | v2.1 | 3/3 | Complete | 2026-01-31 |
