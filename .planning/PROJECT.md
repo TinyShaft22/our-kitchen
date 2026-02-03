@@ -68,7 +68,7 @@ Every weekend Bella asks "what do we need?" and neither can think of anything in
 
 **Existing setup:**
 - Firebase project configured (grocery-store-app-c3aa5)
-- GitHub repo exists (https://github.com/TinyShaft22/our-kitchen)
+- GitHub repo exists (https://github.com/SunsetSystemsAI/our-kitchen)
 - Netlify deployment pending
 - Detailed implementation spec: `.planning/SPEC.md` (data structures, file structure, sample data)
 
